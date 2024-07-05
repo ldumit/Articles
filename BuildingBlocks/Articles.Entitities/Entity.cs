@@ -53,9 +53,18 @@ public abstract class Entity : Entity<int>, IEntity
 {
 }
 
+//[Serializable]
+//public abstract class EnumEntity<TEnum> : Entity<TEnum>
+//{
+//}
+
 [Serializable]
-public abstract class EnumEntity<TEnum> : Entity<TEnum>
+public abstract class EnumEntity2<TEnum> : Entity<TEnum>
 {
+    public string Name { get; set; } = null!;
+
+    public string Code { get; set; } = null!;
+
 }
 
 

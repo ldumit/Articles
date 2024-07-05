@@ -32,19 +32,19 @@ public class AssetRepository : RepositoryBase<Asset>
 
         return entity;
     }
-    public Asset GetAssetByTypeIdAndAssetNumber(int articleId, ArticleAssetType assetTypeId, int assetNumber)
+    public Asset GetAssetByTypeIdAndAssetNumber(int articleId, Domain.Enums.AssetType assetTypeId, int assetNumber)
     {
         var entity = Query().SingleOrDefault(e => e.ArticleId == articleId && e.TypeId == assetTypeId && e.AssetNumber == assetNumber);
             return entity;
     }
 
-    public Asset GetByType(ArticleAssetType assetType, int articleId)
+    public Asset GetByType(Domain.Enums.AssetType assetType, int articleId)
         => Query().SingleOrDefault(e => e.TypeId == assetType && e.ArticleId == articleId);
 
 
     public Asset? GetByIdOrDefault(int id) => Query().SingleOrDefault(e => e.Id == id);
 
-    public async Task<Asset> GetAssetByTypeId(int articleId, ArticleAssetType typeId)
+    public async Task<Asset> GetAssetByTypeId(int articleId, Domain.Enums.AssetType typeId)
     {
         return await Where(x => x.ArticleId == articleId && x.TypeId == typeId)
             .Include(x => x.Files)
@@ -55,7 +55,7 @@ public class AssetRepository : RepositoryBase<Asset>
             .FirstOrDefaultAsync();
     }
 
-    public async Task<Asset> GetLatestFileByAssetTypeId(int articleId, ArticleAssetType typeId)
+    public async Task<Asset> GetLatestFileByAssetTypeId(int articleId, Domain.Enums.AssetType typeId)
     {
         return await Where(x => x.ArticleId == articleId && x.TypeId == typeId)
             .Include(x => x.Files)
@@ -72,7 +72,7 @@ public class AssetRepository : RepositoryBase<Asset>
             .FirstOrDefaultAsync(x => x.Id == assetId);
     }
 
-    public async Task<ArticleAssetType> GetAssetTypeIdAsync(int articleId, int assetId)
+    public async Task<Domain.Enums.AssetType> GetAssetTypeIdAsync(int articleId, int assetId)
     {
         var asset = await base.Entity.FirstOrDefaultAsync(x => x.ArticleId == articleId && x.Id == assetId);
         return asset.TypeId;
@@ -94,7 +94,7 @@ public class AssetRepository : RepositoryBase<Asset>
     }
 
     public async Task UpsertAsset(int articleId, int userId,
-        string fileName, string extension, ArticleAssetType assetTypeId, string assetName,
+        string fileName, string extension, Domain.Enums.AssetType assetTypeId, string assetName,
         string fileServerId,
         int size,
         int version
@@ -108,7 +108,7 @@ public class AssetRepository : RepositoryBase<Asset>
         await _context.SaveChangesAsync();
     }
     private async Task<Asset> CreateOrUpdateAsset(int articleId,
-        ArticleAssetType assetTypeId,
+        Domain.Enums.AssetType assetTypeId,
         int userId,
         string assetName)
     {
@@ -118,7 +118,7 @@ public class AssetRepository : RepositoryBase<Asset>
             asset = new Asset()
             {
                 ArticleId = articleId,
-                StatusId = ArticleAssetStatusCode.UPLOADED,
+                StatusId = AssetStatus.UPLOADED,
                 TypeId = assetTypeId,
                 ModifiedBy = userId,
                 ModifiedDate = DateTime.Now,
@@ -136,7 +136,7 @@ public class AssetRepository : RepositoryBase<Asset>
         string assetName,
         string fileServerId,
         int userId,
-        ArticleAssetType assetTypeId,
+        Domain.Enums.AssetType assetTypeId,
         int size,
         int version
         )
@@ -163,13 +163,13 @@ public class AssetRepository : RepositoryBase<Asset>
     {
         return new FileAction()
         {
-            TypeId = Domain.Enums.FileActionTypeCode.UPLOAD,
+            TypeId = Domain.Enums.FileActionType.UPLOAD,
             Comment = string.Empty,
             Timestamp = DateTime.UtcNow,
             UserId = userId == 0 ? null : userId
         };
     }
-    public async Task<Asset> GetFileByAssetTypeIdAssetNumberAsync(int articleId, ArticleAssetType typeId, int assetNumber)
+    public async Task<Asset> GetFileByAssetTypeIdAssetNumberAsync(int articleId, Domain.Enums.AssetType typeId, int assetNumber)
     {
         return await Where(x => x.ArticleId == articleId && x.TypeId == typeId && x.AssetNumber == assetNumber)
             .Include(x => x.Files)
@@ -188,7 +188,7 @@ public class AssetRepository : RepositoryBase<Asset>
     }
 
     #region PRIVATE
-    private Dictionary<ArticleAssetType, AssetCategory> ConvertToDictionary(IList<Domain.Entities.AssetType> assetTypes)
+    private Dictionary<Domain.Enums.AssetType, AssetCategory> ConvertToDictionary(IList<Domain.Entities.AssetType> assetTypes)
     {
         if (assetTypes.IsNullOrEmpty())
         {

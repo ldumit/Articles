@@ -1,5 +1,5 @@
 ﻿using Articles.Entitities;
-using FileActionTypeCodes = Production.Domain.Enums.FileActionTypeCode;
+using Production.Domain.Enums;
 
 namespace Production.Domain.Entities;
 
@@ -11,7 +11,7 @@ public partial class FileAction : TenantEntity
 
     public DateTime Timestamp { get; set; }
 
-    public FileActionTypeCodes TypeId { get; set; }
+    public FileActionType TypeId { get; set; }
 
     public int? UserId { get; set; }
 
@@ -20,8 +20,6 @@ public partial class FileAction : TenantEntity
     public DateTime? ModificationDate { get; set; }
 
     public virtual File File { get; set; } = null!;
-
-    public virtual FileActionType Type { get; set; } = null!;
 
     public virtual User? User { get; set; }
 }

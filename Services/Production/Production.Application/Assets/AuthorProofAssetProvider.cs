@@ -10,7 +10,7 @@ public class AuthorProofAssetProvider : AssetProviderBase
     public override string ContentType(string contentType) => "application/pdf";
     //public override string AssetTypeName => Description.Replace("'", "").Replace(" ", "-");
     public override string AssetName => Description.Replace("'", "").Replace(" ", "-");
-    public override ArticleAssetType AssetType => ArticleAssetType.AUTHORS_PROOF;
+    public override AssetType AssetType => AssetType.AUTHORS_PROOF;
     public override AssetCategory DefaultCategory => AssetCategory.OTHERS;
 
 }

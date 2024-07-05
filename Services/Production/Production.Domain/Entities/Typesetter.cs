@@ -1,6 +1,4 @@
 ﻿using Articles.Entitities;
-using System;
-using System.Collections.Generic;
 
 namespace Production.Domain.Entities;
 

@@ -5,12 +5,11 @@ namespace Production.Domain.Entities;
 
 public partial class Asset : TenantEntity
 {
-    public ArticleAssetStatusCode StatusId { get; set; }
-    public virtual AssetStatus Status { get; set; } = null!;
+    public AssetStatus StatusId { get; set; }
 
     public int ArticleId { get; set; }
 
-    public ArticleAssetType TypeId { get; set; }
+    public Enums.AssetType TypeId { get; set; }
 
     public DateTime CreationDate { get; set; }
 
@@ -29,8 +28,6 @@ public partial class Asset : TenantEntity
     public int? AssetNumber { get; set; }
 
     public virtual Article? Article { get; set; }
-
-    public virtual AssetCategory? Category { get; set; }
 
     public virtual ICollection<File> Files { get; } = new List<File>();
 

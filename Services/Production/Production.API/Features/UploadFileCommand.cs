@@ -14,7 +14,7 @@ public abstract record UploadFileCommand<TResponse> : FileActionCommand<TRespons
     /// </summary>
     [Required]
     [JsonConverter(typeof(JsonStringEnumConverter))]
-    public ArticleAssetType AssetType { get; set; }
+    public AssetType AssetType { get; set; }
 
     /// <summary>
     /// The file to be uploaded.
@@ -46,6 +46,6 @@ public abstract record UploadFileCommand<TResponse> : FileActionCommand<TRespons
 
 public abstract record UploadFileCommand : UploadFileCommand<UploadFileResponse>
 {
-    internal override FileActionTypeCode ActionType => FileActionTypeCode.UPLOAD;
+    internal override FileActionType ActionType => FileActionType.UPLOAD;
     internal virtual byte GetAssetNumber() => 0;
 }

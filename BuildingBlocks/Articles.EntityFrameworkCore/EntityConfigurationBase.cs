@@ -19,7 +19,7 @@ namespace Common.Persistence.EntityConfigurations
         public override void Configure(EntityTypeBuilder<T> builder)
         {
             base.Configure(builder);
-           // builder.HasKey(e => new { e.SpaceId, e.Id }).HasName($"{base.EntityName}_pkey");
+           // builder.HasKey(e => new { e.TenantId, e.Id }).HasName($"{base.EntityName}_pkey");
         }
     }
 

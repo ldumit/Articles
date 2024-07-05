@@ -45,7 +45,7 @@ namespace Production.API.Features.UploadAuthorsProof
         {
             return file.Length < AssetProvider.MaxFileSize;
         }
-        public bool IsAssetTypeValid(ArticleAssetType assetType)
+        public bool IsAssetTypeValid(AssetType assetType)
         {
             return assetType == AssetProvider.AssetType;
         }
@@ -56,14 +56,14 @@ namespace Production.API.Features.UploadAuthorsProof
             //return AssetProvider.GetAvailableFileExtension().Result.Any(a => a.Extension.Extension == file.GetExtension().ToUpperCase());
         }
 
-        protected override FileActionTypeCode Action => FileActionTypeCode.UPLOAD;
+        protected override FileActionType Action => FileActionType.UPLOAD;
 
     }
 
     public abstract class UploadActionCommandValidator<TUploadFileCommand> : ArticleCommandValidator<TUploadFileCommand>
     where TUploadFileCommand : UploadFileCommand
     {
-        protected abstract FileActionTypeCode Action { get; }
+        protected abstract FileActionType Action { get; }
         protected AssetProviderBase AssetProvider { get; }
         protected ArticleRepository ArticleRepository { get; }
         protected AssetRepository AssetRepository { get; }
@@ -80,7 +80,7 @@ namespace Production.API.Features.UploadAuthorsProof
         }
 
 
-        public virtual bool IsActionValid(int articleId, FileActionTypeCode action)
+        public virtual bool IsActionValid(int articleId, FileActionType action)
         {
             var result = true;
             if (articleId > 0)

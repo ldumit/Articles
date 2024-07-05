@@ -13,7 +13,8 @@ public partial class Journal : TenantEntity
     public DateTime? CreationDate { get; set; }
 
     public DateTime? ModifiedDate { get; set; }
-    public int DefaultTypesetter { get; set; }
+    public int DefaultTypesetterId { get; set; }
+    public Typesetter DefaultTypesetter { get; set; }
 
     public virtual ICollection<Article> Articles { get; } = new List<Article>();
 }

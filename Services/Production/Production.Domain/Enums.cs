@@ -15,7 +15,7 @@ public enum DiscussionType
     Public = 1,
     Private = 2
 }
-public enum FileActionTypeCode
+public enum FileActionType
 {
     AssignTypesetter = 0,
     UPLOAD = 1,
@@ -27,7 +27,7 @@ public enum FileActionTypeCode
     DOWNLOAD = 11,
     ACCEPTED = 101
 }
-public enum ArticleAssetType
+public enum AssetType
 {
     [Description("Manuscript")]
     MANUSCRIPT = 1,
@@ -42,7 +42,7 @@ public enum ArticleAssetType
     [Description("Author's proof")]
     AUTHORS_PROOF = 7,
 }
-public enum ArticleAssetStatusCode
+public enum AssetStatus
 {
     REQUESTED = 1,
     UPLOADED = 2,
@@ -79,7 +79,7 @@ public enum ArticleStagesCode
     PRE_ACCEPT_MANUSCRIPT = 101
 }
 
-public enum ArticleFileStatusCode
+public enum FileStatus
 {
     UPLOADED = 1,
     APPROVED = 2,

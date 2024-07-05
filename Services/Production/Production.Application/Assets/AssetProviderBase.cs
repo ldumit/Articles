@@ -13,11 +13,11 @@ public abstract class AssetProviderBase
         _assetRepository = assetRepository;
     }
 
-    public async virtual Task<bool> IsActionValid(ArticleStagesCode stage, FileActionTypeCode action) => true;
+    public async virtual Task<bool> IsActionValid(ArticleStagesCode stage, FileActionType action) => true;
         //=> (await GetAvailableActions(stage)).Any(a => a == action);
 
 
-    public abstract ArticleAssetType AssetType { get; }
+    public abstract AssetType AssetType { get; }
     public virtual AssetCategory DefaultCategory => AssetCategory.CORE;
     public virtual string AssetName => Description;
     public string Description => AssetType.ToDescription();
@@ -27,7 +27,7 @@ public abstract class AssetProviderBase
     public virtual string CreateFileName(string fileExtension) => $"{AssetName}.{fileExtension}";
 
     public virtual string CreateFileServerId(int articleId, string fileExtension = null) => $"{articleId}/{Description.ToLower().Replace("'", "").Replace(" ", "-")}";
-    public virtual ArticleFileStatusCode DefaultFileStatusId => ArticleFileStatusCode.UPLOADED;
+    public virtual FileStatus DefaultFileStatusId => FileStatus.UPLOADED;
     public virtual int AssetNumber { get; protected set; }
     public string CreateSubmissionName(string fileName, string fileExtension)
         => Path.GetExtension(fileName) == string.Empty ? $"{fileName}.{fileExtension}" : fileName;

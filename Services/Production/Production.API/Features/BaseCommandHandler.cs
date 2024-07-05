@@ -29,7 +29,7 @@ public abstract class BaseCommandHandler<TCommand, TResponse> : IRequestHandler<
     protected virtual ArticleStagesCode GetNextStage(Article article) => article.StageId;
     #region Methods
 
-    protected void ChangeStage(Article article, TCommand command, ArticleAssetType? assetType = null)
+    protected void ChangeStage(Article article, TCommand command, Domain.Enums.AssetType? assetType = null)
     {
         //article.SetStage(GetNextStage(article), command.ActionType, command.ActionComment,  _claimsProvider.GetUserId(), assetType,command.DiscussionGroupType);
     }

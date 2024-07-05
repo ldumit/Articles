@@ -27,7 +27,7 @@ public abstract record ArticleActionCommand<TResponse> : IArticleCommand, IReque
     [FromRoute]
     [Required]
     public int ArticleId { get; set; }
-    internal abstract FileActionTypeCode ActionType { get; }
+    internal abstract FileActionType ActionType { get; }
 
     internal abstract string ActionComment { get; }
     internal abstract DiscussionType DiscussionGroupType { get; }

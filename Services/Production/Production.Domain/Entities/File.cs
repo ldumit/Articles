@@ -19,7 +19,7 @@ public partial class File : TenantEntity
 
     public DateTime LastActionDate { get; set; }
 
-    public ArticleFileStatusCode StatusId { get; set; }
+    public Enums.FileStatus StatusId { get; set; }
 
     public int LastActionUserId { get; set; }
 
