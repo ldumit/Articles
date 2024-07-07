@@ -1,0 +1,11 @@
+version: '3.4'
+
+services:
+  production.api:
+    image: ${DOCKER_REGISTRY-}productionapi
+    build:
+      context: .
+      dockerfile: Services/Production/Production.API/Dockerfile
+  
+  production.database:
+    image: mcr.microsoft.com/mssql/server

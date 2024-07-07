@@ -33,6 +33,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Articles.MediatR", "Buildin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Articles.AspNetCore", "BuildingBlocks\Articles.AspNetCore\Articles.AspNetCore.csproj", "{F7161139-4B9D-4212-93D6-616A5E896FFB}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{CED3B268-6093-4DCE-8CF9-65409BCFC71C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{F7161139-4B9D-4212-93D6-616A5E896FFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7161139-4B9D-4212-93D6-616A5E896FFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7161139-4B9D-4212-93D6-616A5E896FFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CED3B268-6093-4DCE-8CF9-65409BCFC71C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CED3B268-6093-4DCE-8CF9-65409BCFC71C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CED3B268-6093-4DCE-8CF9-65409BCFC71C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CED3B268-6093-4DCE-8CF9-65409BCFC71C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

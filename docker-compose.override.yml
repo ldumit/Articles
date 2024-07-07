@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  production.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+    ports:
+      - "8080"
+      - "8081"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+
+  production.database:
+    container_name: productiondb
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Production123
+    restart: always
+    ports:
+      - "1433:1433" 
