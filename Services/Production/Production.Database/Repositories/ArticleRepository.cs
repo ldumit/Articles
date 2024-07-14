@@ -5,6 +5,7 @@ using Production.Domain.Entities;
 
 namespace Production.Database.Repositories;
 
+
 public class ArticleRepository : RepositoryBase<Article>
 {
     private readonly ICacheService _cacheService;

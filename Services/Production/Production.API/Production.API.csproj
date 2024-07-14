@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="FastEndpoints" Version="5.27.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.4" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.6" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
@@ -24,6 +25,10 @@
     <ProjectReference Include="..\Production.Database\Production.Database.csproj" />
     <ProjectReference Include="..\Production.Domain\Production.Domain.csproj" />
     <ProjectReference Include="..\Production.Application\Production.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Endpoints\" />
   </ItemGroup>
 
 </Project>

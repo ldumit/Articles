@@ -32,6 +32,7 @@ public partial class Article : TenantEntity
     public int VolumeId { get; set; }
     public DateTime? JournalTransferCompletedDate { get; set; }
 
+    public virtual int TypesetterId { get; set; }
     public virtual Typesetter? Typesetter { get; set; }
 
     public virtual ICollection<Asset> Assets { get; set; } = new List<Asset>();

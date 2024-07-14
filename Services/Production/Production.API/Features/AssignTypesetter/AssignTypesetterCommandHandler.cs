@@ -7,7 +7,6 @@ public class AssignTypesetterCommandHandler(IServiceProvider serviceProvider)
     : BaseCommandHandler<AssignTypesetterCommand, ArticleCommandResponse>(serviceProvider)
 {
     //protected readonly WorklfowEventDispatcher _workflowEventService;
-
     public override async Task<ArticleCommandResponse> Handle(AssignTypesetterCommand command, CancellationToken cancellationToken)
     {
         using var transaction = _articleRepository.BeginTransaction();
