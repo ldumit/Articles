@@ -7,5 +7,5 @@ services:
       context: .
       dockerfile: Services/Production/Production.API/Dockerfile
   
-  production.database:
+  productiondb:
     image: mcr.microsoft.com/mssql/server

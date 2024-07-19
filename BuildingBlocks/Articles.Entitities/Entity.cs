@@ -48,6 +48,22 @@ public abstract class AuditedTenantEntity : TenantEntity
     public DateTime CreationDate { get; set; }
     public DateTime? ModificationDate { get; set; }
 }
+
+[Serializable]
+public abstract class AuditedEntity : AuditedEntity<int>, IEntity
+{
+
+}
+
+[Serializable]
+public abstract class AuditedEntity<TPrimaryKey> : Entity<TPrimaryKey>//, IAuditedEntity<TPrimaryKey>
+{
+    public int CreatedById { get; set; }
+    public DateTime CreatedOn { get; set; }
+    public virtual int? LastModifiedById { get; set; }
+    public DateTime? LasModifiedOn { get; set; }
+}
+
 [Serializable]
 public abstract class Entity : Entity<int>, IEntity
 {
@@ -59,7 +75,8 @@ public abstract class Entity : Entity<int>, IEntity
 //}
 
 [Serializable]
-public abstract class EnumEntity2<TEnum> : Entity<TEnum>
+public abstract class EnumEntity<TEnum> : Entity<TEnum>
+    where TEnum : Enum
 {
     public string Name { get; set; } = null!;
 

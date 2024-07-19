@@ -3,7 +3,7 @@ using Production.Domain.Enums;
 
 namespace Production.Domain.Entities;
 
-public partial class Stage : EnumEntity2<ArticleStagesCode>
+public partial class Stage : EnumEntity<ArticleStage>
 {
-    public string Description { get; set; }
+    public string Description { get; set; } = null!;
 }

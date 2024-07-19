@@ -1,11 +1,12 @@
-﻿using FluentValidation;
+﻿using FastEndpoints;
+using FluentValidation;
 using FluentValidation.Results;
 
 namespace Production.API.Features
 {
-    public abstract class BaseValidator<T> : AbstractValidator<T>
+    public abstract class BaseValidator<T> : Validator<T>
     {
-        public override ValidationResult? Validate(ValidationContext<T> context)
+        public override ValidationResult? Validate(FluentValidation.ValidationContext<T> context)
         {
             var validationResult = base.Validate(context);
 

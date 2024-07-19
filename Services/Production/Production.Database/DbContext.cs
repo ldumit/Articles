@@ -7,7 +7,6 @@ using Articles.EntityFrameworkCore;
 using Production.Domain.Entities;
 using Production.Database.EntityConfigurations;
 using Microsoft.EntityFrameworkCore.Metadata;
-using ProductionForum.Data.EFCORE.EntityConfigurations;
 
 namespace Production.Database;
 
@@ -18,7 +17,7 @@ public partial class DbContext : Microsoft.EntityFrameworkCore.DbContext, IMulti
     public int TenantId { get; set; }
     public DbContext(DbContextOptions<DbContext> options):base(options)
     {
-            
+
     }
     public DbContext(DbContextOptions<DbContext> options, IOptions<TenantConfig> tenantConfig, IMediator mediator)
         : base(options)
@@ -52,9 +51,9 @@ public partial class DbContext : Microsoft.EntityFrameworkCore.DbContext, IMulti
 
     public virtual DbSet<Comment> Comments { get; set; }
 
-    public virtual DbSet<CommentType> CommentTypes { get; set; }
+    //public virtual DbSet<CommentType> CommentTypes { get; set; }
 
-    public virtual DbSet<CommentTypeCode> CommentTypeCodes { get; set; }
+    //public virtual DbSet<CommentTypeCode> CommentTypeCodes { get; set; }
 
     public virtual DbSet<FileAction> FileActions { get; set; }
 
@@ -62,7 +61,7 @@ public partial class DbContext : Microsoft.EntityFrameworkCore.DbContext, IMulti
 
     //public virtual DbSet<FileActionTypeCode> FileActionTypeCodes { get; set; }
 
-    public virtual DbSet<FileStatus> FileStatuses { get; set; }
+    //public virtual DbSet<FileStatus> FileStatuses { get; set; }
 
     //public virtual DbSet<FileStatusCode> FileStatusCodes { get; set; }
 
@@ -167,38 +166,40 @@ public partial class DbContext : Microsoft.EntityFrameworkCore.DbContext, IMulti
     {
         //modelBuilder.HasDefaultSchema("public");
 
-        foreach (var entityType in modelBuilder.Model.GetEntityTypes())
-        {
-            if (typeof(IMultitenancy).IsAssignableFrom(entityType.ClrType))
-            {
-                var entityBuilder = modelBuilder.Entity(entityType.ClrType);
-                entityBuilder.AddQueryFilter<IMultitenancy>(e => e.TenantId.Equals(TenantId));
-            }
-        }
+        //foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+        //{
+        //    if (typeof(IMultitenancy).IsAssignableFrom(entityType.ClrType))
+        //    {
+        //        var entityBuilder = modelBuilder.Entity(entityType.ClrType);
+        //        entityBuilder.AddQueryFilter<IMultitenancy>(e => e.TenantId.Equals(TenantId));
+        //    }
+        //}
 
         modelBuilder.ApplyConfiguration(new ArticleEntityConfiguration());
+        modelBuilder.ApplyConfiguration(new ArticleCurrentStageEntityConfiguration());
         modelBuilder.ApplyConfiguration(new AssetEntityConnfiguration());
+        modelBuilder.ApplyConfiguration(new AssetLatestFileEntityConfiguration());
         modelBuilder.ApplyConfiguration(new AssetTypeEntityConnfiguration());
         modelBuilder.ApplyConfiguration(new AuthorEntityConnfiguration());
         modelBuilder.ApplyConfiguration(new CommentEntityConnfiguration());
         modelBuilder.ApplyConfiguration(new FileActionEntityConnfiguration());
         modelBuilder.ApplyConfiguration(new FileEntityConnfiguration());
-        modelBuilder.ApplyConfiguration(new FileStatusEntityConnfiguration());
-        modelBuilder.ApplyConfiguration(new JournalEntityConnfiguration(TenantId));
+        modelBuilder.ApplyConfiguration(new FileLatestActionEntityConfiguration());
+        modelBuilder.ApplyConfiguration(new JournalEntityConnfiguration());
         modelBuilder.ApplyConfiguration(new StageEntityConnfiguration());
         modelBuilder.ApplyConfiguration(new StageHistoryEntityConnfiguration());
         modelBuilder.ApplyConfiguration(new TypesetterEntityConnfiguration());
         modelBuilder.ApplyConfiguration(new UserEntityConnfiguration());
 
-        foreach (IMutableEntityType entity in modelBuilder.Model.GetEntityTypes())
-        {
-            foreach (IMutableProperty property in entity.GetProperties()
-                .Where(p => p.PropertyInfo != null && p.PropertyInfo.DeclaringType != null))
-            {
-                property.SetColumnName(property.PropertyInfo.Name.ToCamelCase());
-            }
-        }
-        OnModelCreatingPartial(modelBuilder);
+        //foreach (IMutableEntityType entity in modelBuilder.Model.GetEntityTypes())
+        //{
+        //    foreach (IMutableProperty property in entity.GetProperties()
+        //        .Where(p => p.PropertyInfo != null && p.PropertyInfo.DeclaringType != null))
+        //    {
+        //        property.SetColumnName(property.PropertyInfo.Name.ToCamelCase());
+        //    }
+        //}
+        base.OnModelCreating(modelBuilder);
     }
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

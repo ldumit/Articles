@@ -1,0 +1,15 @@
+﻿using Articles.Entitities;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+namespace Articles.EntityFrameworkCore;
+
+public abstract class TenantEntityConfigurationBase<T> : EntityConfigurationBase<T> where T : TenantEntity
+{
+    public override void Configure(EntityTypeBuilder<T> entity)
+    {
+        base.Configure(entity);
+
+        entity.Property(e => e.TenantId);
+        entity.HasKey(e => new { e.TenantId, e.Id });
+    }
+}

@@ -1,6 +1,9 @@
 ﻿using FastEndpoints;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Production.API.Features.UploadAuthorsProof;
+using Production.Application;
+using Production.Database.Repositories;
 using Production.Domain.Entities;
 using Production.Domain.Enums;
 
@@ -17,7 +20,8 @@ namespace Production.API.Features.AssignTypesetter
             var article = _articleRepository.GetById(command.ArticleId);
             ChangeStage(article, command);
 
-            article.TypesetterId = command.Body.UserId;
+            //todo - uncomment the next line
+            //article.TypesetterId = command.Body.UserId;
             await _articleRepository.SaveChangesAsync();
 
             //todo - transform into domain event
@@ -41,7 +45,7 @@ namespace Production.API.Features.AssignTypesetter
             //}
             //await _discussionGroupRepository.SaveChangesAsync();
         }
-        protected override ArticleStagesCode GetNextStage(Article article) => ArticleStagesCode.IN_PRODUCTION;
+        protected override ArticleStage GetNextStage(Article article) => ArticleStage.IN_PRODUCTION;
     }
 
 
@@ -61,5 +65,12 @@ namespace Production.API.Features.AssignTypesetter
         //    UserName = $"USR{e.Id:0000000000}",
         //    Age = (DateOnly.FromDateTime(DateTime.UtcNow).DayNumber - e.DateOfBirth.DayNumber) / 365,
         //};
+    }
+
+    public class AssignTypesetterCommandValidator : ArticleCommandValidator<UploadAuthorsProofCommand>
+    {
+        public AssignTypesetterCommandValidator(ArticleRepository articleRepository, AssetRepository assetRepository)
+        {
+        }
     }
 }

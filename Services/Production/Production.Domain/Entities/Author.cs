@@ -1,29 +1,21 @@
 ﻿using Articles.Entitities;
+using Production.Domain.Enums;
 
 namespace Production.Domain.Entities;
 
-public partial class Author : TenantEntity
+public partial class Author : Entity
 {
     public int? UserId { get; set; }
+    public User? User { get; set; }
 
     public string FirstName { get; set; } = null!;
-
     public string LastName { get; set; } = null!;
-
-    public int ArticleId { get; set; }
-
-    public DateTime CreationDate { get; set; }
-
-    public DateTime? ModificationDate { get; set; }
-
-    public int RoleId { get; set; }
-
-    public string RoleCode { get; set; } = null!;
-
     public string? FullName { get; set; }
-
-    public virtual Article Article { get; set; } = null!;
     public string? Email { get; set; }
     public string? Country { get; set; }
 
+    public UserRole RoleId { get; set; }
+
+    public int ArticleId { get; set; }
+    public virtual Article Article { get; set; } = null!;
 }

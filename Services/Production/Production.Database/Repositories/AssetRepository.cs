@@ -82,7 +82,8 @@ public class AssetRepository : RepositoryBase<Asset>
         return await base.Entity
             .Include(x => x.Article)
             .Include(x => x.LatestFile)
-            .ThenInclude(x => x.FileActions)
+                .ThenInclude(x=> x.File)
+                    .ThenInclude(x => x.FileActions)
             .FirstOrDefaultAsync(x => x.Id == assetId);
     }
 
@@ -104,7 +105,8 @@ public class AssetRepository : RepositoryBase<Asset>
         var file = CreateFile(fileName, extension, assetName, fileServerId, userId, assetTypeId, size, version);
         asset.Files.Add(file);
         await _context.SaveChangesAsync();
-        asset.LatestFileId = file.Id;
+        //todo fix the latest file, nexxt line
+        //asset.LatestFileId = file.Id;
         await _context.SaveChangesAsync();
     }
     private async Task<Asset> CreateOrUpdateAsset(int articleId,
@@ -120,15 +122,13 @@ public class AssetRepository : RepositoryBase<Asset>
                 ArticleId = articleId,
                 StatusId = AssetStatus.UPLOADED,
                 TypeId = assetTypeId,
-                ModifiedBy = userId,
-                ModifiedDate = DateTime.Now,
+                LastModifiedById = userId,
+                //ModifiedDate = DateTime.Now,
                 //CategoryId = await GetDefaultAssetCategory(assetTypeId),
                 Name = assetName
             };
             _context.Add(asset);
         }
-        if(asset.LatestFile != null)
-            asset.LatestFile.IsLatest = false;
         return asset;
     }
     private static Domain.Entities.File CreateFile(string fileName,
@@ -144,12 +144,9 @@ public class AssetRepository : RepositoryBase<Asset>
         var file = new Domain.Entities.File()
         {
             Extension = extension,
-            IsLatest = true,
-            LastActionDate = DateTime.UtcNow,
             Name = assetName,
             OriginalName = fileName,
             FileServerId = fileServerId,
-            LastActionUserId = userId,
             Size = size,
             Version = version,
             //StatusId = (assetTypeId == ArticleAssetType.FRONTIERS_MANUSCRIPT || assetTypeId == ArticleAssetType.CROSSREF_XML) ?
@@ -163,10 +160,8 @@ public class AssetRepository : RepositoryBase<Asset>
     {
         return new FileAction()
         {
-            TypeId = Domain.Enums.FileActionType.UPLOAD,
+            TypeId = FileActionType.UPLOAD,
             Comment = string.Empty,
-            Timestamp = DateTime.UtcNow,
-            UserId = userId == 0 ? null : userId
         };
     }
     public async Task<Asset> GetFileByAssetTypeIdAssetNumberAsync(int articleId, Domain.Enums.AssetType typeId, int assetNumber)

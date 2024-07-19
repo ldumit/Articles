@@ -53,7 +53,7 @@ public enum AssetStatus
     DELETED = 7
 }
 
-public enum ArticleStagesCode
+public enum ArticleStage
 {
     [Description("All")]
     ALL = 0,
@@ -94,10 +94,24 @@ public enum FileStatus
     FAILED = 12
 }
 
-public enum CommentTypeTopic
+public enum CommentType
 {
     ADDITIONAL = 1,
     REVIEW = 2,
     EOF_TO_POF = 3
+}
+
+public enum UserRole
+{
+    [Description("Editorial Office")]
+    EOF = 2,          //-->>Editorial Office
+    [Description("Review Editor")]
+    RE = 13,       //-->>Review Editor           
+    AUT = 15,         //-->>Author
+    CORAUT = 16,      //-->>Corresponding Author
+    SAUT = 17,        //-->>Submitting Author
+    COAUT = 18,       //-->>Co-author
+    POF = 20,         //-->>Production Office
+    TSOF = 22,        //-->>Typesetting Office (Typesetter)
 }
 

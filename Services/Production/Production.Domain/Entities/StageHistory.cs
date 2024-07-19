@@ -3,17 +3,13 @@ using Production.Domain.Enums;
 
 namespace Production.Domain.Entities;
 
-public partial class StageHistory : TenantEntity
+public partial class StageHistory : Entity
 {
     public DateTime StartDate { get; set; }
 
-    public ArticleStagesCode StageId { get; set; }
+    public ArticleStage StageId { get; set; }
+    public Stage Stage { get; set; } = null!;
 
     public int ArticleId { get; set; }
-
-    public DateTime CreationDate { get; set; }
-
-    public DateTime? ModificationDate { get; set; }
-    public virtual Article? Article { get; set; }
-
+    public virtual Article Article { get; set; } = null!;
 }

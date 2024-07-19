@@ -1,50 +1,73 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using Production.Domain.Entities;
-using Common.Persistence.EntityConfigurations;
+using Articles.EntityFrameworkCore;
+using Articles.Entitities;
 
 namespace Production.Database.EntityConfigurations;
-public class ArticleEntityConfiguration : TenantEntityConfigurationBase<Article>
+public class ArticleEntityConfiguration : AuditedEntityConfigurationBase<Article>
 {
-    protected override void ConfigureMore(EntityTypeBuilder<Article> entity)
+    public override void Configure(EntityTypeBuilder<Article> entity)
     {
-        entity.HasKey(e => new { e.TenantId, e.Id }).HasName("article_pkey");
+        base.Configure(entity);
 
-        entity.HasIndex(e => e.Title, "article_index");
+        entity.HasIndex(e => e.Title);
 
-        entity.Property(e => e.TenantId);
-        entity.Property(e => e.Id);
-        entity.Property(e => e.AcceptedOn).HasColumnType("timestamp without time zone");
+        //talk - using constants instead of direct numbers
+        entity.Property(e => e.Title).HasMaxLength(Constraints.TwoHundred).IsRequired();
+        entity.Property(e => e.Doi).HasMaxLength(Constraints.Fifty).IsRequired();
+        entity.Property(e => e.VolumeId).IsRequired();
+        entity.Property(e => e.CurrentStageId).HasConversion<int>().IsRequired();
 
-        entity.Property(e => e.CreationDate)
-            .HasDefaultValueSql("now()")
-            .HasColumnType("timestamp without time zone")
-            ;
-        entity.Property(e => e.JournalId)
-            .HasDefaultValueSql("0")
-            ;
-        entity.Property(e => e.ModificationDate)
-            .HasColumnType("timestamp without time zone")
-            ;
-        entity.Property(e => e.PublishedOn)
-            .HasColumnType("timestamp without time zone")
-            ;
-        entity.Property(e => e.StageId);
-        entity.Property(e => e.Title);
+        entity.Property(e => e.SubmitedOn).IsRequired();
+        entity.Property(e => e.AcceptedOn).IsRequired();
+        entity.Property(e => e.PublishedOn).IsRequired();
 
-        entity.HasOne(d => d.Journal).WithMany(p => p.Articles)
-            .HasForeignKey(d => new { d.TenantId, d.JournalId })
-            .OnDelete(DeleteBehavior.Restrict)
-            .HasConstraintName("article_spaceId_journalId_fkey");
-        entity.Property(e => e.FieldId);
-        entity.Property(e => e.FieldName);
 
-        entity.Property(e => e.RecommendedPublicationDate)
-            .HasColumnType("timestamp without time zone")
-            ;
-        entity.Property(e => e.VolumeId);
-        entity.Property(e => e.JournalTransferCompletedDate)
-            .HasColumnType("timestamp without time zone")
-            ;
+        entity.HasOne(e => e.SubmitedBy).WithMany().IsRequired().OnDelete(DeleteBehavior.Restrict);
+        entity.HasOne(e => e.PublishedBy).WithMany();
+        entity.HasOne(e => e.Typesetter).WithMany();
+
+        entity.HasOne(e => e.Journal).WithMany(e => e.Articles)
+            .HasForeignKey(e => e.JournalId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
+
+        entity.HasMany(e => e.Assets).WithOne(e => e.Article)
+            .HasForeignKey(e => e.ArticleId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Cascade);
+
+        entity.HasMany(e => e.Authors).WithOne(e => e.Article)
+            .HasForeignKey(e => e.ArticleId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Cascade);
+
+        entity.HasMany(e => e.Comments).WithOne(e => e.Article)
+            .HasForeignKey(e => e.ArticleId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Cascade);
+
+        entity.HasMany(e => e.StageHistories).WithOne(e => e.Article)
+            .HasForeignKey(e => e.ArticleId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Cascade);
+
+        entity.HasOne(e => e.CurrentStage).WithOne(e => e.Article)
+            .HasForeignKey<ArticleCurrentStage>(e => e.ArticleId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Cascade);
+
+
+        //entity.ComplexProperty(
+        //   e => e.ReadOnlyData, ro =>
+        //   {
+        //       ro.Property(a => a.Title).HasMaxLength(500).IsRequired();
+        //       ro.Property(a => a.Type).HasMaxLength(50).IsRequired();
+        //       ro.Property(a => a.Doi).HasMaxLength(50).IsRequired();
+        //       ro.Property(a => a.SubmissionDate).IsRequired();
+        //       //ro.Property(a => a.SubmissionUser).HasMaxLength(50).IsRequired();
+        //       ro.Property(a => a.AcceptedOn).IsRequired();
+        //   });
     }
 }

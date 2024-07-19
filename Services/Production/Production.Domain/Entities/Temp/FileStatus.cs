@@ -3,6 +3,6 @@ using Production.Domain.Enums;
 
 namespace Production.Domain.Entities;
 
-public partial class CommentType: EnumEntity2<CommentTypeTopic>
-{
-}
+//public partial class FileStatus: EnumEntity<Enums.FileStatus>
+//{
+//}

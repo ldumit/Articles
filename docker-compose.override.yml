@@ -6,14 +6,17 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
+      - ConnectionStrings__Database=Server=productiondb;Database=ProductionDb;User Id=sa;Password=Production123;Encrypt=False;TrustServerCertificate=True
+    depends_on:
+      - productiondb
     ports:
-      - "8080"
-      - "8081"
+      - "6005:8080"
+      - "6065:8081"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
 
-  production.database:
+  productiondb:
     container_name: productiondb
     environment:
       - ACCEPT_EULA=Y

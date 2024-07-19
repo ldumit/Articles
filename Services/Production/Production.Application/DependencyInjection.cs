@@ -1,13 +1,11 @@
 ﻿using Articles.AspNetCore;
 using Articles.System;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Production.Database;
 using Production.Database.Repositories;
 
-namespace Ordering.Application;
+namespace Production.Application;
 public static class DependencyInjection
 {
     public static IServiceCollection AddApplicationServices

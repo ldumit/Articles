@@ -1,12 +1,14 @@
 using FastEndpoints;
-using Ordering.Application;
+//using Ordering.Application;
+using Production.Application;
+using System.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
-//expl - fluid vs normal
+//talk - fluid vs normal
 builder.Services
     .AddFastEndpoints()
     .AddEndpointsApiExplorer()
@@ -16,11 +18,19 @@ builder.Services
 
 var app = builder.Build();
 
+app.UseSwagger();
+app.UseSwaggerUI();
+
+Console.WriteLine($"Launched from {Environment.CurrentDirectory}");
+Console.WriteLine($"Physical location {AppDomain.CurrentDomain.BaseDirectory}");
+Console.WriteLine($"AppContext.BaseDir {AppContext.BaseDirectory}");
+Console.WriteLine($"Runtime Call {Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName)}");
+
 // Configure the HTTP request pipeline.
+app.Migrate();
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.SeedTestData();
 }
 
 app.UseHttpsRedirection();

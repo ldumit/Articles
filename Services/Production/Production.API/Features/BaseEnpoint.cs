@@ -25,7 +25,7 @@ public abstract class BaseEndpoint<TCommand, TResponse> : Endpoint<TCommand, TRe
     }
 
     //public abstract Task<TResponse> Handle(TCommand request, CancellationToken cancellationToken);
-    protected virtual ArticleStagesCode GetNextStage(Article article) => article.StageId;
+    protected virtual ArticleStage GetNextStage(Article article) => article.CurrentStage.StageId;
     #region Methods
 
     protected void ChangeStage(Article article, TCommand command, Domain.Enums.AssetType? assetType = null)

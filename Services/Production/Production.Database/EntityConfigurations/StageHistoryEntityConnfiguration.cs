@@ -1,34 +1,20 @@
-﻿using Common.Persistence.EntityConfigurations;
+﻿using Articles.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Production.Domain.Entities;
 
 namespace Production.Database.EntityConfigurations;
 
-public class StageHistoryEntityConnfiguration : TenantEntityConfigurationBase<StageHistory>
+public class StageHistoryEntityConnfiguration : EntityConfigurationBase<StageHistory>
 {
-    protected override void ConfigureMore(EntityTypeBuilder<StageHistory> entity)
+    public override void Configure(EntityTypeBuilder<StageHistory> entity)
     {
-        entity.HasKey(e => new { e.TenantId, e.Id }).HasName("stageHistory_pkey");
+        base.Configure(entity);
 
-        entity.ToTable("stageHistory");
+        entity.HasIndex(e => e.ArticleId);
 
-        entity.Property(e => e.TenantId);
-        entity.Property(e => e.Id)
-            .HasDefaultValueSql("nextval('\"ArticleStageHistory_ArticleStageHistoryId_seq\"'::regclass)")
-            ;
-        entity.Property(e => e.ArticleId);
-        entity.Property(e => e.CreationDate)
-            .HasDefaultValueSql("now()")
-            .HasColumnType("timestamp without time zone")
-            ;
-        entity.Property(e => e.ModificationDate)
-            .HasColumnType("timestamp without time zone")
-            ;
-        entity.Property(e => e.StageId);
-        entity.Property(e => e.StartDate);
-        entity.HasOne(d => d.Article)
-            .WithMany(p => p.StageHistories)
-        .HasForeignKey(d => new { d.TenantId, d.ArticleId });
+        entity.Property(e => e.StartDate).IsRequired();
+
+        entity.HasOne(e => e.Stage).WithMany().HasForeignKey(e => e.StageId).OnDelete(DeleteBehavior.Restrict);        
     }
 }

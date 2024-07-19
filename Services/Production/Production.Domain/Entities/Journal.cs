@@ -2,19 +2,17 @@
 
 namespace Production.Domain.Entities;
 
-public partial class Journal : TenantEntity
+public partial class Journal : Entity
 {
-    public string? Name { get; set; }
+    //talk - difference between required, null!, default!
+    public required string Name { get; set; }
 
-    public string? Abbreviation { get; set; }
+    public string Abbreviation { get; set; } = null!;
 
-    public string? ShortName { get; set; }
+    //public string ShortName { get; set; } = null!;
 
-    public DateTime? CreationDate { get; set; }
-
-    public DateTime? ModifiedDate { get; set; }
     public int DefaultTypesetterId { get; set; }
-    public Typesetter DefaultTypesetter { get; set; }
+    public Typesetter DefaultTypesetter { get; set; } = null!;
 
     public virtual ICollection<Article> Articles { get; } = new List<Article>();
 }
