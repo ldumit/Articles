@@ -3,6 +3,7 @@ using Articles.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Production.Domain.Entities;
+using Production.Domain.Enums;
 
 namespace Production.Database.EntityConfigurations;
 
@@ -18,18 +19,18 @@ internal class AssetEntityConnfiguration : AuditedEntityConfigurationBase<Asset>
         //entity.HasIndex(e => e.TypeId);
 
         entity.Property(e => e.Name).HasMaxLength(Constraints.Fifty).IsRequired();
-        entity.Property(e => e.AssetNumber).HasDefaultValue(Constraints.Zero);
-        entity.Property(e => e.StatusId).HasConversion<int>().IsRequired();
-        entity.Property(e => e.CategoryId).HasConversion<int>().IsRequired();
-        entity.Property(e => e.TypeId).HasConversion<int>().IsRequired();
+        entity.Property(e => e.AssetNumber).HasDefaultValue(0);
+        entity.Property(e => e.Status).HasEnumConversion().IsRequired();
+        entity.Property(e => e.CategoryId).HasConversion<int>().HasDefaultValue(AssetCategory.Core).IsRequired();
+        entity.Property(e => e.TypeCode).HasEnumConversion().IsRequired();
 
-        //entity.Property(e => e.ArticleId);
         entity.HasOne(d => d.Article).WithMany(p => p.Assets)
             .HasForeignKey(d => d.ArticleId)
             .OnDelete(DeleteBehavior.Cascade);
 
         entity.HasOne(e => e.Type).WithMany()
-            .HasForeignKey(o => o.TypeId)
+            .HasForeignKey(e => e.TypeCode)
+            .HasPrincipalKey(e => e.Code)
             .IsRequired();
 
         entity.HasMany(e => e.Files).WithOne(e => e.Asset)

@@ -15,7 +15,7 @@ public abstract class AuditedEntityConfigurationBase<T, TKey> : EntityConfigurat
 
         entity.Property(u => u.CreatedOn).IsRequired(true).HasDefaultValueSql("getdate()");
         entity.Property(u => u.CreatedById).IsRequired();
-        entity.Property(u => u.LasModifiedOn).HasDefaultValueSql("getdate()");
+        entity.Property(u => u.LasModifiedOn).HasDefaultValue(DateTime.UtcNow);
         entity.Property(u => u.LastModifiedById).IsRequired();
     }
 }

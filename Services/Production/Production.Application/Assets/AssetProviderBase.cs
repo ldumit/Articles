@@ -18,7 +18,7 @@ public abstract class AssetProviderBase
 
 
     public abstract AssetType AssetType { get; }
-    public virtual AssetCategory DefaultCategory => AssetCategory.CORE;
+    public virtual AssetCategory DefaultCategory => AssetCategory.Core;
     public virtual string AssetName => Description;
     public string Description => AssetType.ToDescription();
 

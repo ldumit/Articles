@@ -14,7 +14,7 @@ public abstract class EnumEntityConfigurationBase<T, TEnum> : EntityConfiguratio
 
         entity.HasIndex(e => e.Code).IsUnique();
 
-        entity.Property(e => e.Code).HasMaxLength(Constraints.Fifty).IsRequired();
+        entity.Property(e => e.Code).HasEnumConversion().HasMaxLength(Constraints.Fifty).IsRequired();
         entity.Property(e => e.Name).HasMaxLength(Constraints.Fifty).IsRequired();
 
         Seed(entity);

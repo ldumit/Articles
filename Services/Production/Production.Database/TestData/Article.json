@@ -8,6 +8,36 @@
     "JournalId": "1",
     "VolumeId": "1",
     "AcceptedOn": "2024-06-23T18:00",
-    "TypesetterId": 1
+    "TypesetterId": 1,
+    "CreatedById": 1,
+    "LastModifiedById": 1,
+    "Authors": [
+      {
+        "UserId": 2,
+        "Role": "CORAUT"
+      },
+      {
+        "UserId": 3,
+        "Role": "AUT"
+      }
+    ],
+    "Assets": [
+      {
+        "Name": "Manuscript",
+        "AssetNumber": 0,
+        "Status": "Uploaded",
+        "TypeCode": "Manuscript",
+        "CreatedById": 1,
+        "LastModifiedById": 1
+      },
+      {
+        "Name": "ReviewReport1",
+        "AssetNumber": 0,
+        "Status": "Uploaded",
+        "TypeCode": "ReviewReport",
+        "CreatedById": 1,
+        "LastModifiedById": 1
+      }
+    ]
   }
 ]

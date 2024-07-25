@@ -14,6 +14,7 @@ public partial class Article : AuditedEntity
     
     //todo create a separate entity for referenced users and use it uniformly for all kind of users(sumbission, author, typesetter etc.)
     public DateTime SubmitedOn { get; set; }
+    public required virtual int SubmitedById { get; set; }
     public required virtual User SubmitedBy { get; set; }
 
     public int CurrentStageId { get; set; }
@@ -29,7 +30,7 @@ public partial class Article : AuditedEntity
     public DateTime AcceptedOn { get; set; }
 
     
-    public virtual int TypesetterId { get; set; }
+    public virtual int? TypesetterId { get; set; }
     public virtual Typesetter? Typesetter { get; set; }
     public Journal Journal { get; } = null!;
 

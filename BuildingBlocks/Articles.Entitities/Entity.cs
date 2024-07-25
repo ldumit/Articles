@@ -78,9 +78,8 @@ public abstract class Entity : Entity<int>, IEntity
 public abstract class EnumEntity<TEnum> : Entity<TEnum>
     where TEnum : Enum
 {
+    public TEnum Code { get; set; } = default!;
     public string Name { get; set; } = null!;
-
-    public string Code { get; set; } = null!;
 
 }
 

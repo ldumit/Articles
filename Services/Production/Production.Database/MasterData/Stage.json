@@ -1,56 +1,56 @@
 [
   {
-    "code": "INITIAL_ASSESSMENT",
-    "id": 1,
-    "name": "Initial Assessment",
-    "Description": "Your Production Specialist is checking your files to make sure we have everything we need to produce an Author’s Proof. We will contact you if we need any further files or information."
+    "code": "Submitted",
+    "id": 100,
+    "name": "Article submitted",
+    "Description": "Our editorial specialist is checking your article. We will contact you if we need any further files or information."
   },
   {
-    "code": "IN_PRODUCTION",
-    "id": 2,
-    "name": "In Production",
+    "code": "InReview",
+    "id": 200,
+    "name": "Article approved",
+    "Description": "Your article has been checked and article. Our editorial specialists will start soon revieing it."
+  },
+  {
+    "code": "Accepted",
+    "id": 201,
+    "name": "Article accepted",
+    "Description": "Your article has been reviewed and accepted. The production of the article will start soon."
+  },
+  {
+    "code": "InProduction",
+    "id": 300,
+    "name": "Typesetter assigned",
     "Description": "The typesetter is preparing your Author’s Proof. We will contact you if we need any further files or information."
   },
   {
-    "code": "AUTHORS_PROOF",
-    "id": 3,
-    "name": "Author's Proof",
+    "code": "AuthorsProof",
+    "id": 301,
+    "name": "Author's proof approved",
     "Description": "The Author's Proof is available for you to check and provide corrections. This status is also displayed if we are preparing a further Author's Proof at your request."
   },
   {
-    "code": "FINAL_PRODUCTION",
-    "id": 4,
-    "name": "Final Production",
+    "code": "FinalProduction",
+    "id": 302,
+    "name": "Publisher's proof uploaded",
     "Description": "The typesetter is preparing the final version of your article for publication. We will contact you if we need to check anything further before publication."
   },
   {
-    "code": "PUBLISHERS_PROOF",
-    "id": 5,
-    "name": "Publisher's Proof",
+    "code": "PublisherProof",
+    "id": 303,
+    "name": "Article scheduled for publication",
     "Description": "Your Production Specialist is applying quality checks to ensure your article is ready for publication."
   },
   {
-    "code": "SCHEDULED_FOR_PUBLICATION",
-    "id": 6,
-    "name": "Scheduled for Publication",
+    "code": "PublicationScheduled",
+    "id": 304,
+    "name": "Article scheduled for publication",
     "Description": "Your Production Specialist has completed their quality checks. Your article is now scheduled for publication on our website and will appear online within the next few working days."
   },
   {
-    "code": "PUBLISHED",
-    "id": 7,
-    "name": "Published",
-    "Description": "Congratulations! Your article has been published on our website. The deposition process is ongoing."
-  },
-  {
-    "code": "DEPOSITED",
-    "id": 8,
-    "name": "Deposited",
+    "code": "Published",
+    "id": 305,
+    "name": "Article published",
     "Description": "Your article has been published and sent to all relevant repositories, and the publication process is now complete. Please note that repositories have different processing times and your article may not be available yet."
-  },
-  {
-    "code": "PUBLISHING",
-    "id": 9,
-    "name": "Scheduled for Publication (Publishing)",
-    "Description": ""
   }
 ]

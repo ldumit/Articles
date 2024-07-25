@@ -12,7 +12,7 @@ using Production.Database;
 namespace Production.Database.Migrations
 {
     [DbContext(typeof(DbContext))]
-    [Migration("20240725082408_InitialCreate")]
+    [Migration("20240726154526_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -58,7 +58,7 @@ namespace Production.Database.Migrations
                     b.Property<DateTime?>("LasModifiedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getdate()");
+                        .HasDefaultValue(new DateTime(2024, 7, 26, 15, 45, 25, 925, DateTimeKind.Utc).AddTicks(6931));
 
                     b.Property<int?>("LastModifiedById")
                         .IsRequired()
@@ -68,7 +68,6 @@ namespace Production.Database.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("PublishedOn")
-                        .IsRequired()
                         .HasColumnType("datetime2");
 
                     b.Property<int>("SubmitedById")
@@ -82,7 +81,8 @@ namespace Production.Database.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<int>("TypesetterId")
+                    b.Property<int?>("TypesetterId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int>("VolumeId")
@@ -139,7 +139,9 @@ namespace Production.Database.Migrations
                         .HasDefaultValue(0);
 
                     b.Property<int>("CategoryId")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(1);
 
                     b.Property<int>("CreatedById")
                         .HasColumnType("int");
@@ -152,7 +154,7 @@ namespace Production.Database.Migrations
                     b.Property<DateTime?>("LasModifiedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getdate()");
+                        .HasDefaultValue(new DateTime(2024, 7, 26, 15, 45, 25, 932, DateTimeKind.Utc).AddTicks(5356));
 
                     b.Property<int?>("LastModifiedById")
                         .IsRequired()
@@ -166,17 +168,19 @@ namespace Production.Database.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("StatusId")
-                        .HasColumnType("int");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TypeId")
-                        .HasColumnType("int");
+                    b.Property<string>("TypeCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ArticleId");
 
-                    b.HasIndex("TypeId");
+                    b.HasIndex("TypeCode");
 
                     b.ToTable("Assets");
                 });
@@ -210,9 +214,6 @@ namespace Production.Database.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("DefaultCategory")
-                        .HasColumnType("int");
-
                     b.Property<int>("DefaultCategoryId")
                         .HasColumnType("int");
 
@@ -231,195 +232,59 @@ namespace Production.Database.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 24,
-                            Code = "DOAJ_JSON",
-                            DefaultCategory = 0,
-                            DefaultCategoryId = 3,
-                            Name = "Doaj Json"
-                        },
-                        new
-                        {
                             Id = 1,
-                            Code = "MANUSCRIPT",
-                            DefaultCategory = 0,
+                            Code = "Manuscript",
                             DefaultCategoryId = 1,
                             Name = "Manuscript"
                         },
                         new
                         {
                             Id = 2,
-                            Code = "FIGURE",
-                            DefaultCategory = 0,
-                            DefaultCategoryId = 1,
-                            Name = "Figure"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Code = "PMC_XML",
-                            DefaultCategory = 0,
-                            DefaultCategoryId = 1,
-                            Name = "PMC XML"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Code = "FRONTIERS_MANUSCRIPT",
-                            DefaultCategory = 0,
-                            DefaultCategoryId = 1,
-                            Name = "Frontiers Manuscript"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Code = "MANUSCRIPT_SOURCE",
-                            DefaultCategory = 0,
-                            DefaultCategoryId = 1,
-                            Name = "Manuscript Source"
-                        },
-                        new
-                        {
-                            Id = 18,
-                            Code = "FRONTIERS_XML",
-                            DefaultCategory = 0,
-                            DefaultCategoryId = 1,
-                            Name = "Frontiers XML"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Code = "TABLE",
-                            DefaultCategory = 0,
-                            DefaultCategoryId = 2,
-                            Name = "Supplementary Table"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Code = "DATA_SHEET",
-                            DefaultCategory = 0,
-                            DefaultCategoryId = 2,
-                            Name = "Supplementary Data Sheet"
-                        },
-                        new
-                        {
-                            Id = 14,
-                            Code = "PRESENTATION",
-                            DefaultCategory = 0,
-                            DefaultCategoryId = 2,
-                            Name = "Supplementary Presentation"
-                        },
-                        new
-                        {
-                            Id = 15,
-                            Code = "IMAGE",
-                            DefaultCategory = 0,
-                            DefaultCategoryId = 2,
-                            Name = "Supplementary Image"
-                        },
-                        new
-                        {
-                            Id = 16,
-                            Code = "AUDIO",
-                            DefaultCategory = 0,
-                            DefaultCategoryId = 2,
-                            Name = "Supplementary Audio"
-                        },
-                        new
-                        {
-                            Id = 17,
-                            Code = "VIDEO",
-                            DefaultCategory = 0,
-                            DefaultCategoryId = 2,
-                            Name = "Supplementary Video"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Code = "SUPPLEMENTARY_FILE",
-                            DefaultCategory = 0,
-                            DefaultCategoryId = 3,
-                            Name = "Other Supplementary File"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Code = "REVIEW_REPORT",
-                            DefaultCategory = 0,
+                            Code = "ReviewReport",
                             DefaultCategoryId = 3,
                             Name = "Reviewer Report"
                         },
                         new
                         {
-                            Id = 6,
-                            Code = "XML",
-                            DefaultCategory = 0,
-                            DefaultCategoryId = 3,
-                            Name = "XML"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Code = "AUTHORS_PROOF",
-                            DefaultCategory = 0,
+                            Id = 3,
+                            Code = "AuthorsProof",
                             DefaultCategoryId = 3,
                             Name = "Author's Proof"
                         },
                         new
                         {
-                            Id = 9,
-                            Code = "PUBLISHERS_PROOF",
-                            DefaultCategory = 0,
+                            Id = 4,
+                            Code = "PublishersProof",
                             DefaultCategoryId = 3,
                             Name = "Publisher's Proof"
                         },
                         new
                         {
-                            Id = 10,
+                            Id = 5,
                             Code = "HTML",
-                            DefaultCategory = 0,
                             DefaultCategoryId = 3,
                             Name = "HTML"
                         },
                         new
                         {
-                            Id = 19,
-                            Code = "EPUB",
-                            DefaultCategory = 0,
+                            Id = 6,
+                            Code = "XML",
                             DefaultCategoryId = 3,
-                            Name = "ePub"
+                            Name = "XML Zip"
                         },
                         new
                         {
-                            Id = 20,
-                            Code = "AUTHORS_CORRECTIONS",
-                            DefaultCategory = 0,
-                            DefaultCategoryId = 3,
-                            Name = "Author Corrections"
+                            Id = 7,
+                            Code = "Figure",
+                            DefaultCategoryId = 2,
+                            Name = "HTML Figure"
                         },
                         new
                         {
-                            Id = 21,
-                            Code = "AUTHORSHIP_CHANGE_FORMS",
-                            DefaultCategory = 0,
-                            DefaultCategoryId = 3,
-                            Name = "Authorship Change"
-                        },
-                        new
-                        {
-                            Id = 22,
-                            Code = "PUBLISHERS_CORRECTIONS",
-                            DefaultCategory = 0,
-                            DefaultCategoryId = 3,
-                            Name = "Publisher Corrections"
-                        },
-                        new
-                        {
-                            Id = 23,
-                            Code = "CROSSREF_XML",
-                            DefaultCategory = 0,
-                            DefaultCategoryId = 3,
-                            Name = "CrossRefXML"
+                            Id = 8,
+                            Code = "SupplementaryFile",
+                            DefaultCategoryId = 2,
+                            Name = "Supplementary File"
                         });
                 });
 
@@ -443,22 +308,22 @@ namespace Production.Database.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("FullName")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("AUT");
 
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
@@ -545,7 +410,7 @@ namespace Production.Database.Migrations
                     b.Property<DateTime?>("LasModifiedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getdate()");
+                        .HasDefaultValue(new DateTime(2024, 7, 26, 15, 45, 25, 937, DateTimeKind.Utc).AddTicks(8372));
 
                     b.Property<int?>("LastModifiedById")
                         .IsRequired()
@@ -697,66 +562,66 @@ namespace Production.Database.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            Code = "INITIAL_ASSESSMENT",
-                            Description = "Your Production Specialist is checking your files to make sure we have everything we need to produce an Author’s Proof. We will contact you if we need any further files or information.",
-                            Name = "Initial Assessment"
+                            Id = 100,
+                            Code = "Submitted",
+                            Description = "Our editorial specialist is checking your article. We will contact you if we need any further files or information.",
+                            Name = "Article submitted"
                         },
                         new
                         {
-                            Id = 2,
-                            Code = "IN_PRODUCTION",
+                            Id = 200,
+                            Code = "InReview",
+                            Description = "Your article has been checked and article. Our editorial specialists will start soon revieing it.",
+                            Name = "Article approved"
+                        },
+                        new
+                        {
+                            Id = 201,
+                            Code = "Accepted",
+                            Description = "Your article has been reviewed and accepted. The production of the article will start soon.",
+                            Name = "Article accepted"
+                        },
+                        new
+                        {
+                            Id = 300,
+                            Code = "InProduction",
                             Description = "The typesetter is preparing your Author’s Proof. We will contact you if we need any further files or information.",
-                            Name = "In Production"
+                            Name = "Typesetter assigned"
                         },
                         new
                         {
-                            Id = 3,
-                            Code = "AUTHORS_PROOF",
+                            Id = 301,
+                            Code = "AuthorsProof",
                             Description = "The Author's Proof is available for you to check and provide corrections. This status is also displayed if we are preparing a further Author's Proof at your request.",
-                            Name = "Author's Proof"
+                            Name = "Author's proof approved"
                         },
                         new
                         {
-                            Id = 4,
-                            Code = "FINAL_PRODUCTION",
+                            Id = 302,
+                            Code = "FinalProduction",
                             Description = "The typesetter is preparing the final version of your article for publication. We will contact you if we need to check anything further before publication.",
-                            Name = "Final Production"
+                            Name = "Publisher's proof uploaded"
                         },
                         new
                         {
-                            Id = 5,
-                            Code = "PUBLISHERS_PROOF",
+                            Id = 303,
+                            Code = "PublisherProof",
                             Description = "Your Production Specialist is applying quality checks to ensure your article is ready for publication.",
-                            Name = "Publisher's Proof"
+                            Name = "Article scheduled for publication"
                         },
                         new
                         {
-                            Id = 6,
-                            Code = "SCHEDULED_FOR_PUBLICATION",
+                            Id = 304,
+                            Code = "PublicationScheduled",
                             Description = "Your Production Specialist has completed their quality checks. Your article is now scheduled for publication on our website and will appear online within the next few working days.",
-                            Name = "Scheduled for Publication"
+                            Name = "Article scheduled for publication"
                         },
                         new
                         {
-                            Id = 7,
-                            Code = "PUBLISHED",
-                            Description = "Congratulations! Your article has been published on our website. The deposition process is ongoing.",
-                            Name = "Published"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Code = "DEPOSITED",
+                            Id = 305,
+                            Code = "Published",
                             Description = "Your article has been published and sent to all relevant repositories, and the publication process is now complete. Please note that repositories have different processing times and your article may not be available yet.",
-                            Name = "Deposited"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Code = "PUBLISHING",
-                            Description = "",
-                            Name = "Scheduled for Publication (Publishing)"
+                            Name = "Article published"
                         });
                 });
 
@@ -853,7 +718,8 @@ namespace Production.Database.Migrations
 
                     b.HasOne("Production.Domain.Entities.User", "PublishedBy")
                         .WithMany()
-                        .HasForeignKey("PublishedById");
+                        .HasForeignKey("PublishedById")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Production.Domain.Entities.User", "SubmitedBy")
                         .WithMany()
@@ -864,7 +730,8 @@ namespace Production.Database.Migrations
                     b.HasOne("Production.Domain.Entities.Typesetter", "Typesetter")
                         .WithMany()
                         .HasForeignKey("TypesetterId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasPrincipalKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Journal");
@@ -905,7 +772,8 @@ namespace Production.Database.Migrations
 
                     b.HasOne("Production.Domain.Entities.AssetType", "Type")
                         .WithMany()
-                        .HasForeignKey("TypeId")
+                        .HasForeignKey("TypeCode")
+                        .HasPrincipalKey("Code")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

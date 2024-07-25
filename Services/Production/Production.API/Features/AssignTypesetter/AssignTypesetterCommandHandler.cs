@@ -38,5 +38,5 @@ public class AssignTypesetterCommandHandler(IServiceProvider serviceProvider)
         //}
         //await _discussionGroupRepository.SaveChangesAsync();
     }
-    protected override ArticleStage GetNextStage(Article article) => ArticleStage.IN_PRODUCTION;
+    protected override ArticleStage GetNextStage(Article article) => ArticleStage.InProduction;
 }

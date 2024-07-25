@@ -1,170 +1,58 @@
 [
   {
-    "id": 24,
-    "name": "Doaj Json",
-    "defaultCategoryId": 3,
-    "categoryId": 3,
-    "code": "DOAJ_JSON"
-  },
-  {
     "id": 1,
     "name": "Manuscript",
     "defaultCategoryId": 1,
     "categoryId": 1,
-    "code": "MANUSCRIPT"
+    "code": "Manuscript"
   },
   {
     "id": 2,
-    "name": "Figure",
-    "defaultCategoryId": 1,
-    "categoryId": 1,
-    "code": "FIGURE"
-  },
-  {
-    "id": 8,
-    "name": "PMC XML",
-    "defaultCategoryId": 1,
-    "categoryId": 3,
-    "code": "PMC_XML"
-  },
-  {
-    "id": 11,
-    "name": "Frontiers Manuscript",
-    "defaultCategoryId": 1,
-    "categoryId": 1,
-    "code": "FRONTIERS_MANUSCRIPT"
-  },
-  {
-    "id": 12,
-    "name": "Manuscript Source",
-    "defaultCategoryId": 1,
-    "categoryId": 1,
-    "code": "MANUSCRIPT_SOURCE"
-  },
-  {
-    "id": 18,
-    "name": "Frontiers XML",
-    "defaultCategoryId": 1,
-    "categoryId": 2,
-    "code": "FRONTIERS_XML"
-  },
-  {
-    "id": 3,
-    "name": "Supplementary Table",
-    "defaultCategoryId": 2,
-    "categoryId": 1,
-    "code": "TABLE"
-  },
-  {
-    "id": 13,
-    "name": "Supplementary Data Sheet",
-    "defaultCategoryId": 2,
-    "categoryId": 1,
-    "code": "DATA_SHEET"
-  },
-  {
-    "id": 14,
-    "name": "Supplementary Presentation",
-    "defaultCategoryId": 2,
-    "categoryId": 1,
-    "code": "PRESENTATION"
-  },
-  {
-    "id": 15,
-    "name": "Supplementary Image",
-    "defaultCategoryId": 2,
-    "categoryId": 1,
-    "code": "IMAGE"
-  },
-  {
-    "id": 16,
-    "name": "Supplementary Audio",
-    "defaultCategoryId": 2,
-    "categoryId": 1,
-    "code": "AUDIO"
-  },
-  {
-    "id": 17,
-    "name": "Supplementary Video",
-    "defaultCategoryId": 2,
-    "categoryId": 1,
-    "code": "VIDEO"
-  },
-  {
-    "id": 4,
-    "name": "Other Supplementary File",
-    "defaultCategoryId": 3,
-    "categoryId": 1,
-    "code": "SUPPLEMENTARY_FILE"
-  },
-  {
-    "id": 5,
     "name": "Reviewer Report",
     "defaultCategoryId": 3,
     "categoryId": 2,
-    "code": "REVIEW_REPORT"
+    "code": "ReviewReport"
   },
   {
-    "id": 6,
-    "name": "XML",
-    "defaultCategoryId": 3,
-    "categoryId": 2,
-    "code": "XML"
-  },
-  {
-    "id": 7,
+    "id": 3,
     "name": "Author's Proof",
     "defaultCategoryId": 3,
     "categoryId": 3,
-    "code": "AUTHORS_PROOF"
+    "code": "AuthorsProof"
   },
   {
-    "id": 9,
+    "id": 4,
     "name": "Publisher's Proof",
     "defaultCategoryId": 3,
     "categoryId": 3,
-    "code": "PUBLISHERS_PROOF"
+    "code": "PublishersProof"
   },
   {
-    "id": 10,
+    "id": 5,
     "name": "HTML",
     "defaultCategoryId": 3,
     "categoryId": 3,
     "code": "HTML"
   },
   {
-    "id": 19,
-    "name": "ePub",
+    "id": 6,
+    "name": "XML Zip",
     "defaultCategoryId": 3,
+    "categoryId": 2,
+    "code": "XML"
+  },
+  {
+    "id": 7,
+    "name": "HTML Figure",
+    "defaultCategoryId": 2,
     "categoryId": 1,
-    "code": "EPUB"
+    "code": "Figure"
   },
   {
-    "id": 20,
-    "name": "Author Corrections",
-    "defaultCategoryId": 3,
-    "categoryId": 3,
-    "code": "AUTHORS_CORRECTIONS"
-  },
-  {
-    "id": 21,
-    "name": "Authorship Change",
-    "defaultCategoryId": 3,
-    "categoryId": 3,
-    "code": "AUTHORSHIP_CHANGE_FORMS"
-  },
-  {
-    "id": 22,
-    "name": "Publisher Corrections",
-    "defaultCategoryId": 3,
-    "categoryId": 3,
-    "code": "PUBLISHERS_CORRECTIONS"
-  },
-  {
-    "id": 23,
-    "name": "CrossRefXML",
-    "defaultCategoryId": 3,
-    "categoryId": 3,
-    "code": "CROSSREF_XML"
+    "id": 8,
+    "name": "Supplementary File",
+    "defaultCategoryId": 2,
+    "categoryId": 1,
+    "code": "SupplementaryFile"
   }
 ]

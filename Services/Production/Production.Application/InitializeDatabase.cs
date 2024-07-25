@@ -33,11 +33,17 @@ public static class InitializeDatabase
         Seed<Journal>(context);
 
         transaction.Commit();
+
+        Seed<Article>(context);
     }
 
     private static void Seed<TEntity>(Database.DbContext context)
-        where TEntity : Entity
+        where TEntity : Entity<int>
     {
+
+        if (context.Set<TEntity>().Any())
+            return;
+
         var filePath = $"{AppContext.BaseDirectory}TestData/{typeof(TEntity).Name}.json";
         if (System.IO.File.Exists(filePath))
         {

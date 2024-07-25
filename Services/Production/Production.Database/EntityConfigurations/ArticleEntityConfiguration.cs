@@ -17,16 +17,22 @@ public class ArticleEntityConfiguration : AuditedEntityConfigurationBase<Article
         entity.Property(e => e.Title).HasMaxLength(Constraints.TwoHundred).IsRequired();
         entity.Property(e => e.Doi).HasMaxLength(Constraints.Fifty).IsRequired();
         entity.Property(e => e.VolumeId).IsRequired();
-        entity.Property(e => e.CurrentStageId).HasConversion<int>().IsRequired();
+        //entity.Property(e => e.CurrentStageId).HasConversion<int>().IsRequired();
 
         entity.Property(e => e.SubmitedOn).IsRequired();
         entity.Property(e => e.AcceptedOn).IsRequired();
-        entity.Property(e => e.PublishedOn).IsRequired();
 
 
-        entity.HasOne(e => e.SubmitedBy).WithMany().IsRequired().OnDelete(DeleteBehavior.Restrict);
-        entity.HasOne(e => e.PublishedBy).WithMany();
-        entity.HasOne(e => e.Typesetter).WithMany();
+        entity.HasOne(e => e.SubmitedBy).WithMany()
+            .HasForeignKey(e => e.SubmitedById)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
+        entity.HasOne(e => e.PublishedBy).WithMany()
+            .OnDelete(DeleteBehavior.Restrict);
+        entity.HasOne(e => e.Typesetter).WithMany()
+            .HasForeignKey(e=> e.TypesetterId).HasPrincipalKey(e=> e.Id)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
 
         entity.HasOne(e => e.Journal).WithMany(e => e.Articles)
             .HasForeignKey(e => e.JournalId)

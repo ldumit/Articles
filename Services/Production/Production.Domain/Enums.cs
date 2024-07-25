@@ -4,9 +4,9 @@ namespace Production.Domain.Enums;
 
 public enum AssetCategory
 {
-    CORE = 1,
-    SUPPLEMENTARY = 2,
-    OTHERS = 3
+    Core = 1,
+    Supplementary = 2,
+    Others = 3
 }
 
 public enum DiscussionType
@@ -27,56 +27,49 @@ public enum FileActionType
     DOWNLOAD = 11,
     ACCEPTED = 101
 }
+
 public enum AssetType
 {
-    [Description("Manuscript")]
-    MANUSCRIPT = 1,
-    [Description("Figure")]
-    FIGURE = 2,
-    [Description("Table")]
-    TABLE = 3,
-    [Description("Supplementary file")]
-    SUPPLEMENTARY_FILE = 4,
-    [Description("XML")]
+    Manuscript = 1,
+    ReviewReport = 2,
+    AuthorsProof = 3,
+    PublishersProof = 4,
+    HTML = 5,
     XML = 6,
-    [Description("Author's proof")]
-    AUTHORS_PROOF = 7,
+    Figure = 7,
+    SupplementaryFile = 8,
 }
+
 public enum AssetStatus
 {
-    REQUESTED = 1,
-    UPLOADED = 2,
-    APPROVED = 3,
-    PUBLISHED = 4,
-    PUBLICATION_SCHEDULED = 5,
-    PENDING_PROVISION = 6,
-    DELETED = 7
+    Deleted = 0,
+    Requested = 1,
+    Uploaded = 2,
+    Approved = 3,
+    ScheduledForPublication = 4,
+    Published = 5
 }
 
 public enum ArticleStage
 {
-    [Description("All")]
-    ALL = 0,
-    [Description("Initial Assessment")]
-    INITIAL_ASSESSMENT = 1,
-    [Description("In Production")]
-    IN_PRODUCTION = 2,
-    [Description("Author's proof")]
-    AUTHORS_PROOF = 3,
-    [Description("Final Production")]
-    FINAL_PRODUCTION = 4,
-    [Description("Publisher's proof")]
-    PUBLISHERS_PROOF = 5,
-    [Description("Scheduled for Publication")]
-    SCHEDULED_FOR_PUBLICATION = 6,
-    [Description("Published")]
-    PUBLISHED = 7,
-    [Description("Deposition Summary")]
-    DEPOSITED = 8,
-    [Description("Scheduled for Publication (Publishing)")]
-    PUBLISHING = 9,
-    [Description("Pre Accept")]
-    PRE_ACCEPT_MANUSCRIPT = 101
+    [Description("Article submitted by the author")]
+    Submitted = 100,
+    [Description("Article approved")] 
+    InReview = 200,
+    [Description("Article accepted")]
+    Accepted = 201,
+    [Description("Typesetter assigned")]
+    InProduction = 300,
+    [Description("Author's proof uploaded")]
+    AuthorsProof = 301,
+    [Description("Author's proof approved")]
+    FinalProduction= 302,
+    [Description("Publisher's proof uploaded")]
+    PublisherProof = 303,
+    [Description("Article scheduled for publication")]
+    PublicationScheduled = 304,
+    [Description("Article published")]
+    Published = 305    
 }
 
 public enum FileStatus
@@ -104,14 +97,14 @@ public enum CommentType
 public enum UserRole
 {
     [Description("Editorial Office")]
-    EOF = 2,          //-->>Editorial Office
+    EOF = 1,          //-->>Editorial Office
     [Description("Review Editor")]
-    RE = 13,       //-->>Review Editor           
-    AUT = 15,         //-->>Author
-    CORAUT = 16,      //-->>Corresponding Author
-    SAUT = 17,        //-->>Submitting Author
-    COAUT = 18,       //-->>Co-author
-    POF = 20,         //-->>Production Office
-    TSOF = 22,        //-->>Typesetting Office (Typesetter)
+    RE = 2,       //-->>Review Editor           
+    AUT = 3,         //-->>Author
+    CORAUT = 4,      //-->>Corresponding Author
+    SAUT = 5,        //-->>Submitting Author
+    COAUT = 6,       //-->>Co-author
+    POF = 7,         //-->>Production Office
+    TSOF = 8,        //-->>Typesetting Office (Typesetter)
 }
 

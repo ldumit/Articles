@@ -20,13 +20,13 @@ namespace Production.Database.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DefaultCategoryId = table.Column<int>(type: "int", nullable: false),
-                    DefaultCategory = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Code = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    Code = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AssetTypes", x => x.Id);
+                    table.UniqueConstraint("AK_AssetTypes_Code", x => x.Code);
                 });
 
             migrationBuilder.CreateTable(
@@ -36,8 +36,8 @@ namespace Production.Database.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Code = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    Code = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -116,14 +116,14 @@ namespace Production.Database.Migrations
                     CurrentStageId = table.Column<int>(type: "int", nullable: false),
                     JournalId = table.Column<int>(type: "int", nullable: false),
                     VolumeId = table.Column<int>(type: "int", nullable: false),
-                    PublishedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PublishedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     PublishedById = table.Column<int>(type: "int", nullable: true),
                     AcceptedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TypesetterId = table.Column<int>(type: "int", nullable: false),
                     CreatedById = table.Column<int>(type: "int", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
                     LastModifiedById = table.Column<int>(type: "int", nullable: false),
-                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "getdate()")
+                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValue: new DateTime(2024, 7, 26, 15, 45, 25, 925, DateTimeKind.Utc).AddTicks(6931))
                 },
                 constraints: table =>
                 {
@@ -138,13 +138,14 @@ namespace Production.Database.Migrations
                         name: "FK_Articles_Typesetters_TypesetterId",
                         column: x => x.TypesetterId,
                         principalTable: "Typesetters",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Articles_Users_PublishedById",
                         column: x => x.PublishedById,
                         principalTable: "Users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Articles_Users_SubmitedById",
                         column: x => x.SubmitedById,
@@ -186,15 +187,15 @@ namespace Production.Database.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     AssetNumber = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
-                    StatusId = table.Column<int>(type: "int", nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
                     ArticleId = table.Column<int>(type: "int", nullable: false),
-                    TypeId = table.Column<int>(type: "int", nullable: false),
+                    TypeCode = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     LatestFileId = table.Column<int>(type: "int", nullable: false),
                     CreatedById = table.Column<int>(type: "int", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
                     LastModifiedById = table.Column<int>(type: "int", nullable: false),
-                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "getdate()")
+                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValue: new DateTime(2024, 7, 26, 15, 45, 25, 932, DateTimeKind.Utc).AddTicks(5356))
                 },
                 constraints: table =>
                 {
@@ -206,10 +207,10 @@ namespace Production.Database.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Assets_AssetTypes_TypeId",
-                        column: x => x.TypeId,
+                        name: "FK_Assets_AssetTypes_TypeCode",
+                        column: x => x.TypeCode,
                         principalTable: "AssetTypes",
-                        principalColumn: "Id",
+                        principalColumn: "Code",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -220,12 +221,12 @@ namespace Production.Database.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: true),
-                    FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    FullName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    FullName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     Country = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    RoleId = table.Column<int>(type: "int", nullable: false),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "AUT"),
                     ArticleId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -315,7 +316,7 @@ namespace Production.Database.Migrations
                     CreatedById = table.Column<int>(type: "int", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
                     LastModifiedById = table.Column<int>(type: "int", nullable: false),
-                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "getdate()")
+                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValue: new DateTime(2024, 7, 26, 15, 45, 25, 937, DateTimeKind.Utc).AddTicks(8372))
                 },
                 constraints: table =>
                 {
@@ -403,33 +404,17 @@ namespace Production.Database.Migrations
 
             migrationBuilder.InsertData(
                 table: "AssetTypes",
-                columns: new[] { "Id", "Code", "DefaultCategory", "DefaultCategoryId", "Name" },
+                columns: new[] { "Id", "Code", "DefaultCategoryId", "Name" },
                 values: new object[,]
                 {
-                    { 1, "MANUSCRIPT", 0, 1, "Manuscript" },
-                    { 2, "FIGURE", 0, 1, "Figure" },
-                    { 3, "TABLE", 0, 2, "Supplementary Table" },
-                    { 4, "SUPPLEMENTARY_FILE", 0, 3, "Other Supplementary File" },
-                    { 5, "REVIEW_REPORT", 0, 3, "Reviewer Report" },
-                    { 6, "XML", 0, 3, "XML" },
-                    { 7, "AUTHORS_PROOF", 0, 3, "Author's Proof" },
-                    { 8, "PMC_XML", 0, 1, "PMC XML" },
-                    { 9, "PUBLISHERS_PROOF", 0, 3, "Publisher's Proof" },
-                    { 10, "HTML", 0, 3, "HTML" },
-                    { 11, "FRONTIERS_MANUSCRIPT", 0, 1, "Frontiers Manuscript" },
-                    { 12, "MANUSCRIPT_SOURCE", 0, 1, "Manuscript Source" },
-                    { 13, "DATA_SHEET", 0, 2, "Supplementary Data Sheet" },
-                    { 14, "PRESENTATION", 0, 2, "Supplementary Presentation" },
-                    { 15, "IMAGE", 0, 2, "Supplementary Image" },
-                    { 16, "AUDIO", 0, 2, "Supplementary Audio" },
-                    { 17, "VIDEO", 0, 2, "Supplementary Video" },
-                    { 18, "FRONTIERS_XML", 0, 1, "Frontiers XML" },
-                    { 19, "EPUB", 0, 3, "ePub" },
-                    { 20, "AUTHORS_CORRECTIONS", 0, 3, "Author Corrections" },
-                    { 21, "AUTHORSHIP_CHANGE_FORMS", 0, 3, "Authorship Change" },
-                    { 22, "PUBLISHERS_CORRECTIONS", 0, 3, "Publisher Corrections" },
-                    { 23, "CROSSREF_XML", 0, 3, "CrossRefXML" },
-                    { 24, "DOAJ_JSON", 0, 3, "Doaj Json" }
+                    { 1, "Manuscript", 1, "Manuscript" },
+                    { 2, "ReviewReport", 3, "Reviewer Report" },
+                    { 3, "AuthorsProof", 3, "Author's Proof" },
+                    { 4, "PublishersProof", 3, "Publisher's Proof" },
+                    { 5, "HTML", 3, "HTML" },
+                    { 6, "XML", 3, "XML Zip" },
+                    { 7, "Figure", 2, "HTML Figure" },
+                    { 8, "SupplementaryFile", 2, "Supplementary File" }
                 });
 
             migrationBuilder.InsertData(
@@ -437,15 +422,15 @@ namespace Production.Database.Migrations
                 columns: new[] { "Id", "Code", "Description", "Name" },
                 values: new object[,]
                 {
-                    { 1, "INITIAL_ASSESSMENT", "Your Production Specialist is checking your files to make sure we have everything we need to produce an Author’s Proof. We will contact you if we need any further files or information.", "Initial Assessment" },
-                    { 2, "IN_PRODUCTION", "The typesetter is preparing your Author’s Proof. We will contact you if we need any further files or information.", "In Production" },
-                    { 3, "AUTHORS_PROOF", "The Author's Proof is available for you to check and provide corrections. This status is also displayed if we are preparing a further Author's Proof at your request.", "Author's Proof" },
-                    { 4, "FINAL_PRODUCTION", "The typesetter is preparing the final version of your article for publication. We will contact you if we need to check anything further before publication.", "Final Production" },
-                    { 5, "PUBLISHERS_PROOF", "Your Production Specialist is applying quality checks to ensure your article is ready for publication.", "Publisher's Proof" },
-                    { 6, "SCHEDULED_FOR_PUBLICATION", "Your Production Specialist has completed their quality checks. Your article is now scheduled for publication on our website and will appear online within the next few working days.", "Scheduled for Publication" },
-                    { 7, "PUBLISHED", "Congratulations! Your article has been published on our website. The deposition process is ongoing.", "Published" },
-                    { 8, "DEPOSITED", "Your article has been published and sent to all relevant repositories, and the publication process is now complete. Please note that repositories have different processing times and your article may not be available yet.", "Deposited" },
-                    { 9, "PUBLISHING", "", "Scheduled for Publication (Publishing)" }
+                    { 100, "Submitted", "Our editorial specialist is checking your article. We will contact you if we need any further files or information.", "Article submitted" },
+                    { 200, "InReview", "Your article has been checked and article. Our editorial specialists will start soon revieing it.", "Article approved" },
+                    { 201, "Accepted", "Your article has been reviewed and accepted. The production of the article will start soon.", "Article accepted" },
+                    { 300, "InProduction", "The typesetter is preparing your Author’s Proof. We will contact you if we need any further files or information.", "Typesetter assigned" },
+                    { 301, "AuthorsProof", "The Author's Proof is available for you to check and provide corrections. This status is also displayed if we are preparing a further Author's Proof at your request.", "Author's proof approved" },
+                    { 302, "FinalProduction", "The typesetter is preparing the final version of your article for publication. We will contact you if we need to check anything further before publication.", "Publisher's proof uploaded" },
+                    { 303, "PublisherProof", "Your Production Specialist is applying quality checks to ensure your article is ready for publication.", "Article scheduled for publication" },
+                    { 304, "PublicationScheduled", "Your Production Specialist has completed their quality checks. Your article is now scheduled for publication on our website and will appear online within the next few working days.", "Article scheduled for publication" },
+                    { 305, "Published", "Your article has been published and sent to all relevant repositories, and the publication process is now complete. Please note that repositories have different processing times and your article may not be available yet.", "Article published" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -491,9 +476,9 @@ namespace Production.Database.Migrations
                 column: "ArticleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Assets_TypeId",
+                name: "IX_Assets_TypeCode",
                 table: "Assets",
-                column: "TypeId");
+                column: "TypeCode");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AssetTypes_Code",
