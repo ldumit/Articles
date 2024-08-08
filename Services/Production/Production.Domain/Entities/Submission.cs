@@ -2,7 +2,7 @@
 
 namespace Production.Domain.Entities
 {
-    public record Submission : EntityValue
+    public record Submission : ValueObject
     {
         //talk - complex property with one to many relations is not possible
         // CP is only to store data is not possible to reference another table but only another complex property
@@ -15,10 +15,10 @@ namespace Production.Domain.Entities
 
         //public virtual ICollection<Author> Authors { get; } = new List<Author>();
 
-        protected override IEnumerable<object> GetAtomicValues()
-        {
-            yield return Title;
-            yield return Doi;
-        }
+        //protected override IEnumerable<object> GetAtomicValues()
+        //{
+        //    yield return Title;
+        //    yield return Doi;
+        //}
     }
 }

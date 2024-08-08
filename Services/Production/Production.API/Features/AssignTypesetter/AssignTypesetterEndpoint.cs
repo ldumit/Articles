@@ -9,30 +9,25 @@ using Production.Domain.Enums;
 
 namespace Production.API.Features.AssignTypesetter
 {
-    [Authorize(Roles = "pof")]
+    //[Authorize(Roles = "pof")]
+    [AllowAnonymous]
     [HttpPut("{articleId:int}/typesetter")]
     public class AssignTypesetterEndpoint(IServiceProvider serviceProvider) 
         : BaseEndpoint<AssignTypesetterCommand, ArticleCommandResponse>(serviceProvider)
     {
         public override async Task HandleAsync(AssignTypesetterCommand command, CancellationToken ct)
         {
-            using var transaction = _articleRepository.BeginTransaction();
             var article = _articleRepository.GetById(command.ArticleId);
             ChangeStage(article, command);
 
-            //todo - uncomment the next line
-            //article.TypesetterId = command.Body.UserId;
+            var orderList = new OrderList();
+            article.TypesetterId = command.Body.UserId;
             await _articleRepository.SaveChangesAsync();
 
             //todo - transform into domain event
             await AddTypesetterToDiscussion(command.ArticleId, article);
 
-            transaction.Commit();
-
-            //await _workflowEventService.PublishEvent(new StartProductionEndWF1Event { ArticleId = command.ArticleId });
-            //await _workflowEventService.PublishEvent(new StartProductionStartWF2Event { ArticleId = command.ArticleId });
-
-            await SendAsync( new ArticleCommandResponse());
+            await SendAsync( new ArticleCommandResponse(command.ArticleId));
         }
 
         private async Task AddTypesetterToDiscussion(int articleId, Article article)

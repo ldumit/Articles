@@ -6,7 +6,7 @@ using Production.Domain.Entities;
 
 namespace Production.Database.EntityConfigurations;
 
-public class JournalEntityConnfiguration : EntityConfigurationBase<Journal>
+public class JournalEntityConnfiguration : EntityConfiguration<Journal>
 {
     public override void Configure(EntityTypeBuilder<Journal> entity)
     {

@@ -57,9 +57,9 @@ public record CommandBody
     public DiscussionType DiscussionType { get; set; }
 }
 
-public class ArticleCommandResponse
+public record ArticleCommandResponse(int ArticleId)
 {
-    public int ArticleId { get; set; }
+    //public int ArticleId { get; set; }
 }
 
 

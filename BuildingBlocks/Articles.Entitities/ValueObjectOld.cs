@@ -2,25 +2,25 @@
 
 
 
-public abstract record EntityValue :IDomainObject
+public abstract record ValueObject : IDomainObject
 {
-    protected abstract IEnumerable<object> GetAtomicValues();
+    //protected abstract IEnumerable<object> GetAtomicValues();
 }
 
 public abstract class ChildEntity : IDomainObject
 {
 }
 
-public abstract class ValueObject : IDomainObject
+public abstract class ValueObjectOld : IDomainObject
 {
-    protected static bool EqualOperator(ValueObject left, ValueObject right)
+    protected static bool EqualOperator(ValueObjectOld left, ValueObjectOld right)
     {
         return ReferenceEquals(left, null) ^ ReferenceEquals(right, null)
             ? false
             : ReferenceEquals(left, null) || left.Equals(right);
     }
 
-    protected static bool NotEqualOperator(ValueObject left, ValueObject right)
+    protected static bool NotEqualOperator(ValueObjectOld left, ValueObjectOld right)
     {
         return !(EqualOperator(left, right));
     }
@@ -36,7 +36,7 @@ public abstract class ValueObject : IDomainObject
             equals = false;
         }
 
-			var other = (ValueObject)obj;
+			var other = (ValueObjectOld)obj;
 
 			var thisValues = GetAtomicValues().GetEnumerator();
 			var otherValues = other.GetAtomicValues().GetEnumerator();
@@ -63,8 +63,8 @@ public abstract class ValueObject : IDomainObject
          .Aggregate((x, y) => x ^ y);
     }
 
-    public ValueObject GetCopy()
+    public ValueObjectOld GetCopy()
     {
-        return MemberwiseClone() as ValueObject;
+        return MemberwiseClone() as ValueObjectOld;
     }
 }

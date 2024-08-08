@@ -4,7 +4,7 @@ using Production.Domain.Entities;
 
 namespace Production.Database.EntityConfigurations;
 
-public class UserEntityConnfiguration : EntityConfigurationBase<User>
+public class UserEntityConnfiguration : EntityConfiguration<User>
 {
     public override void Configure(EntityTypeBuilder<User> entity)
     {

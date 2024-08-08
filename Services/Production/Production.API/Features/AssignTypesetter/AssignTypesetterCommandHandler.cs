@@ -25,7 +25,7 @@ public class AssignTypesetterCommandHandler(IServiceProvider serviceProvider)
         //await _workflowEventService.PublishEvent(new StartProductionEndWF1Event { ArticleId = command.ArticleId });
         //await _workflowEventService.PublishEvent(new StartProductionStartWF2Event { ArticleId = command.ArticleId });
 
-        return new ArticleCommandResponse();
+        return new ArticleCommandResponse(command.ArticleId);
     }
 
     private async Task AddTypesetterToDiscussion(int articleId, Article article)

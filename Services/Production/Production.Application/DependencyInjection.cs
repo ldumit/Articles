@@ -8,8 +8,7 @@ using Production.Database.Repositories;
 namespace Production.Application;
 public static class DependencyInjection
 {
-    public static IServiceCollection AddApplicationServices
-        (this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddApplicationServices (this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("Database");
 

@@ -7,7 +7,7 @@ namespace Articles.EntityFrameworkCore;
 public abstract class AuditedEntityConfigurationBase<T> : AuditedEntityConfigurationBase<T, int> where T : AuditedEntity<int>
 {
 }
-public abstract class AuditedEntityConfigurationBase<T, TKey> : EntityConfigurationBase<T, TKey> where T : AuditedEntity<TKey>
+public abstract class AuditedEntityConfigurationBase<T, TKey> : EntityConfiguration<T, TKey> where T : AuditedEntity<TKey>
 {
     public override void Configure(EntityTypeBuilder<T> entity)
     {

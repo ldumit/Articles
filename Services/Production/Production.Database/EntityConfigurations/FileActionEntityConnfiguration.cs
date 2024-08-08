@@ -5,7 +5,7 @@ using Production.Domain.Entities;
 
 namespace Production.Database.EntityConfigurations;
 
-public class FileActionEntityConnfiguration : EntityConfigurationBase<FileAction>
+public class FileActionEntityConnfiguration : EntityConfiguration<FileAction>
 {
     public override void Configure(EntityTypeBuilder<FileAction> entity)
     {

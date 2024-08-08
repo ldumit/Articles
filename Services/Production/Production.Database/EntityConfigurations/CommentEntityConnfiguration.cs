@@ -5,7 +5,7 @@ using Production.Domain.Entities;
 
 namespace Production.Database.EntityConfigurations;
 
-public class CommentEntityConnfiguration : EntityConfigurationBase<Comment>
+public class CommentEntityConnfiguration : EntityConfiguration<Comment>
 {
     public override void Configure(EntityTypeBuilder<Comment> entity)
     {

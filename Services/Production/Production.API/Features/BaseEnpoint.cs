@@ -30,7 +30,7 @@ public abstract class BaseEndpoint<TCommand, TResponse> : Endpoint<TCommand, TRe
 
     protected void ChangeStage(Article article, TCommand command, Domain.Enums.AssetType? assetType = null)
     {
-        //article.SetStage(GetNextStage(article), command.ActionType, command.ActionComment,  _claimsProvider.GetUserId(), assetType,command.DiscussionGroupType);
+        article.SetStage(GetNextStage(article), command.ActionType, command.ActionComment,  _claimsProvider.GetUserId(), assetType,command.DiscussionGroupType);
     }
 
     protected async Task AddFileAction(Asset asset, Domain.Entities.File file, TCommand command)

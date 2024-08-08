@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Articles.EntityFrameworkCore;
 
-public abstract class TenantEntityConfigurationBase<T> : EntityConfigurationBase<T> where T : TenantEntity
+public abstract class TenantEntityConfigurationBase<T> : EntityConfiguration<T> where T : TenantEntity
 {
     public override void Configure(EntityTypeBuilder<T> entity)
     {

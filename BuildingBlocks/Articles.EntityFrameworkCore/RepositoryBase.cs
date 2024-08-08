@@ -37,7 +37,7 @@ public interface IRepository<TEntity, TKey>
 public abstract class RepositoryBase<TEntity> : RepositoryBase<TEntity, int>
     where TEntity : class, IEntity
 {
-    public RepositoryBase(DbContext context, IMultitenancy multitenancy) : base(context, multitenancy)
+    public RepositoryBase(DbContext context, IMultitenancy multitenancy) : base(context)
     {
     }
 }
@@ -47,13 +47,10 @@ public abstract class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
     where TKey : struct
 {
     protected readonly DbContext _context;
-    protected readonly IMultitenancy _multitenancy;
 
-
-    public RepositoryBase(DbContext context, IMultitenancy multitenancy)
+    public RepositoryBase(DbContext context)
     {
         _context = context;
-        _multitenancy = multitenancy;
     }
 
     protected DbSet<TEntity> Entity => _context.Set<TEntity>();
@@ -68,7 +65,7 @@ public abstract class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
 
     public virtual TEntity GetById(TKey id, bool throwNotFound = true)
     {
-        var entity = Entity.Find(_multitenancy.TenantId, id);
+        var entity = Entity.Find(id);
         if (throwNotFound == true && entity == null)
             throw new HttpException(HttpStatusCode.NotFound, NotFoundMessage);
         return entity;
@@ -78,7 +75,7 @@ public abstract class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
 
     public virtual async Task<TEntity> GetAsync(TKey id)
     {
-        return await _context.Set<TEntity>().FindAsync(_multitenancy.TenantId, id);
+        return await _context.Set<TEntity>().FindAsync(id);
     }
 
     public bool IsValid(TKey id)

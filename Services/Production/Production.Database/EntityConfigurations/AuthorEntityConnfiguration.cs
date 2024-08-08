@@ -6,7 +6,7 @@ using Production.Domain.Enums;
 
 namespace Production.Database.EntityConfigurations;
 
-public class AuthorEntityConnfiguration : EntityConfigurationBase<Author>
+public class AuthorEntityConnfiguration : EntityConfiguration<Author>
 {
     public override void Configure(EntityTypeBuilder<Author> entity)
     {

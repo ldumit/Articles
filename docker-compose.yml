@@ -6,6 +6,11 @@ services:
     build:
       context: .
       dockerfile: Services/Production/Production.API/Dockerfile
+  auth.api:
+    image: ${DOCKER_REGISTRY-}authapi
+    build:
+      context: .
+      dockerfile: Services/Auth/Auth.API/Dockerfile
   
   productiondb:
     image: mcr.microsoft.com/mssql/server

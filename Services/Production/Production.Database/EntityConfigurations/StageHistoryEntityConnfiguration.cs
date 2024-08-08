@@ -5,7 +5,7 @@ using Production.Domain.Entities;
 
 namespace Production.Database.EntityConfigurations;
 
-public class StageHistoryEntityConnfiguration : EntityConfigurationBase<StageHistory>
+public class StageHistoryEntityConnfiguration : EntityConfiguration<StageHistory>
 {
     public override void Configure(EntityTypeBuilder<StageHistory> entity)
     {
