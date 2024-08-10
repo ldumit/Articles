@@ -6,7 +6,8 @@ using Articles.System;
 
 namespace Articles.EntityFrameworkCore;
 
-public abstract class EntityConfiguration<T> : EntityConfiguration<T, int> where T : Entity<int>
+public abstract class EntityConfiguration<T> : EntityConfiguration<T, int> 
+    where T : class, IEntity<int>
 {
     public override void Configure(EntityTypeBuilder<T> builder)
     {
@@ -14,7 +15,9 @@ public abstract class EntityConfiguration<T> : EntityConfiguration<T, int> where
     }
 }
 
-public abstract class EntityConfiguration<T, TKey> : IEntityTypeConfiguration<T> where T : Entity<TKey>
+public abstract class EntityConfiguration<T, TKey> : IEntityTypeConfiguration<T> 
+    where T : class, IEntity<TKey>
+    where TKey: struct
 {
     public virtual void Configure(EntityTypeBuilder<T> builder)
     {

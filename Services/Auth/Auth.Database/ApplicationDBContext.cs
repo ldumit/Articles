@@ -45,8 +45,6 @@ public class ApplicationDbContext :
         builder.Entity<User>().Property(u => u.RegistrationDate)
             .HasDefaultValue(DateTime.UtcNow);
         builder.Entity<User>()
-            .HasIndex(p => p.EmployeeId).IsUnique();
-        builder.Entity<User>()
             .HasMany(u => u.RefreshTokens)
             .WithOne()
             .OnDelete(DeleteBehavior.Cascade);

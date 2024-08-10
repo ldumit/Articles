@@ -6,7 +6,7 @@ namespace Articles.EntityFrameworkCore;
 
 public abstract class EnumEntityConfigurationBase<T, TEnum> : EntityConfiguration<T, TEnum>
     where T : EnumEntity<TEnum>
-    where TEnum : Enum
+    where TEnum : struct, Enum
 {
     public override void Configure(EntityTypeBuilder<T> entity)
     {

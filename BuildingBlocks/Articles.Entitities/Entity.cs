@@ -11,11 +11,6 @@ public interface IUser : IEntity
     string? MiddleName { get; set; }
 }
 
-public interface IMultitenancy
-{
-    public int TenantId { get; set; }
-}
-
 public interface IDomainObject
 {
 }
@@ -32,36 +27,7 @@ public interface IEntity<TPrimaryKey> : IDomainObject
 //where TPrimaryKey : struct
 {
     TPrimaryKey Id { get; set; }
-    bool IsTransient();
-}
-
-[Serializable]
-public abstract class TenantEntity : Entity, IMultitenancy
-{
-    public int TenantId { get; set; }
-}
-[Serializable]
-public abstract class AuditedTenantEntity : TenantEntity
-{
-    public int? UserId { get; set; }
-    public virtual IUser? User { get; set; }
-    public DateTime CreationDate { get; set; }
-    public DateTime? ModificationDate { get; set; }
-}
-
-[Serializable]
-public abstract class AuditedEntity : AuditedEntity<int>, IEntity
-{
-
-}
-
-[Serializable]
-public abstract class AuditedEntity<TPrimaryKey> : Entity<TPrimaryKey>//, IAuditedEntity<TPrimaryKey>
-{
-    public int CreatedById { get; set; }
-    public DateTime CreatedOn { get; set; }
-    public virtual int? LastModifiedById { get; set; }
-    public DateTime? LasModifiedOn { get; set; }
+    //bool IsTransient();
 }
 
 [Serializable]
@@ -76,7 +42,7 @@ public abstract class Entity : Entity<int>, IEntity
 
 [Serializable]
 public abstract class EnumEntity<TEnum> : Entity<TEnum>
-    where TEnum : Enum
+    where TEnum : struct, Enum
 {
     public TEnum Code { get; set; } = default!;
     public string Name { get; set; } = null!;
@@ -89,6 +55,7 @@ public abstract class EnumEntityCode : IEnumerationEntity
 {
     public string Code { get ; set; }
 }
+
 [Serializable]
 public abstract class DefaultEntity : IDomainObject
 {
@@ -96,7 +63,7 @@ public abstract class DefaultEntity : IDomainObject
 
 [Serializable]
 public abstract class Entity<TPrimaryKey> : IEntity<TPrimaryKey>
-//where TPrimaryKey : struct
+    where TPrimaryKey : struct
 {
     public virtual TPrimaryKey Id { get; set; }
 
@@ -190,10 +157,10 @@ public abstract class Entity<TPrimaryKey> : IEntity<TPrimaryKey>
     /// <inheritdoc/>
     public override int GetHashCode()
     {
-        if (Id == null)
-        {
-            return 0;
-        }
+        //if (Id == null)
+        //{
+        //    return 0;
+        //}
 
         return Id.GetHashCode();
     }
