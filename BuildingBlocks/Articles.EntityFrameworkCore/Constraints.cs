@@ -2,11 +2,13 @@
 
 public static class Constraints
 {
-    public const int Zero = 0;
-    public const int Ten = 10;
-    public const int Twenty = 10;
-    public const int Fifty = 50;
-    public const int TwoHundred = 200;
-    public const int FiveHundred = 500;
-    public const int TwoTousands = 2000;
+    public const int C0 = 0;
+    public const int C8 = 8;
+    public const int C32 = 32;
+    public const int C64 = 64;
+		public const int C128 = 128;
+		public const int C256 = 256;
+    public const int C512 = 512;
+		public const int C1024 = 1024;
+		public const int C2048 = 2048;
 }

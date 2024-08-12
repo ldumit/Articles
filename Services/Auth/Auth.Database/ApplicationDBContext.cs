@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Auth.Domain;
-using Newtonsoft.Json;
+using Auth.Persistence.EntityConfigurations;
+using Auth.Domain.Models;
 
 namespace Auth.Persistence;
 
@@ -11,22 +11,22 @@ public class ApplicationDbContext :
 				IdentityDbContext<User, Role, int>
 		{
 
-    private IHttpContextAccessor httpContextAccessor;
+    //private IHttpContextAccessor httpContextAccessor;
 
-    JsonSerializerSettings jsonSettings;
+    //JsonSerializerSettings jsonSettings;
 
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,
-        IHttpContextAccessor httpContextAccessor)
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,IHttpContextAccessor httpContextAccessor)
         : base(options)
     {
-        this.httpContextAccessor = httpContextAccessor;
+        //this.httpContextAccessor = httpContextAccessor;
 
         //this.jsonSettings = JsonSerializerSettingsProvider.CreateSerializerSettings();
-
     }
 
+		public virtual DbSet<RefreshToken> RefreshTokens{ get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder builder)
+
+		protected override void OnConfiguring(DbContextOptionsBuilder builder)
     {
         base.OnConfiguring(builder);
 
@@ -38,34 +38,10 @@ public class ApplicationDbContext :
     {
         base.OnModelCreating(builder);
 
-        builder.HasDefaultSchema("security");
+        //builder.HasDefaultSchema("security");
 
-        builder.Entity<User>()
-            .Property(e => e.Id);
-        builder.Entity<User>().Property(u => u.RegistrationDate)
-            .HasDefaultValue(DateTime.UtcNow);
-        builder.Entity<User>()
-            .HasMany(u => u.RefreshTokens)
-            .WithOne()
-            .OnDelete(DeleteBehavior.Cascade);
-
-
-        builder.Entity<Role>()
-            .Property(e => e.Id)
-            .ValueGeneratedOnAdd();
-
-
-        base.OnModelCreating(builder);
-
-        //to avoid issues with inserting multiple roles with same name for different tenants
-        builder.Entity<Role>(builder =>
-        {
-            builder.ToTable("Roles");
-            builder.Metadata.RemoveIndex(new[] { builder.Property(r => r.NormalizedName).Metadata });
-
-        });
-
-
-        builder.ApplyConfiguration(new RefreshTokenEntityConfiguration());
-    }
+        builder.ApplyConfiguration(new UserEntityConfiguration());
+				builder.ApplyConfiguration(new RoleEntityConfiguration());
+				builder.ApplyConfiguration(new RefreshTokenEntityConfiguration());
+		}
 }

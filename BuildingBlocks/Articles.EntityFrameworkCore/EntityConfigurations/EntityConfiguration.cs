@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Newtonsoft.Json;
 using Articles.Entitities;
-using Articles.System;
 
 namespace Articles.EntityFrameworkCore;
 
@@ -19,22 +18,40 @@ public abstract class EntityConfiguration<T, TKey> : IEntityTypeConfiguration<T>
     where T : class, IEntity<TKey>
     where TKey: struct
 {
-    public virtual void Configure(EntityTypeBuilder<T> builder)
+    public virtual void Configure(EntityTypeBuilder<T> entity)
     {
         //builder.ToTable(new Pluralizer().Pluralize(typeof(T).Name));
         //builder.ToTable(this.EntityName);
 
-        builder.Property(col => col.Id).ValueGeneratedOnAdd();
-        builder.HasKey(col => col.Id);
-
-        //ConfigureEntity(builder);
+        entity.Property(col => col.Id).ValueGeneratedOnAdd();
+        entity.HasKey(col => col.Id);
     }
 
     protected virtual string EntityName => typeof(T).Name;
 
-    //protected abstract void ConfigureEntity(EntityTypeBuilder<T> builder);
+		//protected abstract void ConfigureEntity(EntityTypeBuilder<T> builder);
 
-    public virtual void Seed(string path, EntityTypeBuilder<T> entity)
+		protected virtual void SeedFromFile(EntityTypeBuilder<T> entity)
+		{
+				try
+				{
+						var filePath = $"{AppContext.BaseDirectory}MasterData/{typeof(T).Name}.json";
+            ///var filePath2 = $@"../Production.Persistence/MasterData/{EntityName}.json";
+
+						var stagesData = JsonConvert.DeserializeObject<List<T>>(File.ReadAllText(filePath));
+						if (stagesData != null)
+						{
+								entity.HasData(stagesData);
+						}
+
+				}
+				catch (Exception ex)
+				{
+						Console.WriteLine("EX:---->" + ex.ToString());
+				}
+		}
+
+		public virtual void SeedFromFile(string path, EntityTypeBuilder<T> entity)
     {
         try
         {

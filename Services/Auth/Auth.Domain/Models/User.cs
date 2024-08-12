@@ -1,15 +1,15 @@
 ﻿using Articles.Entitities;
 using Microsoft.AspNetCore.Identity;
 
-namespace Auth.Domain;
+namespace Auth.Domain.Models;
 
 public class User : IdentityUser<int>, IAuditedEntity<int>, IEntity<int>
 {
-		public string FirstName { get; set; }
-    public string LastName { get; set; }
-		public string Position { get; set; }
-		public string PictureUrl { get; set; }
-		public string CompanyName { get; set; }
+		public required string FirstName { get; set; }
+    public required string LastName { get; set; }
+		public string Position { get; set; } = null!;
+		public string PictureUrl { get; set; } = null!;
+		public string CompanyName { get; set; } = null!;
 
 		public DateTime RegistrationDate { get; set; }
 		public DateTime? LastLogin { get; set; }

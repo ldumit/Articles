@@ -5,10 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Articles.EntityFrameworkCore;
 using Production.Domain.Entities;
-using Production.Database.EntityConfigurations;
-using Microsoft.EntityFrameworkCore.Metadata;
+using Production.Persistence.EntityConfigurations;
 
-namespace Production.Database;
+namespace Production.Persistence;
 
 public partial class DbContext : Microsoft.EntityFrameworkCore.DbContext, IMultitenancy
 {

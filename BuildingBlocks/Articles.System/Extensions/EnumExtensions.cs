@@ -11,4 +11,10 @@ public static class EnumExtensions
         DescriptionAttribute attribute = Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute)) as DescriptionAttribute;
         return attribute == null ? value.ToString() : attribute.Description;
     }
+
+		public static IEnumerable<TEnum> GetValues<TEnum>()
+        where TEnum : struct, Enum
+    {
+				return Enum.GetValues(typeof(TEnum)).Cast<TEnum>();
+		}
 }

@@ -6,7 +6,7 @@ using Production.Domain.Entities;
 using Production.Domain.Enums;
 using System.Net;
 
-namespace Production.Database.Repositories;
+namespace Production.Persistence.Repositories;
 
 public class AssetRepository : RepositoryBase<Asset>
 {

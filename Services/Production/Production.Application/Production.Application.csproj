@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\BuildingBlocks\Articles.AspNetCore\Articles.AspNetCore.csproj" />
-    <ProjectReference Include="..\Production.Database\Production.Database.csproj" />
+    <ProjectReference Include="..\Production.Database\Production.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

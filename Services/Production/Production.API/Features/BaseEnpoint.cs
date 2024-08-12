@@ -1,7 +1,7 @@
 ﻿using Articles.AspNetCore;
 using FastEndpoints;
 using MediatR;
-using Production.Database.Repositories;
+using Production.Persistence.Repositories;
 using Production.Domain.Entities;
 using Production.Domain.Enums;
 

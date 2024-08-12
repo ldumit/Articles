@@ -3,14 +3,14 @@ using Articles.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Production.Domain.Entities;
 
-namespace Production.Database.EntityConfigurations;
+namespace Production.Persistence.EntityConfigurations;
 
-public class StageEntityConnfiguration : EnumEntityConfigurationBase<Stage, Domain.Enums.ArticleStage>
+public class StageEntityConnfiguration : EnumEntityConfiguration<Stage, Domain.Enums.ArticleStage>
 {
     public override void Configure(EntityTypeBuilder<Stage> entity)
     {
         base.Configure(entity);
 
-        entity.Property(e => e.Description).HasMaxLength(Constraints.FiveHundred).IsRequired();
+        entity.Property(e => e.Description).HasMaxLength(Constraints.C512).IsRequired();
     }
 }

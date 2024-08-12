@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Production.Domain.Entities;
 using Production.Domain.Enums;
 
-namespace Production.Database.EntityConfigurations;
+namespace Production.Persistence.EntityConfigurations;
 
 public class AuthorEntityConnfiguration : EntityConfiguration<Author>
 {
@@ -15,11 +15,11 @@ public class AuthorEntityConnfiguration : EntityConfiguration<Author>
         entity.HasIndex(e => e.ArticleId);
         entity.HasIndex(e => new { e.FirstName, e.LastName });
 
-        entity.Property(e => e.FirstName).HasMaxLength(Constraints.Fifty);
-        entity.Property(e => e.FullName).HasMaxLength(Constraints.Fifty);
-        entity.Property(e => e.LastName).HasMaxLength(Constraints.Fifty);
-        entity.Property(e => e.Email).HasMaxLength(Constraints.TwoHundred);
-        entity.Property(e => e.Country).HasMaxLength(Constraints.Fifty);
+        entity.Property(e => e.FirstName).HasMaxLength(Constraints.C64);
+        entity.Property(e => e.FullName).HasMaxLength(Constraints.C64);
+        entity.Property(e => e.LastName).HasMaxLength(Constraints.C64);
+        entity.Property(e => e.Email).HasMaxLength(Constraints.C256);
+        entity.Property(e => e.Country).HasMaxLength(Constraints.C64);
 
         //talk - storing enums as int vs string, leasibility
         //entity.Property(e => e.Role).HasConversion<int>().IsRequired();

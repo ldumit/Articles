@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Production.Domain.Entities;
 
-namespace Production.Database.EntityConfigurations;
+namespace Production.Persistence.EntityConfigurations;
 
 public class TypesetterEntityConnfiguration : EntityConfiguration<Typesetter>
 {
@@ -15,7 +15,7 @@ public class TypesetterEntityConnfiguration : EntityConfiguration<Typesetter>
         entity.HasKey(e => e.UserId);
         
         entity.Property(e => e.IsDefault).HasDefaultValue(false);
-        entity.Property(e => e.CompanyName).HasMaxLength(Constraints.Fifty);
+        entity.Property(e => e.CompanyName).HasMaxLength(Constraints.C64);
 
         entity.HasOne(d => d.User).WithMany()
             .HasForeignKey(d => d.UserId)

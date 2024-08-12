@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Production.Application;
-using Production.Database.Repositories;
+using Production.Persistence.Repositories;
 
 namespace Production.API.Features.UploadAuthorsProof;
 

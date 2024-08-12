@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Production.Domain.Entities;
 
-namespace Production.Database.EntityConfigurations;
+namespace Production.Persistence.EntityConfigurations;
 
-public class AssetTypeEntityConnfiguration : EnumEntityConfigurationBase<AssetType, Domain.Enums.AssetType>
+public class AssetTypeEntityConnfiguration : EnumEntityConfiguration<AssetType, Domain.Enums.AssetType>
 {
     public override void Configure(EntityTypeBuilder<AssetType> entity)
     {

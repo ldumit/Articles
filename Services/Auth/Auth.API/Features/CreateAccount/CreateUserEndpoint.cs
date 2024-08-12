@@ -1,12 +1,15 @@
 ﻿using Articles.Exceptions;
-using Auth.Domain;
+using Auth.Domain.Models;
 using FastEndpoints;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Net;
 
 namespace Auth.API.Features;
 
-public class CreateUserCommandHandler(UserManager<User> userManager, AutoMapper.IMapper mapper) 
+[AllowAnonymous]
+[HttpPost("users")]
+public class CreateUserEndpoint(UserManager<User> userManager, AutoMapper.IMapper mapper) 
 		: Endpoint<CreateUserCommand, int>
 {
 		public override async Task HandleAsync(CreateUserCommand command, CancellationToken ct)

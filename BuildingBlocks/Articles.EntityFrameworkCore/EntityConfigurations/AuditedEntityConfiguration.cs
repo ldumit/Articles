@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Articles.EntityFrameworkCore;
 
-public abstract class AuditedEntityConfigurationBase<T> : AuditedEntityConfigurationBase<T, int>
+public abstract class AuditedEntityConfiguration<T> : AuditedEntityConfiguration<T, int>
 	  where T : class, IEntity<int>, IAuditedEntity<int>
 {
 }
 
-public abstract class AuditedEntityConfigurationBase<T, TKey> : EntityConfiguration<T, TKey> 
+public abstract class AuditedEntityConfiguration<T, TKey> : EntityConfiguration<T, TKey> 
     where T : class, IEntity<TKey>, IAuditedEntity<TKey>
     where TKey : struct
 {

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Production.Domain.Entities;
 
-namespace Production.Database.EntityConfigurations;
+namespace Production.Persistence.EntityConfigurations;
 
 internal class FileLatestActionEntityConfiguration : IEntityTypeConfiguration<FileLatestAction>
 {

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Production.Domain.Entities;
 
-namespace Production.Database.EntityConfigurations;
+namespace Production.Persistence.EntityConfigurations;
 
 public class UserEntityConnfiguration : EntityConfiguration<User>
 {
@@ -10,9 +10,9 @@ public class UserEntityConnfiguration : EntityConfiguration<User>
     {
         base.Configure(entity);
 
-        entity.Property(e => e.FirstName).HasMaxLength(Constraints.Fifty).IsRequired();
-        entity.Property(e => e.LastName).HasMaxLength(Constraints.Fifty).IsRequired();
-        entity.Property(e => e.Title).HasMaxLength(Constraints.Fifty);
-        entity.Property(e => e.Email).HasMaxLength(Constraints.TwoHundred).IsRequired();
+        entity.Property(e => e.FirstName).HasMaxLength(Constraints.C64).IsRequired();
+        entity.Property(e => e.LastName).HasMaxLength(Constraints.C64).IsRequired();
+        entity.Property(e => e.Title).HasMaxLength(Constraints.C64);
+        entity.Property(e => e.Email).HasMaxLength(Constraints.C256).IsRequired();
     }
 }

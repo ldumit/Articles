@@ -2,6 +2,9 @@ using Auth.API;
 using Articles.AspNetCore.Dependencies;
 using FastEndpoints;
 using Auth.Application;
+using Articles.EntityFrameworkCore;
+using Auth.Persistence;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +14,7 @@ builder.Services.ConfigureOptions<ConfigureJwtBearerOptions>();
 builder.Services
 		.AddFastEndpoints()
 		.AddEndpointsApiExplorer()
+		.AddAutoMapper(new Assembly[] {typeof(Auth.API.Features.CreateAccount.CreateUserMapping).Assembly})
 		.AddApplicationServices(builder.Configuration)
     .AddSwaggerGen()
     .AddJwtAuthentication(builder.Configuration)
@@ -19,11 +23,13 @@ builder.Services
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.UseSwagger();
+app.UseSwaggerUI();
+
+app.Migrate<ApplicationDbContext>();
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+		app.SeedTestData();
 }
 
 //use

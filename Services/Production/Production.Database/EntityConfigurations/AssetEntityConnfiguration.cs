@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Production.Domain.Entities;
 using Production.Domain.Enums;
 
-namespace Production.Database.EntityConfigurations;
+namespace Production.Persistence.EntityConfigurations;
 
-internal class AssetEntityConnfiguration : AuditedEntityConfigurationBase<Asset>
+internal class AssetEntityConnfiguration : AuditedEntityConfiguration<Asset>
 {
     public override void Configure(EntityTypeBuilder<Asset> entity)
     {
@@ -18,7 +18,7 @@ internal class AssetEntityConnfiguration : AuditedEntityConfigurationBase<Asset>
         //entity.HasIndex(e => e.StatusId);
         //entity.HasIndex(e => e.TypeId);
 
-        entity.Property(e => e.Name).HasMaxLength(Constraints.Fifty).IsRequired();
+        entity.Property(e => e.Name).HasMaxLength(Constraints.C64).IsRequired();
         entity.Property(e => e.AssetNumber).HasDefaultValue(0);
         entity.Property(e => e.Status).HasEnumConversion().IsRequired();
         entity.Property(e => e.CategoryId).HasConversion<int>().HasDefaultValue(AssetCategory.Core).IsRequired();

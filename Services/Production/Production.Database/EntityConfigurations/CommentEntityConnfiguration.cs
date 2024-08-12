@@ -3,7 +3,7 @@ using Articles.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Production.Domain.Entities;
 
-namespace Production.Database.EntityConfigurations;
+namespace Production.Persistence.EntityConfigurations;
 
 public class CommentEntityConnfiguration : EntityConfiguration<Comment>
 {
@@ -13,7 +13,7 @@ public class CommentEntityConnfiguration : EntityConfiguration<Comment>
 
         entity.HasIndex(e => new { e.ArticleId, e.TypeId }).IsUnique();
 
-        entity.Property(e => e.Text).HasMaxLength(Constraints.TwoTousands);
+        entity.Property(e => e.Text).HasMaxLength(Constraints.C2048);
         entity.Property(e => e.TypeId).HasConversion<int>().IsRequired();
     }
 }

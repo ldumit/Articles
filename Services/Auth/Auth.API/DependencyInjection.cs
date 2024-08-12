@@ -1,4 +1,4 @@
-﻿using Auth.Domain;
+﻿using Auth.Domain.Models;
 using Auth.Persistence;
 using Microsoft.AspNetCore.Identity;
 

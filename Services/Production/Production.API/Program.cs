@@ -1,9 +1,10 @@
 using Articles.AspNetCore.Dependencies;
 using FastEndpoints;
 using Production.Application;
+using Articles.EntityFrameworkCore;
+using Production.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
-
 
 #region Add
 //talk - fluid vs normal
@@ -25,8 +26,8 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 
-// Configure the HTTP request pipeline.
-app.Migrate();
+//talk - explain when is the best time to run the migration, integrate the migration in the CI pipeline
+app.Migrate<DbContext>();
 if (app.Environment.IsDevelopment())
 {
     app.SeedTestData();

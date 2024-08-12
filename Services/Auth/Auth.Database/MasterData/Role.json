@@ -1,0 +1,42 @@
+[
+  {
+    "code": "EOF",
+    "id": 1,
+    "name": "Editorial Office",
+  },
+  {
+    "code": "RE",
+    "id": 1,
+    "name": "Review Editor"
+  },
+  {
+    "code": "AUT",
+    "id": 1,
+    "name": "Author"
+  },
+  {
+    "code": "CORAUT",
+    "id": 1,
+    "name": "Corresponding Author"
+  },
+  {
+    "code": "SAUT",
+    "id": 1,
+    "name": "Submitting Author"
+  },
+  {
+    "code": "COAUT",
+    "id": 1,
+    "name": "Co-Author"
+  },
+  {
+    "code": "POF",
+    "id": 1,
+    "name": "Production Office"
+  },
+  {
+    "code": "TSOF",
+    "id": 1,
+    "name": "Typesetter"
+  }
+]

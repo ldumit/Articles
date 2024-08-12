@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using Auth.Domain;
+using Auth.Domain.Models;
 
 namespace Auth.Application;
 public static class DependencyInjection

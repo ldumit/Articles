@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Production.Domain.Entities;
 
-namespace Production.Database.EntityConfigurations;
+namespace Production.Persistence.EntityConfigurations;
 
 public class JournalEntityConnfiguration : EntityConfiguration<Journal>
 {
@@ -12,8 +12,8 @@ public class JournalEntityConnfiguration : EntityConfiguration<Journal>
     {
         base.Configure(entity);
 
-        entity.Property(e => e.Abbreviation).HasMaxLength(Constraints.Ten).IsRequired();
-        entity.Property(e => e.Name).HasMaxLength(Constraints.Fifty).IsRequired();
+        entity.Property(e => e.Abbreviation).HasMaxLength(Constraints.C8).IsRequired();
+        entity.Property(e => e.Name).HasMaxLength(Constraints.C64).IsRequired();
         //entity.Property(e => e.ShortName).HasMaxLength(Constraints.Twenty).IsRequired();
         
         entity.HasOne(e => e.DefaultTypesetter).WithMany()

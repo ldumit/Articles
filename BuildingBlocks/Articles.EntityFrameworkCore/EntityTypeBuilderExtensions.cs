@@ -1,11 +1,31 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Query;
+using Newtonsoft.Json;
 using System.Linq.Expressions;
 
 namespace Articles.EntityFrameworkCore;
 public static class EntityTypeBuilderExtensions
 {
-    public static void AddQueryFilter<T>(this EntityTypeBuilder entityTypeBuilder, Expression<Func<T, bool>> expression)
+		public static void Seed<T>(this EntityTypeBuilder<T> entity, string folder)
+        where T : class
+		{
+				try
+				{
+						var stagesData = JsonConvert.DeserializeObject<List<T>>(File.ReadAllText($@"../Production.Persistence/MasterData/{typeof(T).Name}.json"));
+						//var stagesData = JsonConvert.DeserializeObject<List<T>>(File.ReadAllText($@"/MasterData/{base.EntityName}.json"));
+						if (stagesData != null)
+						{
+								entity.HasData(stagesData);
+						}
+
+				}
+				catch (Exception ex)
+				{
+						Console.WriteLine("EX:---->" + ex.ToString());
+				}
+		}
+
+		public static void AddQueryFilter<T>(this EntityTypeBuilder entityTypeBuilder, Expression<Func<T, bool>> expression)
     {
         var parameterType = Expression.Parameter(entityTypeBuilder.Metadata.ClrType);
         var expressionFilter = ReplacingExpressionVisitor.Replace(
@@ -22,6 +42,7 @@ public static class EntityTypeBuilderExtensions
         var lambdaExpression = Expression.Lambda(expressionFilter, parameterType);
         entityTypeBuilder.HasQueryFilter(lambdaExpression);
     }
+
     public static string ToCamelCase(this string propetyName)
     {
         if (string.IsNullOrEmpty(propetyName))

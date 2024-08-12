@@ -2,10 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using Production.Domain.Entities;
 using Articles.EntityFrameworkCore;
-using Articles.Entitities;
 
-namespace Production.Database.EntityConfigurations;
-public class ArticleEntityConfiguration : AuditedEntityConfigurationBase<Article>
+namespace Production.Persistence.EntityConfigurations;
+public class ArticleEntityConfiguration : AuditedEntityConfiguration<Article>
 {
     public override void Configure(EntityTypeBuilder<Article> entity)
     {
@@ -14,8 +13,8 @@ public class ArticleEntityConfiguration : AuditedEntityConfigurationBase<Article
         entity.HasIndex(e => e.Title);
 
         //talk - using constants instead of direct numbers
-        entity.Property(e => e.Title).HasMaxLength(Constraints.TwoHundred).IsRequired();
-        entity.Property(e => e.Doi).HasMaxLength(Constraints.Fifty).IsRequired();
+        entity.Property(e => e.Title).HasMaxLength(Constraints.C256).IsRequired();
+        entity.Property(e => e.Doi).HasMaxLength(Constraints.C64).IsRequired();
         entity.Property(e => e.VolumeId).IsRequired();
         //entity.Property(e => e.CurrentStageId).HasConversion<int>().IsRequired();
 
@@ -27,10 +26,13 @@ public class ArticleEntityConfiguration : AuditedEntityConfigurationBase<Article
             .HasForeignKey(e => e.SubmitedById)
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
+
         entity.HasOne(e => e.PublishedBy).WithMany()
             .OnDelete(DeleteBehavior.Restrict);
+
         entity.HasOne(e => e.Typesetter).WithMany()
-            .HasForeignKey(e=> e.TypesetterId).HasPrincipalKey(e=> e.Id)
+            .HasForeignKey(e => e.TypesetterId)
+            .HasPrincipalKey(e => e.Id)
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
 

@@ -4,13 +4,6 @@ using System.Reflection;
 
 namespace Articles.Entitities;
 
-public interface IUser : IEntity
-{
-    string? FirstName { get; set; }
-
-    string? MiddleName { get; set; }
-}
-
 public interface IDomainObject
 {
 }
@@ -18,10 +11,6 @@ public interface IDomainObject
 public interface IEntity : IEntity<int>
 {
 } 
-public interface IEnumerationEntity 
-{
-    public string Code { get; set; }
-}
 
 public interface IEntity<TPrimaryKey> : IDomainObject
 //where TPrimaryKey : struct
@@ -35,32 +24,15 @@ public abstract class Entity : Entity<int>, IEntity
 {
 }
 
-//[Serializable]
-//public abstract class EnumEntity<TEnum> : Entity<TEnum>
-//{
-//}
 
 [Serializable]
-public abstract class EnumEntity<TEnum> : Entity<TEnum>
-    where TEnum : struct, Enum
-{
-    public TEnum Code { get; set; } = default!;
-    public string Name { get; set; } = null!;
-
-}
-
-
-[Serializable]
-public abstract class EnumEntityCode : IEnumerationEntity
-{
-    public string Code { get ; set; }
-}
-
-[Serializable]
+//todo - find out what's this class
 public abstract class DefaultEntity : IDomainObject
 {
 }
 
+//todo find out if we need Seriazable attribute
+//todo clean up all the methods we don't need
 [Serializable]
 public abstract class Entity<TPrimaryKey> : IEntity<TPrimaryKey>
     where TPrimaryKey : struct

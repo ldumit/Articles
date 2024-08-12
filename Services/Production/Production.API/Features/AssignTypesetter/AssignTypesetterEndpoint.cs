@@ -3,7 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Production.API.Features.UploadAuthorsProof;
 using Production.Application;
-using Production.Database.Repositories;
+using Production.Persistence.Repositories;
 using Production.Domain.Entities;
 using Production.Domain.Enums;
 

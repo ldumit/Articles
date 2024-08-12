@@ -1,17 +1,23 @@
 ﻿using Articles.EntityFrameworkCore;
-using Auth.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Auth.Domain.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Auth.Persistence.EntityConfigurations
+namespace Auth.Persistence.EntityConfigurations;
+
+internal class UserEntityConfiguration : AuditedEntityConfiguration<User>
 {
-		internal class UserEntityConfiguration : AuditedEntityConfigurationBase<User>
+		public override void Configure(EntityTypeBuilder<User> entity)
 		{
-				public UserEntityConfiguration()
-				{
-				}
+				base.Configure(entity);
+
+				entity.Property(e => e.FirstName).HasMaxLength(Constraints.C64).IsRequired();
+				entity.Property(e => e.LastName).HasMaxLength(Constraints.C64).IsRequired();
+				entity.Property(e => e.Position).HasMaxLength(Constraints.C64);
+				entity.Property(e => e.CompanyName).HasMaxLength(Constraints.C256);
+				//entity.Property(e => e.PictureUrl).HasMaxLength(Constraints.TwoHundred);
+
+				entity.HasMany(p => p.UserRoles).WithOne().HasForeignKey(p => p.UserId).OnDelete(DeleteBehavior.Cascade).IsRequired();
+				entity.HasMany(p => p.RefreshTokens).WithOne().HasForeignKey(p => p.UserId).OnDelete(DeleteBehavior.Cascade).IsRequired();
 		}
 }

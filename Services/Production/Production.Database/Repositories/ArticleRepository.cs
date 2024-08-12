@@ -3,7 +3,7 @@ using Articles.System;
 using Production.Domain.Entities;
 
 
-namespace Production.Database.Repositories;
+namespace Production.Persistence.Repositories;
 
 
 public class ArticleRepository : RepositoryBase<Article>

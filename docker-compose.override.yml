@@ -1,6 +1,21 @@
 version: '3.4'
 
 services:
+  auth.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+      - ConnectionStrings__Database=Server=productiondb;Database=AuthDb;User Id=sa;Password=Production123;Encrypt=False;TrustServerCertificate=True
+    depends_on:
+      - productiondb
+    ports:
+      - "9001:8080"
+      - "9051:8081"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+  
   production.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -10,8 +25,8 @@ services:
     depends_on:
       - productiondb
     ports:
-      - "6005:8080"
-      - "6065:8081"
+      - "9002:8080"
+      - "9052:8081"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro

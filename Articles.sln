@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Production.Domain", "Servic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Articles.Entitities", "BuildingBlocks\Articles.Entitities\Articles.Entitities.csproj", "{C0C96231-8A2E-44CF-AA58-AFFB4A986E85}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Production.Database", "Services\Production\Production.Database\Production.Database.csproj", "{91B5D80C-2BDF-4CD1-87DE-57513C01526A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Production.Persistence", "Services\Production\Production.Database\Production.Persistence.csproj", "{91B5D80C-2BDF-4CD1-87DE-57513C01526A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Production.Application", "Services\Production\Production.Application\Production.Application.csproj", "{63B808B0-FB44-4DCB-9BB1-E0C20C1C2869}"
 EndProject

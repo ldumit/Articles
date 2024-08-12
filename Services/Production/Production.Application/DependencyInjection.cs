@@ -3,7 +3,7 @@ using Articles.System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Production.Database.Repositories;
+using Production.Persistence.Repositories;
 
 namespace Production.Application;
 public static class DependencyInjection
@@ -21,7 +21,7 @@ public static class DependencyInjection
 
         //services.AddFeatureManagement();
         //services.AddMessageBroker(configuration, Assembly.GetExecutingAssembly());
-        services.AddDbContext<Production.Database.DbContext>((sp, options) =>
+        services.AddDbContext<Production.Persistence.DbContext>((sp, options) =>
         {
             //options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
             options.UseSqlServer(connectionString);

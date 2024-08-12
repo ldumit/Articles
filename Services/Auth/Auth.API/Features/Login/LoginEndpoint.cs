@@ -6,7 +6,7 @@ using Auth.Application;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.Extensions.Options;
-using Auth.Domain;
+using Auth.Domain.Models;
 
 namespace Auth.API.Features
 {

@@ -1,46 +1,38 @@
 ﻿using Articles.Entitities;
-using Articles.System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
-using Production.Domain.Entities;
+using Auth.Domain.Models;
+using Auth.Persistence;
 
-namespace Production.Application;
+namespace Auth.Application;
 
 public static class InitializeDatabase
 {
-    public static void Migrate(this IHost host)
-    {
-        using var scope = host.Services.CreateScope();
-        using var context = scope.ServiceProvider.GetRequiredService<Database.DbContext>();
-        context.Database.Migrate();
-    }
-
     public static void SeedTestData(this IHost host)
     {
         using var scope = host.Services.CreateScope();
-        using var context = scope.ServiceProvider.GetRequiredService<Database.DbContext>();
+        using var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         context.SeedTestData();
     }
 
-    public static void SeedTestData(this Database.DbContext context)
+    public static void SeedTestData(this ApplicationDbContext context)
     {
-        using var transaction = context.Database.BeginTransaction();
+        ///using var transaction = context.Database.BeginTransaction();
 
-        Seed<User>(context);
-        Seed<Typesetter>(context);
-        Seed<Journal>(context);
+        ///Seed<User>(context);
+        //Seed<Typesetter>(context);
+        //Seed<Journal>(context);
 
-        transaction.Commit();
+        //transaction.Commit();
 
-        Seed<Article>(context);
+        //Seed<Article>(context);
     }
 
-    private static void Seed<TEntity>(Database.DbContext context)
-        where TEntity : Entity<int>
+    private static void Seed<TEntity>(ApplicationDbContext context)
+        where TEntity : class, IEntity<int>
     {
-
         if (context.Set<TEntity>().Any())
             return;
 
