@@ -9,7 +9,6 @@ namespace Articles.AspNetCore.Dependencies;
 
 public static class ConfigureAuthentication
 {
-
 		public static IServiceCollection AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
 		{
 				//todo create an extension method which will use nameof ans substract "Options" word

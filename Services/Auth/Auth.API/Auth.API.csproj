@@ -12,9 +12,14 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="FastEndpoints" Version="5.28.0" />
+    <PackageReference Include="Flurl.Http" Version="4.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.7.0" />
   </ItemGroup>
@@ -22,6 +27,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\BuildingBlocks\Articles.AspNetCore\Articles.AspNetCore.csproj" />
     <ProjectReference Include="..\..\..\BuildingBlocks\Articles.System\Articles.System.csproj" />
+    <ProjectReference Include="..\..\..\Modules\EmailService.SendGrid\EmailService.SendGrid.csproj" />
     <ProjectReference Include="..\Auth.Application\Auth.Application.csproj" />
     <ProjectReference Include="..\Auth.Database\Auth.Persistence.csproj" />
     <ProjectReference Include="..\Auth.Domain\Auth.Domain.csproj" />

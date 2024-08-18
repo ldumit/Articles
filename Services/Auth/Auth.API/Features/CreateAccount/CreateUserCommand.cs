@@ -23,7 +23,7 @@ public class CreateUserCommand
 		public string CompanyName { get; set; }
 		public string Position { get; set; }
 
-		public List<UserRoleDto> Roles { get; set; }
+		public List<UserRoleDto> UserRoles { get; set; }
 
     public Guid? EmployeeId { get; set; }
 

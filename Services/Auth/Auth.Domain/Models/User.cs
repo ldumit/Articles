@@ -7,11 +7,14 @@ public class User : IdentityUser<int>, IAuditedEntity<int>, IEntity<int>
 {
 		public required string FirstName { get; set; }
     public required string LastName { get; set; }
-		public string Position { get; set; } = null!;
-		public string PictureUrl { get; set; } = null!;
-		public string CompanyName { get; set; } = null!;
+		
+		public string FullName => FirstName + " " + LastName;
 
-		public DateTime RegistrationDate { get; set; }
+    public string? Position { get; set; } = null!;
+		public string? PictureUrl { get; set; } = null!;
+		public string? CompanyName { get; set; } = null!;
+
+		public DateTime RegistrationDate { get; set; } = DateTime.UtcNow;
 		public DateTime? LastLogin { get; set; }
 
 
@@ -19,8 +22,8 @@ public class User : IdentityUser<int>, IAuditedEntity<int>, IEntity<int>
 		public virtual List<UserRole> UserRoles { get; set; } = new();
 
 		//audited
-		public int CreatedById { get; set; }
-		public DateTime CreatedOn { get; set; }
-		public int? LastModifiedById { get; set; }
-		public DateTime? LasModifiedOn { get; set; }
+		public int CreatedById { get; set; } = default!;
+		public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
+		public int? LastModifiedById { get; set; } = 0;
+		public DateTime? LasModifiedOn { get; set; } = DateTime.UtcNow;
 }

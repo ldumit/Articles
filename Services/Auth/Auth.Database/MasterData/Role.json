@@ -1,42 +1,47 @@
 [
   {
+    "code": "AuthAdmin",
+    "id": 1000,
+    "name": "Auth Admin"
+  },
+  {
     "code": "EOF",
     "id": 1,
-    "name": "Editorial Office",
+    "name": "Editorial Office"
   },
   {
     "code": "RE",
-    "id": 1,
+    "id": 2,
     "name": "Review Editor"
   },
   {
     "code": "AUT",
-    "id": 1,
+    "id": 3,
     "name": "Author"
   },
   {
     "code": "CORAUT",
-    "id": 1,
+    "id": 4,
     "name": "Corresponding Author"
   },
   {
     "code": "SAUT",
-    "id": 1,
+    "id": 5,
     "name": "Submitting Author"
   },
   {
     "code": "COAUT",
-    "id": 1,
+    "id": 6,
     "name": "Co-Author"
   },
   {
     "code": "POF",
-    "id": 1,
+    "id": 7,
     "name": "Production Office"
   },
   {
     "code": "TSOF",
-    "id": 1,
+    "id": 8,
     "name": "Typesetter"
   }
 ]

@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Auth.Domain.Models;
+using EmailService.Contracts;
+using EmailService.Smtp;
 
 namespace Auth.Application;
 public static class DependencyInjection
@@ -15,9 +17,10 @@ public static class DependencyInjection
 
 
 				services.AddScoped<UserManager<User>>();
+				services.AddScoped<IEmailService, SmtpEmailService>();
 
 
-        return services;
+				return services;
     }
 
 		//public static void AddSqlServerDbContext<TDbContext>(this IServiceCollection services, string connectionString)

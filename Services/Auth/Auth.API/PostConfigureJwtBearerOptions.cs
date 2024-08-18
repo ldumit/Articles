@@ -6,11 +6,11 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Auth.API;
 
-public class ConfigureJwtBearerOptions : IPostConfigureOptions<JwtBearerOptions>
+public class PostConfigureJwtBearerOptions : IPostConfigureOptions<JwtBearerOptions>
 {
     private readonly JwtOptions _jwtOptions;
 
-    public ConfigureJwtBearerOptions(IOptions<JwtOptions> jwtOptions)
+    public PostConfigureJwtBearerOptions(IOptions<JwtOptions> jwtOptions)
     {
         _jwtOptions = jwtOptions.Value;
     }

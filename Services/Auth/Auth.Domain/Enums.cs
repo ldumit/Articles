@@ -12,6 +12,8 @@ public enum Gender
 
 public enum UserRoleType : int
 {
+		[Description("Auth Admin")]
+		AuthAdmin = 0,   // manage users
 		[Description("Editorial Office")]
 		EOF = 1,          //-->>Editorial Office
 		[Description("Review Editor")]

@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Articles.AspNetCore.Extensions
+namespace Articles.AspNetCore;
+
+public static class ConfigurationExtensions
 {
-		internal class ConfigurationExtensions
-		{
-		}
+		public static IServiceCollection ConfigureOptions<TOptions>(this IServiceCollection services, ConfigurationManager configuration)
+				where TOptions : class
+				=> services.Configure<TOptions>(configuration.GetSection(typeof(TOptions).Name));
 }

@@ -11,7 +11,6 @@ public class CreateUserMapping : Profile
         CreateMap<UserRoleDto, UserRole>()
             .ForMember(dest => dest.RoleId, opt => opt.MapFrom(s => s.Type));
         CreateMap<CreateUserCommand, User>()
-						//.Include<UserRoleDto, UserRole>()
-            .ForMember(d => d.UserName, opt => opt.MapFrom(s => s.Email));
+						.ForMember(d => d.UserName, opt => opt.MapFrom(s => s.Email));
     }
 }
