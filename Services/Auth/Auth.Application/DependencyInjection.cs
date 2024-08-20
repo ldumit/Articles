@@ -16,7 +16,8 @@ public static class DependencyInjection
 				services.AddDbContext<ApplicationDbContext>(opts => opts.UseSqlServer(connectionString));
 
 
-				services.AddScoped<UserManager<User>>();
+				///services.AddScoped<UserManager<User>>();
+				//services.AddScoped<SignInManager<User>>();
 				services.AddScoped<IEmailService, SmtpEmailService>();
 
 

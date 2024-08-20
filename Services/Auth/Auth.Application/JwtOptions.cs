@@ -2,11 +2,11 @@
 
 public record JwtOptions
 {
-    public string Issuer { get; init; }
+    public required string Issuer { get; init; }
 
-    public string Audience { get; init; }
+    public required string Audience { get; init; }
 
-    public string Secret { get; init; }
+    public required string Secret { get; init; }
 		//public SigningCredentials SigningCredentials { get; set; }
 
 		public DateTime IssuedAt { get; set; } = DateTime.UtcNow;

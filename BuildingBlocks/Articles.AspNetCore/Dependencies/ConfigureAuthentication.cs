@@ -12,7 +12,7 @@ public static class ConfigureAuthentication
 		public static IServiceCollection AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
 		{
 				//todo create an extension method which will use nameof ans substract "Options" word
-				var jwtOptions = configuration.GetSection("Jwt").Get<JwtOptions>();
+				var jwtOptions = configuration.Get<JwtOptions>();
 
 				services
 						.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -25,7 +25,7 @@ public static class ConfigureAuthentication
 										ValidateIssuer =  true,
 										ValidIssuer = jwtOptions.Issuer,
 										ValidateIssuerSigningKey = true,
-										IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtOptions.Secret)),
+										IssuerSigningKey = new SymmetricSecurityKey(Encoding.Default.GetBytes(jwtOptions.Secret)),
 										ValidateAudience = false,
 										RequireExpirationTime = true,
 								};

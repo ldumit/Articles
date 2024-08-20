@@ -3,10 +3,10 @@ using FastEndpoints;
 using Microsoft.AspNetCore.Identity;
 using System.Net;
 using Auth.Application;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.Extensions.Options;
 using Auth.Domain.Models;
+using Articles.Security;
 
 namespace Auth.API.Features;
 
@@ -15,50 +15,27 @@ public record LoginResponse(string JWTToken, string RefreshToken);
 
 [AllowAnonymous]
 [HttpPost("login")]
-public class LoginEndpoint(UserManager<User> _userManager, IOptions<JwtOptions> _jwtOptions) 
+public class LoginEndpoint(UserManager<User> _userManager, SignInManager<User> _signInManager, TokenFactory _tokenFactory, IOptions<JwtOptions> _jwtOptions) 
 		: Endpoint<LoginCommand, LoginResponse>
 {
 		public override async Task HandleAsync(LoginCommand command, CancellationToken ct)
 		{
 				var user = await _userManager.FindByEmailAsync(command.Email);
+				if (user is null)
+						ThrowError("User not found", (int)HttpStatusCode.BadRequest);
 
-				if (user is null || (await _userManager.CheckPasswordAsync(user, command.Password)) == false)
-				{
-						ThrowError("Invalid credentials", (int) HttpStatusCode.Unauthorized);
-				}
+				var result = await _signInManager.CheckPasswordSignInAsync(user, command.Password, lockoutOnFailure: false);
+				if (!result.Succeeded) 
+						ThrowError("Invalid credentials", (int) HttpStatusCode.BadRequest);
 
+				var userRoles = await _userManager.GetRolesAsync(user);
 
-				await SendAsync(new LoginResponse(
-						GenerateJWTToken(user.Id.ToString(), user.Email, Array.Empty<Claim>()),
-						string.Empty));
+				var jwtToken = _tokenFactory.GenerateJWTToken(user.Id.ToString(), command.Email, userRoles, Array.Empty<Claim>());
+				
+				var refreshToken = _tokenFactory.GenerateRefreshToken();
+				user.RefreshTokens.Add(refreshToken);
+				await _userManager.UpdateAsync(user);
 
+				await SendAsync(new LoginResponse(jwtToken, refreshToken.Token));
 		}
-
-		public string GenerateJWTToken(string userId, string email, IEnumerable<Claim> additionalClaims)
-		{
-				var claims = new[]
-				{
-						new Claim(JwtRegisteredClaimNames.Sub, userId),
-						new Claim(JwtRegisteredClaimNames.Email, email),
-						//new Claim(JwtRegisteredClaimNames.Jti, _jwtOptions.JtiGenerator()),
-						//new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(DateTime.UtcNow).ToString(), ClaimValueTypes.Integer64),
-				}
-				.Concat(additionalClaims);
-
-				var jwtSettings = _jwtOptions.Value;
-				var jwtToken = new JwtSecurityToken(
-						issuer: jwtSettings.Issuer,
-						audience: jwtSettings.Audience,
-						claims: claims,
-						notBefore: DateTime.UtcNow,
-						expires: DateTime.UtcNow.Add(jwtSettings.ValidFor))
-						//signingCredentials: jwtSettings.SigningCredentials)
-						;
-				var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwtToken);
-				//var zippedToken = Convert.ToBase64String(ZipHelper.Zip(encodedJwt));
-				//var zippedToken = Convert.ToBase64String(encodedJwt);
-
-				return encodedJwt;
-		}
-
 }

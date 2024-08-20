@@ -43,12 +43,13 @@ public class CreateUserEndpoint(UserManager<User> userManager, AutoMapper.IMappe
 
 		private EmailMessage BuildEmailMessage(User user, string  token)
 		{
-				const string ConfirmationEmail = "Dear {0}, please confirm your email and set your password using the following link {1}";
+				const string ConfirmationEmail = 
+						@"Dear {0}, An account has been created for you. Please set your password using the following URL: {1}";
 
 				var url = 
 						httpContextAccessor.HttpContext?.Request.BaseUrl()
 						.AppendPathSegment("set-first-password")
-						.SetQueryParams(new {token = HttpUtility.UrlEncode(token)});
+						.SetQueryParams(new { token });
 
 				return new EmailMessage(
 						"Confirmation", 

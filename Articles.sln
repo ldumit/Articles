@@ -53,9 +53,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailService.Smtp", "Module
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EmailService", "EmailService", "{6EC4AB69-944E-4EEF-AC42-52A4C8DF1CAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailService.Contracts", "Modules\EmailService.Contracts\EmailService.Contracts.csproj", "{1494690E-45AB-4D61-AC1F-2120FC0BC208}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailService.Contracts", "Modules\EmailService.Contracts\EmailService.Contracts.csproj", "{1494690E-45AB-4D61-AC1F-2120FC0BC208}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailService.SendGrid", "Modules\EmailService.SendGrid\EmailService.SendGrid.csproj", "{B6FB8E4F-D498-46A2-9254-F0852CC80B54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailService.SendGrid", "Modules\EmailService.SendGrid\EmailService.SendGrid.csproj", "{B6FB8E4F-D498-46A2-9254-F0852CC80B54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Articles.Security", "BuildingBlocks\Articles.Security\Articles.Security.csproj", "{893F49BB-98A7-42D9-A4FF-F8D7F78FDD45}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -147,6 +149,10 @@ Global
 		{B6FB8E4F-D498-46A2-9254-F0852CC80B54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6FB8E4F-D498-46A2-9254-F0852CC80B54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6FB8E4F-D498-46A2-9254-F0852CC80B54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{893F49BB-98A7-42D9-A4FF-F8D7F78FDD45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{893F49BB-98A7-42D9-A4FF-F8D7F78FDD45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{893F49BB-98A7-42D9-A4FF-F8D7F78FDD45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{893F49BB-98A7-42D9-A4FF-F8D7F78FDD45}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -175,6 +181,7 @@ Global
 		{6EC4AB69-944E-4EEF-AC42-52A4C8DF1CAA} = {43093EE6-A060-4D76-A05C-8AD764B6BE15}
 		{1494690E-45AB-4D61-AC1F-2120FC0BC208} = {6EC4AB69-944E-4EEF-AC42-52A4C8DF1CAA}
 		{B6FB8E4F-D498-46A2-9254-F0852CC80B54} = {6EC4AB69-944E-4EEF-AC42-52A4C8DF1CAA}
+		{893F49BB-98A7-42D9-A4FF-F8D7F78FDD45} = {119E4BB2-4239-487F-B5F7-3BCED9AFF33C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DB8333BC-C32E-4759-8E3B-CC033665D9E0}
