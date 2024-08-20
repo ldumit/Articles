@@ -14,8 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Modules\SmtpEmailService\EmailService.Smtp.csproj" />
-    <ProjectReference Include="..\Auth.Database\Auth.Persistence.csproj" />
+    <ProjectReference Include="..\..\..\Modules\EmailService.Smtp\EmailService.Smtp.csproj" />
+    <ProjectReference Include="..\Auth.Persistence\Auth.Persistence.csproj" />
     <ProjectReference Include="..\Auth.Domain\Auth.Domain.csproj" />
   </ItemGroup>
 

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Auth.Application;
 
+//todo move it to Application project
 public static class DependenciesConfiguration
 {
 		public static void AddJwtIdentity(this IServiceCollection services, IConfiguration configuration)

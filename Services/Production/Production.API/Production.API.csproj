@@ -30,7 +30,7 @@
     <ProjectReference Include="..\..\..\BuildingBlocks\Articles.AspNetCore\Articles.AspNetCore.csproj" />
     <ProjectReference Include="..\..\..\BuildingBlocks\Articles.EntityFrameworkCore\Articles.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\..\..\BuildingBlocks\Articles.System\Articles.System.csproj" />
-    <ProjectReference Include="..\Production.Database\Production.Persistence.csproj" />
+    <ProjectReference Include="..\Production.Persistence\Production.Persistence.csproj" />
     <ProjectReference Include="..\Production.Domain\Production.Domain.csproj" />
     <ProjectReference Include="..\Production.Application\Production.Application.csproj" />
   </ItemGroup>

@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Production.Domain", "Servic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Articles.Entitities", "BuildingBlocks\Articles.Entitities\Articles.Entitities.csproj", "{C0C96231-8A2E-44CF-AA58-AFFB4A986E85}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Production.Persistence", "Services\Production\Production.Database\Production.Persistence.csproj", "{91B5D80C-2BDF-4CD1-87DE-57513C01526A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Production.Persistence", "Services\Production\Production.Persistence\Production.Persistence.csproj", "{91B5D80C-2BDF-4CD1-87DE-57513C01526A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Production.Application", "Services\Production\Production.Application\Production.Application.csproj", "{63B808B0-FB44-4DCB-9BB1-E0C20C1C2869}"
 EndProject
@@ -41,7 +41,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Auth", "Auth", "{05EFFBE3-D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auth.API", "Services\Auth\Auth.API\Auth.API.csproj", "{E8D4EE6A-AB0A-494D-AE2D-06D307A151EC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auth.Persistence", "Services\Auth\Auth.Database\Auth.Persistence.csproj", "{3122C64A-F4C0-4244-99A7-613B6DFD9D09}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auth.Persistence", "Services\Auth\Auth.Persistence\Auth.Persistence.csproj", "{3122C64A-F4C0-4244-99A7-613B6DFD9D09}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auth.Domain", "Services\Auth\Auth.Domain\Auth.Domain.csproj", "{4F5E31C0-D149-4215-ABAD-165F99C1439D}"
 EndProject
@@ -49,7 +49,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auth.Application", "Service
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{43093EE6-A060-4D76-A05C-8AD764B6BE15}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailService.Smtp", "Modules\SmtpEmailService\EmailService.Smtp.csproj", "{A62BA7C8-FB5C-49CD-B842-C2BEA6A955D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailService.Smtp", "Modules\EmailService.Smtp\EmailService.Smtp.csproj", "{A62BA7C8-FB5C-49CD-B842-C2BEA6A955D1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EmailService", "EmailService", "{6EC4AB69-944E-4EEF-AC42-52A4C8DF1CAA}"
 EndProject

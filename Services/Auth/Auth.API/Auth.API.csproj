@@ -29,7 +29,7 @@
     <ProjectReference Include="..\..\..\BuildingBlocks\Articles.System\Articles.System.csproj" />
     <ProjectReference Include="..\..\..\Modules\EmailService.SendGrid\EmailService.SendGrid.csproj" />
     <ProjectReference Include="..\Auth.Application\Auth.Application.csproj" />
-    <ProjectReference Include="..\Auth.Database\Auth.Persistence.csproj" />
+    <ProjectReference Include="..\Auth.Persistence\Auth.Persistence.csproj" />
     <ProjectReference Include="..\Auth.Domain\Auth.Domain.csproj" />
   </ItemGroup>
 
