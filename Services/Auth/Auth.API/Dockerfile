@@ -10,9 +10,9 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Services/Auth/Auth.API/Auth.API.csproj", "Services/Auth/Auth.API/"]
-COPY ["Services/Auth/Auth.API/Auth.Application.csproj", "Services/Auth/Auth.API/"]
-COPY ["Services/Auth/Auth.API/Auth.Domain.csproj", "Services/Auth/Auth.API/"]
-COPY ["Services/Auth/Auth.API/Auth.Persistence.csproj", "Services/Auth/Auth.API/"]
+COPY ["Services/Auth/Auth.Application/Auth.Application.csproj", "Services/Auth/Auth.Application/"]
+COPY ["Services/Auth/Auth.Persistence/Auth.Persistence.csproj", "Services/Auth/Auth.Persistence/"]
+COPY ["Services/Auth/Auth.Domain/Auth.Domain.csproj", "Services/Auth/Auth.Domain/"]
 COPY ["BuildingBlocks/Articles.AspNetCore/Articles.AspNetCore.csproj", "BuildingBlocks/Articles.AspNetCore/"]
 COPY ["BuildingBlocks/Articles.AspNetCore/Articles.Entitities.csproj", "BuildingBlocks/Articles.Entitities/"]
 COPY ["BuildingBlocks/Articles.AspNetCore/Articles.EntityFrameworkCore.csproj", "BuildingBlocks/Articles.EntityFrameworkCore/"]

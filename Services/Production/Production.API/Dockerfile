@@ -9,10 +9,10 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Services/Production/Production.API", "Production.API/"]
-COPY ["Services/Production/Production.Application", "Production.Application/"]
-COPY ["Services/Production/Production.Database", "Production.Database/"]
-COPY ["Services/Production/Production.Domain", "Production.Domain/"]
+COPY ["Services/Production/Production.API/Production.API.csproj", "Services/Production/Production.API/"]
+COPY ["Services/Production/Production.Application/Production.Application.csproj", "Services/Production/Production.Application/"]
+COPY ["Services/Production/Production.Persistence/Production.Persistence.csproj", "Services/Production/Production.Persistence/"]
+COPY ["Services/Production/Production.Domain/Production.Domain.csproj", "Services/Production/Production.Domain/"]
 COPY ["BuildingBlocks/Articles.AspNetCore/Articles.AspNetCore.csproj", "BuildingBlocks/Articles.AspNetCore/"]
 COPY ["BuildingBlocks/Articles.AspNetCore/Articles.Entitities.csproj", "BuildingBlocks/Articles.Entitities/"]
 COPY ["BuildingBlocks/Articles.AspNetCore/Articles.EntityFrameworkCore.csproj", "BuildingBlocks/Articles.EntityFrameworkCore/"]
@@ -21,6 +21,7 @@ COPY ["BuildingBlocks/Articles.AspNetCore/Articles.Exceptions.Hanlder.csproj", "
 COPY ["BuildingBlocks/Articles.AspNetCore/Articles.MediatR.csproj", "BuildingBlocks/Articles.MediatR/"]
 COPY ["BuildingBlocks/Articles.AspNetCore/Articles.Settings.csproj", "BuildingBlocks/Articles.Settings/"]
 COPY ["BuildingBlocks/Articles.AspNetCore/Articles.System.csproj", "BuildingBlocks/Articles.System/"]
+
 RUN dotnet restore "./Articles.API/Articles.API.csproj"
 COPY . .
 WORKDIR "/src/Articles.API"
