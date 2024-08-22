@@ -8,6 +8,10 @@ using System.Reflection;
 using EmailService.SendGrid;
 using EmailService.Contracts;
 using Articles.AspNetCore;
+using GraphQL;
+using GraphQL.Types;
+using Auth.Application.GraphQLSchemas;
+using GraphQL.NewtonsoftJson;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +32,13 @@ builder.Services
     .AddAuthorization()
     .AddJwtIdentity(builder.Configuration);
 
+builder.Services.AddGraphQL(builder =>
+		{
+				builder
+				.AddNewtonsoftJson()
+				.AddSchema<UserSchema>();
+		});
+
 var app = builder.Build();
 
 app.UseSwagger();
@@ -44,6 +55,16 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseFastEndpoints();
+
+app.UseGraphQL<UserSchema>("/graphql/user");
+app.UseGraphQLGraphiQL();
+
+app
+		.UseRouting()
+		.UseEndpoints(endpoints =>
+		{
+				endpoints.MapGraphQL("/graphql/user");
+		});
 
 //app.MapControllers();
 

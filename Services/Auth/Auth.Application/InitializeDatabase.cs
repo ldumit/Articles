@@ -19,6 +19,8 @@ public static class InitializeDatabase
 
     public static void SeedTestData(this ApplicationDbContext context)
     {
+        //todo - seed users needed for the other microservices: 
+
         ///using var transaction = context.Database.BeginTransaction();
 
         ///Seed<User>(context);

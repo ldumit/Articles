@@ -13,6 +13,9 @@
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="FastEndpoints" Version="5.28.0" />
     <PackageReference Include="Flurl.Http" Version="4.0.2" />
+    <PackageReference Include="GraphQL.NewtonsoftJson" Version="8.0.0" />
+    <PackageReference Include="GraphQL.Server.Transports.AspNetCore" Version="8.0.0" />
+    <PackageReference Include="GraphQL.Server.Ui.GraphiQL" Version="8.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.7" />
@@ -31,6 +34,10 @@
     <ProjectReference Include="..\Auth.Application\Auth.Application.csproj" />
     <ProjectReference Include="..\Auth.Persistence\Auth.Persistence.csproj" />
     <ProjectReference Include="..\Auth.Domain\Auth.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\GetUsers\" />
   </ItemGroup>
 
 </Project>
