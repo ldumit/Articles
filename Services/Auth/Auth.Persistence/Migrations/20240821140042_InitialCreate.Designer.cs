@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Auth.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240814071018_InitialCreate")]
+    [Migration("20240821140042_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -51,7 +51,6 @@ namespace Auth.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("RevokedByIp")
-                        .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
@@ -202,7 +201,7 @@ namespace Auth.Persistence.Migrations
                     b.Property<DateTime?>("LasModifiedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 8, 14, 7, 10, 18, 352, DateTimeKind.Utc).AddTicks(1181));
+                        .HasDefaultValue(new DateTime(2024, 8, 21, 14, 0, 40, 593, DateTimeKind.Utc).AddTicks(2134));
 
                     b.Property<DateTime?>("LastLogin")
                         .HasColumnType("datetime2");

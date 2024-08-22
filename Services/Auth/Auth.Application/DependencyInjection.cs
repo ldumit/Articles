@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Auth.Domain.Models;
 using EmailService.Contracts;
 using EmailService.Smtp;
+using Articles.Security;
 
 namespace Auth.Application;
 public static class DependencyInjection
@@ -19,6 +20,7 @@ public static class DependencyInjection
 				///services.AddScoped<UserManager<User>>();
 				//services.AddScoped<SignInManager<User>>();
 				services.AddScoped<IEmailService, SmtpEmailService>();
+				services.AddScoped<TokenFactory>();
 
 
 				return services;

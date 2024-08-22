@@ -3,17 +3,17 @@
     "title": "Iris Research",
     "Doi": "med.2024.2451234",
     "SubmitedOn": "2024-04-23T18:00",
-    "SubmitedById": 1,
+    "SubmitedById": 5,
     "CurrentStageId": 1,
     "JournalId": "1",
     "VolumeId": "1",
     "AcceptedOn": "2024-06-23T18:00",
     "TypesetterId": 1,
-    "CreatedById": 1,
-    "LastModifiedById": 1,
+    "CreatedById": 5,
+    "LastModifiedById": 9,
     "Authors": [
       {
-        "UserId": 2,
+        "UserId": 5,
         "Role": "CORAUT"
       },
       {
@@ -27,16 +27,16 @@
         "AssetNumber": 0,
         "Status": "Uploaded",
         "TypeCode": "Manuscript",
-        "CreatedById": 1,
-        "LastModifiedById": 1
+        "CreatedById": 5,
+        "LastModifiedById": 5
       },
       {
         "Name": "ReviewReport1",
         "AssetNumber": 0,
         "Status": "Uploaded",
         "TypeCode": "ReviewReport",
-        "CreatedById": 1,
-        "LastModifiedById": 1
+        "CreatedById": 9,
+        "LastModifiedById": 9
       }
     ]
   }

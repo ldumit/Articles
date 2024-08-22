@@ -10,9 +10,6 @@ using Articles.Security;
 
 namespace Auth.API.Features;
 
-public record LoginCommand(string Email, string Password);
-public record LoginResponse(string JWTToken, string RefreshToken);
-
 [AllowAnonymous]
 [HttpPost("login")]
 public class LoginEndpoint(UserManager<User> _userManager, SignInManager<User> _signInManager, TokenFactory _tokenFactory, IOptions<JwtOptions> _jwtOptions) 
@@ -36,6 +33,6 @@ public class LoginEndpoint(UserManager<User> _userManager, SignInManager<User> _
 				user.RefreshTokens.Add(refreshToken);
 				await _userManager.UpdateAsync(user);
 
-				await SendAsync(new LoginResponse(jwtToken, refreshToken.Token));
+				await SendAsync(new LoginResponse(command.Email, jwtToken, refreshToken.Token));
 		}
 }

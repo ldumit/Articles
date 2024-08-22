@@ -11,7 +11,7 @@ public class RefreshToken : Entity
     public DateTime Created { get; set; }
     public required string CreatedByIp { get; set; }
     public DateTime? Revoked { get; set; }
-    public string RevokedByIp { get; set; } = null!;
+    public string? RevokedByIp { get; set; } = null!;
     //todo do I need this field?
     public string? ReplacedByToken { get; set; }
     public bool IsActive => Revoked == null && !IsExpired;

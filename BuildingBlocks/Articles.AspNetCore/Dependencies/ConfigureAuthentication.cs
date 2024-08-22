@@ -12,7 +12,7 @@ public static class ConfigureAuthentication
 		public static IServiceCollection AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
 		{
 				//todo create an extension method which will use nameof ans substract "Options" word
-				var jwtOptions = configuration.Get<JwtOptions>();
+				var jwtOptions = configuration.GetByTypeName<JwtOptions>();
 
 				services
 						.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

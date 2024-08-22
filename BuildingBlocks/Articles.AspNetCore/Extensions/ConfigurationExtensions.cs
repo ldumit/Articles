@@ -9,7 +9,7 @@ public static class ConfigurationExtensions
 				where TOptions : class
 				=> services.Configure<TOptions>(configuration.GetSection(typeof(TOptions).Name));
 
-		public static T? Get<T>(this IConfiguration configuration)
+		public static T? GetByTypeName<T>(this IConfiguration configuration)
 		{
 				return configuration.GetSection(typeof(T).Name).Get<T>();
 		}

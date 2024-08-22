@@ -1,11 +1,11 @@
 ﻿using Auth.Domain.Models;
 using AutoMapper;
 
-namespace Auth.API.Features.CreateAccount;
+namespace Auth.API.Features;
 
-public class CreateUserMapping : Profile
+public class CreateUserCommandMapping : Profile
 {
-    public CreateUserMapping()
+    public CreateUserCommandMapping()
     {
         //talk - parent child relation & inheritance
         CreateMap<UserRoleDto, UserRole>()

@@ -8,65 +8,72 @@
   },
   {
     //2
-    "FirstName": "Juan",
-    "LastName": "Perez",
+    "FirstName": "Author",
+    "LastName": "1",
     "Title": "Mr",
-    "Email": "juan.perez@qsharp.com"
+    "Email": "author.1@articles.org"
   },
   {
     //3
-    "FirstName": "Jane",
-    "LastName": "Roe",
+    "FirstName": "Author",
+    "LastName": "2",
     "Title": "Ms",
-    "Email": "jane.roe@qsharp.com"
+    "Email": "author.2@articles.com"
   },
   {
     //4
-    "FirstName": "Han",
-    "LastName": "Solo",
+    "FirstName": "Author",
+    "LastName": "3",
     "Title": "Dr",
-    "Email": "Han.Solo@qsharp.com"
+    "Email": "author.3@articles.com"
   },
   {
     ///5
-    "FirstName": "Ellen",
-    "LastName": "Ripley",
+    "FirstName": "Co-Author",
+    "LastName": "1",
     "Title": "Ms",
-    "Email": "ellen.ripley@qsharp.com"
+    "Email": "coauthor.1@articles.com"
   },
   {
-    //6
-    "FirstName": "Typesetter",
-    "LastName": "1",
+    ///6
+    "FirstName": "Co-Author",
+    "LastName": "2",
     "Title": "Mr",
-    "Email": "typesetter1@qsharp.com"
+    "Email": "coauthor.2@articles.com"
   },
   {
     //7
     "FirstName": "Typesetter",
-    "LastName": "2",
-    "Title": "Ms",
-    "Email": "typesetter1@qsharp.com"
+    "LastName": "1",
+    "Title": "Mr",
+    "Email": "typesetter.1@articles.com"
   },
   {
     //8
-    "FirstName": "Reviewer",
-    "LastName": "1",
-    "Title": "Mr",
-    "Email": "typesetter1@qsharp.com"
+    "FirstName": "Typesetter",
+    "LastName": "2",
+    "Title": "Ms",
+    "Email": "typesetter.2@articles.com"
   },
   {
     //9
     "FirstName": "Reviewer",
-    "LastName": "2",
-    "Title": "Ms",
-    "Email": "typesetter1@qsharp.com"
+    "LastName": "1",
+    "Title": "Mr",
+    "Email": "reviewer.1@articles.com"
   },
   {
     //10
+    "FirstName": "Reviewer",
+    "LastName": "2",
+    "Title": "Ms",
+    "Email": "reviewer.2@articles.com"
+  },
+  {
+    //11
     "FirstName": "POF",
     "LastName": "1",
     "Title": "Ms",
-    "Email": "pof1@qsharp.com"
+    "Email": "pof.1@articles.com"
   }
 ]

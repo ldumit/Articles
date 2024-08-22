@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Identity;
 using System.Net;
 using Articles.AspNetCore;
 using Flurl;
-using System.Web;
 using Microsoft.Extensions.Options;
 
 namespace Auth.API.Features;
@@ -15,7 +14,7 @@ namespace Auth.API.Features;
 [AllowAnonymous]
 [HttpPost("users")]
 public class CreateUserEndpoint(UserManager<User> userManager, AutoMapper.IMapper mapper, IEmailService emailService, IHttpContextAccessor httpContextAccessor, IOptions<EmailOptions> emailOptions) 
-		: Endpoint<CreateUserCommand, int>
+		: Endpoint<CreateUserCommand, CreateUserResponse>
 {
 		public override async Task HandleAsync(CreateUserCommand command, CancellationToken ct)
     {
@@ -38,7 +37,7 @@ public class CreateUserEndpoint(UserManager<User> userManager, AutoMapper.IMappe
 				var emailMessage = BuildEmailMessage(user, ressetPasswordToken);
 				await emailService.SendEmailAsync(emailMessage);
 
-				await SendAsync(user.Id);
+				await SendAsync(new CreateUserResponse(command.Email, user.Id, ressetPasswordToken));
     }
 
 		private EmailMessage BuildEmailMessage(User user, string  token)
@@ -46,6 +45,7 @@ public class CreateUserEndpoint(UserManager<User> userManager, AutoMapper.IMappe
 				const string ConfirmationEmail = 
 						@"Dear {0}, An account has been created for you. Please set your password using the following URL: {1}";
 
+				//todo - add presentation application URl to appsettings
 				var url = 
 						httpContextAccessor.HttpContext?.Request.BaseUrl()
 						.AppendPathSegment("set-first-password")

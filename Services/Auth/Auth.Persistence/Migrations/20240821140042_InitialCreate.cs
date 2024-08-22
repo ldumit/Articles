@@ -45,7 +45,7 @@ namespace Auth.Persistence.Migrations
                     CreatedById = table.Column<int>(type: "int", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
                     LastModifiedById = table.Column<int>(type: "int", nullable: false),
-                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValue: new DateTime(2024, 8, 14, 7, 10, 18, 352, DateTimeKind.Utc).AddTicks(1181)),
+                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValue: new DateTime(2024, 8, 21, 14, 0, 40, 593, DateTimeKind.Utc).AddTicks(2134)),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -187,7 +187,7 @@ namespace Auth.Persistence.Migrations
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedByIp = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     Revoked = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    RevokedByIp = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    RevokedByIp = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
                     ReplacedByToken = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>

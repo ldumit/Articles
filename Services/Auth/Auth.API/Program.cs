@@ -21,7 +21,7 @@ builder.Services
 builder.Services
 		.AddFastEndpoints()
 		.AddEndpointsApiExplorer()
-		.AddAutoMapper(new Assembly[] {typeof(Auth.API.Features.CreateAccount.CreateUserMapping).Assembly})
+		.AddAutoMapper(new Assembly[] {typeof(Auth.API.Features.CreateUserCommandMapping).Assembly})
 		.AddApplicationServices(builder.Configuration)
     .AddSwaggerGen()
     .AddJwtAuthentication(builder.Configuration)
