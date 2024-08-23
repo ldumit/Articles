@@ -1,0 +1,137 @@
+[
+  {
+    "email": "dumitrescu.laurentiu@gmail.com",
+    "firstName": "Laurentiu",
+    "lastName": "Dumitrescu",
+    "gender": "Male",
+    "nickname": "Laur",
+    "companyName": "Articles",
+    "position": "Admin",
+    "userRoles": [
+      {
+        "roleId": 100,
+        "beginDate": "2024-08-01"
+      }
+    ]
+  },
+  {
+    "email": "author.1@articles.cs",
+    "firstName": "Author",
+    "lastName": "1",
+    "gender": "Female",
+    "nickname": "Aut1",
+    "companyName": "Articles",
+    "position": "Author",
+    "userRoles": [
+      {
+        "roleId": 3,
+        "beginDate": "2024-08-01"
+      }
+    ]
+  },
+  {
+    "email": "author.2@articles.cs",
+    "firstName": "Author",
+    "lastName": "2",
+    "gender": "Male",
+    "nickname": "Auth2",
+    "companyName": "Articles",
+    "position": "Author",
+    "userRoles": [
+      {
+        "roleId": 3,
+        "beginDate": "2024-08-01"
+      }
+    ]
+  },
+  {
+    "email": "author.3@articles.cs",
+    "firstName": "Author",
+    "lastName": "3",
+    "gender": "Male",
+    "nickname": "Auth3",
+    "companyName": "Articles",
+    "position": "Author",
+    "userRoles": [
+      {
+        "roleId": 3,
+        "beginDate": "2024-08-01"
+      }
+    ]
+  },
+  {
+    "email": "coauthor.1@articles.cs",
+    "firstName": "CoAuthor",
+    "lastName": "1",
+    "gender": "Male",
+    "nickname": "CoAuth1",
+    "companyName": "Articles",
+    "position": "Author",
+    "userRoles": [
+      {
+        "roleId": 4,
+        "beginDate": "2024-08-01"
+      }
+    ]
+  },
+  {
+    "email": "coauthor.2@articles.cs",
+    "firstName": "CoAuthor",
+    "lastName": "2",
+    "gender": "Female",
+    "nickname": "CoAuth2",
+    "companyName": "Articles",
+    "position": "Author",
+    "userRoles": [
+      {
+        "roleId": 4,
+        "beginDate": "2024-08-01"
+      }
+    ]
+  },
+  {
+    "email": "typesetter.1@articles.cs",
+    "firstName": "Typesetter",
+    "lastName": "1",
+    "gender": "Female",
+    "nickname": "Typesetter1",
+    "companyName": "Typesetting Company1",
+    "position": "Typesetter",
+    "userRoles": [
+      {
+        "roleId": 8,
+        "beginDate": "2024-08-01"
+      }
+    ]
+  },
+  {
+    "email": "typesetter.2@articles.cs",
+    "firstName": "Typesetter",
+    "lastName": "2",
+    "gender": "Female",
+    "nickname": "Typesetter2",
+    "companyName": "Typesetting Company2",
+    "position": "Typesetter",
+    "userRoles": [
+      {
+        "roleId": 8,
+        "beginDate": "2024-08-01"
+      }
+    ]
+  },
+  {
+    "email": "pof.1@articles.cs",
+    "firstName": "POF",
+    "lastName": "1",
+    "gender": "Female",
+    "nickname": "POF1",
+    "companyName": "Articles",
+    "position": "Production Office Specialist",
+    "userRoles": [
+      {
+        "roleId": 7,
+        "beginDate": "2024-08-01"
+      }
+    ]
+  }
+]

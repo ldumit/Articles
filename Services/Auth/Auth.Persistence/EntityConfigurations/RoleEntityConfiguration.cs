@@ -10,7 +10,7 @@ internal class RoleEntityConfiguration : EntityConfiguration<Role>
 		{
 				base.Configure(entity);
 
-				entity.Property(e => e.Code).HasEnumConversion().HasMaxLength(Constraints.C64).IsRequired();
+				entity.Property(e => e.Type).HasEnumConversion().HasMaxLength(Constraints.C64).IsRequired();
 				entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
 				base.SeedFromFile(entity);

@@ -8,6 +8,7 @@ using System.Reflection;
 using EmailService.SendGrid;
 using EmailService.Contracts;
 using Articles.AspNetCore;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,7 +44,10 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseFastEndpoints();
+app.UseFastEndpoints(c =>
+		{
+				c.Serializer.Options.Converters.Add(new JsonStringEnumConverter());
+		});
 
 //app.MapControllers();
 

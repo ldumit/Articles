@@ -1,7 +1,7 @@
 [
   {
-    "code": "AuthAdmin",
-    "id": 1000,
+    "code": "ADMIN",
+    "id": 100,
     "name": "Auth Admin"
   },
   {

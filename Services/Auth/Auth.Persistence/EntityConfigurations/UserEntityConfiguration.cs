@@ -13,6 +13,8 @@ internal class UserEntityConfiguration : AuditedEntityConfiguration<User>
 
 				entity.Property(e => e.FirstName).HasMaxLength(Constraints.C64).IsRequired();
 				entity.Property(e => e.LastName).HasMaxLength(Constraints.C64).IsRequired();
+				entity.Property(e => e.Gender).HasEnumConversion().HasMaxLength(Constraints.C64).IsRequired();
+
 				entity.Property(e => e.Position).HasMaxLength(Constraints.C64);
 				entity.Property(e => e.CompanyName).HasMaxLength(Constraints.C256);
 				entity.Property(e => e.PictureUrl).HasMaxLength(Constraints.C2048);

@@ -9,9 +9,9 @@ using Production.Domain.Enums;
 
 namespace Production.API.Features.AssignTypesetter
 {
-    //[Authorize(Roles = "pof")]
-    [AllowAnonymous]
-    [HttpPut("{articleId:int}/typesetter")]
+    [Authorize(Roles = "pof")]
+    //[AllowAnonymous]
+    [HttpPut("articles/{articleId:int}/typesetter")]
     public class AssignTypesetterEndpoint(IServiceProvider serviceProvider) 
         : BaseEndpoint<AssignTypesetterCommand, ArticleCommandResponse>(serviceProvider)
     {

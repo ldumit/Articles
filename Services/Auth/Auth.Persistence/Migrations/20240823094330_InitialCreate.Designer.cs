@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Auth.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240821140042_InitialCreate")]
+    [Migration("20240823094330_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -76,11 +76,6 @@ namespace Auth.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -92,6 +87,11 @@ namespace Auth.Persistence.Migrations
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.HasKey("Id");
 
@@ -105,57 +105,57 @@ namespace Auth.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1000,
-                            Code = "AuthAdmin",
-                            Name = "Auth Admin"
+                            Id = 100,
+                            Name = "Auth Admin",
+                            Type = "0"
                         },
                         new
                         {
                             Id = 1,
-                            Code = "EOF",
-                            Name = "Editorial Office"
+                            Name = "Editorial Office",
+                            Type = "0"
                         },
                         new
                         {
                             Id = 2,
-                            Code = "RE",
-                            Name = "Review Editor"
+                            Name = "Review Editor",
+                            Type = "0"
                         },
                         new
                         {
                             Id = 3,
-                            Code = "AUT",
-                            Name = "Author"
+                            Name = "Author",
+                            Type = "0"
                         },
                         new
                         {
                             Id = 4,
-                            Code = "CORAUT",
-                            Name = "Corresponding Author"
+                            Name = "Corresponding Author",
+                            Type = "0"
                         },
                         new
                         {
                             Id = 5,
-                            Code = "SAUT",
-                            Name = "Submitting Author"
+                            Name = "Submitting Author",
+                            Type = "0"
                         },
                         new
                         {
                             Id = 6,
-                            Code = "COAUT",
-                            Name = "Co-Author"
+                            Name = "Co-Author",
+                            Type = "0"
                         },
                         new
                         {
                             Id = 7,
-                            Code = "POF",
-                            Name = "Production Office"
+                            Name = "Production Office",
+                            Type = "0"
                         },
                         new
                         {
                             Id = 8,
-                            Code = "TSOF",
-                            Name = "Typesetter"
+                            Name = "Typesetter",
+                            Type = "0"
                         });
                 });
 
@@ -198,10 +198,15 @@ namespace Auth.Persistence.Migrations
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
                     b.Property<DateTime?>("LasModifiedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 8, 21, 14, 0, 40, 593, DateTimeKind.Utc).AddTicks(2134));
+                        .HasDefaultValue(new DateTime(2024, 8, 23, 9, 43, 29, 237, DateTimeKind.Utc).AddTicks(8848));
 
                     b.Property<DateTime?>("LastLogin")
                         .HasColumnType("datetime2");

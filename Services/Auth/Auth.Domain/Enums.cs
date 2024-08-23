@@ -4,16 +4,15 @@ namespace Auth.Domain;
 
 public enum Gender
 {
-		Male = 0,
-		Female = 1,
-		Neutral = 2,
-		NotDeclared = 3
+		NotDeclared = 0,
+		Male = 1,
+		Female = 2,
+		Neutral = 3
 }
 
+//
 public enum UserRoleType : int
 {
-		[Description("Auth Admin")]
-		AuthAdmin = 0,   // manage users
 		[Description("Editorial Office")]
 		EOF = 1,          //-->>Editorial Office
 		[Description("Review Editor")]
@@ -27,7 +26,9 @@ public enum UserRoleType : int
 		[Description("Co-Author")]
 		COAUT = 6,       //-->>Co-author
 		[Description("Production Office")]
-		POF = 7,         //-->>Production Office
+		POF = 7,         //-->>Production Office Admin
 		[Description("Typesetter")]
 		TSOF = 8,        //-->>Typesetting Office (Typesetter)
+		[Description("User Admin")]
+		ADMIN = 100   // manage users
 }

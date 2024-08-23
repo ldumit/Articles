@@ -9,8 +9,9 @@ public class User : IdentityUser<int>, IAuditedEntity<int>, IEntity<int>
     public required string LastName { get; set; }
 		
 		public string FullName => FirstName + " " + LastName;
-
-    public string? Position { get; set; } = null!;
+		public required Gender Gender { get; set; }
+		
+		public string? Position { get; set; } = null!;
 		public string? PictureUrl { get; set; } = null!;
 		public string? CompanyName { get; set; } = null!;
 

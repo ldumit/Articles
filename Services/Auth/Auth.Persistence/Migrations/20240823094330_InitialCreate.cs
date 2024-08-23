@@ -19,7 +19,7 @@ namespace Auth.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Code = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -37,6 +37,7 @@ namespace Auth.Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    Gender = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     Position = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
                     PictureUrl = table.Column<string>(type: "nvarchar(2048)", maxLength: 2048, nullable: true),
                     CompanyName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -45,7 +46,7 @@ namespace Auth.Persistence.Migrations
                     CreatedById = table.Column<int>(type: "int", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
                     LastModifiedById = table.Column<int>(type: "int", nullable: false),
-                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValue: new DateTime(2024, 8, 21, 14, 0, 40, 593, DateTimeKind.Utc).AddTicks(2134)),
+                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValue: new DateTime(2024, 8, 23, 9, 43, 29, 237, DateTimeKind.Utc).AddTicks(8848)),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -203,18 +204,18 @@ namespace Auth.Persistence.Migrations
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
-                columns: new[] { "Id", "Code", "ConcurrencyStamp", "Name", "NormalizedName" },
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName", "Type" },
                 values: new object[,]
                 {
-                    { 1, "EOF", null, "Editorial Office", null },
-                    { 2, "RE", null, "Review Editor", null },
-                    { 3, "AUT", null, "Author", null },
-                    { 4, "CORAUT", null, "Corresponding Author", null },
-                    { 5, "SAUT", null, "Submitting Author", null },
-                    { 6, "COAUT", null, "Co-Author", null },
-                    { 7, "POF", null, "Production Office", null },
-                    { 8, "TSOF", null, "Typesetter", null },
-                    { 1000, "AuthAdmin", null, "Auth Admin", null }
+                    { 1, null, "Editorial Office", null, "0" },
+                    { 2, null, "Review Editor", null, "0" },
+                    { 3, null, "Author", null, "0" },
+                    { 4, null, "Corresponding Author", null, "0" },
+                    { 5, null, "Submitting Author", null, "0" },
+                    { 6, null, "Co-Author", null, "0" },
+                    { 7, null, "Production Office", null, "0" },
+                    { 8, null, "Typesetter", null, "0" },
+                    { 100, null, "Auth Admin", null, "0" }
                 });
 
             migrationBuilder.CreateIndex(
