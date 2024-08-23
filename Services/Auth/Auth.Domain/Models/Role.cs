@@ -5,5 +5,6 @@ namespace Auth.Domain.Models;
 
 public class Role : IdentityRole<int>, IEntity<int>
 {
-    public UserRoleType Type { get; set; }
+    public required UserRoleType Type { get; set; }
+    public required string Description { get; set; }
 }

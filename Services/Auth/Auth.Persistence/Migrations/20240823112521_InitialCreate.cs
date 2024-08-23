@@ -20,6 +20,7 @@ namespace Auth.Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Type = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -46,7 +47,7 @@ namespace Auth.Persistence.Migrations
                     CreatedById = table.Column<int>(type: "int", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
                     LastModifiedById = table.Column<int>(type: "int", nullable: false),
-                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValue: new DateTime(2024, 8, 23, 9, 43, 29, 237, DateTimeKind.Utc).AddTicks(8848)),
+                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValue: new DateTime(2024, 8, 23, 11, 25, 21, 405, DateTimeKind.Utc).AddTicks(1993)),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -204,18 +205,18 @@ namespace Auth.Persistence.Migrations
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName", "Type" },
+                columns: new[] { "Id", "ConcurrencyStamp", "Description", "Name", "NormalizedName", "Type" },
                 values: new object[,]
                 {
-                    { 1, null, "Editorial Office", null, "0" },
-                    { 2, null, "Review Editor", null, "0" },
-                    { 3, null, "Author", null, "0" },
-                    { 4, null, "Corresponding Author", null, "0" },
-                    { 5, null, "Submitting Author", null, "0" },
-                    { 6, null, "Co-Author", null, "0" },
-                    { 7, null, "Production Office", null, "0" },
-                    { 8, null, "Typesetter", null, "0" },
-                    { 100, null, "Auth Admin", null, "0" }
+                    { 1, null, "Editorial Office", "EOF", null, "EOF" },
+                    { 2, null, "Review Editor", "RE", null, "RE" },
+                    { 3, null, "Author", "AUT", null, "AUT" },
+                    { 4, null, "Corresponding Author", "CORAUT", null, "CORAUT" },
+                    { 5, null, "Submitting Author", "SAUT", null, "SAUT" },
+                    { 6, null, "Co-Author", "COAUT", null, "COAUT" },
+                    { 7, null, "Production Office Admin", "POF", null, "POF" },
+                    { 8, null, "Typesetter", "TSOF", null, "TSOF" },
+                    { 100, null, "Admin", "ADMIN", null, "ADMIN" }
                 });
 
             migrationBuilder.CreateIndex(

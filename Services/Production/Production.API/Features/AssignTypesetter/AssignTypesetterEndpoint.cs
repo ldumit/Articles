@@ -9,7 +9,7 @@ using Production.Domain.Enums;
 
 namespace Production.API.Features.AssignTypesetter
 {
-    [Authorize(Roles = "pof")]
+    [Authorize(Roles = "POF")]
     //[AllowAnonymous]
     [HttpPut("articles/{articleId:int}/typesetter")]
     public class AssignTypesetterEndpoint(IServiceProvider serviceProvider) 
@@ -20,7 +20,6 @@ namespace Production.API.Features.AssignTypesetter
             var article = _articleRepository.GetById(command.ArticleId);
             ChangeStage(article, command);
 
-            var orderList = new OrderList();
             article.TypesetterId = command.Body.UserId;
             await _articleRepository.SaveChangesAsync();
 

@@ -1,47 +1,56 @@
 [
   {
-    "code": "ADMIN",
+    "type": "ADMIN",
     "id": 100,
-    "name": "Auth Admin"
+    "name": "ADMIN",
+    "description": "Admin"
   },
   {
-    "code": "EOF",
+    "type": "EOF",
     "id": 1,
-    "name": "Editorial Office"
+    "name": "EOF",
+    "description": "Editorial Office"
   },
   {
-    "code": "RE",
+    "type": "RE",
     "id": 2,
-    "name": "Review Editor"
+    "name": "RE",
+    "description": "Review Editor"
   },
   {
-    "code": "AUT",
+    "type": "AUT",
     "id": 3,
-    "name": "Author"
+    "name": "AUT",
+    "description": "Author"
   },
   {
-    "code": "CORAUT",
+    "type": "CORAUT",
     "id": 4,
-    "name": "Corresponding Author"
+    "name": "CORAUT",
+    "description": "Corresponding Author"
   },
   {
-    "code": "SAUT",
+    "type": "SAUT",
     "id": 5,
-    "name": "Submitting Author"
+    "name": "SAUT",
+    "description": "Submitting Author"
   },
   {
-    "code": "COAUT",
+    "type": "COAUT",
     "id": 6,
-    "name": "Co-Author"
+    "name": "COAUT",
+    "description": "Co-Author"
   },
   {
-    "code": "POF",
+    "type": "POF",
     "id": 7,
-    "name": "Production Office"
+    "name": "POF",
+    "description": "Production Office Admin"
   },
   {
-    "code": "TSOF",
+    "type": "TSOF",
     "id": 8,
-    "name": "Typesetter"
+    "name": "TSOF",
+    "description": "Typesetter"
   }
 ]

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Auth.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240823094330_InitialCreate")]
+    [Migration("20240823112521_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -80,6 +80,11 @@ namespace Auth.Persistence.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
                     b.Property<string>("Name")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -106,56 +111,65 @@ namespace Auth.Persistence.Migrations
                         new
                         {
                             Id = 100,
-                            Name = "Auth Admin",
-                            Type = "0"
+                            Description = "Admin",
+                            Name = "ADMIN",
+                            Type = "ADMIN"
                         },
                         new
                         {
                             Id = 1,
-                            Name = "Editorial Office",
-                            Type = "0"
+                            Description = "Editorial Office",
+                            Name = "EOF",
+                            Type = "EOF"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Review Editor",
-                            Type = "0"
+                            Description = "Review Editor",
+                            Name = "RE",
+                            Type = "RE"
                         },
                         new
                         {
                             Id = 3,
-                            Name = "Author",
-                            Type = "0"
+                            Description = "Author",
+                            Name = "AUT",
+                            Type = "AUT"
                         },
                         new
                         {
                             Id = 4,
-                            Name = "Corresponding Author",
-                            Type = "0"
+                            Description = "Corresponding Author",
+                            Name = "CORAUT",
+                            Type = "CORAUT"
                         },
                         new
                         {
                             Id = 5,
-                            Name = "Submitting Author",
-                            Type = "0"
+                            Description = "Submitting Author",
+                            Name = "SAUT",
+                            Type = "SAUT"
                         },
                         new
                         {
                             Id = 6,
-                            Name = "Co-Author",
-                            Type = "0"
+                            Description = "Co-Author",
+                            Name = "COAUT",
+                            Type = "COAUT"
                         },
                         new
                         {
                             Id = 7,
-                            Name = "Production Office",
-                            Type = "0"
+                            Description = "Production Office Admin",
+                            Name = "POF",
+                            Type = "POF"
                         },
                         new
                         {
                             Id = 8,
-                            Name = "Typesetter",
-                            Type = "0"
+                            Description = "Typesetter",
+                            Name = "TSOF",
+                            Type = "TSOF"
                         });
                 });
 
@@ -206,7 +220,7 @@ namespace Auth.Persistence.Migrations
                     b.Property<DateTime?>("LasModifiedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 8, 23, 9, 43, 29, 237, DateTimeKind.Utc).AddTicks(8848));
+                        .HasDefaultValue(new DateTime(2024, 8, 23, 11, 25, 21, 405, DateTimeKind.Utc).AddTicks(1993));
 
                     b.Property<DateTime?>("LastLogin")
                         .HasColumnType("datetime2");
