@@ -1,5 +1,4 @@
-﻿using Production.API.Features.UploadAuthorsProof;
-using Production.Domain.Enums;
+﻿using Production.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using System.Text.Json.Serialization;
@@ -46,6 +45,27 @@ public abstract record UploadFileCommand<TResponse> : FileActionCommand<TRespons
 
 public abstract record UploadFileCommand : UploadFileCommand<UploadFileResponse>
 {
-    internal override FileActionType ActionType => FileActionType.UPLOAD;
+    internal override ActionType ActionType => Domain.Enums.ActionType.Upload;
+    //todo remove the following method 
     internal virtual byte GetAssetNumber() => 0;
+}
+
+public record UploadFileResponse : IFileActionResponse
+{
+		/// <summary>
+		/// Returns the FileId of the uploaded file.
+		/// </summary>
+		public int FileId { get; set; }
+		/// <summary>
+		/// Returns the assetId of the uploaded file
+		/// </summary>
+		public int AssetId { get; set; }
+		/// <summary>
+		/// Returns the version of the uploaded file.
+		/// </summary>
+		public int Version { get; set; }
+		/// <summary>
+		/// Returns the fileServerId of the uploaded file
+		/// </summary>
+		public string FileServerId { get; set; }
 }

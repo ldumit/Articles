@@ -6,7 +6,7 @@ public interface IDiscussionDomainEvent
 {
     public int ArticleId { get; set; }
     public ArticleStage PreviousStage { get; set; }
-    public FileActionType NewAction { get; set; }
+    public ActionType NewAction { get; set; }
     public AssetType? AssetType { get; set; }
     public int? UserId { get; set; }
     public string Comment { get; set; }

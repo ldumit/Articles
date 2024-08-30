@@ -1,17 +1,15 @@
 ﻿using Articles.EntityFrameworkCore;
 using Articles.System;
+using Microsoft.Extensions.Caching.Memory;
 using Production.Domain.Entities;
 
 
 namespace Production.Persistence.Repositories;
 
 
-public class ArticleRepository : RepositoryBase<Article>
+public class ArticleRepository(ProductionDbContext _dbContext, IMemoryCache _cache) : RepositoryBase<Article>(_dbContext)
 {
-    private readonly ICacheService _cacheService;
-    public ArticleRepository(DbContext dbContext, ICacheService cacheService) : base(dbContext, dbContext)
-    {
-        _cacheService = cacheService;
-    }
+		public virtual IList<Stage> GetStages()
+				=> _cache.GetOrCreate(entry => _dbContext.Stages.ToList());
 }
 

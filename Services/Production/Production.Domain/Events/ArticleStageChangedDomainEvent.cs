@@ -10,6 +10,6 @@ public record ArticleStageChangedDomainEvent : DomainEvent, IDiscussionDomainEve
     public string RoleCode { get; set; }
     public DiscussionType DiscussionType { get; set; }
     public ArticleStage PreviousStage { get; set; }
-    public FileActionType NewAction { get; set; }
+    public ActionType NewAction { get; set; }
     public AssetType? AssetType { get; set; }
 }

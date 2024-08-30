@@ -10,11 +10,11 @@ public static class Seed
     public static void SeedTestData(this IHost host)
     {
         using var scope = host.Services.CreateScope();
-        using var context = scope.ServiceProvider.GetRequiredService<Persistence.DbContext>();
+        using var context = scope.ServiceProvider.GetRequiredService<Persistence.ProductionDbContext>();
         context.SeedTestData();
     }
 
-    public static void SeedTestData(this Persistence.DbContext context)
+    public static void SeedTestData(this Persistence.ProductionDbContext context)
     {
         using var transaction = context.Database.BeginTransaction();
 

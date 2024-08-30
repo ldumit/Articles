@@ -1,6 +1,5 @@
 ﻿using Articles.AspNetCore;
 using FastEndpoints;
-using MediatR;
 using Production.Persistence.Repositories;
 using Production.Domain.Entities;
 using Production.Domain.Enums;
@@ -12,15 +11,12 @@ public abstract class BaseEndpoint<TCommand, TResponse> : Endpoint<TCommand, TRe
 {
     protected readonly ClaimsProvider _claimsProvider;
     protected readonly IMapper _mapper;
-    protected IMediator _mediator;
-
     protected readonly ArticleRepository _articleRepository;
 
     public BaseEndpoint(IServiceProvider serviceProvider)
     {
         _claimsProvider = serviceProvider.GetRequiredService<ClaimsProvider>();
         //_mapper = serviceProvider.GetRequiredService<IMapper>();
-        //_mediator = serviceProvider.GetRequiredService<IMediator>();
         _articleRepository = serviceProvider.GetRequiredService<ArticleRepository>();
     }
 

@@ -5,7 +5,7 @@ using Auth.Application;
 using Articles.EntityFrameworkCore;
 using Auth.Persistence;
 using System.Reflection;
-using EmailService.SendGrid;
+//using EmailService.SendGrid;
 using EmailService.Contracts;
 using Articles.AspNetCore;
 using System.Text.Json.Serialization;
@@ -14,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
 		.ConfigureOptions<EmailOptions>(builder.Configuration)
-		.ConfigureOptions<SendGridAccountOptions>(builder.Configuration)
+		//.ConfigureOptions<SendGridAccountOptions>(builder.Configuration)
 		.ConfigureOptions<JwtOptions>(builder.Configuration)
 		.ConfigureOptions<PostConfigureJwtBearerOptions>();
 

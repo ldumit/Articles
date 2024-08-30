@@ -11,7 +11,7 @@ using Production.Persistence;
 
 namespace Production.Persistence.Migrations
 {
-    [DbContext(typeof(DbContext))]
+    [DbContext(typeof(ProductionDbContext))]
     [Migration("20240726154526_InitialCreate")]
     partial class InitialCreate
     {

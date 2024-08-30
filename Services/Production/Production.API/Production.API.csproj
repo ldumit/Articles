@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.21.2" />
     <PackageReference Include="FastEndpoints" Version="5.28.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7">
@@ -30,6 +31,7 @@
     <ProjectReference Include="..\..\..\BuildingBlocks\Articles.AspNetCore\Articles.AspNetCore.csproj" />
     <ProjectReference Include="..\..\..\BuildingBlocks\Articles.EntityFrameworkCore\Articles.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\..\..\BuildingBlocks\Articles.System\Articles.System.csproj" />
+    <ProjectReference Include="..\..\..\Modules\FileService\FileService.Contracts\FileStorage.Contracts.csproj" />
     <ProjectReference Include="..\Production.Persistence\Production.Persistence.csproj" />
     <ProjectReference Include="..\Production.Domain\Production.Domain.csproj" />
     <ProjectReference Include="..\Production.Application\Production.Application.csproj" />

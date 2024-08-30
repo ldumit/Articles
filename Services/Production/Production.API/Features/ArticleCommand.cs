@@ -27,7 +27,7 @@ public abstract record ArticleActionCommand<TResponse> : IArticleCommand, IReque
     [FromRoute]
     [Required]
     public int ArticleId { get; set; }
-    internal abstract FileActionType ActionType { get; }
+    internal abstract ActionType ActionType { get; }
 
     internal abstract string ActionComment { get; }
     internal abstract DiscussionType DiscussionGroupType { get; }
@@ -54,6 +54,7 @@ public record CommandBody
     /// Add comments, if any.
     /// </summary>
     public string Comment { get; set; }
+    //todo do I need discussion here?
     public DiscussionType DiscussionType { get; set; }
 }
 

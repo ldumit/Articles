@@ -2,22 +2,19 @@
 using Articles.Exceptions;
 using Articles.System;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Production.Domain.Entities;
 using Production.Domain.Enums;
+using System.Linq;
+
+//using Production.Domain.Enums;
 using System.Net;
+using AssetType = Production.Domain.Entities.AssetType;
 
 namespace Production.Persistence.Repositories;
 
-public class AssetRepository : RepositoryBase<Asset>
+public class AssetRepository(ProductionDbContext _dbContext, IMemoryCache _cache) : RepositoryBase<Asset>(_dbContext)
 {
-    private readonly ICacheService _cacheService;
-    private const string ASSET_CATEGORY_MAPPING_FAILED = "Asset category mapping failed.";
-
-    public AssetRepository(DbContext dbContext, ICacheService cacheService) : base(dbContext, dbContext)
-    {
-        _cacheService = cacheService;
-    }
-
     protected override IQueryable<Asset> Query()
     {
         return base.Entity.Include(e => e.LatestFile);
@@ -26,13 +23,12 @@ public class AssetRepository : RepositoryBase<Asset>
     public override Asset GetById(int id, bool throwNotFound = false)
     {
         var entity = Query().SingleOrDefault(e => e.Id == id);
-        //todo - Remove HttpException and HttpStatusCode ?! maybe??
         if (throwNotFound && entity is null)
-            throw new HttpException(HttpStatusCode.NotFound, ErrorCodes.ASSET_NOT_FOUND);
+            throw new NotFoundException(ErrorCodes.ASSET_NOT_FOUND);
 
         return entity;
     }
-    public Asset GetAssetByTypeIdAndAssetNumber(int articleId, Domain.Enums.AssetType assetTypeId, int assetNumber)
+    public Asset GetByTypeAndNumber(int articleId, Domain.Enums.AssetType assetTypeId, int assetNumber)
     {
         var entity = Query().SingleOrDefault(e => e.ArticleId == articleId && e.TypeCode == assetTypeId && e.AssetNumber == assetNumber);
             return entity;
@@ -104,10 +100,10 @@ public class AssetRepository : RepositoryBase<Asset>
         var asset = await CreateOrUpdateAsset(articleId, assetTypeId, userId, assetName);
         var file = CreateFile(fileName, extension, assetName, fileServerId, userId, assetTypeId, size, version);
         asset.Files.Add(file);
-        await _context.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync();
         //todo fix the latest file, nexxt line
         //asset.LatestFileId = file.Id;
-        await _context.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync();
     }
     private async Task<Asset> CreateOrUpdateAsset(int articleId,
         Domain.Enums.AssetType assetTypeId,
@@ -127,7 +123,7 @@ public class AssetRepository : RepositoryBase<Asset>
                 //CategoryId = await GetDefaultAssetCategory(assetTypeId),
                 Name = assetName
             };
-            _context.Add(asset);
+            _dbContext.Add(asset);
         }
         return asset;
     }
@@ -160,7 +156,7 @@ public class AssetRepository : RepositoryBase<Asset>
     {
         return new FileAction()
         {
-            TypeId = FileActionType.UPLOAD,
+            TypeId = ActionType.Upload,
             Comment = string.Empty,
         };
     }
@@ -182,8 +178,14 @@ public class AssetRepository : RepositoryBase<Asset>
             .Include(x => x.Files).FirstOrDefaultAsync(x => x.Files.Any(y => y.FileServerId == fileServerId));
     }
 
-    #region PRIVATE
-    private Dictionary<Domain.Enums.AssetType, AssetCategory> ConvertToDictionary(IList<Domain.Entities.AssetType> assetTypes)
+		public IEnumerable<AssetType> GetAssetTypes() 
+        => _cache.GetOrCreate(entry => _dbContext.AssetTypes.ToList());
+
+		public AssetType GetAssetType(Domain.Enums.AssetType type)
+		    => GetAssetTypes().Single(e => e.Id == type);
+
+		#region PRIVATE
+		private Dictionary<Domain.Enums.AssetType, AssetCategory> ConvertToDictionary(IList<Domain.Entities.AssetType> assetTypes)
     {
         if (assetTypes.IsNullOrEmpty())
         {

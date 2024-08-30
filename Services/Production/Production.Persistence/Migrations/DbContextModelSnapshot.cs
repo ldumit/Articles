@@ -10,7 +10,7 @@ using Production.Persistence;
 
 namespace Production.Persistence.Migrations
 {
-    [DbContext(typeof(DbContext))]
+    [DbContext(typeof(ProductionDbContext))]
     partial class DbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

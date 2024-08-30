@@ -5,8 +5,8 @@ namespace Production.Domain.Entities;
 
 public partial class Asset : AuditedEntity
 {
-    public required string Name { get; set; }
-    public int AssetNumber { get; set; }
+    public string Name { get; set; } = null!;
+		public int AssetNumber { get; set; }
     
     //talk - keep them as enum because they change quite rarely
     public AssetStatus Status { get; set; }

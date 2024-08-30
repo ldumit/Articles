@@ -8,4 +8,8 @@ namespace Production.Domain.Entities;
 public partial class AssetType : EnumEntity<Enums.AssetType>
 {
     public AssetCategory DefaultCategoryId { get; set; }
+
+    public string? ContentType { get; set; }
+
+    //public required string Description { get; set; }
 }

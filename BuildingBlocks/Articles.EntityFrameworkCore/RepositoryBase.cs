@@ -37,7 +37,7 @@ public interface IRepository<TEntity, TKey>
 public abstract class RepositoryBase<TEntity> : RepositoryBase<TEntity, int>
     where TEntity : class, IEntity
 {
-    public RepositoryBase(DbContext context, IMultitenancy multitenancy) : base(context)
+    public RepositoryBase(DbContext context, IMultitenancy? multitenancy = null) : base(context)
     {
     }
 }
@@ -62,6 +62,7 @@ public abstract class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
     {
         return Entity.Any(e => e.Id.Equals(id));
     }
+
 
     public virtual TEntity GetById(TKey id, bool throwNotFound = true)
     {

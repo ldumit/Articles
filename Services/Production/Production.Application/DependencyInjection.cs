@@ -21,7 +21,7 @@ public static class DependencyInjection
 
         //services.AddFeatureManagement();
         //services.AddMessageBroker(configuration, Assembly.GetExecutingAssembly());
-        services.AddDbContext<Production.Persistence.DbContext>((sp, options) =>
+        services.AddDbContext<Production.Persistence.ProductionDbContext>((sp, options) =>
         {
             //options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
             options.UseSqlServer(connectionString);
@@ -30,7 +30,7 @@ public static class DependencyInjection
 
         services.AddScoped<ClaimsProvider>();
         services.AddScoped<ArticleRepository>();
-        services.AddScoped<ICacheService, MemoryCacheService>();
+        services.AddScoped<IThreadSafeMemoryCache, MemoryCache>();
 
 
         return services;

@@ -7,27 +7,6 @@ using Production.Domain.Enums;
 
 namespace Production.API.Features.UploadAuthorsProof
 {
-    public class UploadFileResponse : IFileActionResponse
-    {
-        /// <summary>
-        /// Returns the FileId of the uploaded file.
-        /// </summary>
-        public int FileId { get; set; }
-        /// <summary>
-        /// Returns the assetId of the uploaded file
-        /// </summary>
-        public int AssetId { get; set; }
-        /// <summary>
-        /// Returns the version of the uploaded file.
-        /// </summary>
-        public int Version { get; set; }
-        /// <summary>
-        /// Returns the fileServerId of the uploaded file
-        /// </summary>
-        public string FileServerId { get; set; }
-    }
-
-
     public class UploadFileCommandValidator<TUploadFileCommand> : UploadActionCommandValidator<TUploadFileCommand>
        where TUploadFileCommand : UploadFileCommand
     {
@@ -56,14 +35,14 @@ namespace Production.API.Features.UploadAuthorsProof
             //return AssetProvider.GetAvailableFileExtension().Result.Any(a => a.Extension.Extension == file.GetExtension().ToUpperCase());
         }
 
-        protected override FileActionType Action => FileActionType.UPLOAD;
+        protected override ActionType Action => ActionType.Upload;
 
     }
 
     public abstract class UploadActionCommandValidator<TUploadFileCommand> : ArticleCommandValidator<TUploadFileCommand>
     where TUploadFileCommand : UploadFileCommand
     {
-        protected abstract FileActionType Action { get; }
+        protected abstract ActionType Action { get; }
         protected AssetProviderBase AssetProvider { get; }
         protected ArticleRepository ArticleRepository { get; }
         protected AssetRepository AssetRepository { get; }
@@ -80,7 +59,7 @@ namespace Production.API.Features.UploadAuthorsProof
         }
 
 
-        public virtual bool IsActionValid(int articleId, FileActionType action)
+        public virtual bool IsActionValid(int articleId, ActionType action)
         {
             var result = true;
             if (articleId > 0)

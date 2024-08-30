@@ -20,7 +20,7 @@ public class AssignTypesetterController(IMediator mediator) : ApiControllerBase(
 
 public record AssignTypesetterCommand : ArticleActionCommand<AssignTypesetterCommandBody, ArticleCommandResponse>
 {
-    internal override FileActionType ActionType => FileActionType.AssignTypesetter;
+    internal override ActionType ActionType => ActionType.AssignTypesetter;
 }
 
 public record AssignTypesetterCommandBody : CommandBody
