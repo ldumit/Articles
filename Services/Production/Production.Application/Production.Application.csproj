@@ -9,11 +9,14 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.7" />
+    <PackageReference Include="Stateless" Version="5.16.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.7.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\BuildingBlocks\Articles.AspNetCore\Articles.AspNetCore.csproj" />
+    <ProjectReference Include="..\..\..\Modules\FileService\FileService.AzureBlob\FileStorage.AzureBlob.csproj" />
+    <ProjectReference Include="..\..\..\Modules\FileService\FileService.Contracts\FileStorage.Contracts.csproj" />
     <ProjectReference Include="..\Production.Persistence\Production.Persistence.csproj" />
   </ItemGroup>
 

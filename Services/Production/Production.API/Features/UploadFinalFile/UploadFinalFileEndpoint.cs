@@ -1,22 +1,14 @@
 ﻿using FastEndpoints;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Production.API.Features.UploadAuthorsProof;
-using Production.Application;
 using Production.Persistence.Repositories;
 using Production.Domain.Entities;
 using Production.Domain.Enums;
-using Articles.Exceptions;
-using System.Net;
-using Azure;
-using System;
-using AssetType = Production.Domain.Entities.AssetType;
 using FileStorage.Contracts;
 
 namespace Production.API.Features;
 
 [Authorize(Roles = "TSOF")]
-[HttpPut("articles/{articleId:int}/typesetter")]
+[HttpPut("articles/{articleId:int}/upload")]
 public class UploadFinalFileEndpoint(IFileService _fileService, IServiceProvider serviceProvider)
     : BaseEndpoint<UploadFinalFileCommand, UploadFileResponse>(serviceProvider)
 {
@@ -26,38 +18,65 @@ public class UploadFinalFileEndpoint(IFileService _fileService, IServiceProvider
 		{
 				using var transaction = _articleRepository.BeginTransaction();
 
-				var article = _articleRepository.GetById(command.ArticleId);
+				var article = _articleRepository.GetById(command.ArticleId, throwNotFound:true);
 				
-				var asset = FindEntity(command);
+				var asset = FindAsset(command);
 				bool isNew = asset is null;
 				if (isNew)
-						asset = CreateEntity(command);
+						asset = CreateAsset(command);
 
-				var uploadSession = await UploadFile(command);
+				var uploadResponse = await UploadFile(command, asset);
 
 				//_fileService.UploadFile(asset, uploadSession, ct);
 				//asset.IsNewVersion;
 				//asset.IsFileRequested;
 		}
 
-		private async Task<UploadResponse> UploadFile(UploadFileCommand command)
+		private async Task<UploadResponse> UploadFile(UploadFileCommand command, Asset asset)
 		{
-				using var fileContent = command.File.OpenReadStream();
-				return await _fileService.UploadFile(command.FileServerId,
-																															 command.File.FileName,
-																															 _assetProvider.ContentType(command.File.ContentType),
-																															 fileContent);
+				var filePath= $"{command.ArticleId}/{asset.Name}/{asset.AssetNumber}";
+				//talk about tags
+				return await _fileService.UploadFile(filePath, command.File, 
+						new Dictionary<string, string> 
+						{ {"entity", nameof(Asset)},
+							{"entityId", asset.Id.ToString()}
+						});
 		}
-		protected virtual Asset FindEntity(UploadFileCommand command)
+
+		private async Task<Domain.Entities.File> CreateFile (UploadFileCommand command, Asset asset)
+		{
+				//await CheckAndCompleteRequestedFile(asset);
+
+				//var latestFile = new File();
+				//_mapper
+				//		.MultiMap(command, ref latestFile)
+				//		.MultiMap(uploadSession, ref latestFile)
+				//		;
+				//if (validatedZipContent != null && !validatedZipContent.ZipContent.IsNullOrEmpty())
+				//{
+				//		foreach (var content in validatedZipContent.ZipContent)
+				//		{
+				//				latestFile.ZipContentFiles.Add(_mapper.Map<ZipContentFile>(content));
+				//		}
+				//		latestFile.ErrorMessage = GetXmlErrorMessage(validatedZipContent.ZipContent);
+				//}
+				//asset.Files.Add(latestFile);
+				////asset.LatestFile = latestFile;
+				//return latestFile;
+
+				return new Domain.Entities.File() { FileServerId = "", Name="", OriginalName=""};
+		}
+
+		protected virtual Asset FindAsset(UploadFileCommand command)
 		{
 				return _assetRepository.GetByTypeAndNumber(command.ArticleId, command.AssetType, command.GetAssetNumber());
 		}
 
-		protected virtual Asset CreateEntity(UploadFileCommand command)
+		protected virtual Asset CreateAsset(UploadFileCommand command)
 		{
 				var assetType = _assetRepository.GetAssetType(command.AssetType);
 
-				var asset = new Asset()
+				return new Asset()
 				{
 						Name = assetType.Name,
 						Type = assetType,
@@ -66,14 +85,5 @@ public class UploadFinalFileEndpoint(IFileService _fileService, IServiceProvider
 						ArticleId = command.ArticleId,
 						AssetNumber = command.GetAssetNumber(),
 				};
-
-
-				//_mapper
-				//		.MultiMap(command, ref asset)
-				//		.MultiMap(_assetProvider, ref asset);
-				//_assetRepository.Add(asset);
-
-				//CreateFileNameAndFileServerId(command);
-				return asset;
 		}
 }

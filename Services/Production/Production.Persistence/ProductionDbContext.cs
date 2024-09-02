@@ -1,9 +1,6 @@
 ﻿using Articles.System;
-using Articles.Entitities;
-using Articles.Settings;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Articles.EntityFrameworkCore;
 using Production.Domain.Entities;
 using Production.Persistence.EntityConfigurations;
@@ -11,24 +8,9 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace Production.Persistence;
 
-public partial class ProductionDbContext : DbContext, IMultitenancy
+public partial class ProductionDbContext(DbContextOptions<ProductionDbContext> _options, IMemoryCache _cache, IMediator _mediator)
+    : DbContext(_options)
 {
-    private readonly IMediator _mediator;
-    private readonly IMemoryCache _cache;
-
-
-		public int TenantId { get; set; }
-    public ProductionDbContext(DbContextOptions<ProductionDbContext> options, IMemoryCache cache):base(options)
-    {
-        _cache = cache;
-    }
-    public ProductionDbContext(DbContextOptions<ProductionDbContext> options, IOptions<TenantConfig> tenantConfig, IMediator mediator)
-        : base(options)
-    {
-        _mediator = mediator;
-
-        TenantId = tenantConfig.Value.TenantId;
-    }
 
     #region Entities
     public virtual DbSet<Article> Articles { get; set; }
@@ -88,17 +70,6 @@ public partial class ProductionDbContext : DbContext, IMultitenancy
         where TEntity : class
         => _cache.GetOrCreate(entry => this.Set<TEntity>().ToList());
 
-
-
-		//todo
-		[Obsolete("Use the async method because it dispatches the domain events also")]
-    public override int SaveChanges()
-    {
-        SetSpaceId();
-
-        return base.SaveChanges();
-    }
-
     public async Task<int> TrySaveChangesAsync(CancellationToken cancellationToken = default)
     {
         try
@@ -145,28 +116,9 @@ public partial class ProductionDbContext : DbContext, IMultitenancy
 
     private async Task<int> SaveChangesImpl(CancellationToken cancellationToken = default)
     {
-        SetSpaceId();
-
         return await base.SaveChangesAsync(cancellationToken);
     }
 
-    private void SetSpaceId()
-    {
-        if (!TenantId.Equals(0))
-        {
-            //this.ChangeTracker.DetectChanges();
-            var entries = this.ChangeTracker.Entries()
-                .Where(t => t.State == EntityState.Added);
-
-            foreach (var entry in entries)
-            {
-                if (entry.Entity is IMultitenancy)
-                {
-                    ((IMultitenancy)entry.Entity).TenantId = TenantId;
-                }
-            }
-        }
-    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

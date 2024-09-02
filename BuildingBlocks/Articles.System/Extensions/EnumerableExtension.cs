@@ -9,7 +9,8 @@ public static class EnumerableExtensions
         return enumerable == null || !enumerable.Any();
     }
     public static bool IsNullOrEmpty<T>(this Dictionary<T, T> dict)
-    {
+				where T : notnull
+		{
         return dict is null || dict.Count == 0;
     }
 

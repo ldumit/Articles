@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Production.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
@@ -11,13 +10,7 @@ public interface IArticleCommand
 {
     int ArticleId { get; set; }
 }
-public interface IFileActionCommand : IArticleCommand
-{
-}
 
-public interface IFileActionResponse
-{
-}
 
 public abstract record ArticleActionCommand<TResponse> : IArticleCommand, IRequest<TResponse>
 {
@@ -40,12 +33,6 @@ public abstract record ArticleActionCommand<TBody, TResponse> : ArticleActionCom
 
     internal override string ActionComment => Body?.Comment;
     internal override DiscussionType DiscussionGroupType => Body.DiscussionType;
-}
-
-public abstract record FileActionCommand<TResponse> : ArticleActionCommand<TResponse>, IFileActionCommand, IRequest<TResponse>
-    where TResponse : IFileActionResponse
-{
-    internal int FileId { get; set; }
 }
 
 public record CommandBody

@@ -1,4 +1,5 @@
 ﻿using Articles.Entitities;
+using Articles.Security;
 using Microsoft.AspNetCore.Identity;
 
 namespace Auth.Domain.Models;

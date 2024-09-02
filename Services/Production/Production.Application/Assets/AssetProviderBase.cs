@@ -27,7 +27,7 @@ public abstract class AssetProviderBase
     public virtual string CreateFileName(string fileExtension) => $"{AssetName}.{fileExtension}";
 
     public virtual string CreateFileServerId(int articleId, string fileExtension = null) => $"{articleId}/{Description.ToLower().Replace("'", "").Replace(" ", "-")}";
-    public virtual FileStatus DefaultFileStatusId => FileStatus.UPLOADED;
+    public virtual FileStatus DefaultFileStatusId => FileStatus.Uploaded;
     public virtual int AssetNumber { get; protected set; }
     public string CreateSubmissionName(string fileName, string fileExtension)
         => Path.GetExtension(fileName) == string.Empty ? $"{fileName}.{fileExtension}" : fileName;

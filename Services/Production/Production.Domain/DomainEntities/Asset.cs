@@ -10,8 +10,8 @@
 
 				public string CreateFileName(string fileExtension) => $"{AssetName}.{fileExtension}";
 
-				public bool IsNewVersion => this.LatestFile != null;
+				public bool IsNewVersion => this.LatestFileRef != null;
 
-				public bool IsFileRequested => this.LatestFile?.File.StatusId == Enums.FileStatus.NEW_VERSION_REQUESTED;
+				public bool IsFileRequested => this.LatestFileRef?.File.StatusId == Enums.FileStatus.Requested;
 		}
 }

@@ -38,7 +38,7 @@ internal class AssetEntityConnfiguration : AuditedEntityConfiguration<Asset>
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
 
-        entity.HasOne(e => e.LatestFile).WithOne(e => e.Asset)
+        entity.HasOne(e => e.LatestFileRef).WithOne(e => e.Asset)
             .HasForeignKey<AssetLatestFile>(e => e.AssetId)
             .IsRequired(true)
             .OnDelete(DeleteBehavior.Cascade);

@@ -22,6 +22,8 @@ public partial class Asset : AuditedEntity
 
 
     public int LatestFileId { get; set; }
-    public virtual AssetLatestFile LatestFile { get; set; } = null!;
-    public int LatestVersion => this.LatestFile?.File.Version ?? 0;
+    public virtual AssetLatestFile LatestFileRef { get; set; } = null!;
+
+    public File LatestFile => this.LatestFileRef.File;
+    public int LatestVersion => this.LatestFileRef?.File.Version ?? 0;
 }

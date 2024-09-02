@@ -1,4 +1,5 @@
-﻿using Azure.Core;
+﻿using Articles.System;
+using Azure.Core;
 using Azure.Storage.Blobs;
 using FileStorage.Contracts;
 using Microsoft.AspNetCore.Http;
@@ -14,27 +15,27 @@ public class FileService(BlobServiceClient _blobServiceClient, IOptions<FileServ
 				BlobContainerClient containerClient = await _blobServiceClient.CreateBlobContainerAsync(name);
 		}
 
-		public async Task<UploadResponse> UploadFile(string containerName, string fileName, IFormFile file, params string[] tags)
+		public async Task<UploadResponse> UploadFile(string filePath, IFormFile file, Dictionary<string, string>? tags = null)
 		{
 				var container = _blobServiceClient.GetBlobContainerClient(_fileServerOptions.Value.Container);
 
-				var blob = container.GetBlobClient(fileName);
+				var blob = container.GetBlobClient(filePath);
 				var result = await blob.UploadAsync(file.OpenReadStream(), overwrite: false);
 				
 				//talk - use tags/metadata to search the files based on the original entity name/id
-				var res = blob.SetTags(new Dictionary<string, string>());
+				if(tags.IsNullOrEmpty())
+						blob.SetTags(tags);
 
-				return new UploadResponse("", "");
+				return new UploadResponse(filePath, result.Value.VersionId);
 		}
 
-		public async Task<UploadResponse> UploadFile(string fileName, IFormFile file)
-		{
-				return await UploadFile(_fileServerOptions.Value.Container, fileName, file);
-		}
+		//public async Task<UploadResponse> UploadFile(string fileName, IFormFile file)
+		//{
+		//		return await UploadFile(_fileServerOptions.Value.Container, fileName, file);
+		//}
 
-		public async Task<UploadResponse> UploadFile(UploadRequest request)
-		{
-				var fileName = $"{request.EntityId}/{request.DocumentName}/{request.Version}";
-				return await UploadFile(_fileServerOptions.Value.Container, fileName, request.File);
-		}
+		//public async Task<UploadResponse> UploadFile(UploadRequest request)
+		//{			
+		//		return await UploadFile(_fileServerOptions.Value.Container, request.FilePath, request.File, request.Tags);
+		//}
 }

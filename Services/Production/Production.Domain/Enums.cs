@@ -72,19 +72,15 @@ public enum ArticleStage
     Published = 305    
 }
 
+//todo unify it with AssetStatus and keep only one
 public enum FileStatus
 {
-    UPLOADED = 1,
-    APPROVED = 2,
-    PUBLISHED = 3,
-    NEW_VERSION_REQUESTED = 4,
-    UN_APPROVED = 5,
-    SYSTEM_GENERATED = 6,
-    PENDING_PROVISION = 7,
-    SCHEDULED_FOR_PUBLICATION = 9,
-    DELETED = 10,
-    DEPOSITED = 11,
-    FAILED = 12
+		Deleted = 0,
+		Requested = 1,
+		Uploaded = 2,
+		Approved = 3,
+		ScheduledForPublication = 4,
+		Published = 5
 }
 
 public enum CommentType

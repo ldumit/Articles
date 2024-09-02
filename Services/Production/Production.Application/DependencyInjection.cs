@@ -1,5 +1,7 @@
 ﻿using Articles.AspNetCore;
 using Articles.System;
+using FileStorage.AzureBlob;
+using FileStorage.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,8 +33,9 @@ public static class DependencyInjection
         services.AddScoped<ClaimsProvider>();
         services.AddScoped<ArticleRepository>();
         services.AddScoped<IThreadSafeMemoryCache, MemoryCache>();
+				services.AddScoped<IFileService, FileService>();
 
 
-        return services;
+				return services;
     }
 }

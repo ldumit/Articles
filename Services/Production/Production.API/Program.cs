@@ -14,8 +14,11 @@ builder
     .Services.ConfigureOptions<FileServerOptions>(builder.Configuration);
 
 //talk - fluid vs normal
+builder.Services.AddControllers();
+
 builder.Services
-    .AddFastEndpoints()
+    .AddMemoryCache()
+		.AddFastEndpoints()
     .AddEndpointsApiExplorer()
 		.AddDistributedMemoryCache() //.AddMemoryCache()
     .AddApplicationServices(builder.Configuration)
@@ -45,6 +48,15 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseRouting();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+		endpoints.MapDefaultControllerRoute();
+
+});
+//app.
 app.UseFastEndpoints();
 
 #endregion

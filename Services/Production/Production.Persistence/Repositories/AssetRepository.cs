@@ -17,7 +17,7 @@ public class AssetRepository(ProductionDbContext _dbContext, IMemoryCache _cache
 {
     protected override IQueryable<Asset> Query()
     {
-        return base.Entity.Include(e => e.LatestFile);
+        return base.Entity.Include(e => e.LatestFileRef);
     }
 
     public override Asset GetById(int id, bool throwNotFound = false)
@@ -47,7 +47,7 @@ public class AssetRepository(ProductionDbContext _dbContext, IMemoryCache _cache
             .Include(x => x.Article)
             .Include(x => x.Article)
             .ThenInclude(x => x.Journal)
-            .Include(x => x.LatestFile)
+            .Include(x => x.LatestFileRef)
             .FirstOrDefaultAsync();
     }
 
@@ -56,14 +56,14 @@ public class AssetRepository(ProductionDbContext _dbContext, IMemoryCache _cache
         return await Where(x => x.ArticleId == articleId && x.TypeCode == typeId)
             .Include(x => x.Files)
             .Include(x => x.Article)
-            .Include(x => x.LatestFile)
+            .Include(x => x.LatestFileRef)
             .FirstOrDefaultAsync();
     }
 
     public async Task<Asset> GetWithArticleAsync(int assetId)
     {
         return await base.Entity
-            .Include(x => x.LatestFile)
+            .Include(x => x.LatestFileRef)
             .Include(x => x.Article)
             .FirstOrDefaultAsync(x => x.Id == assetId);
     }
@@ -77,7 +77,7 @@ public class AssetRepository(ProductionDbContext _dbContext, IMemoryCache _cache
     {
         return await base.Entity
             .Include(x => x.Article)
-            .Include(x => x.LatestFile)
+            .Include(x => x.LatestFileRef)
                 .ThenInclude(x=> x.File)
                     .ThenInclude(x => x.FileActions)
             .FirstOrDefaultAsync(x => x.Id == assetId);
@@ -86,7 +86,7 @@ public class AssetRepository(ProductionDbContext _dbContext, IMemoryCache _cache
     public async Task<Asset> GetWithLatestFileAsync(int assetId)
     {
         return await base.Entity
-        .Include(x => x.LatestFile)
+        .Include(x => x.LatestFileRef)
         .FirstOrDefaultAsync(x => x.Id == assetId);
     }
 

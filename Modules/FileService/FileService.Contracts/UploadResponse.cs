@@ -2,5 +2,9 @@
 
 namespace FileStorage.Contracts;
 
-public record UploadRequest(string EntityId, string DocumentName, int Version, IFormFile File);
-public record UploadResponse(string EntityId, string DocumentId);
+public record FileMetadata(string EntityNamme, string EntityId);
+
+public record UploadRequest(string FilePath, IFormFile File, Dictionary<string,string>? Tags = null);
+
+public record UploadRequest2(string EntityId, string DocumentName, int Version, IFormFile File);
+public record UploadResponse(string filePath, string fileId);
