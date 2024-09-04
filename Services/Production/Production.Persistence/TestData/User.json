@@ -1,79 +1,58 @@
 [
-  {
-    //1
-    "FirstName": "Laurentiu",
-    "LastName": "Dumitrescu",
-    "Title": "Mr",
-    "Email": "dumitrescu.laurentiu@gmail.com"
-  },
-  {
-    //2
-    "FirstName": "Author",
-    "LastName": "1",
-    "Title": "Mr",
-    "Email": "author.1@articles.org"
-  },
-  {
-    //3
-    "FirstName": "Author",
-    "LastName": "2",
-    "Title": "Ms",
-    "Email": "author.2@articles.com"
-  },
-  {
-    //4
-    "FirstName": "Author",
-    "LastName": "3",
-    "Title": "Dr",
-    "Email": "author.3@articles.com"
-  },
-  {
-    ///5
-    "FirstName": "Co-Author",
-    "LastName": "1",
-    "Title": "Ms",
-    "Email": "coauthor.1@articles.com"
-  },
-  {
-    ///6
-    "FirstName": "Co-Author",
-    "LastName": "2",
-    "Title": "Mr",
-    "Email": "coauthor.2@articles.com"
-  },
-  {
-    //7
-    "FirstName": "Typesetter",
-    "LastName": "1",
-    "Title": "Mr",
-    "Email": "typesetter.1@articles.com"
-  },
-  {
-    //8
-    "FirstName": "Typesetter",
-    "LastName": "2",
-    "Title": "Ms",
-    "Email": "typesetter.2@articles.com"
-  },
-  {
-    //9
-    "FirstName": "Reviewer",
-    "LastName": "1",
-    "Title": "Mr",
-    "Email": "reviewer.1@articles.com"
-  },
-  {
-    //10
-    "FirstName": "Reviewer",
-    "LastName": "2",
-    "Title": "Ms",
-    "Email": "reviewer.2@articles.com"
-  },
-  {
-    //11
-    "FirstName": "POF",
-    "LastName": "1",
-    "Title": "Ms",
-    "Email": "pof.1@articles.com"
-  }
+	{
+		"Id": 1,
+		"PersonId": 1,
+		"Role": "ADMIN"
+	},
+	{
+		"Id": 2,
+		"PersonId": 2,
+		"Role": "AUT"
+	},
+	{
+		"Id": 3,
+		"PersonId": 3,
+		"Role": "AUT"
+	},
+	{
+		"Id": 4,
+		"PersonId": 4,
+		"Role": "AUT"
+	},
+	{
+		"Id": 5,
+		"PersonId": 5,
+		"Role": "COAUT"
+	},
+	{
+		"Id": 6,
+		"PersonId": 6,
+		"Role": "COAUT"
+	},
+	{
+		//7
+		"Id": 7,
+		"PersonId": 7,
+		"Role": "TSOF"
+	},
+	{
+		"Id": 8,
+		"PersonId": 8,
+		"Role": "TSOF"
+	},
+	{
+		"Id": 9,
+		"PersonId": 9,
+		"Role": "RE"
+	},
+	{
+		"Id": 10,
+		"PersonId": 10,
+		"Role": "RE"
+	},
+	{
+		"Id": 11,
+		"PersonId": 11,
+		"Role": "POF"
+	}
 ]

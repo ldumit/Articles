@@ -5,15 +5,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Production.Domain.Entities;
 using Production.Domain.Enums;
-using System.Linq;
 
-//using Production.Domain.Enums;
-using System.Net;
 using AssetType = Production.Domain.Entities.AssetType;
 
 namespace Production.Persistence.Repositories;
 
-public class AssetRepository(ProductionDbContext _dbContext, IMemoryCache _cache) : RepositoryBase<Asset>(_dbContext)
+public class AssetRepository(ProductionDbContext _dbContext, IMemoryCache _cache) : RepositoryBase<ProductionDbContext, Asset>(_dbContext)
 {
     protected override IQueryable<Asset> Query()
     {

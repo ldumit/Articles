@@ -1,12 +1,7 @@
-﻿using Articles.Entitities;
+﻿namespace Production.Domain.Entities;
 
-namespace Production.Domain.Entities;
-
-public partial class Typesetter : Entity
+public partial class Typesetter : Person
 {
     public bool? IsDefault { get; set; }
     public string? CompanyName { get; set; }
-
-    public int UserId { get; set; }
-    public virtual User User { get; set; } = null!;
 }

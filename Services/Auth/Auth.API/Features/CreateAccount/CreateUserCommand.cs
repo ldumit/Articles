@@ -1,4 +1,5 @@
-﻿using Auth.Domain;
+﻿using Articles.Security;
+using Auth.Domain;
 
 namespace Auth.API.Features;
 

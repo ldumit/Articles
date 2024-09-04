@@ -14,7 +14,7 @@ public class AssignTypesetterCommandHandler(IServiceProvider serviceProvider)
         
         ChangeStage(article, command);
 
-        article.Typesetter = _mapper.Map<Typesetter>(command);
+        article.SetTypesetter(_mapper.Map<Typesetter>(command));
         await _articleRepository.SaveChangesAsync();
 
         //todo - transform into domain event

@@ -13,6 +13,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\BuildingBlocks\Articles.Entitities\Articles.Entitities.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.Exceptions\Articles.Exceptions.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.Security\Articles.Security.csproj" />
     <ProjectReference Include="..\..\..\BuildingBlocks\Articles.System\Articles.System.csproj" />
   </ItemGroup>
 

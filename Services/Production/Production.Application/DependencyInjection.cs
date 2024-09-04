@@ -1,7 +1,9 @@
 ﻿using Articles.AspNetCore;
+using Articles.Security;
 using Articles.System;
 using FileStorage.AzureBlob;
 using FileStorage.Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,9 +32,20 @@ public static class DependencyInjection
         });
 
 
-        services.AddScoped<ClaimsProvider>();
-        services.AddScoped<ArticleRepository>();
-        services.AddScoped<IThreadSafeMemoryCache, MemoryCache>();
+				services.AddScoped<IAuthorizationHandler, ArticleRoleAuthorizationHandler>();
+
+				services.AddScoped<ClaimsProvider>();
+
+        //talk - SOLID principle interface segragation, injecting multiple interfaces using the same class
+				services.AddScoped<IClaimsProvider, HttpContextProvider>(); 
+        services.AddScoped<IRouteProvider, HttpContextProvider>();
+        services.AddScoped<HttpContextProvider>();
+
+        services.AddScoped<IArticleRoleChecker, ActorRepository>();
+				services.AddScoped<ArticleRepository>();
+				services.AddScoped<AssetRepository>(); 
+
+				services.AddScoped<IThreadSafeMemoryCache, MemoryCache>();
 				services.AddScoped<IFileService, FileService>();
 
 

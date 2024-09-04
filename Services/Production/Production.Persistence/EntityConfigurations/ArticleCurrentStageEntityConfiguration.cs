@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Articles.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Production.Domain.Entities;
 
@@ -8,14 +9,16 @@ internal class ArticleCurrentStageEntityConfiguration : IEntityTypeConfiguration
 {
     public void Configure(EntityTypeBuilder<ArticleCurrentStage> entity)
     {
-        entity.HasKey(e => e.ArticleId);
-        entity.HasIndex(e => e.StageId).IsUnique();
+				entity.HasKey(e => e.ArticleId);
+				entity.HasIndex(e => e.Stage);
 
-        entity.Property(e => e.StageId).IsRequired().HasConversion<int>();
+        entity.Property(e => e.Stage).IsRequired().HasEnumConversion();
 
-        entity.HasOne(e => e.Stage).WithOne()
-            .HasForeignKey<ArticleCurrentStage>(e => e.StageId)
-            .IsRequired()
-            .OnDelete(DeleteBehavior.Restrict);
-    }
+
+				entity.HasOne<Stage>().WithMany()
+					 .HasForeignKey(e => e.Stage)
+					 .HasPrincipalKey(e => e.Code)
+					 .IsRequired()
+					 .OnDelete(DeleteBehavior.Restrict);
+		}
 }

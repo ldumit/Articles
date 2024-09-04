@@ -1,4 +1,4 @@
-using Articles.AspNetCore.Dependencies;
+using Articles.Security;
 using FastEndpoints;
 using Production.Application;
 using Articles.EntityFrameworkCore;
@@ -46,9 +46,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
-app.UseAuthorization();
 
 app.UseRouting();
+
+app.UseAuthorization();
+
 
 app.UseEndpoints(endpoints =>
 {

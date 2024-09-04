@@ -6,13 +6,14 @@ using System.Net;
 namespace Articles.EntityFrameworkCore;
 
 
-public abstract class TenantRepositoryBase<TEntity, TKey> : RepositoryBase<TEntity, TKey>
-    where TEntity : class, IEntity<TKey>
+public abstract class TenantRepositoryBase<TContext, TEntity, TKey> : RepositoryBase<TContext, TEntity, TKey>
+		where TContext : DbContext
+		where TEntity : class, IEntity<TKey>
     where TKey : struct
 {
     IMultitenancy _multitenancy;
 
-    protected TenantRepositoryBase(DbContext context, IMultitenancy multitenancy) : base(context)
+    protected TenantRepositoryBase(TContext context, IMultitenancy multitenancy) : base(context)
     {
         _multitenancy = multitenancy;
     }
@@ -29,7 +30,7 @@ public abstract class TenantRepositoryBase<TEntity, TKey> : RepositoryBase<TEnti
 
     public virtual async Task<TEntity> GetAsync(TKey id)
     {
-        return await _context.Set<TEntity>().FindAsync(_multitenancy.TenantId, id);
+        return await _dbContext.Set<TEntity>().FindAsync(_multitenancy.TenantId, id);
     }
 
 }

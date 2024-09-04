@@ -27,7 +27,7 @@ public class LoginEndpoint(UserManager<User> _userManager, SignInManager<User> _
 
 				var userRoles = await _userManager.GetRolesAsync(user);
 
-				var jwtToken = _tokenFactory.GenerateJWTToken(user.Id.ToString(), command.Email, userRoles, Array.Empty<Claim>());
+				var jwtToken = _tokenFactory.GenerateJWTToken(user.Id.ToString(), user.FullName, command.Email, userRoles, Array.Empty<Claim>());
 				
 				var refreshToken = _tokenFactory.GenerateRefreshToken();
 				user.RefreshTokens.Add(refreshToken);

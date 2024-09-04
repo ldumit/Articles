@@ -10,7 +10,7 @@ namespace Production.Domain.Entities
         public required string Type { get; set; }
         public required string Doi { get; set; }
         public DateTime SubmissionDate { get; set; }
-        public required virtual User SubmissionUser { get; set; }
+        public required virtual Person SubmittedBy { get; set; }
         public DateTime AcceptedOn { get; set; }
 
         //public virtual ICollection<Author> Authors { get; } = new List<Author>();

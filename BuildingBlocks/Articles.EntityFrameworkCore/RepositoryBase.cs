@@ -34,26 +34,28 @@ public interface IRepository<TEntity, TKey>
     //bool SoftDelete(TKey id);
 }
 
-public abstract class RepositoryBase<TEntity> : RepositoryBase<TEntity, int>
-    where TEntity : class, IEntity
+public abstract class RepositoryBase<TContext, TEntity> : RepositoryBase<TContext, TEntity, int>
+		where TContext : DbContext
+		where TEntity : class, IEntity
 {
-    public RepositoryBase(DbContext context, IMultitenancy? multitenancy = null) : base(context)
+    public RepositoryBase(TContext dbContext, IMultitenancy? multitenancy = null) : base(dbContext)
     {
     }
 }
 
-public abstract class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
-    where TEntity : class, IEntity<TKey>
+public abstract class RepositoryBase<TContext, TEntity, TKey> : IRepository<TEntity, TKey>
+		where TContext : DbContext
+		where TEntity : class, IEntity<TKey>
     where TKey : struct
 {
-    protected readonly DbContext _context;
+    protected readonly TContext _dbContext;
 
-    public RepositoryBase(DbContext context)
+    public RepositoryBase(TContext dbContext)
     {
-        _context = context;
+        _dbContext = dbContext;
     }
 
-    protected DbSet<TEntity> Entity => _context.Set<TEntity>();
+    protected DbSet<TEntity> Entity => _dbContext.Set<TEntity>();
 
     protected virtual IQueryable<TEntity> Query() => Entity;
 
@@ -76,7 +78,7 @@ public abstract class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
 
     public virtual async Task<TEntity> GetAsync(TKey id)
     {
-        return await _context.Set<TEntity>().FindAsync(id);
+        return await _dbContext.Set<TEntity>().FindAsync(id);
     }
 
     public bool IsValid(TKey id)
@@ -86,7 +88,7 @@ public abstract class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
 
     public IQueryable<TDto> GetAll<TDto>(Expression<Func<TEntity, TDto>> projection, Expression<Func<TEntity, object>> orderBy)
     {
-        var items = _context.Set<TEntity>().AsNoTracking().OrderBy(orderBy);
+        var items = _dbContext.Set<TEntity>().AsNoTracking().OrderBy(orderBy);
 
         //var expression = new ProjectionExpressionOptimiser().Optimise(projection);
 
@@ -98,31 +100,31 @@ public abstract class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
     }
     public virtual IQueryable<TEntity> GetAll()
     {
-        return _context.Set<TEntity>();
+        return _dbContext.Set<TEntity>();
     }
 
-    public virtual IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> predicate) { return _context.Set<TEntity>().Where(predicate); }
-    public virtual IQueryable<TEntity> Where(Expression<Func<TEntity, int, bool>> predicate) { return _context.Set<TEntity>().Where(predicate); }
+    public virtual IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> predicate) { return _dbContext.Set<TEntity>().Where(predicate); }
+    public virtual IQueryable<TEntity> Where(Expression<Func<TEntity, int, bool>> predicate) { return _dbContext.Set<TEntity>().Where(predicate); }
 
     public virtual TEntity Add(TEntity entity)
     {
-        return _context.Set<TEntity>().Add(entity).Entity;
+        return _dbContext.Set<TEntity>().Add(entity).Entity;
     }
 
     public virtual async Task<TEntity> AddAsync(TEntity entity)
     {
-        var addedEntity = await _context.Set<TEntity>().AddAsync(entity);
+        var addedEntity = await _dbContext.Set<TEntity>().AddAsync(entity);
         return addedEntity.Entity;
     }
 
     public virtual TEntity Update(TEntity entity)
     {
-        return _context.Set<TEntity>().Update(entity).Entity;
+        return _dbContext.Set<TEntity>().Update(entity).Entity;
     }
 
     public virtual void Delete(TEntity entity)
     {
-        _context.Set<TEntity>().Remove(entity);
+        _dbContext.Set<TEntity>().Remove(entity);
     }
 
     public virtual bool Delete(TKey id)
@@ -130,7 +132,7 @@ public abstract class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
         TEntity entity = GetById(id);
         if (entity != null)
         {
-            _context.Set<TEntity>().Remove(entity);
+            _dbContext.Set<TEntity>().Remove(entity);
             return true;
         }
         return false;
@@ -138,22 +140,22 @@ public abstract class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
 
     public virtual void AddRange(IEnumerable<TEntity> entities)
     {
-        _context.Set<TEntity>().AddRange(entities);
+        _dbContext.Set<TEntity>().AddRange(entities);
     }
 
     public virtual void RemoveRange(IEnumerable<TEntity> entities)
     {
-        _context.Set<TEntity>().RemoveRange(entities);
+        _dbContext.Set<TEntity>().RemoveRange(entities);
     }
 
     public virtual void UpdateRange(IEnumerable<TEntity> entities)
     {
-        _context.Set<TEntity>().UpdateRange(entities);
+        _dbContext.Set<TEntity>().UpdateRange(entities);
     }
 
     public Task<int> SaveChangesAsync()
     {
-        return _context.SaveChangesAsync();
+        return _dbContext.SaveChangesAsync();
     }
     //public Task<int> TrySaveChangesAsync()
     //{
@@ -162,11 +164,11 @@ public abstract class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
 
     public IDbContextTransaction BeginTransaction()
     {
-        return _context.Database.BeginTransaction();
+        return _dbContext.Database.BeginTransaction();
     }
     public void ClearTracking()
     {
-        _context.ChangeTracker.Clear();
+        _dbContext.ChangeTracker.Clear();
     }
 
     //public bool SoftDelete(TKey id)

@@ -1,5 +1,5 @@
 using Auth.API;
-using Articles.AspNetCore.Dependencies;
+using Articles.Security;
 using FastEndpoints;
 using Auth.Application;
 using Articles.EntityFrameworkCore;

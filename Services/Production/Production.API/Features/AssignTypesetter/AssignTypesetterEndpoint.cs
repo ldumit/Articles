@@ -1,27 +1,31 @@
 ﻿using FastEndpoints;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Production.API.Features.UploadAuthorsProof;
-using Production.Application;
 using Production.Persistence.Repositories;
 using Production.Domain.Entities;
 using Production.Domain.Enums;
+using Production.Persistence;
 
 namespace Production.API.Features.AssignTypesetter
 {
-    [Authorize(Roles = "POF")]
-    //[AllowAnonymous]
+		[Authorize(Roles = "POF")]
     [HttpPut("articles/{articleId:int}/typesetter")]
-    public class AssignTypesetterEndpoint(IServiceProvider serviceProvider) 
+    public class AssignTypesetterEndpoint(ProductionDbContext _dbContext, IServiceProvider serviceProvider) 
         : BaseEndpoint<AssignTypesetterCommand, ArticleCommandResponse>(serviceProvider)
     {
         public override async Task HandleAsync(AssignTypesetterCommand command, CancellationToken ct)
         {
             var article = _articleRepository.GetById(command.ArticleId);
-            ChangeStage(article, command);
 
-            article.TypesetterId = command.Body.UserId;
-            await _articleRepository.SaveChangesAsync();
+						//var typesetter1 = _dbContext.Persons.Single(t => t.UserId == command.Body.UserId);
+            //var types = typesetter as Typesetter;
+
+            var typesetter = _dbContext.Typesetters.Single(t => t.UserId == command.Body.UserId);
+						article.SetTypesetter(typesetter);
+						article.SetStage(GetNextStage(article), command.ActionType, command.ActionComment, _claimsProvider.GetUserId(), null);
+
+            article.Actors.Add(new ArticleActor() { PersonId = 1, Role = Articles.Security.UserRoleType.AUT });
+
+						await _articleRepository.SaveChangesAsync();
 
             //todo - transform into domain event
             await AddTypesetterToDiscussion(command.ArticleId, article);

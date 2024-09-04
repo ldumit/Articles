@@ -14,143 +14,67 @@ namespace Production.Persistence.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AssetTypes",
+                name: "AssetType",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DefaultCategoryId = table.Column<int>(type: "int", nullable: false),
-                    Code = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    ContentType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Code = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AssetTypes", x => x.Id);
-                    table.UniqueConstraint("AK_AssetTypes_Code", x => x.Code);
+                    table.PrimaryKey("PK_AssetType", x => x.Id);
+                    table.UniqueConstraint("AK_AssetType_Code", x => x.Code);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Stages",
+                name: "Stage",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    Code = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Stages", x => x.Id);
+                    table.PrimaryKey("PK_Stage", x => x.Id);
+                    table.UniqueConstraint("AK_Stage_Code", x => x.Code);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "Article",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Typesetters",
-                columns: table => new
-                {
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    IsDefault = table.Column<bool>(type: "bit", nullable: true, defaultValue: false),
-                    CompanyName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Typesetters", x => x.UserId);
-                    table.UniqueConstraint("AK_Typesetters_Id", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Typesetters_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Journals",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Abbreviation = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    DefaultTypesetterId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Journals", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Journals_Typesetters_DefaultTypesetterId",
-                        column: x => x.DefaultTypesetterId,
-                        principalTable: "Typesetters",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Articles",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    Doi = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    Doi = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     SubmitedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     SubmitedById = table.Column<int>(type: "int", nullable: false),
-                    CurrentStageId = table.Column<int>(type: "int", nullable: false),
+                    Stage = table.Column<string>(type: "nvarchar(64)", nullable: false),
                     JournalId = table.Column<int>(type: "int", nullable: false),
                     VolumeId = table.Column<int>(type: "int", nullable: false),
                     PublishedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     PublishedById = table.Column<int>(type: "int", nullable: true),
                     AcceptedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TypesetterId = table.Column<int>(type: "int", nullable: false),
                     CreatedById = table.Column<int>(type: "int", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
                     LastModifiedById = table.Column<int>(type: "int", nullable: false),
-                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValue: new DateTime(2024, 7, 26, 15, 45, 25, 925, DateTimeKind.Utc).AddTicks(6931))
+                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValue: new DateTime(2024, 9, 7, 10, 54, 0, 444, DateTimeKind.Utc).AddTicks(1569))
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Articles", x => x.Id);
+                    table.PrimaryKey("PK_Article", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Articles_Journals_JournalId",
-                        column: x => x.JournalId,
-                        principalTable: "Journals",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Articles_Typesetters_TypesetterId",
-                        column: x => x.TypesetterId,
-                        principalTable: "Typesetters",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Articles_Users_PublishedById",
-                        column: x => x.PublishedById,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Articles_Users_SubmitedById",
-                        column: x => x.SubmitedById,
-                        principalTable: "Users",
-                        principalColumn: "Id",
+                        name: "FK_Article_Stage_Stage",
+                        column: x => x.Stage,
+                        principalTable: "Stage",
+                        principalColumn: "Code",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -159,102 +83,69 @@ namespace Production.Persistence.Migrations
                 columns: table => new
                 {
                     ArticleId = table.Column<int>(type: "int", nullable: false),
-                    StageId = table.Column<int>(type: "int", nullable: false),
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Stage = table.Column<string>(type: "nvarchar(64)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ArticleCurrentStage", x => x.ArticleId);
                     table.ForeignKey(
-                        name: "FK_ArticleCurrentStage_Articles_ArticleId",
+                        name: "FK_ArticleCurrentStage_Article_ArticleId",
                         column: x => x.ArticleId,
-                        principalTable: "Articles",
+                        principalTable: "Article",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ArticleCurrentStage_Stages_StageId",
-                        column: x => x.StageId,
-                        principalTable: "Stages",
-                        principalColumn: "Id",
+                        name: "FK_ArticleCurrentStage_Stage_Stage",
+                        column: x => x.Stage,
+                        principalTable: "Stage",
+                        principalColumn: "Code",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Assets",
+                name: "Asset",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     AssetNumber = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
                     ArticleId = table.Column<int>(type: "int", nullable: false),
-                    TypeCode = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    TypeCode = table.Column<string>(type: "nvarchar(64)", nullable: false),
                     LatestFileId = table.Column<int>(type: "int", nullable: false),
                     CreatedById = table.Column<int>(type: "int", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
                     LastModifiedById = table.Column<int>(type: "int", nullable: false),
-                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValue: new DateTime(2024, 7, 26, 15, 45, 25, 932, DateTimeKind.Utc).AddTicks(5356))
+                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValue: new DateTime(2024, 9, 7, 10, 54, 0, 449, DateTimeKind.Utc).AddTicks(112))
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Assets", x => x.Id);
+                    table.PrimaryKey("PK_Asset", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Assets_Articles_ArticleId",
+                        name: "FK_Asset_Article_ArticleId",
                         column: x => x.ArticleId,
-                        principalTable: "Articles",
+                        principalTable: "Article",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Assets_AssetTypes_TypeCode",
+                        name: "FK_Asset_AssetType_TypeCode",
                         column: x => x.TypeCode,
-                        principalTable: "AssetTypes",
+                        principalTable: "AssetType",
                         principalColumn: "Code",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Authors",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: true),
-                    FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    FullName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    Country = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "AUT"),
-                    ArticleId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Authors", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Authors_Articles_ArticleId",
-                        column: x => x.ArticleId,
-                        principalTable: "Articles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Authors_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Comments",
+                name: "Comment",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ArticleId = table.Column<int>(type: "int", nullable: false),
                     TypeId = table.Column<int>(type: "int", nullable: false),
-                    Text = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: false),
+                    Text = table.Column<string>(type: "nvarchar(2048)", maxLength: 2048, nullable: false),
                     CreatedById = table.Column<int>(type: "int", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastModifiedById = table.Column<int>(type: "int", nullable: true),
@@ -262,17 +153,45 @@ namespace Production.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Comments", x => x.Id);
+                    table.PrimaryKey("PK_Comment", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Comments_Articles_ArticleId",
+                        name: "FK_Comment_Article_ArticleId",
                         column: x => x.ArticleId,
-                        principalTable: "Articles",
+                        principalTable: "Article",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "StageHistories",
+                name: "Person",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: true),
+                    PersonType = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
+                    Country = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
+                    Biography = table.Column<string>(type: "nvarchar(2048)", maxLength: 2048, nullable: true),
+                    ArticleId = table.Column<int>(type: "int", nullable: true),
+                    IsDefault = table.Column<bool>(type: "bit", nullable: true, defaultValue: false),
+                    CompanyName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Person", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Person_Article_ArticleId",
+                        column: x => x.ArticleId,
+                        principalTable: "Article",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StageHistory",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -283,17 +202,17 @@ namespace Production.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StageHistories", x => x.Id);
+                    table.PrimaryKey("PK_StageHistory", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_StageHistories_Articles_ArticleId",
+                        name: "FK_StageHistory_Article_ArticleId",
                         column: x => x.ArticleId,
-                        principalTable: "Articles",
+                        principalTable: "Article",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_StageHistories_Stages_StageId",
+                        name: "FK_StageHistory_Stage_StageId",
                         column: x => x.StageId,
-                        principalTable: "Stages",
+                        principalTable: "Stage",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -304,29 +223,75 @@ namespace Production.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    OriginalName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false, comment: "Full file name, with extension"),
-                    FileServerId = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    OriginalName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false, comment: "Full file name, with extension"),
+                    FileServerId = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     Size = table.Column<int>(type: "int", nullable: false, comment: "Size of the file in kilobytes"),
                     Version = table.Column<int>(type: "int", nullable: false),
                     StatusId = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, comment: "Final name of the file after renaming"),
-                    Extension = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false, comment: "Final name of the file after renaming"),
+                    Extension = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
                     AssetId = table.Column<int>(type: "int", nullable: false),
                     LatestActionId = table.Column<int>(type: "int", nullable: false),
                     CreatedById = table.Column<int>(type: "int", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
                     LastModifiedById = table.Column<int>(type: "int", nullable: false),
-                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValue: new DateTime(2024, 7, 26, 15, 45, 25, 937, DateTimeKind.Utc).AddTicks(8372))
+                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValue: new DateTime(2024, 9, 7, 10, 54, 0, 452, DateTimeKind.Utc).AddTicks(1692))
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_File", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_File_Assets_AssetId",
+                        name: "FK_File_Asset_AssetId",
                         column: x => x.AssetId,
-                        principalTable: "Assets",
+                        principalTable: "Asset",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ArticleActor",
+                columns: table => new
+                {
+                    ArticleId = table.Column<int>(type: "int", nullable: false),
+                    PersonId = table.Column<int>(type: "int", nullable: false),
+                    Role = table.Column<string>(type: "nvarchar(450)", nullable: false, defaultValue: "AUT")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ArticleActor", x => new { x.ArticleId, x.PersonId, x.Role });
+                    table.ForeignKey(
+                        name: "FK_ArticleActor_Article_ArticleId",
+                        column: x => x.ArticleId,
+                        principalTable: "Article",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ArticleActor_Person_PersonId",
+                        column: x => x.PersonId,
+                        principalTable: "Person",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Journal",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    Abbreviation = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
+                    DefaultTypesetterId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Journal", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Journal_Person_DefaultTypesetterId",
+                        column: x => x.DefaultTypesetterId,
+                        principalTable: "Person",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -340,9 +305,9 @@ namespace Production.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_AssetLatestFile", x => x.AssetId);
                     table.ForeignKey(
-                        name: "FK_AssetLatestFile_Assets_AssetId",
+                        name: "FK_AssetLatestFile_Asset_AssetId",
                         column: x => x.AssetId,
-                        principalTable: "Assets",
+                        principalTable: "Asset",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -354,7 +319,7 @@ namespace Production.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "FileActions",
+                name: "FileAction",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -369,9 +334,9 @@ namespace Production.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FileActions", x => x.Id);
+                    table.PrimaryKey("PK_FileAction", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FileActions_File_FileId",
+                        name: "FK_FileAction_File_FileId",
                         column: x => x.FileId,
                         principalTable: "File",
                         principalColumn: "Id",
@@ -389,9 +354,9 @@ namespace Production.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_FileLatestAction", x => x.FileId);
                     table.ForeignKey(
-                        name: "FK_FileLatestAction_FileActions_ActionId",
+                        name: "FK_FileLatestAction_FileAction_ActionId",
                         column: x => x.ActionId,
-                        principalTable: "FileActions",
+                        principalTable: "FileAction",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -403,22 +368,22 @@ namespace Production.Persistence.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "AssetTypes",
-                columns: new[] { "Id", "Code", "DefaultCategoryId", "Name" },
+                table: "AssetType",
+                columns: new[] { "Id", "Code", "ContentType", "DefaultCategoryId", "Name" },
                 values: new object[,]
                 {
-                    { 1, "Manuscript", 1, "Manuscript" },
-                    { 2, "ReviewReport", 3, "Reviewer Report" },
-                    { 3, "AuthorsProof", 3, "Author's Proof" },
-                    { 4, "PublishersProof", 3, "Publisher's Proof" },
-                    { 5, "HTML", 3, "HTML" },
-                    { 6, "XML", 3, "XML Zip" },
-                    { 7, "Figure", 2, "HTML Figure" },
-                    { 8, "SupplementaryFile", 2, "Supplementary File" }
+                    { 1, "Manuscript", null, 1, "Manuscript" },
+                    { 2, "ReviewReport", null, 3, "Reviewer Report" },
+                    { 3, "AuthorsProof", null, 3, "Author's Proof" },
+                    { 4, "PublishersProof", null, 3, "Publisher's Proof" },
+                    { 5, "HTML", null, 3, "HTML" },
+                    { 6, "XML", null, 3, "XML Zip" },
+                    { 7, "Figure", null, 2, "HTML Figure" },
+                    { 8, "SupplementaryFile", null, 2, "Supplementary File" }
                 });
 
             migrationBuilder.InsertData(
-                table: "Stages",
+                table: "Stage",
                 columns: new[] { "Id", "Code", "Description", "Name" },
                 values: new object[,]
                 {
@@ -434,35 +399,49 @@ namespace Production.Persistence.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ArticleCurrentStage_StageId",
-                table: "ArticleCurrentStage",
-                column: "StageId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Articles_JournalId",
-                table: "Articles",
+                name: "IX_Article_JournalId",
+                table: "Article",
                 column: "JournalId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Articles_PublishedById",
-                table: "Articles",
+                name: "IX_Article_PublishedById",
+                table: "Article",
                 column: "PublishedById");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Articles_SubmitedById",
-                table: "Articles",
+                name: "IX_Article_Stage",
+                table: "Article",
+                column: "Stage");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Article_SubmitedById",
+                table: "Article",
                 column: "SubmitedById");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Articles_Title",
-                table: "Articles",
+                name: "IX_Article_Title",
+                table: "Article",
                 column: "Title");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Articles_TypesetterId",
-                table: "Articles",
-                column: "TypesetterId");
+                name: "IX_ArticleActor_PersonId",
+                table: "ArticleActor",
+                column: "PersonId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ArticleCurrentStage_Stage",
+                table: "ArticleCurrentStage",
+                column: "Stage");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Asset_ArticleId",
+                table: "Asset",
+                column: "ArticleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Asset_TypeCode",
+                table: "Asset",
+                column: "TypeCode");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AssetLatestFile_FileId",
@@ -471,39 +450,14 @@ namespace Production.Persistence.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Assets_ArticleId",
-                table: "Assets",
-                column: "ArticleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Assets_TypeCode",
-                table: "Assets",
-                column: "TypeCode");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AssetTypes_Code",
-                table: "AssetTypes",
+                name: "IX_AssetType_Code",
+                table: "AssetType",
                 column: "Code",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Authors_ArticleId",
-                table: "Authors",
-                column: "ArticleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Authors_FirstName_LastName",
-                table: "Authors",
-                columns: new[] { "FirstName", "LastName" });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Authors_UserId",
-                table: "Authors",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Comments_ArticleId_TypeId",
-                table: "Comments",
+                name: "IX_Comment_ArticleId_TypeId",
+                table: "Comment",
                 columns: new[] { "ArticleId", "TypeId" },
                 unique: true);
 
@@ -513,8 +467,8 @@ namespace Production.Persistence.Migrations
                 column: "AssetId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FileActions_FileId",
-                table: "FileActions",
+                name: "IX_FileAction_FileId",
+                table: "FileAction",
                 column: "FileId");
 
             migrationBuilder.CreateIndex(
@@ -524,30 +478,81 @@ namespace Production.Persistence.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Journals_DefaultTypesetterId",
-                table: "Journals",
+                name: "IX_Journal_DefaultTypesetterId",
+                table: "Journal",
                 column: "DefaultTypesetterId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StageHistories_ArticleId",
-                table: "StageHistories",
+                name: "IX_Person_ArticleId",
+                table: "Person",
                 column: "ArticleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StageHistories_StageId",
-                table: "StageHistories",
-                column: "StageId");
+                name: "IX_Person_UserId",
+                table: "Person",
+                column: "UserId",
+                unique: true,
+                filter: "[UserId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Stages_Code",
-                table: "Stages",
+                name: "IX_Stage_Code",
+                table: "Stage",
                 column: "Code",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StageHistory_ArticleId",
+                table: "StageHistory",
+                column: "ArticleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StageHistory_StageId",
+                table: "StageHistory",
+                column: "StageId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Article_Journal_JournalId",
+                table: "Article",
+                column: "JournalId",
+                principalTable: "Journal",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Article_Person_PublishedById",
+                table: "Article",
+                column: "PublishedById",
+                principalTable: "Person",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Article_Person_SubmitedById",
+                table: "Article",
+                column: "SubmitedById",
+                principalTable: "Person",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Article_Journal_JournalId",
+                table: "Article");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Article_Person_PublishedById",
+                table: "Article");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Article_Person_SubmitedById",
+                table: "Article");
+
+            migrationBuilder.DropTable(
+                name: "ArticleActor");
+
             migrationBuilder.DropTable(
                 name: "ArticleCurrentStage");
 
@@ -555,43 +560,37 @@ namespace Production.Persistence.Migrations
                 name: "AssetLatestFile");
 
             migrationBuilder.DropTable(
-                name: "Authors");
-
-            migrationBuilder.DropTable(
-                name: "Comments");
+                name: "Comment");
 
             migrationBuilder.DropTable(
                 name: "FileLatestAction");
 
             migrationBuilder.DropTable(
-                name: "StageHistories");
+                name: "StageHistory");
 
             migrationBuilder.DropTable(
-                name: "FileActions");
-
-            migrationBuilder.DropTable(
-                name: "Stages");
+                name: "FileAction");
 
             migrationBuilder.DropTable(
                 name: "File");
 
             migrationBuilder.DropTable(
-                name: "Assets");
+                name: "Asset");
 
             migrationBuilder.DropTable(
-                name: "Articles");
+                name: "AssetType");
 
             migrationBuilder.DropTable(
-                name: "AssetTypes");
+                name: "Journal");
 
             migrationBuilder.DropTable(
-                name: "Journals");
+                name: "Person");
 
             migrationBuilder.DropTable(
-                name: "Typesetters");
+                name: "Article");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Stage");
         }
     }
 }

@@ -1,11 +1,12 @@
 ﻿using Articles.Entitities;
+using Articles.Security;
 
 namespace Production.Domain.Entities;
 
-public partial class User : Entity
-{
-    public required string FirstName { get; set; }
-    public required string LastName { get; set; }    
-    public string? Title { get; set; }
-    public required string Email{ get; set; }
-}
+//public partial class User : Entity
+//{
+//    public required int PersonId { get; set; }
+//    public required Person Person { get; set; }
+
+//    public UserRoleType Role { get; set; }
+//}

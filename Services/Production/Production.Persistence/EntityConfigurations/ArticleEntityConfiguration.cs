@@ -16,24 +16,25 @@ public class ArticleEntityConfiguration : AuditedEntityConfiguration<Article>
         entity.Property(e => e.Title).HasMaxLength(Constraints.C256).IsRequired();
         entity.Property(e => e.Doi).HasMaxLength(Constraints.C64).IsRequired();
         entity.Property(e => e.VolumeId).IsRequired();
-        //entity.Property(e => e.CurrentStageId).HasConversion<int>().IsRequired();
+        entity.Property(e => e.Stage).HasEnumConversion().IsRequired();
 
         entity.Property(e => e.SubmitedOn).IsRequired();
         entity.Property(e => e.AcceptedOn).IsRequired();
 
 
-        entity.HasOne(e => e.SubmitedBy).WithMany()
+				entity.HasOne<Stage>().WithMany()
+					 .HasForeignKey(e => e.Stage)
+					 .HasPrincipalKey(e => e.Code)
+					 .IsRequired()
+					 .OnDelete(DeleteBehavior.Restrict);
+
+				entity.HasOne(e => e.SubmitedBy).WithMany()
             .HasForeignKey(e => e.SubmitedById)
+            //.HasPrincipalKey( e=> e.UserId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
 
         entity.HasOne(e => e.PublishedBy).WithMany()
-            .OnDelete(DeleteBehavior.Restrict);
-
-        entity.HasOne(e => e.Typesetter).WithMany()
-            .HasForeignKey(e => e.TypesetterId)
-            .HasPrincipalKey(e => e.Id)
-            .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
 
         entity.HasOne(e => e.Journal).WithMany(e => e.Articles)
@@ -42,11 +43,6 @@ public class ArticleEntityConfiguration : AuditedEntityConfiguration<Article>
             .OnDelete(DeleteBehavior.Restrict);
 
         entity.HasMany(e => e.Assets).WithOne(e => e.Article)
-            .HasForeignKey(e => e.ArticleId)
-            .IsRequired()
-            .OnDelete(DeleteBehavior.Cascade);
-
-        entity.HasMany(e => e.Authors).WithOne(e => e.Article)
             .HasForeignKey(e => e.ArticleId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
@@ -60,6 +56,8 @@ public class ArticleEntityConfiguration : AuditedEntityConfiguration<Article>
             .HasForeignKey(e => e.ArticleId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
+
+
 
         entity.HasOne(e => e.CurrentStage).WithOne(e => e.Article)
             .HasForeignKey<ArticleCurrentStage>(e => e.ArticleId)

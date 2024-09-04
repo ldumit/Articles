@@ -10,5 +10,5 @@ public interface IDiscussionDomainEvent
     public AssetType? AssetType { get; set; }
     public int? UserId { get; set; }
     public string Comment { get; set; }
-    public DiscussionType DiscussionType { get; set; }
+//    public DiscussionType DiscussionType { get; set; }
 }

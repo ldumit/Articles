@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Production.Persistence;
 
@@ -11,9 +12,11 @@ using Production.Persistence;
 namespace Production.Persistence.Migrations
 {
     [DbContext(typeof(ProductionDbContext))]
-    partial class DbContextModelSnapshot : ModelSnapshot
+    [Migration("20240907105400_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,13 +44,10 @@ namespace Production.Persistence.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getdate()");
 
-                    b.Property<int>("CurrentStageId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Doi")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.Property<int>("JournalId")
                         .HasColumnType("int");
@@ -55,7 +55,7 @@ namespace Production.Persistence.Migrations
                     b.Property<DateTime?>("LasModifiedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 7, 26, 15, 45, 25, 925, DateTimeKind.Utc).AddTicks(6931));
+                        .HasDefaultValue(new DateTime(2024, 9, 7, 10, 54, 0, 444, DateTimeKind.Utc).AddTicks(1569));
 
                     b.Property<int?>("LastModifiedById")
                         .IsRequired()
@@ -67,6 +67,10 @@ namespace Production.Persistence.Migrations
                     b.Property<DateTime?>("PublishedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Stage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(64)");
+
                     b.Property<int>("SubmitedById")
                         .HasColumnType("int");
 
@@ -75,12 +79,8 @@ namespace Production.Persistence.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<int?>("TypesetterId")
-                        .IsRequired()
-                        .HasColumnType("int");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<int>("VolumeId")
                         .HasColumnType("int");
@@ -91,13 +91,33 @@ namespace Production.Persistence.Migrations
 
                     b.HasIndex("PublishedById");
 
+                    b.HasIndex("Stage");
+
                     b.HasIndex("SubmitedById");
 
                     b.HasIndex("Title");
 
-                    b.HasIndex("TypesetterId");
+                    b.ToTable("Article", (string)null);
+                });
 
-                    b.ToTable("Articles");
+            modelBuilder.Entity("Production.Domain.Entities.ArticleActor", b =>
+                {
+                    b.Property<int>("ArticleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PersonId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Role")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)")
+                        .HasDefaultValue("AUT");
+
+                    b.HasKey("ArticleId", "PersonId", "Role");
+
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("ArticleActor", (string)null);
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.ArticleCurrentStage", b =>
@@ -105,18 +125,15 @@ namespace Production.Persistence.Migrations
                     b.Property<int>("ArticleId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StageId")
-                        .HasColumnType("int");
+                    b.Property<string>("Stage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(64)");
 
                     b.HasKey("ArticleId");
 
-                    b.HasIndex("StageId")
-                        .IsUnique();
+                    b.HasIndex("Stage");
 
-                    b.ToTable("ArticleCurrentStage");
+                    b.ToTable("ArticleCurrentStage", (string)null);
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.Asset", b =>
@@ -151,7 +168,7 @@ namespace Production.Persistence.Migrations
                     b.Property<DateTime?>("LasModifiedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 7, 26, 15, 45, 25, 932, DateTimeKind.Utc).AddTicks(5356));
+                        .HasDefaultValue(new DateTime(2024, 9, 7, 10, 54, 0, 449, DateTimeKind.Utc).AddTicks(112));
 
                     b.Property<int?>("LastModifiedById")
                         .IsRequired()
@@ -162,8 +179,8 @@ namespace Production.Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -171,7 +188,7 @@ namespace Production.Persistence.Migrations
 
                     b.Property<string>("TypeCode")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(64)");
 
                     b.HasKey("Id");
 
@@ -179,7 +196,7 @@ namespace Production.Persistence.Migrations
 
                     b.HasIndex("TypeCode");
 
-                    b.ToTable("Assets");
+                    b.ToTable("Asset", (string)null);
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.AssetLatestFile", b =>
@@ -195,7 +212,7 @@ namespace Production.Persistence.Migrations
                     b.HasIndex("FileId")
                         .IsUnique();
 
-                    b.ToTable("AssetLatestFile");
+                    b.ToTable("AssetLatestFile", (string)null);
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.AssetType", b =>
@@ -208,23 +225,26 @@ namespace Production.Persistence.Migrations
 
                     b.Property<string>("Code")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("ContentType")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("DefaultCategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Code")
                         .IsUnique();
 
-                    b.ToTable("AssetTypes");
+                    b.ToTable("AssetType", (string)null);
 
                     b.HasData(
                         new
@@ -285,57 +305,6 @@ namespace Production.Persistence.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Production.Domain.Entities.Author", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ArticleId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Country")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("FirstName")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("FullName")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("LastName")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("AUT");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ArticleId");
-
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("FirstName", "LastName");
-
-                    b.ToTable("Authors");
-                });
-
             modelBuilder.Entity("Production.Domain.Entities.Comment", b =>
                 {
                     b.Property<int>("Id")
@@ -361,8 +330,8 @@ namespace Production.Persistence.Migrations
 
                     b.Property<string>("Text")
                         .IsRequired()
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)");
+                        .HasMaxLength(2048)
+                        .HasColumnType("nvarchar(2048)");
 
                     b.Property<int>("TypeId")
                         .HasColumnType("int");
@@ -372,7 +341,7 @@ namespace Production.Persistence.Migrations
                     b.HasIndex("ArticleId", "TypeId")
                         .IsUnique();
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comment", (string)null);
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.File", b =>
@@ -396,18 +365,18 @@ namespace Production.Persistence.Migrations
 
                     b.Property<string>("Extension")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
 
                     b.Property<string>("FileServerId")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.Property<DateTime?>("LasModifiedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 7, 26, 15, 45, 25, 937, DateTimeKind.Utc).AddTicks(8372));
+                        .HasDefaultValue(new DateTime(2024, 9, 7, 10, 54, 0, 452, DateTimeKind.Utc).AddTicks(1692));
 
                     b.Property<int?>("LastModifiedById")
                         .IsRequired()
@@ -418,14 +387,14 @@ namespace Production.Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)")
                         .HasComment("Final name of the file after renaming");
 
                     b.Property<string>("OriginalName")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)")
                         .HasComment("Full file name, with extension");
 
                     b.Property<int>("Size")
@@ -442,7 +411,7 @@ namespace Production.Persistence.Migrations
 
                     b.HasIndex("AssetId");
 
-                    b.ToTable("File");
+                    b.ToTable("File", (string)null);
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.FileAction", b =>
@@ -479,7 +448,7 @@ namespace Production.Persistence.Migrations
 
                     b.HasIndex("FileId");
 
-                    b.ToTable("FileActions");
+                    b.ToTable("FileAction", (string)null);
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.FileLatestAction", b =>
@@ -495,7 +464,7 @@ namespace Production.Persistence.Migrations
                     b.HasIndex("ActionId")
                         .IsUnique();
 
-                    b.ToTable("FileLatestAction");
+                    b.ToTable("FileLatestAction", (string)null);
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.Journal", b =>
@@ -508,22 +477,70 @@ namespace Production.Persistence.Migrations
 
                     b.Property<string>("Abbreviation")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
 
                     b.Property<int>("DefaultTypesetterId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("DefaultTypesetterId");
 
-                    b.ToTable("Journals");
+                    b.ToTable("Journal", (string)null);
+                });
+
+            modelBuilder.Entity("Production.Domain.Entities.Person", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("PersonType")
+                        .IsRequired()
+                        .HasMaxLength(13)
+                        .HasColumnType("nvarchar(13)");
+
+                    b.Property<string>("Title")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
+
+                    b.ToTable("Person", (string)null);
+
+                    b.HasDiscriminator<string>("PersonType").HasValue("Person");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.Stage", b =>
@@ -536,25 +553,25 @@ namespace Production.Persistence.Migrations
 
                     b.Property<string>("Code")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Code")
                         .IsUnique();
 
-                    b.ToTable("Stages");
+                    b.ToTable("Stage", (string)null);
 
                     b.HasData(
                         new
@@ -645,64 +662,47 @@ namespace Production.Persistence.Migrations
 
                     b.HasIndex("StageId");
 
-                    b.ToTable("StageHistories");
+                    b.ToTable("StageHistory", (string)null);
+                });
+
+            modelBuilder.Entity("Production.Domain.Entities.Author", b =>
+                {
+                    b.HasBaseType("Production.Domain.Entities.Person");
+
+                    b.Property<int?>("ArticleId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Biography")
+                        .HasMaxLength(2048)
+                        .HasColumnType("nvarchar(2048)");
+
+                    b.Property<string>("Country")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.HasIndex("ArticleId");
+
+                    b.ToTable("Person", (string)null);
+
+                    b.HasDiscriminator().HasValue("Author");
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.Typesetter", b =>
                 {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.HasBaseType("Production.Domain.Entities.Person");
 
                     b.Property<string>("CompanyName")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.Property<bool?>("IsDefault")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
-                    b.HasKey("UserId");
+                    b.ToTable("Person", (string)null);
 
-                    b.ToTable("Typesetters");
-                });
-
-            modelBuilder.Entity("Production.Domain.Entities.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Title")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Users");
+                    b.HasDiscriminator().HasValue("Typesetter");
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.Article", b =>
@@ -713,21 +713,21 @@ namespace Production.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Production.Domain.Entities.User", "PublishedBy")
+                    b.HasOne("Production.Domain.Entities.Person", "PublishedBy")
                         .WithMany()
                         .HasForeignKey("PublishedById")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Production.Domain.Entities.User", "SubmitedBy")
+                    b.HasOne("Production.Domain.Entities.Stage", null)
                         .WithMany()
-                        .HasForeignKey("SubmitedById")
+                        .HasForeignKey("Stage")
+                        .HasPrincipalKey("Code")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Production.Domain.Entities.Typesetter", "Typesetter")
+                    b.HasOne("Production.Domain.Entities.Person", "SubmitedBy")
                         .WithMany()
-                        .HasForeignKey("TypesetterId")
-                        .HasPrincipalKey("Id")
+                        .HasForeignKey("SubmitedById")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -736,8 +736,25 @@ namespace Production.Persistence.Migrations
                     b.Navigation("PublishedBy");
 
                     b.Navigation("SubmitedBy");
+                });
 
-                    b.Navigation("Typesetter");
+            modelBuilder.Entity("Production.Domain.Entities.ArticleActor", b =>
+                {
+                    b.HasOne("Production.Domain.Entities.Article", "Article")
+                        .WithMany("Actors")
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Production.Domain.Entities.Person", "Person")
+                        .WithMany("ArticleActors")
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Article");
+
+                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.ArticleCurrentStage", b =>
@@ -748,15 +765,14 @@ namespace Production.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Production.Domain.Entities.Stage", "Stage")
-                        .WithOne()
-                        .HasForeignKey("Production.Domain.Entities.ArticleCurrentStage", "StageId")
+                    b.HasOne("Production.Domain.Entities.Stage", null)
+                        .WithMany()
+                        .HasForeignKey("Stage")
+                        .HasPrincipalKey("Code")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Article");
-
-                    b.Navigation("Stage");
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.Asset", b =>
@@ -782,7 +798,7 @@ namespace Production.Persistence.Migrations
             modelBuilder.Entity("Production.Domain.Entities.AssetLatestFile", b =>
                 {
                     b.HasOne("Production.Domain.Entities.Asset", "Asset")
-                        .WithOne("LatestFile")
+                        .WithOne("LatestFileRef")
                         .HasForeignKey("Production.Domain.Entities.AssetLatestFile", "AssetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -796,24 +812,6 @@ namespace Production.Persistence.Migrations
                     b.Navigation("Asset");
 
                     b.Navigation("File");
-                });
-
-            modelBuilder.Entity("Production.Domain.Entities.Author", b =>
-                {
-                    b.HasOne("Production.Domain.Entities.Article", "Article")
-                        .WithMany("Authors")
-                        .HasForeignKey("ArticleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Production.Domain.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("Article");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.Comment", b =>
@@ -873,7 +871,6 @@ namespace Production.Persistence.Migrations
                     b.HasOne("Production.Domain.Entities.Typesetter", "DefaultTypesetter")
                         .WithMany()
                         .HasForeignKey("DefaultTypesetterId")
-                        .HasPrincipalKey("Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -899,19 +896,17 @@ namespace Production.Persistence.Migrations
                     b.Navigation("Stage");
                 });
 
-            modelBuilder.Entity("Production.Domain.Entities.Typesetter", b =>
+            modelBuilder.Entity("Production.Domain.Entities.Author", b =>
                 {
-                    b.HasOne("Production.Domain.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("User");
+                    b.HasOne("Production.Domain.Entities.Article", null)
+                        .WithMany("Authors")
+                        .HasForeignKey("ArticleId");
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.Article", b =>
                 {
+                    b.Navigation("Actors");
+
                     b.Navigation("Assets");
 
                     b.Navigation("Authors");
@@ -928,7 +923,7 @@ namespace Production.Persistence.Migrations
                 {
                     b.Navigation("Files");
 
-                    b.Navigation("LatestFile")
+                    b.Navigation("LatestFileRef")
                         .IsRequired();
                 });
 
@@ -943,6 +938,11 @@ namespace Production.Persistence.Migrations
             modelBuilder.Entity("Production.Domain.Entities.Journal", b =>
                 {
                     b.Navigation("Articles");
+                });
+
+            modelBuilder.Entity("Production.Domain.Entities.Person", b =>
+                {
+                    b.Navigation("ArticleActors");
                 });
 #pragma warning restore 612, 618
         }

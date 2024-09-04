@@ -36,17 +36,22 @@ public class TokenFactory
 				}
 		}
 
-		public string GenerateJWTToken(string userId, string email, IList<string> userRoles, IEnumerable<Claim> additionalClaims)
+		public string GenerateJWTToken(string userId, string fullName, string email, IList<string> userRoles, IEnumerable<Claim> additionalClaims)
 		{
 				var secretKey = new SymmetricSecurityKey(Encoding.Default.GetBytes(_jwtOptions.Secret));
 				var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
+				//talk - explain the difference between the 2 classes and why we need to duplicate a few of the claims
 				var claims = new[]
 				{
 						new Claim(JwtRegisteredClaimNames.Sub, userId),
 						new Claim(JwtRegisteredClaimNames.Email, email),
-						//new Claim(JwtRegisteredClaimNames.Jti, _jwtOptions.JtiGenerator()),
+						new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
 						new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToUnixEpochDate().ToString(), ClaimValueTypes.Integer64),
+						new Claim(ClaimTypes.NameIdentifier, userId),
+						new Claim(ClaimTypes.Name, fullName),
+						new Claim(ClaimTypes.Email, email),
+
 				}
 				.Concat(userRoles.Select(r => new Claim(ClaimTypes.Role, r)))
 				.Concat(additionalClaims);

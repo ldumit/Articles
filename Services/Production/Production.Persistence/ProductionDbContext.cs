@@ -5,17 +5,20 @@ using Articles.EntityFrameworkCore;
 using Production.Domain.Entities;
 using Production.Persistence.EntityConfigurations;
 using Microsoft.Extensions.Caching.Memory;
+using System.Linq;
 
 namespace Production.Persistence;
 
-public partial class ProductionDbContext(DbContextOptions<ProductionDbContext> _options, IMemoryCache _cache, IMediator _mediator)
+public partial class ProductionDbContext(DbContextOptions<ProductionDbContext> _options, IMemoryCache _cache)
     : DbContext(_options)
 {
 
     #region Entities
     public virtual DbSet<Article> Articles { get; set; }
 
-    public virtual DbSet<Asset> Assets { get; set; }
+		public virtual DbSet<ArticleActor> ArticleActors { get; set; }
+
+		public virtual DbSet<Asset> Assets { get; set; }
 
     //public virtual DbSet<AssetCategory> AssetCategories { get; set; }
 
@@ -31,8 +34,6 @@ public partial class ProductionDbContext(DbContextOptions<ProductionDbContext> _
 
     //public virtual DbSet<AssetTypeCode> AssetTypeCodes { get; set; }
 
-
-    public virtual DbSet<Author> Authors { get; set; }
 
     public virtual DbSet<Comment> Comments { get; set; }
 
@@ -60,10 +61,12 @@ public partial class ProductionDbContext(DbContextOptions<ProductionDbContext> _
     public virtual DbSet<StageHistory> StageHistories { get; set; }
 
 
-    public virtual DbSet<Typesetter> Typesetters { get; set; }
+		public virtual DbSet<Person> Persons { get; set; }
+		public virtual DbSet<Author> Authors { get; set; }
+		public virtual DbSet<Typesetter> Typesetters { get; set; }
+		//public virtual IQueryable<Typesetter> Typesetters => Persons.OfType<Typesetter>();
 
-
-    public virtual DbSet<User> Users { get; set; }
+		///public virtual DbSet<User> Users { get; set; }
 		#endregion
 
 		public virtual IEnumerable<TEntity> GetCached<TEntity>()
@@ -105,7 +108,9 @@ public partial class ProductionDbContext(DbContextOptions<ProductionDbContext> _
         // save first the main changes
         int counter = await SaveChangesImpl(cancellationToken);
 
-        int dispatchedEventsCounter = (await _mediator.DispatchDomainEventsAsync(this));
+        //todo implement events dispatching with fastendpoints
+        int dispatchedEventsCounter = 0;
+				//int dispatchedEventsCounter = (await _mediator.DispatchDomainEventsAsync(this));
         if (dispatchedEventsCounter > 0)
             // save changes from event handlers
             // todo domain events handlers should save their own changes
@@ -138,7 +143,8 @@ public partial class ProductionDbContext(DbContextOptions<ProductionDbContext> _
         modelBuilder.ApplyConfiguration(new AssetEntityConnfiguration());
         modelBuilder.ApplyConfiguration(new AssetLatestFileEntityConfiguration());
         modelBuilder.ApplyConfiguration(new AssetTypeEntityConnfiguration());
-        modelBuilder.ApplyConfiguration(new AuthorEntityConnfiguration());
+				modelBuilder.ApplyConfiguration(new ArticleActorEntityConfiguration());
+				modelBuilder.ApplyConfiguration(new AuthorEntityConnfiguration());
         modelBuilder.ApplyConfiguration(new CommentEntityConnfiguration());
         modelBuilder.ApplyConfiguration(new FileActionEntityConnfiguration());
         modelBuilder.ApplyConfiguration(new FileEntityConnfiguration());
@@ -147,17 +153,28 @@ public partial class ProductionDbContext(DbContextOptions<ProductionDbContext> _
         modelBuilder.ApplyConfiguration(new StageEntityConnfiguration());
         modelBuilder.ApplyConfiguration(new StageHistoryEntityConnfiguration());
         modelBuilder.ApplyConfiguration(new TypesetterEntityConnfiguration());
-        modelBuilder.ApplyConfiguration(new UserEntityConnfiguration());
+				modelBuilder.ApplyConfiguration(new PersonEntityConfiguration());
+				//modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
 
-        //foreach (IMutableEntityType entity in modelBuilder.Model.GetEntityTypes())
-        //{
-        //    foreach (IMutableProperty property in entity.GetProperties()
-        //        .Where(p => p.PropertyInfo != null && p.PropertyInfo.DeclaringType != null))
-        //    {
-        //        property.SetColumnName(property.PropertyInfo.Name.ToCamelCase());
-        //    }
-        //}
-        base.OnModelCreating(modelBuilder);
+
+				foreach (var entity in modelBuilder.Model.GetEntityTypes())
+				{
+						var baseType = entity.BaseType;
+						if (baseType == null) // check if we have inheritance, in that case we need to use the base class name.
+								modelBuilder.Entity(entity.ClrType).ToTable(entity.ClrType.Name);
+						else
+								modelBuilder.Entity(entity.ClrType).ToTable(baseType.ClrType.Name);
+				}
+
+				//foreach (IMutableEntityType entity in modelBuilder.Model.GetEntityTypes())
+				//{
+				//    foreach (IMutableProperty property in entity.GetProperties()
+				//        .Where(p => p.PropertyInfo != null && p.PropertyInfo.DeclaringType != null))
+				//    {
+				//        property.SetColumnName(property.PropertyInfo.Name.ToCamelCase());
+				//    }
+				//}
+				base.OnModelCreating(modelBuilder);
     }
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

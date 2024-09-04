@@ -18,12 +18,15 @@ public static class Seed
     {
         using var transaction = context.Database.BeginTransaction();
 
-				context.Seed<User>();
-				context.Seed<Typesetter>();
+				context.Seed<Person>();
+
+				//context.Seed<User>();
+				//context.Seed<Typesetter>();
 				context.Seed<Journal>();
 
-        transaction.Commit();
 
 				context.Seed<Article>();
-    }
+
+				transaction.Commit();
+		}
 }

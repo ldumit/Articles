@@ -12,14 +12,10 @@ public class TypesetterEntityConnfiguration : EntityConfiguration<Typesetter>
         base.Configure(entity);
 
         //talk - small table, practically we don't need an index, teoretically we may add it
-        entity.HasKey(e => e.UserId);
+        //entity.HasKey(e => e.UserId);
         
         entity.Property(e => e.IsDefault).HasDefaultValue(false);
         entity.Property(e => e.CompanyName).HasMaxLength(Constraints.C64);
-
-        entity.HasOne(d => d.User).WithMany()
-            .HasForeignKey(d => d.UserId)
-            .OnDelete(DeleteBehavior.Restrict);
         
         //todo - investigate ignore and maybe talk about it
         //entity.Ignore(t => t.Id);

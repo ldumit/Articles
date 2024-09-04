@@ -4,22 +4,29 @@
     "Doi": "med.2024.2451234",
     "SubmitedOn": "2024-04-23T18:00",
     "SubmitedById": 5,
-    "CurrentStageId": 1,
     "JournalId": "1",
     "VolumeId": "1",
     "AcceptedOn": "2024-06-23T18:00",
     "TypesetterId": 1,
     "CreatedById": 5,
     "LastModifiedById": 9,
-    "Authors": [
+    "Stage": "Accepted",
+    "CurrentStage": {
+      "Stage": "Accepted"
+    },
+    "Actors": [
       {
-        "UserId": 5,
+        "PersonId": 5,
         "Role": "CORAUT"
       },
       {
-        "UserId": 3,
+        "PersonId": 3,
         "Role": "AUT"
       }
+      //{
+      //  "PersonId": 7,
+      //  "Role": "TSOF"
+      //}
     ],
     "Assets": [
       {
