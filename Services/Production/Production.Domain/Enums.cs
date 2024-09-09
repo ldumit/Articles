@@ -50,27 +50,27 @@ public enum AssetStatus
     Published = 5
 }
 
-public enum ArticleStage
-{
-    [Description("Article submitted by the author")]
-    Submitted = 100,
-    [Description("Article approved")] 
-    InReview = 200,
-    [Description("Article accepted")]
-    Accepted = 201,
-    [Description("Typesetter assigned")]
-    InProduction = 300,
-    [Description("Author's proof uploaded")]
-    AuthorsProof = 301,
-    [Description("Author's proof approved")]
-    FinalProduction= 302,
-    [Description("Publisher's proof uploaded")]
-    PublisherProof = 303,
-    [Description("Article scheduled for publication")]
-    PublicationScheduled = 304,
-    [Description("Article published")]
-    Published = 305    
-}
+//public enum ArticleStage
+//{
+//    [Description("Article submitted by the author")]
+//    Submitted = 100,
+//    [Description("Article approved")] 
+//    InReview = 200,
+//    [Description("Article accepted")]
+//    Accepted = 201,
+//    [Description("Typesetter assigned")]
+//    InProduction = 300,
+//    [Description("Author's proof uploaded")]
+//    AuthorsProof = 301,
+//    [Description("Author's proof approved")]
+//    FinalProduction= 302,
+//    [Description("Publisher's proof uploaded")]
+//    PublisherProof = 303,
+//    [Description("Article scheduled for publication")]
+//    PublicationScheduled = 304,
+//    [Description("Article published")]
+//    Published = 305    
+//}
 
 //todo unify it with AssetStatus and keep only one
 public enum FileStatus

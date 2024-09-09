@@ -5,6 +5,8 @@ using Articles.EntityFrameworkCore;
 using Production.Persistence;
 using Articles.AspNetCore;
 using Azure.Storage.Blobs;
+using System.Text.Json.Serialization;
+using Articles.FastEnpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,7 +34,7 @@ builder.Services.AddSingleton(x => new BlobServiceClient(builder.Configuration.G
 var app = builder.Build();
 
 #region Use
-
+//app.UseMiddleware<AssignUserIdMiddleware>();
 app.UseSwagger();
 app.UseSwaggerUI();
 
@@ -46,20 +48,22 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
-
 app.UseRouting();
-
 app.UseAuthorization();
-
-
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
 		endpoints.MapDefaultControllerRoute();
 
 });
-//app.
-app.UseFastEndpoints();
+app.UseFastEndpoints(config =>
+{
+		config.Serializer.Options.Converters.Add(new JsonStringEnumConverter());
+		config.Endpoints.Configurator = ep =>
+		{
+				ep.PreProcessor<AssignUserIdPreProcessor>(FastEndpoints.Order.Before);
+		};
+});
 
 #endregion
 

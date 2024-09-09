@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Production.Domain.Enums;
+﻿using Articles.Abstractions;
+using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
 namespace Production.API.Features;
 
-public interface IFileActionCommand : IArticleCommand
+public interface IFileActionCommand : IArticleAction
 {
 }
 
@@ -13,7 +13,7 @@ public interface IFileActionResponse
 }
 
 
-public abstract record FileActionCommand<TResponse> : ArticleActionCommand<TResponse>, IFileActionCommand, IRequest<TResponse>
+public abstract record FileActionCommand<TResponse> : ArticleCommand<TResponse>, IFileActionCommand, IRequest<TResponse>
 		where TResponse : IFileActionResponse
 {
 		internal int FileId { get; set; }
@@ -34,8 +34,7 @@ public abstract record FileActionWithBodyCommand : FileActionCommand<FileActionR
 		[FromBody]
 		public FileActionBody Body { get; set; }
 
-		internal override string ActionComment => Body?.Comment;
-		internal override DiscussionType DiscussionGroupType => Body.DiscussionType;
+		protected override string GetActionComment() => Body?.Comment;
 }
 
 public record FileActionBody : CommandBody

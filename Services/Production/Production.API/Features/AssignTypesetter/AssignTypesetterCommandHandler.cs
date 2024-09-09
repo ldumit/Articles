@@ -1,5 +1,5 @@
-﻿using Production.Domain.Entities;
-using Production.Domain.Enums;
+﻿using Articles.Abstractions;
+using Production.Domain.Entities;
 
 namespace Production.API.Features.AssignTypesetter;
 

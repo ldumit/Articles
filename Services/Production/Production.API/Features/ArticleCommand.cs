@@ -1,18 +1,14 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
-using Production.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 using Articles.System;
+using Articles.Abstractions;
+
+using Production.Domain.Enums;
 
 namespace Production.API.Features;
 
-public interface IArticleCommand
-{
-    int ArticleId { get; set; }
-}
-
-
-public abstract record ArticleActionCommand<TResponse> : IArticleCommand, IRequest<TResponse>
+public abstract record ArticleCommand<TResponse> : Domain.IArticleAction, IRequest<TResponse>
 {
     /// <summary>
     /// The article Id
@@ -20,20 +16,25 @@ public abstract record ArticleActionCommand<TResponse> : IArticleCommand, IReque
     [FromRoute]
     [Required]
     public int ArticleId { get; set; }
-    internal abstract ActionType ActionType { get; }
 
-    internal abstract string ActionComment { get; }
-    internal abstract DiscussionType DiscussionGroupType { get; }
+    //talk - explain why the members have to be implemented explicitly, so they will not apear in swagger
+		ActionType IArticleAction<ActionType>.ActionType => GetActionType();
+		string IArticleAction<ActionType>.ActionComment => GetActionComment();
+		int IArticleAction.UserId { get; set; }
+
+    protected abstract string GetActionComment();
+		protected abstract ActionType GetActionType();
 }
-public abstract record ArticleActionCommand<TBody, TResponse> : ArticleActionCommand<TResponse>
-    where TBody : CommandBody
+
+public abstract record ArticleCommand<TBody, TResponse> : ArticleCommand<TResponse>
+		where TBody : CommandBody
 {
     [FromBody]
     public TBody Body { get; set; }
 
-    internal override string ActionComment => Body?.Comment;
-    internal override DiscussionType DiscussionGroupType => Body.DiscussionType;
+    protected override string GetActionComment() => Body?.Comment;
 }
+
 
 public record CommandBody
 {
@@ -41,18 +42,12 @@ public record CommandBody
     /// Add comments, if any.
     /// </summary>
     public string Comment { get; set; }
-    //todo do I need discussion here?
-    public DiscussionType DiscussionType { get; set; }
 }
 
-public record ArticleCommandResponse(int ArticleId)
-{
-    //public int ArticleId { get; set; }
-}
-
+public record ArticleCommandResponse(int ArticleId);
 
 public abstract class ArticleCommandValidator<TFileActionCommand> : BaseValidator<TFileActionCommand>
-    where TFileActionCommand : IArticleCommand
+    where TFileActionCommand : IArticleAction
 {
     public ArticleCommandValidator()
     {

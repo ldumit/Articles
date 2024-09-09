@@ -10,7 +10,7 @@ namespace Articles.Security
 		{
 				protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, RolesAuthorizationRequirement requirement)
 				{
-						if (requirement.AllowedRoles.Any(context.User.IsInRole) || await HasUserRoleForArticle(requirement.AllowedRoles))
+						if (requirement.AllowedRoles.Any(context.User.IsInRole) && await HasUserRoleForArticle(requirement.AllowedRoles))
 						{
 								context.Succeed(requirement);
 						}

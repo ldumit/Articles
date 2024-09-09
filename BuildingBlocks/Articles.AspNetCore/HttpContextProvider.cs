@@ -8,7 +8,7 @@ namespace Articles.AspNetCore;
 public interface IClaimsProvider
 {
 		public string GetClaimValue(string claimName);
-		public int? GetUserId();
+		public int GetUserId();
 		public string GetUserEmail();
 }
 
@@ -25,8 +25,8 @@ public class HttpContextProvider(IHttpContextAccessor _httpContextAccessor)
 {
 		public string GetClaimValue(string claimName)
 				=> _httpContextAccessor.GetClaimValue(claimName);
-		public int? GetUserId() 
-				=> _httpContextAccessor.GetClaimValue(ClaimTypes.NameIdentifier).ToInt();
+		public int GetUserId() 
+				=> _httpContextAccessor.GetClaimValue(ClaimTypes.NameIdentifier).ToInt().Value;
 
 		public string GetUserEmail() 
 				=> _httpContextAccessor.GetClaimValue(ClaimTypes.Email);
@@ -34,7 +34,7 @@ public class HttpContextProvider(IHttpContextAccessor _httpContextAccessor)
 		public string GetRouteValue(string key)
 				=> _httpContextAccessor.GetRouteValue(key);
 		public int? GetArticleId() 
-				=> _httpContextAccessor.GetRouteValue("articles").ToInt();
+				=> _httpContextAccessor.GetRouteValue("articleId").ToInt();
 }
 
 public static class HttpContextExtensions

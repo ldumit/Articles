@@ -1,11 +1,8 @@
 ﻿using MediatR;
+using Production.Domain.Enums;
 
 namespace Production.Domain.Events;
 
-public abstract record DomainEvent : INotification
+public abstract record DomainEvent(int ArticleId, ActionType Action, int UserId, string? Comment) : INotification
 {
-    public int ArticleId { get; set; }
-    public int? UserId { get; set; }
-    public string Comment { get; set; }
-
 }

@@ -1,11 +1,12 @@
-﻿using Articles.Entitities;
+﻿using Articles.Abstractions;
+using Articles.Entitities;
 using Articles.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Production.Domain.Entities;
 
 namespace Production.Persistence.EntityConfigurations;
 
-public class StageEntityConnfiguration : EnumEntityConfiguration<Stage, Domain.Enums.ArticleStage>
+public class StageEntityConnfiguration : EnumEntityConfiguration<Stage, ArticleStage>
 {
     public override void Configure(EntityTypeBuilder<Stage> entity)
     {

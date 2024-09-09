@@ -1,49 +1,46 @@
 ﻿//namespace Articles.Abstractions;
 using System.ComponentModel;
 
-namespace Production.Domain.Enums;
+namespace Articles.Abstractions;
 
-public enum DiscussionType
-{
-    Default = 0,
-    Public = 1,
-    Private = 2
-}
+//public enum DiscussionType
+//{
+//    Default = 0,
+//    Public = 1,
+//    Private = 2
+//}
 
-public enum FileActionType
-{
-    AssignTypesetter = 0,
-    UPLOAD = 1,
-    APPROVE = 2,
-    PUBLISHED = 3,
-    REQUEST_NEW = 4,
-    UN_APPROVE = 5,
-    SCHEDULED_FOR_PUBLICATION = 9,
-    DOWNLOAD = 11,
-    ACCEPTED = 101
-}
+//public enum ActionType
+//{
+//		AssignTypesetter = 0,
+//		Upload = 1,
+//		Approve = 2,
+//		Published = 3,
+//		RequestNew = 4,
+//		UnApprove = 5,
+//		SchedulePublication = 9,
+//		Download = 11,
+//		Accepted = 101
+//}
+
 public enum ArticleStage
 {
-    [Description("All")]
-    ALL = 0,
-    [Description("Initial Assessment")]
-    INITIAL_ASSESSMENT = 1,
-    [Description("In Production")]
-    IN_PRODUCTION = 2,
-    [Description("Author's proof")]
-    AUTHORS_PROOF = 3,
-    [Description("Final Production")]
-    FINAL_PRODUCTION = 4,
-    [Description("Publisher's proof")]
-    PUBLISHERS_PROOF = 5,
-    [Description("Scheduled for Publication")]
-    SCHEDULED_FOR_PUBLICATION = 6,
-    [Description("Published")]
-    PUBLISHED = 7,
-    [Description("Deposition Summary")]
-    DEPOSITED = 8,
-    [Description("Scheduled for Publication (Publishing)")]
-    PUBLISHING = 9,
-    [Description("Pre Accept")]
-    PRE_ACCEPT_MANUSCRIPT = 101
+		[Description("Article submitted by the author")]
+		Submitted = 100,
+		[Description("Article approved")]
+		InReview = 200,
+		[Description("Article accepted")]
+		Accepted = 201,
+		[Description("Typesetter assigned")]
+		InProduction = 300,
+		[Description("Author's proof uploaded")]
+		AuthorsProof = 301,
+		[Description("Author's proof approved")]
+		FinalProduction = 302,
+		[Description("Publisher's proof uploaded")]
+		PublisherProof = 303,
+		[Description("Article scheduled for publication")]
+		PublicationScheduled = 304,
+		[Description("Article published")]
+		Published = 305
 }

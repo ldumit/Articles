@@ -1,5 +1,5 @@
-﻿using Articles.Entitities;
-using Production.Domain.Enums;
+﻿using Articles.Abstractions;
+using Articles.Entitities;
 
 namespace Production.Domain.Entities;
 

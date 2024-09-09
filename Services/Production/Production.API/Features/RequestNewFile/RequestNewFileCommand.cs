@@ -4,7 +4,7 @@ namespace Production.API.Features;
 
 public record RequestNewFileCommand : FileActionWithBodyCommand
 {
-		internal override ActionType ActionType => ActionType.RequestNew;
+		protected override ActionType GetActionType() => ActionType.RequestNew;
 }
 
 public record RequestNewAuthorProofCommand : RequestNewFileCommand

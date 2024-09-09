@@ -3,11 +3,12 @@ using FastEndpoints;
 using Production.Persistence.Repositories;
 using Production.Domain.Entities;
 using Production.Domain.Enums;
+using Articles.Abstractions;
 
 namespace Production.API.Features;
 
 public abstract class BaseEndpoint<TCommand, TResponse> : Endpoint<TCommand, TResponse>
-    where TCommand : ArticleActionCommand<TResponse>
+    where TCommand : ArticleCommand<TResponse>
 {
     protected readonly IClaimsProvider _claimsProvider;
     protected readonly IMapper _mapper;
@@ -26,7 +27,7 @@ public abstract class BaseEndpoint<TCommand, TResponse> : Endpoint<TCommand, TRe
 
     protected void ChangeStage(Article article, TCommand command, Domain.Enums.AssetType? assetType = null)
     {
-        article.SetStage(GetNextStage(article), command.ActionType, command.ActionComment,  _claimsProvider.GetUserId(), assetType);
+        //article.SetStage(GetNextStage(article), command.ActionType, command.ActionComment,  _claimsProvider.GetUserId(), assetType);
     }
 
     protected async Task AddFileAction(Asset asset, Domain.Entities.File file, TCommand command)

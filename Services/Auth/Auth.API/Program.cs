@@ -44,10 +44,11 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseFastEndpoints(c =>
-		{
-				c.Serializer.Options.Converters.Add(new JsonStringEnumConverter());
-		});
+app.UseFastEndpoints(config =>
+{
+		config.Serializer.Options.Converters.Add(new JsonStringEnumConverter());
+		//config..Add(new AssignUserIdPreProcessor(app.Services.GetRequiredService<IHttpContextAccessor>()));
+});
 
 //app.MapControllers();
 

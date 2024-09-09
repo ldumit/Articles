@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using System.Text.Json.Serialization;
+using Articles.Abstractions;
 
 namespace Production.API.Features;
 
@@ -39,13 +40,12 @@ public abstract record UploadFileCommand<TResponse> : FileActionCommand<TRespons
     internal string FileName { get; set; }
     internal string FileServerId { get; set; }
     internal int VersionCount { get; set; }
-    internal override string ActionComment => this.Comment;
-    internal override DiscussionType DiscussionGroupType => this.DiscussionType;
+    protected override string GetActionComment() => this.Comment;
 }
 
 public abstract record UploadFileCommand : UploadFileCommand<UploadFileResponse>
 {
-    internal override ActionType ActionType => Domain.Enums.ActionType.Upload;
+    protected override ActionType GetActionType() => ActionType.Upload;
     //todo remove the following method 
     internal virtual byte GetAssetNumber() => 0;
 }

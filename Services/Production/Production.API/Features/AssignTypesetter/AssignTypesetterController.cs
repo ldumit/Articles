@@ -1,5 +1,4 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Production.Domain.Enums;
 
@@ -52,9 +51,9 @@ public class AssignTypesetterController(IMediator mediator) : ApiControllerBase(
 
 }
 
-public record AssignTypesetterCommand : ArticleActionCommand<AssignTypesetterCommandBody, ArticleCommandResponse>
+public record AssignTypesetterCommand : ArticleCommand<AssignTypesetterCommandBody, ArticleCommandResponse>
 {
-    internal override ActionType ActionType => ActionType.AssignTypesetter;
+    protected override ActionType GetActionType() => ActionType.AssignTypesetter;
 }
 
 public record AssignTypesetterCommandBody : CommandBody

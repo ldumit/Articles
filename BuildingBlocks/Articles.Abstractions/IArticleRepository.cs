@@ -1,6 +1,4 @@
-﻿using Production.Domain.Enums;
-
-namespace Articles.Abstractions;
+﻿namespace Articles.Abstractions;
 
 public interface IArticle
 {

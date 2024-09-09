@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Production.Persistence.Repositories;
 using Production.Domain.Entities;
-using Production.Domain.Enums;
 using Production.Persistence;
+using Articles.Abstractions;
 
 namespace Production.API.Features.AssignTypesetter
 {
@@ -16,14 +16,13 @@ namespace Production.API.Features.AssignTypesetter
         {
             var article = _articleRepository.GetById(command.ArticleId);
 
-						//var typesetter1 = _dbContext.Persons.Single(t => t.UserId == command.Body.UserId);
-            //var types = typesetter as Typesetter;
-
             var typesetter = _dbContext.Typesetters.Single(t => t.UserId == command.Body.UserId);
-						article.SetTypesetter(typesetter);
-						article.SetStage(GetNextStage(article), command.ActionType, command.ActionComment, _claimsProvider.GetUserId(), null);
 
-            article.Actors.Add(new ArticleActor() { PersonId = 1, Role = Articles.Security.UserRoleType.AUT });
+            var action = (Domain.IArticleAction)command;
+
+						article.SetTypesetter(typesetter, action);
+
+						article.SetStage(GetNextStage(article), action);
 
 						await _articleRepository.SaveChangesAsync();
 

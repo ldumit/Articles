@@ -4,11 +4,12 @@ using MediatR;
 using Production.Persistence.Repositories;
 using Production.Domain.Entities;
 using Production.Domain.Enums;
+using Articles.Abstractions;
 
 namespace Production.API.Features;
 
 public abstract class BaseCommandHandler<TCommand, TResponse> : IRequestHandler<TCommand, TResponse>
-    where TCommand : ArticleActionCommand<TResponse>
+    where TCommand : ArticleCommand<TResponse>
 {
     protected readonly ClaimsProvider _claimsProvider;
     protected readonly IMapper _mapper;

@@ -1,15 +1,8 @@
-﻿using Production.Domain.Enums;
+﻿using Articles.Abstractions;
 
 namespace Production.Domain.Events;
 
-public record ArticleStageChangedDomainEvent : DomainEvent, IDiscussionDomainEvent
+public record ArticleStageChangedDomainEvent(IArticleAction action, ArticleStage PreviousStage, ArticleStage NewStage) 
+    : DomainEvent(action.ArticleId, action.ActionType, action.UserId, action.ActionComment)
 {
-    public ArticleStage NewStage { get; set; }
-    public DateTime? CreateTime { get; set; }
-    public string UserName { get; set; }
-    public string RoleCode { get; set; }
-    //public DiscussionType DiscussionType { get; set; }
-    public ArticleStage PreviousStage { get; set; }
-    public ActionType NewAction { get; set; }
-    public AssetType? AssetType { get; set; }
 }
