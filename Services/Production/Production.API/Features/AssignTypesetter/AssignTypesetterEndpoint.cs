@@ -15,7 +15,7 @@ namespace Production.API.Features.AssignTypesetter
     {
 				public override async Task HandleAsync(AssignTypesetterCommand command, CancellationToken ct)
         {
-            var article = _articleRepository.GetById(command.ArticleId);
+            var article = await _articleRepository.GetByIdAsync(command.ArticleId);
 
             //var typesetter = _dbContext.Typesetters.Single(t => t.UserId == command.Body.UserId);
 						var typesetter = _dbContext.Typesetters.Single(t => t.UserId == command.TypesetterId);

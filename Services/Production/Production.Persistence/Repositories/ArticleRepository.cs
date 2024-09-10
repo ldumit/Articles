@@ -10,7 +10,8 @@ using System.Net;
 namespace Production.Persistence.Repositories;
 
 
-public class ArticleRepository(ProductionDbContext _dbContext, IMemoryCache _cache) : RepositoryBase<ProductionDbContext, Article>(_dbContext)
+public class ArticleRepository(ProductionDbContext _dbContext, IMemoryCache _cache) 
+		: RepositoryBase<ProductionDbContext, Article>(_dbContext)
 {
 		public virtual IList<Stage> GetStages()
 				=> _cache.GetOrCreate(entry => _dbContext.Stages.ToList());
@@ -20,15 +21,16 @@ public class ArticleRepository(ProductionDbContext _dbContext, IMemoryCache _cac
 		{
 				return base.Entity
 						.Include(e => e.CurrentStage)
+						//.Include(e => e.CurrentStage.Stage)
 						.Include(e => e.Actors);
 		}
-		public override Article GetById(int id, bool throwNotFound = true)
-		{
-				var entity = Query().SingleOrDefault(e => e.Id == id);
-				if (throwNotFound && entity is null)
-						throw new NotFoundException();
 
-				return entity;
+		public async Task<Article> GetWithAssets(int id)
+		{
+				return await Query()
+						 .Include(e => e.Assets)
+								 .ThenInclude(e => e.LatestFile)
+						.SingleAsync(e => e.Id == id);
 		}
 }
 

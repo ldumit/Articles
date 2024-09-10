@@ -10,7 +10,7 @@ namespace Production.API.Features;
 [HttpPut("articles/{articleId:int}/final-file:request")]
 [Tags("Assets")]
 public class RequestFinalFileEndpoint(IServiceProvider serviceProvider, AssetRepository _assetRepository) 
-		: BaseEndpoint<RequestFinalFileCommand, FileActionResponse>(serviceProvider)
+		: BaseEndpoint<RequestFinalFileCommand, AssetActionResponse>(serviceProvider)
 {
 		//public override void Configure()
 		//{
@@ -19,7 +19,7 @@ public class RequestFinalFileEndpoint(IServiceProvider serviceProvider, AssetRep
 
 		public async override Task HandleAsync(RequestFinalFileCommand command, CancellationToken cancellationToken)
 		{
-				var asset = await _assetRepository.GetWithArticleAsync(command.AssetId);
+				var asset = await _assetRepository.GetByTypeAndNumber(command.ArticleId, command.AssetType);
 
 				asset.SetStatus(AssetStatus.Requested, command);
 
@@ -27,7 +27,7 @@ public class RequestFinalFileEndpoint(IServiceProvider serviceProvider, AssetRep
 				await AddFileAction(asset, asset.LatestFile, command);
 				await _assetRepository.SaveChangesAsync();
 
-				await SendAsync(new FileActionResponse
+				await SendAsync(new AssetActionResponse
 				{
 						AssetId = asset.Id,
 						FileId = asset.LatestFileId,

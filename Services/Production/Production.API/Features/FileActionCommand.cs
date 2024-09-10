@@ -4,6 +4,19 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Production.API.Features;
 
+
+public abstract record AssetActionCommand<TResponse> : ArticleCommand2<TResponse>
+{
+		public int AssetId { get; set; }
+}
+
+public abstract record AssetActionCommand : ArticleCommand2<AssetActionResponse>
+{
+		public int AssetId { get; set; }
+}
+
+
+
 public interface IFileActionCommand : IArticleAction
 {
 }
@@ -19,7 +32,7 @@ public abstract record FileActionCommand<TResponse> : ArticleCommand<TResponse>,
 		internal int FileId { get; set; }
 }
 
-public abstract record FileActionWithBodyCommand : FileActionCommand<FileActionResponse>
+public abstract record FileActionWithBodyCommand : FileActionCommand<AssetActionResponse>
 {
 		/// <summary>
 		/// The AssetId.
@@ -41,7 +54,7 @@ public record FileActionBody : CommandBody
 {
 }
 
-public class FileActionResponse : IFileActionResponse
+public class AssetActionResponse : IFileActionResponse
 {
 		/// <summary>
 		/// Returns the assetId of the uploaded file

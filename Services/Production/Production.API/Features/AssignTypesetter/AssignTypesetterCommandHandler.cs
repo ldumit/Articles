@@ -10,7 +10,7 @@ public class AssignTypesetterCommandHandler(IServiceProvider serviceProvider)
     public override async Task<ArticleCommandResponse> Handle(AssignTypesetterCommand1 command, CancellationToken cancellationToken)
     {
         using var transaction = _articleRepository.BeginTransaction();
-        var article = _articleRepository.GetById(command.ArticleId);
+        var article = await _articleRepository.GetByIdAsync(command.ArticleId);
         
         ChangeStage(article, command);
 

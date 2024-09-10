@@ -10,12 +10,12 @@ namespace Production.API.Features;
 [HttpPut("articles/{articleId:int}/author-file:request")]
 [Tags("Assets")]
 public class RequestAuthorFileEndpoint(IServiceProvider serviceProvider, AssetRepository _assetRepository) 
-		: BaseEndpoint<RequestAuthorFileCommand , FileActionResponse>(serviceProvider)
+		: BaseEndpoint<RequestAuthorFileCommand , AssetActionResponse>(serviceProvider)
 {
 
 		public async override Task HandleAsync(RequestAuthorFileCommand command, CancellationToken cancellationToken)
 		{
-				var asset = await _assetRepository.GetWithArticleAsync(command.AssetId);
+				var asset = await _assetRepository.GetByTypeAndNumber(command.ArticleId, command.AssetType, command.AssetNumber);
 
 				asset.SetStatus(AssetStatus.Requested, command);
 
@@ -23,7 +23,7 @@ public class RequestAuthorFileEndpoint(IServiceProvider serviceProvider, AssetRe
 				await AddFileAction(asset, asset.LatestFile, command);
 				await _assetRepository.SaveChangesAsync();
 
-				await SendAsync(new FileActionResponse
+				await SendAsync(new AssetActionResponse
 				{
 						AssetId = asset.Id,
 						FileId = asset.LatestFileId,

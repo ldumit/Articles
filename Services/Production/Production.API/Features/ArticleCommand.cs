@@ -5,6 +5,7 @@ using Articles.System;
 using Articles.Abstractions;
 
 using Production.Domain.Enums;
+using System.Text.Json.Serialization;
 
 namespace Production.API.Features;
 
@@ -14,15 +15,15 @@ public abstract record ArticleCommand2<TResponse> : Domain.IArticleAction, IRequ
 
 		public string Comment { get; init; }
 
+    [JsonIgnore]
+    public abstract ActionType ActionType { get; }
+
 		//todo check why the FromClaim doesn't work
 		//[FromClaim(JwtRegisteredClaimNames.Sub)]
 		//[JsonIgnore]
 		int IArticleAction.UserId { get; set; }
-
-		//string IArticleAction.Comment => Body.Comment;
-
-		//public ActionType ActionType => ActionType.AssignTypesetter;
-		ActionType Domain.IArticleAction.ActionType => ActionType.AssignTypesetter;
+		
+		//ActionType Domain.IArticleAction.ActionType => ActionType.AssignTypesetter;
 }
 
 public abstract record ArticleCommand<TResponse> : Domain.IArticleAction, IRequest<TResponse>

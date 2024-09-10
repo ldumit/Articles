@@ -18,9 +18,9 @@ public class UploadFinalFileEndpoint(IFileService _fileService, IServiceProvider
 		{
 				using var transaction = _articleRepository.BeginTransaction();
 
-				var article = _articleRepository.GetById(command.ArticleId, throwNotFound:true);
+				var article = _articleRepository.GetByIdAsync(command.ArticleId, throwNotFound:true);
 				
-				var asset = FindAsset(command);
+				var asset = await FindAsset(command);
 				bool isNew = asset is null;
 				if (isNew)
 						asset = CreateAsset(command);
@@ -67,9 +67,9 @@ public class UploadFinalFileEndpoint(IFileService _fileService, IServiceProvider
 				return new Domain.Entities.File() { FileServerId = "", Name="", OriginalName=""};
 		}
 
-		protected virtual Asset FindAsset(UploadFileCommand command)
+		protected virtual async Task<Asset> FindAsset(UploadFileCommand command)
 		{
-				return _assetRepository.GetByTypeAndNumber(command.ArticleId, command.AssetType, command.GetAssetNumber());
+				return await _assetRepository.GetByTypeAndNumber(command.ArticleId, command.AssetType, command.GetAssetNumber());
 		}
 
 		protected virtual Asset CreateAsset(UploadFileCommand command)
