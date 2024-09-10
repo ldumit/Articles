@@ -2,11 +2,31 @@
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using Articles.System;
-using Articles.Abstractions;
+//using Articles.Abstractions;
 
 using Production.Domain.Enums;
+using Production.Domain;
 
 namespace Production.API.Features;
+
+public abstract record ArticleCommand2<TBody, TResponse> : Domain.IArticleAction, IRequest<TResponse>
+		where TBody : CommandBody
+{
+		[FromRoute]
+		[Required]
+		public int ArticleId { get; set; }
+		[FromBody]
+		public TBody Body { get; set; }
+
+		public int UserId { get; set; }
+
+		public string Comment => Body.Comment;
+
+    public abstract ActionType ActionType { get; }
+}
+public abstract record ArticleCommand2<TResponse> :ArticleCommand2<CommandBody, TResponse>
+{
+}
 
 public abstract record ArticleCommand<TResponse> : Domain.IArticleAction, IRequest<TResponse>
 {
@@ -19,11 +39,13 @@ public abstract record ArticleCommand<TResponse> : Domain.IArticleAction, IReque
 
     //talk - explain why the members have to be implemented explicitly, so they will not apear in swagger
     // the alternative will be to use JsonIgnore attribute
-		ActionType IArticleAction<ActionType>.ActionType => GetActionType();
-		string IArticleAction<ActionType>.ActionComment => GetActionComment();
-		int IArticleAction.UserId { get; set; }
+		ActionType IArticleAction.ActionType => GetActionType();
 
-    protected abstract string GetActionComment();
+		int Articles.Abstractions.IArticleAction.UserId { get; set; }
+
+		string Articles.Abstractions.IArticleAction.Comment => GetActionComment();
+
+		protected abstract string GetActionComment();
 		protected abstract ActionType GetActionType();
 }
 

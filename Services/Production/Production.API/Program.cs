@@ -7,6 +7,7 @@ using Articles.AspNetCore;
 using Azure.Storage.Blobs;
 using System.Text.Json.Serialization;
 using Articles.FastEnpoints;
+using FastEndpoints.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,7 @@ builder.Services.AddControllers();
 builder.Services
     .AddMemoryCache()
 		.AddFastEndpoints()
+    .SwaggerDocument()
     .AddEndpointsApiExplorer()
 		.AddDistributedMemoryCache() //.AddMemoryCache()
     .AddApplicationServices(builder.Configuration)
@@ -56,14 +58,16 @@ app.UseEndpoints(endpoints =>
 		endpoints.MapDefaultControllerRoute();
 
 });
-app.UseFastEndpoints(config =>
-{
-		config.Serializer.Options.Converters.Add(new JsonStringEnumConverter());
-		config.Endpoints.Configurator = ep =>
-		{
-				ep.PreProcessor<AssignUserIdPreProcessor>(FastEndpoints.Order.Before);
-		};
-});
+app
+    .UseFastEndpoints(config =>
+    {
+		    config.Serializer.Options.Converters.Add(new JsonStringEnumConverter());
+		    config.Endpoints.Configurator = ep =>
+		    {
+				    //ep.PreProcessor<AssignUserIdPreProcessor>(FastEndpoints.Order.Before);
+		    };
+    })
+		.UseSwaggerGen();
 
 #endregion
 

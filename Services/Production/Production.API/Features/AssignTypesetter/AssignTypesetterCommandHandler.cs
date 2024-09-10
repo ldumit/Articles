@@ -4,10 +4,10 @@ using Production.Domain.Entities;
 namespace Production.API.Features.AssignTypesetter;
 
 public class AssignTypesetterCommandHandler(IServiceProvider serviceProvider) 
-    : BaseCommandHandler<AssignTypesetterCommand, ArticleCommandResponse>(serviceProvider)
+    : BaseCommandHandler<AssignTypesetterCommand1, ArticleCommandResponse>(serviceProvider)
 {
     //protected readonly WorklfowEventDispatcher _workflowEventService;
-    public override async Task<ArticleCommandResponse> Handle(AssignTypesetterCommand command, CancellationToken cancellationToken)
+    public override async Task<ArticleCommandResponse> Handle(AssignTypesetterCommand1 command, CancellationToken cancellationToken)
     {
         using var transaction = _articleRepository.BeginTransaction();
         var article = _articleRepository.GetById(command.ArticleId);

@@ -3,12 +3,15 @@ using FastEndpoints;
 using Production.Persistence.Repositories;
 using Production.Domain.Entities;
 using Production.Domain.Enums;
+using Production.Domain;
 using Articles.Abstractions;
+//using Articles.Abstractions;
 
 namespace Production.API.Features;
 
 public abstract class BaseEndpoint<TCommand, TResponse> : Endpoint<TCommand, TResponse>
-    where TCommand : ArticleCommand<TResponse>
+    //where TCommand : ArticleCommand<TResponse>
+		where TCommand : Domain.IArticleAction
 {
     protected readonly IMapper _mapper;
     protected readonly ArticleRepository _articleRepository;

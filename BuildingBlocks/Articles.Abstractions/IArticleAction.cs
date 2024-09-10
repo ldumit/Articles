@@ -3,12 +3,12 @@
 
 public interface IArticleAction
 {
-		int ArticleId { get; set; }
+		int ArticleId { get; }
 		int UserId { get; set; }
+		string Comment { get; }
 }
-public interface IArticleAction<TActionType> : IArticleAction
-		where TActionType : Enum
-{
-		TActionType ActionType { get; }
-		string ActionComment { get; }
-}
+//public interface IArticleAction<TActionType> : IArticleAction
+//		where TActionType : Enum
+//{
+//		TActionType ActionType { get; }
+//}

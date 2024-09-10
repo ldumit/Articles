@@ -10,7 +10,6 @@ namespace Production.Domain.Entities
 				public required string Email { get; set; }
 
 				public int? UserId { get; set; }
-				//public User? User { get; set; }
 
 				public string PersonType { get; set; } = null!;
 
