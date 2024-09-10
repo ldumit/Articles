@@ -16,8 +16,8 @@ public record AssignTypesetterCommand : Domain.IArticleAction
 
 		//todo check why the FromClaim doesn't work
 		//[FromClaim(JwtRegisteredClaimNames.Sub)]
-		[JsonIgnore]
-		public int UserId { get; set; }
+		//[JsonIgnore]
+		int IArticleAction.UserId { get; set; }
 
 		string IArticleAction.Comment => Body.Comment;
 

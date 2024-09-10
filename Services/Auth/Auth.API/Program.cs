@@ -9,6 +9,7 @@ using System.Reflection;
 using EmailService.Contracts;
 using Articles.AspNetCore;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Http.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +17,12 @@ builder.Services
 		.ConfigureOptions<EmailOptions>(builder.Configuration)
 		//.ConfigureOptions<SendGridAccountOptions>(builder.Configuration)
 		.ConfigureOptions<JwtOptions>(builder.Configuration)
-		.ConfigureOptions<PostConfigureJwtBearerOptions>();
+		.ConfigureOptions<PostConfigureJwtBearerOptions>()
+		.Configure<JsonOptions>(opt =>
+		{
+				opt.SerializerOptions.PropertyNameCaseInsensitive = true;
+				opt.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
+		});
 
 
 builder.Services

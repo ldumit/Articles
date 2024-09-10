@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Articles.System;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Query;
-using Newtonsoft.Json;
 using System.Linq.Expressions;
 
 namespace Articles.EntityFrameworkCore;
@@ -11,8 +11,8 @@ public static class EntityTypeBuilderExtensions
 		{
 				try
 				{
-						var stagesData = JsonConvert.DeserializeObject<List<T>>(File.ReadAllText($@"../Production.Persistence/MasterData/{typeof(T).Name}.json"));
-						//var stagesData = JsonConvert.DeserializeObject<List<T>>(File.ReadAllText($@"/MasterData/{base.EntityName}.json"));
+						var stagesData = JsonExtensions.DeserializeCaseInsensitive<List<T>>(File.ReadAllText($@"../Production.Persistence/MasterData/{typeof(T).Name}.json"));
+						//var stagesData = JsonSerializer.Deserialize<List<T>>(File.ReadAllText($@"/MasterData/{base.EntityName}.json"));
 						if (stagesData != null)
 						{
 								entity.HasData(stagesData);

@@ -13,6 +13,6 @@ namespace Production.Domain.Entities
 
 				public string PersonType { get; set; } = null!;
 
-        public required List<ArticleActor> ArticleActors { get; set; }
+				public List<ArticleActor> ArticleActors { get; set; } = new();
 		}
 }

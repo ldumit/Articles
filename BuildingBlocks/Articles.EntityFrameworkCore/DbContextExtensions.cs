@@ -1,24 +1,23 @@
 ﻿using Articles.Entitities;
+using Articles.System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Articles.EntityFrameworkCore;
 
 public static class DbContextExtensions
 {
-		//The files needs to be located in a TestData folder
-		public static void Seed<TEntity>(this DbContext context)
+		public static void Seed<TEntity>(this DbContext context, string folderPath = "TestData")
 				where TEntity : Entity<int>
 		{
 				if (context.Set<TEntity>().Any())
 						return;
 
-				var filePath = $"{AppContext.BaseDirectory}TestData/{typeof(TEntity).Name}.json";
+				var filePath = $"{AppContext.BaseDirectory}{folderPath}/{typeof(TEntity).Name}.json";
 				if (File.Exists(filePath))
 				{
-						var collection = JsonConvert.DeserializeObject<TEntity[]>(File.ReadAllText(filePath));
+						var collection = JsonExtensions.DeserializeCaseInsensitive<TEntity[]>(File.ReadAllText(filePath));
 						if (collection != null)
 								context.Set<TEntity>().AddRange(collection);
 				}

@@ -1,11 +1,11 @@
 ﻿using Articles.Entitities;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Newtonsoft.Json;
 using Auth.Domain.Models;
 using Auth.Persistence;
 using Microsoft.AspNetCore.Identity;
+using System.Text.Json;
+using Articles.System;
 
 namespace Auth.Application;
 
@@ -43,7 +43,7 @@ public static class Seed
         var filePath = $"{AppContext.BaseDirectory}TestData/{typeof(TEntity).Name}.json";
         if (File.Exists(filePath))
         {
-            var collection = JsonConvert.DeserializeObject<TEntity[]>(System.IO.File.ReadAllText(filePath));
+            var collection = JsonExtensions.DeserializeCaseInsensitive<TEntity[]>(System.IO.File.ReadAllText(filePath));
             if (collection != null)
                 return collection;
 

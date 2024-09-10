@@ -1,7 +1,7 @@
 ﻿using Articles.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Newtonsoft.Json;
 using Ordering.Domain.Models;
+using System.Text.Json;
 
 namespace Ordering.Database.EntityConfigurations.Orders;
 
@@ -30,14 +30,14 @@ public class CustomerEntityConfiguration : EntityConfiguration<Customer>
 							phoneNumber.Property(a => a.CountryCode).IsRequired();
 					});
 
-				JsonSerializerSettings _jsonSettings = new();
+				JsonSerializerOptions _jsonSettings = new();
 				entity.Property(e => e.Address).HasConversion(
-						v => JsonConvert.SerializeObject(v, _jsonSettings),
-						v => JsonConvert.DeserializeObject<Address>(v, _jsonSettings));
+						v => JsonSerializer.Serialize(v, _jsonSettings),
+						v => JsonSerializer.Deserialize<Address>(v, _jsonSettings));
 
 				entity.Property(e => e.PhoneNumber).HasConversion(
-						v => JsonConvert.SerializeObject(v, _jsonSettings),
-						v => JsonConvert.DeserializeObject<PhoneNumber>(v, _jsonSettings));
+						v => JsonSerializer.Serialize(v, _jsonSettings),
+						v => JsonSerializer.Deserialize<PhoneNumber>(v, _jsonSettings));
 
 		}
 }

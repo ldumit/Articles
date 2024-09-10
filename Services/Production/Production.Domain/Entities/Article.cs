@@ -16,7 +16,7 @@ public partial class Article : AuditedEntity
     //todo create a separate entity for referenced users and use it uniformly for all kind of users(sumbission, author, typesetter etc.)
     public DateTime SubmitedOn { get; set; }
     public required virtual int SubmitedById { get; set; }
-    public required virtual Person SubmitedBy { get; set; }
+    public virtual Person SubmitedBy { get; set; } = null!;
 
     public ArticleStage Stage { get; set; }
     public ArticleCurrentStage CurrentStage { get; set; } = null!;

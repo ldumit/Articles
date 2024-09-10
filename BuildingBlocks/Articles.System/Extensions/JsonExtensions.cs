@@ -1,0 +1,22 @@
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+
+namespace Articles.System;
+
+public static class JsonExtensions
+{
+		public static readonly JsonSerializerOptions DefaultOptions;
+
+		static JsonExtensions()
+    {
+				DefaultOptions = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true, ReadCommentHandling = JsonCommentHandling.Skip };
+				DefaultOptions.Converters.Add(new JsonStringEnumConverter());
+		}
+
+
+		public static T DeserializeCaseInsensitive<T>(string json)
+		{
+				return JsonSerializer.Deserialize<T>(json, DefaultOptions);
+		}
+}
+

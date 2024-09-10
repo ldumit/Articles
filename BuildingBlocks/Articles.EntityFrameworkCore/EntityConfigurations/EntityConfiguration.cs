@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Newtonsoft.Json;
 using Articles.Entitities;
+using Articles.System;
 
 namespace Articles.EntityFrameworkCore;
 
@@ -38,7 +38,7 @@ public abstract class EntityConfiguration<T, TKey> : IEntityTypeConfiguration<T>
 						var filePath = $"{AppContext.BaseDirectory}MasterData/{typeof(T).Name}.json";
             ///var filePath2 = $@"../Production.Persistence/MasterData/{EntityName}.json";
 
-						var stagesData = JsonConvert.DeserializeObject<List<T>>(File.ReadAllText(filePath));
+						var stagesData = JsonExtensions.DeserializeCaseInsensitive<List<T>>(File.ReadAllText(filePath));
 						if (stagesData != null)
 						{
 								entity.HasData(stagesData);
@@ -56,7 +56,7 @@ public abstract class EntityConfiguration<T, TKey> : IEntityTypeConfiguration<T>
         try
         {
 
-            var data = JsonConvert.DeserializeObject<List<T>>(File.ReadAllText(path));
+            var data = JsonExtensions.DeserializeCaseInsensitive<List<T>>(File.ReadAllText(path));
             if (data != null)
             {
                 entity.HasData(data);

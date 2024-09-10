@@ -6,15 +6,22 @@ using Production.Persistence;
 using Articles.AspNetCore;
 using Azure.Storage.Blobs;
 using System.Text.Json.Serialization;
-using Articles.FastEnpoints;
 using FastEndpoints.Swagger;
+using Microsoft.AspNetCore.Http.Json;
+using Articles.System;
 
 var builder = WebApplication.CreateBuilder(args);
 
 #region Add
 
-builder
-    .Services.ConfigureOptions<FileServerOptions>(builder.Configuration);
+builder.Services
+    .ConfigureOptions<FileServerOptions>(builder.Configuration)
+    .Configure<JsonOptions>(opt =>
+    {
+				opt.SerializerOptions.PropertyNameCaseInsensitive = true;
+				opt.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
+
 
 //talk - fluid vs normal
 builder.Services.AddControllers();

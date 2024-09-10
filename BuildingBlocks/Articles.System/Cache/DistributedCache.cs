@@ -1,8 +1,6 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
-using Newtonsoft.Json;
 using Articles.System;
-using Newtonsoft.Json.Linq;
 
 namespace Articles.System.Cache
 {

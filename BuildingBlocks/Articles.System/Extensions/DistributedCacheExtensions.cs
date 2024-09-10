@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace Articles.System;
 
@@ -14,10 +14,10 @@ public static class DistributedCacheExtensions
 				{
 						var cachedData = await cache.GetStringAsync(key);
 						if (cachedData != null)
-								return JsonConvert.DeserializeObject<T>(cachedData);
+								return JsonSerializer.Deserialize<T>(cachedData);
 
 						var item = await createItem();
-						var serializedData = JsonConvert.SerializeObject(item);
+						var serializedData = JsonSerializer.Serialize(item);
 
 						if (options == null)
 								options = new DistributedCacheEntryOptions();
@@ -35,10 +35,10 @@ public static class DistributedCacheExtensions
 				{
 						var cachedData = cache.GetString(key);
 						if (cachedData != null)
-								return JsonConvert.DeserializeObject<T>(cachedData);
+								return JsonSerializer.Deserialize<T>(cachedData);
 
 						var item = createItem();
-						var serializedData = JsonConvert.SerializeObject(item);
+						var serializedData = JsonSerializer.Serialize(item);
 
 						if (options == null)
 								options = new DistributedCacheEntryOptions();
@@ -56,9 +56,9 @@ public static class DistributedCacheExtensions
 				{
 						var cachedData = cache.GetString(key);
 						if (cachedData != null)
-								return JsonConvert.DeserializeObject<T>(cachedData);
+								return JsonSerializer.Deserialize<T>(cachedData);
 
-						var serializedData = JsonConvert.SerializeObject(item);
+						var serializedData = JsonSerializer.Serialize(item);
 
 						if (options == null)
 								options = new DistributedCacheEntryOptions();
