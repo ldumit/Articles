@@ -21,7 +21,15 @@ public static class DbContextExtensions
 						if (collection != null)
 								context.Set<TEntity>().AddRange(collection);
 				}
-				context.SaveChanges();
+				try
+				{
+						context.SaveChanges();
+				}
+				catch (Exception)
+				{
+						context.Database.ExecuteSql($"DBCC CHECKIDENT({typeof(TEntity).Name}, RESEED, 0)");
+						throw;
+				}
 		}
 
 		public static void Migrate<TDbContext>(this WebApplication app)

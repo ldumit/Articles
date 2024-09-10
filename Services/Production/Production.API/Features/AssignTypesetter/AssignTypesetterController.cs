@@ -58,14 +58,6 @@ public class AssignTypesetterController(IMediator mediator) : ApiControllerBase(
 
 }
 
-public record AssignTypesetterCommand2 : ArticleCommand2<ArticleCommandResponse>
-{
-		//[FromRoute]
-		public int TypesetterId { get; init; }
-		
-		public override ActionType ActionType => ActionType.AssignTypesetter;
-}
-
 public record AssignTypesetterCommand1 : ArticleCommand<AssignTypesetterCommandBody, ArticleCommandResponse>
 {
     protected override ActionType GetActionType() => ActionType.AssignTypesetter;

@@ -2,30 +2,27 @@
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using Articles.System;
-//using Articles.Abstractions;
+using Articles.Abstractions;
 
 using Production.Domain.Enums;
-using Production.Domain;
 
 namespace Production.API.Features;
 
-public abstract record ArticleCommand2<TBody, TResponse> : Domain.IArticleAction, IRequest<TResponse>
-		where TBody : CommandBody
+public abstract record ArticleCommand2<TResponse> : Domain.IArticleAction, IRequest<TResponse>
 {
-		[FromRoute]
-		[Required]
 		public int ArticleId { get; set; }
-		[FromBody]
-		public TBody Body { get; set; }
 
-		public int UserId { get; set; }
+		public string Comment { get; init; }
 
-		public string Comment => Body.Comment;
+		//todo check why the FromClaim doesn't work
+		//[FromClaim(JwtRegisteredClaimNames.Sub)]
+		//[JsonIgnore]
+		int IArticleAction.UserId { get; set; }
 
-    public abstract ActionType ActionType { get; }
-}
-public abstract record ArticleCommand2<TResponse> :ArticleCommand2<CommandBody, TResponse>
-{
+		//string IArticleAction.Comment => Body.Comment;
+
+		//public ActionType ActionType => ActionType.AssignTypesetter;
+		ActionType Domain.IArticleAction.ActionType => ActionType.AssignTypesetter;
 }
 
 public abstract record ArticleCommand<TResponse> : Domain.IArticleAction, IRequest<TResponse>
@@ -39,7 +36,7 @@ public abstract record ArticleCommand<TResponse> : Domain.IArticleAction, IReque
 
     //talk - explain why the members have to be implemented explicitly, so they will not apear in swagger
     // the alternative will be to use JsonIgnore attribute
-		ActionType IArticleAction.ActionType => GetActionType();
+		ActionType Domain.IArticleAction.ActionType => GetActionType();
 
 		int Articles.Abstractions.IArticleAction.UserId { get; set; }
 

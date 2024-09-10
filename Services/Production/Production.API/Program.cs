@@ -9,6 +9,7 @@ using System.Text.Json.Serialization;
 using FastEndpoints.Swagger;
 using Microsoft.AspNetCore.Http.Json;
 using Articles.System;
+using Articles.FastEnpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -71,7 +72,7 @@ app
 		    config.Serializer.Options.Converters.Add(new JsonStringEnumConverter());
 		    config.Endpoints.Configurator = ep =>
 		    {
-				    //ep.PreProcessor<AssignUserIdPreProcessor>(FastEndpoints.Order.Before);
+				    ep.PreProcessor<AssignUserIdPreProcessor>(FastEndpoints.Order.Before);
 		    };
     })
 		.UseSwaggerGen();
