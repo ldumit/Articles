@@ -1,24 +1,25 @@
 ﻿using FastEndpoints;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.DependencyInjection;
 using Production.Domain.Enums;
 using Production.Persistence.Repositories;
 
 namespace Production.API.Features;
 
-[Authorize(Roles = "POF")]
-[HttpPut("final-file:requestnew")]
-public class RequestNewFinalFilesCommandHandler(IServiceProvider serviceProvider, AssetRepository _assetRepository) 
-		: BaseEndpoint<RequestNewFinalFileCommand, FileActionResponse>(serviceProvider)
+[Authorize(Roles = "TSOF")]
+//talk about custom verbs
+[HttpPut("articles/{articleId:int}/author-file:request")]
+[Tags("Assets")]
+public class RequestAuthorFileEndpoint(IServiceProvider serviceProvider, AssetRepository _assetRepository) 
+		: BaseEndpoint<RequestAuthorFileCommand , FileActionResponse>(serviceProvider)
 {
-		public async override Task HandleAsync(RequestNewFinalFileCommand command, CancellationToken cancellationToken)
+
+		public async override Task HandleAsync(RequestAuthorFileCommand command, CancellationToken cancellationToken)
 		{
 				var asset = await _assetRepository.GetWithArticleAsync(command.AssetId);
 
-				asset.Status = AssetStatus.Requested;
-				asset.LasModifiedOn = DateTime.UtcNow;
-				asset.LastModifiedById = _claimsProvider.GetUserId();
+				asset.SetStatus(AssetStatus.Requested, command);
 
+				//todo - AddFileAction in the domain object?
 				await AddFileAction(asset, asset.LatestFile, command);
 				await _assetRepository.SaveChangesAsync();
 

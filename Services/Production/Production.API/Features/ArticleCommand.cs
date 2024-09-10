@@ -18,6 +18,7 @@ public abstract record ArticleCommand<TResponse> : Domain.IArticleAction, IReque
     public int ArticleId { get; set; }
 
     //talk - explain why the members have to be implemented explicitly, so they will not apear in swagger
+    // the alternative will be to use JsonIgnore attribute
 		ActionType IArticleAction<ActionType>.ActionType => GetActionType();
 		string IArticleAction<ActionType>.ActionComment => GetActionComment();
 		int IArticleAction.UserId { get; set; }

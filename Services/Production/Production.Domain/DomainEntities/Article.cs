@@ -12,14 +12,16 @@ public partial class Article : AuditedEntity
         if (newStage == CurrentStage.Stage)
             return;
 
-        //todo chose between the next 2 aproaches
-        CurrentStage.Stage = newStage;
+        var previousStage = CurrentStage.Stage;
+				//todo chose between the next 2 aproaches
+				CurrentStage.Stage = newStage;
 				Stage = newStage;
 
+				_stageHistories.Add(new StageHistory { ArticleId = Id, StageId = newStage, StartDate = DateTime.UtcNow });
+
 				AddDomainEvent(
-            new ArticleStageChangedDomainEvent(action, newStage, CurrentStage.Stage)
+            new ArticleStageChangedDomainEvent(action, newStage, previousStage)
             );
-        _stageHistories.Add(new StageHistory { ArticleId = Id, StageId = newStage, StartDate = DateTime.UtcNow });
     }
 
     public void SetTypesetter(Typesetter typesetter, IArticleAction action)

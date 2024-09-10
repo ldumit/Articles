@@ -1,4 +1,6 @@
-﻿namespace Production.Domain.Entities
+﻿using Production.Domain.Enums;
+
+namespace Production.Domain.Entities
 {
 		public partial class Asset
 		{
@@ -13,5 +15,13 @@
 				public bool IsNewVersion => this.LatestFileRef != null;
 
 				public bool IsFileRequested => this.LatestFileRef?.File.StatusId == Enums.FileStatus.Requested;
+
+				public void SetStatus(AssetStatus newStatus, IArticleAction action)
+				{
+						this.Status = newStatus;
+						this.LasModifiedOn = DateTime.UtcNow;
+						this.LastModifiedById = action.UserId;
+
+				}
 		}
 }

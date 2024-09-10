@@ -9,20 +9,21 @@ namespace Production.API.Features.AssignTypesetter
 {
 		[Authorize(Roles = "POF")]
     [HttpPut("articles/{articleId:int}/typesetter")]
-    public class AssignTypesetterEndpoint(ProductionDbContext _dbContext, IServiceProvider serviceProvider) 
+		[Tags("Articles")]
+		public class AssignTypesetterEndpoint(ProductionDbContext _dbContext, IServiceProvider serviceProvider) 
         : BaseEndpoint<AssignTypesetterCommand, ArticleCommandResponse>(serviceProvider)
     {
-        public override async Task HandleAsync(AssignTypesetterCommand command, CancellationToken ct)
+				public override async Task HandleAsync(AssignTypesetterCommand command, CancellationToken ct)
         {
             var article = _articleRepository.GetById(command.ArticleId);
 
             var typesetter = _dbContext.Typesetters.Single(t => t.UserId == command.Body.UserId);
 
-            var action = (Domain.IArticleAction)command;
+            //var action = (Domain.IArticleAction)command;
 
-						article.SetTypesetter(typesetter, action);
+						article.SetTypesetter(typesetter, command);
 
-						article.SetStage(GetNextStage(article), action);
+						article.SetStage(GetNextStage(article), command);
 
 						await _articleRepository.SaveChangesAsync();
 
