@@ -5,20 +5,21 @@ using Production.Domain.Entities;
 using Production.Domain.Enums;
 using Production.Domain;
 using Articles.Abstractions;
+using AutoMapper;
 //using Articles.Abstractions;
 
-namespace Production.API.Features;
+namespace Production.API.Features.Shared;
 
 public abstract class BaseEndpoint<TCommand, TResponse> : Endpoint<TCommand, TResponse>
-    //where TCommand : ArticleCommand<TResponse>
-		where TCommand : Domain.IArticleAction
+        //where TCommand : ArticleCommand<TResponse>
+        where TCommand : Domain.IArticleAction
 {
-    protected readonly IMapper _mapper;
+    protected readonly AutoMapper.IMapper _mapper;
     protected readonly ArticleRepository _articleRepository;
 
     public BaseEndpoint(IServiceProvider serviceProvider)
     {
-        //_mapper = serviceProvider.GetRequiredService<IMapper>();
+        _mapper = serviceProvider.GetRequiredService<AutoMapper.IMapper>();
         _articleRepository = serviceProvider.GetRequiredService<ArticleRepository>();
     }
 

@@ -2,11 +2,11 @@
 using FluentValidation;
 using FluentValidation.Results;
 
-namespace Production.API.Features
+namespace Production.API.Features.Shared
 {
     public abstract class BaseValidator<T> : Validator<T>
     {
-        public override ValidationResult? Validate(FluentValidation.ValidationContext<T> context)
+        public override ValidationResult Validate(FluentValidation.ValidationContext<T> context)
         {
             var validationResult = base.Validate(context);
 

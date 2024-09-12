@@ -1,8 +1,9 @@
 ﻿using FastEndpoints;
+using Production.API.Features.Shared;
 
 namespace Production.API.Features.AssignTypesetter
 {
-		public class AssignTypesetterSummary: Summary<AssignTypesetterEndpoint>
+    public class AssignTypesetterSummary: Summary<AssignTypesetterEndpoint>
 		{
 				public AssignTypesetterSummary()
 				{

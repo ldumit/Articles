@@ -3,8 +3,9 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using System.Text.Json.Serialization;
 using Articles.Abstractions;
+using Production.API.Features.Shared;
 
-namespace Production.API.Features;
+namespace Production.API.Features.UploadFiles.Shared;
 
 public abstract record UploadFileCommand<TResponse> : FileActionCommand<TResponse>
     where TResponse : IFileActionResponse
@@ -40,7 +41,7 @@ public abstract record UploadFileCommand<TResponse> : FileActionCommand<TRespons
     internal string FileName { get; set; }
     internal string FileServerId { get; set; }
     internal int VersionCount { get; set; }
-    protected override string GetActionComment() => this.Comment;
+    protected override string GetActionComment() => Comment;
 }
 
 public abstract record UploadFileCommand : UploadFileCommand<UploadFileResponse>
@@ -50,22 +51,4 @@ public abstract record UploadFileCommand : UploadFileCommand<UploadFileResponse>
     internal virtual byte GetAssetNumber() => 0;
 }
 
-public record UploadFileResponse : IFileActionResponse
-{
-		/// <summary>
-		/// Returns the FileId of the uploaded file.
-		/// </summary>
-		public int FileId { get; set; }
-		/// <summary>
-		/// Returns the assetId of the uploaded file
-		/// </summary>
-		public int AssetId { get; set; }
-		/// <summary>
-		/// Returns the version of the uploaded file.
-		/// </summary>
-		public int Version { get; set; }
-		/// <summary>
-		/// Returns the fileServerId of the uploaded file
-		/// </summary>
-		public string FileServerId { get; set; }
-}
+public record UploadFileResponse(int Assetid, int FileId, int Version, string FileServerId) : IFileActionResponse;

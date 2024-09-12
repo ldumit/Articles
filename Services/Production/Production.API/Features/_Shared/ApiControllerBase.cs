@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Production.API.Features;
+namespace Production.API.Features.Shared;
 
 
 [ApiController]

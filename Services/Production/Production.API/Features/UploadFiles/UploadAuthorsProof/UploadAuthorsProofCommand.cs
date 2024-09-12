@@ -4,8 +4,10 @@ using Production.Persistence.Repositories;
 using Articles.System;
 using Articles.AspNetCore;
 using Production.Domain.Enums;
+using Production.API.Features.Shared;
+using Production.API.Features.UploadFiles.Shared;
 
-namespace Production.API.Features.UploadAuthorsProof
+namespace Production.API.Features.UploadFiles.UploadAuthorsProof
 {
     public class UploadFileCommandValidator<TUploadFileCommand> : UploadActionCommandValidator<TUploadFileCommand>
        where TUploadFileCommand : UploadFileCommand
@@ -53,8 +55,8 @@ namespace Production.API.Features.UploadAuthorsProof
             ArticleRepository = articleRepository;
             AssetRepository = assetRepository;
 
-            RuleFor(command => this.Action).Must((value, c) => IsActionValid(value.ArticleId, this.Action))
-                .WithMessage(command => ValidatorsMessagesConstants.InvalidActionMessage.FormatWith("assetProvider.Description", this.Action.ToString()));
+            RuleFor(command => Action).Must((value, c) => IsActionValid(value.ArticleId, Action))
+                .WithMessage(command => ValidatorsMessagesConstants.InvalidActionMessage.FormatWith("assetProvider.Description", Action.ToString()));
 
         }
 

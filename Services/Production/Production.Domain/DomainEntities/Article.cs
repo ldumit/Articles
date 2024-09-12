@@ -31,6 +31,6 @@ public partial class Article : AuditedEntity
         
         Actors.Add(new ArticleActor() { PersonId = typesetter.Id, Role = UserRoleType.TSOF});
 
-        AddDomainEvent(new TypesetterAssignedDomainEvent(action, typesetter.Id, typesetter.UserId.Value));
+        AddDomainEvent(new TypesetterAssignedDomainEvent(action, typesetter.Id, typesetter.UserId!.Value));
     }
 }

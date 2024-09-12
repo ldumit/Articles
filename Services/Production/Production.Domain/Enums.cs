@@ -28,17 +28,13 @@ public enum ActionType
     Accepted = 101
 }
 
-public enum AssetType
-{
-    Manuscript = 1,
-    ReviewReport = 2,
-    AuthorsProof = 3,
-    PublishersProof = 4,
-    HTML = 5,
-    XML = 6,
-    Figure = 7,
-    SupplementaryFile = 8,
-}
+//public static List<AssetType> FinalFileAssetTypes = new()
+//{
+//		AssetType.Pdf,
+//		AssetType.Html,
+//		AssetType.Epub
+//};
+
 
 public enum AssetStatus
 {

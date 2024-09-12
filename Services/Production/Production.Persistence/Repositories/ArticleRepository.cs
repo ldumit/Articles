@@ -25,7 +25,7 @@ public class ArticleRepository(ProductionDbContext _dbContext, IMemoryCache _cac
 						.Include(e => e.Actors);
 		}
 
-		public async Task<Article> GetWithAssets(int id)
+		public async Task<Article> GetByIdWithAssetsAsync(int id)
 		{
 				return await Query()
 						 .Include(e => e.Assets)

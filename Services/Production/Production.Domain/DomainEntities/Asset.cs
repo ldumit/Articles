@@ -1,4 +1,5 @@
 ﻿using Production.Domain.Enums;
+using Production.Domain.Events;
 
 namespace Production.Domain.Entities
 {
@@ -22,6 +23,26 @@ namespace Production.Domain.Entities
 						this.LasModifiedOn = DateTime.UtcNow;
 						this.LastModifiedById = action.UserId;
 
+						this.AddFileAction(action);
+				}
+
+				private void AddFileAction(IArticleAction action)
+				{
+						var fileAction = new FileAction()
+						{
+								FileId = this.LatestFileId,
+								TypeId = action.ActionType,
+								Comment = action.Comment,
+								CreatedById = action.UserId,
+								CreatedOn = DateTime.UtcNow
+						};
+						this.LatestFile.FileActions.Add(fileAction);
+
+						this.LatestFile.AddDomainEvent(new ActionExecutedDomainEvent(
+								action,
+								this.TypeCode,
+								this.AssetNumber,
+								this.LatestFile));
 				}
 		}
 }

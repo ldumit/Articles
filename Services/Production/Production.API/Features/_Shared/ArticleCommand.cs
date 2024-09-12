@@ -7,26 +7,26 @@ using Articles.Abstractions;
 using Production.Domain.Enums;
 using System.Text.Json.Serialization;
 
-namespace Production.API.Features;
+namespace Production.API.Features.Shared;
 
-public abstract record ArticleCommand2<TResponse> : Domain.IArticleAction, IRequest<TResponse>
+public abstract record ArticleCommand<TResponse> : Domain.IArticleAction, IRequest<TResponse>
 {
-		public int ArticleId { get; set; }
+    public int ArticleId { get; set; }
 
-		public string Comment { get; init; }
+    public string Comment { get; init; }
 
     [JsonIgnore]
     public abstract ActionType ActionType { get; }
 
-		//todo check why the FromClaim doesn't work
-		//[FromClaim(JwtRegisteredClaimNames.Sub)]
-		//[JsonIgnore]
-		int IArticleAction.UserId { get; set; }
-		
-		//ActionType Domain.IArticleAction.ActionType => ActionType.AssignTypesetter;
+    //todo check why the FromClaim doesn't work
+    //[FromClaim(JwtRegisteredClaimNames.Sub)]
+    //[JsonIgnore]
+    int IArticleAction.UserId { get; set; }
+
+    //ActionType Domain.IArticleAction.ActionType => ActionType.AssignTypesetter;
 }
 
-public abstract record ArticleCommand<TResponse> : Domain.IArticleAction, IRequest<TResponse>
+public abstract record ArticleCommand3<TResponse> : Domain.IArticleAction, IRequest<TResponse>
 {
     /// <summary>
     /// The article Id
@@ -37,18 +37,18 @@ public abstract record ArticleCommand<TResponse> : Domain.IArticleAction, IReque
 
     //talk - explain why the members have to be implemented explicitly, so they will not apear in swagger
     // the alternative will be to use JsonIgnore attribute
-		ActionType Domain.IArticleAction.ActionType => GetActionType();
+    ActionType Domain.IArticleAction.ActionType => GetActionType();
 
-		int Articles.Abstractions.IArticleAction.UserId { get; set; }
+    int IArticleAction.UserId { get; set; }
 
-		string Articles.Abstractions.IArticleAction.Comment => GetActionComment();
+    string IArticleAction.Comment => GetActionComment();
 
-		protected abstract string GetActionComment();
-		protected abstract ActionType GetActionType();
+    protected abstract string GetActionComment();
+    protected abstract ActionType GetActionType();
 }
 
-public abstract record ArticleCommand<TBody, TResponse> : ArticleCommand<TResponse>
-		where TBody : CommandBody
+public abstract record ArticleCommand3<TBody, TResponse> : ArticleCommand3<TResponse>
+        where TBody : CommandBody
 {
     [FromBody]
     public TBody Body { get; set; }

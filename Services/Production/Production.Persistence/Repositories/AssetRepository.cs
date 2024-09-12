@@ -10,7 +10,8 @@ using AssetType = Production.Domain.Entities.AssetType;
 
 namespace Production.Persistence.Repositories;
 
-public class AssetRepository(ProductionDbContext _dbContext, IMemoryCache _cache) : RepositoryBase<ProductionDbContext, Asset>(_dbContext)
+public class AssetRepository(ProductionDbContext _dbContext, IMemoryCache _cache) 
+    : RepositoryBase<ProductionDbContext, Asset>(_dbContext)
 {
     protected override IQueryable<Asset> Query()
     {
@@ -25,4 +26,10 @@ public class AssetRepository(ProductionDbContext _dbContext, IMemoryCache _cache
         return await Query()
             .SingleOrDefaultAsync(e => e.ArticleId == articleId && e.TypeCode == assetTypeId && e.AssetNumber == assetNumber);
     }
+
+		public IEnumerable<AssetType> GetAssetTypes()
+		=> _cache.GetOrCreate(entry => _dbContext.AssetTypes.ToList());
+
+		public AssetType GetAssetType(Domain.Enums.AssetType type)
+				=> GetAssetTypes().Single(e => e.Id == type);
 }

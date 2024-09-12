@@ -3,18 +3,19 @@ using Azure;
 using FastEndpoints;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Production.API.Features.Shared;
 using Production.Domain.Enums;
 using System.IdentityModel.Tokens.Jwt;
 
 ///using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace Production.API.Features.AssignTypesetter;
+namespace Production.API.Features.AssignEditor;
 
 [Authorize(AuthenticationSchemes = "Cookie")]
 [Route("api/articles/{articleId:int}")]
 [ApiController]
-public class AssignTypesetterController(IMediator mediator) : ApiControllerBase(mediator)
+public class AssignEditorController(IMediator mediator) : ApiControllerBase(mediator)
 {
     //[Authorize(Roles = "pof")]
     //[HttpPut("{articleId:int}/typesetter")]
@@ -56,16 +57,6 @@ public class AssignTypesetterController(IMediator mediator) : ApiControllerBase(
 		//		}));
 		//}
 
-}
-
-public record AssignTypesetterCommand1 : ArticleCommand<AssignTypesetterCommandBody, ArticleCommandResponse>
-{
-    protected override ActionType GetActionType() => ActionType.AssignTypesetter;
-}
-
-public record AssignTypesetterCommandBody : CommandBody
-{
-    public int UserId { get; set; }
 }
 
 public record AssignEditorCommand : IRequest<ArticleCommandResponse>

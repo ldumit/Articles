@@ -4,10 +4,11 @@ using Production.Persistence.Repositories;
 using Production.Domain.Entities;
 using Production.Persistence;
 using Articles.Abstractions;
+using Production.API.Features.Shared;
 
 namespace Production.API.Features.AssignTypesetter
 {
-		[Authorize(Roles = "POF")]
+    [Authorize(Roles = "POF")]
     [HttpPut("articles/{articleId:int}/typesetter/{typesetterId:int}")]
 		[Tags("Articles")]
 		public class AssignTypesetterEndpoint(ProductionDbContext _dbContext, IServiceProvider serviceProvider) 
@@ -15,12 +16,10 @@ namespace Production.API.Features.AssignTypesetter
     {
 				public override async Task HandleAsync(AssignTypesetterCommand command, CancellationToken ct)
         {
-            var article = await _articleRepository.GetByIdAsync(command.ArticleId);
+            var article = await _articleRepository.GetByIdAsync(command.ArticleId, throwNotFound:true);
 
-            //var typesetter = _dbContext.Typesetters.Single(t => t.UserId == command.Body.UserId);
-						var typesetter = _dbContext.Typesetters.Single(t => t.UserId == command.TypesetterId);
-
-						//var action = (Domain.IArticleAction)command;
+						//todo - maybe is more suitable to create a Person repository and take the Typesetter using that repo istead of using the DbContext
+            var typesetter = _dbContext.Typesetters.Single(t => t.UserId == command.TypesetterId);
 
 						article.SetTypesetter(typesetter, command);
 
@@ -31,12 +30,5 @@ namespace Production.API.Features.AssignTypesetter
             await SendAsync( new ArticleCommandResponse(command.ArticleId));
         }
         protected override ArticleStage GetNextStage(Article article) => ArticleStage.InProduction;
-    }
-
-    public class AssignTypesetterCommandValidator : ArticleCommandValidator<UploadAuthorsProofCommand>
-    {
-        public AssignTypesetterCommandValidator(ArticleRepository articleRepository, AssetRepository assetRepository)
-        {
-        }
     }
 }
