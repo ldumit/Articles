@@ -9,7 +9,7 @@ using Articles.Abstractions;
 namespace Production.API.Features.Shared;
 
 public abstract class BaseCommandHandler<TCommand, TResponse> : IRequestHandler<TCommand, TResponse>
-    where TCommand : ArticleCommand3<TResponse>
+    where TCommand : ArticleCommand<TResponse>
 {
     protected readonly ClaimsProvider _claimsProvider;
     protected readonly IMapper _mapper;

@@ -10,11 +10,11 @@ using System.Net;
 namespace Production.Persistence.Repositories;
 
 
-public class ArticleRepository(ProductionDbContext _dbContext, IMemoryCache _cache) 
+public class ArticleRepository(ProductionDbContext _dbContext) 
 		: RepositoryBase<ProductionDbContext, Article>(_dbContext)
 {
-		public virtual IList<Stage> GetStages()
-				=> _cache.GetOrCreate(entry => _dbContext.Stages.ToList());
+		//public virtual IList<Stage> GetStages()
+		//		=> _cache.GetOrCreate(entry => _dbContext.Stages.ToList());
 
 
 		protected override IQueryable<Article> Query()
@@ -29,7 +29,8 @@ public class ArticleRepository(ProductionDbContext _dbContext, IMemoryCache _cac
 		{
 				return await Query()
 						 .Include(e => e.Assets)
-								 .ThenInclude(e => e.LatestFile)
+								 .ThenInclude(e => e.LatestFileRef)
+										.ThenInclude(e => e.File)
 						.SingleAsync(e => e.Id == id);
 		}
 }

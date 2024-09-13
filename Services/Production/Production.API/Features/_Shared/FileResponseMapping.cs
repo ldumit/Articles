@@ -7,7 +7,7 @@ public class FileResponseMapping : Profile
 {
     public FileResponseMapping()
     {
-        CreateMap<Domain.Entities.File, UploadFileResponse>()
+        CreateMap<Domain.Entities.File, FileResponse>()
                 .ForMember(dest => dest.FileId, opt => opt.MapFrom(s => s.Id));
     }
 }

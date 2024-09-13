@@ -17,7 +17,7 @@ public class UploadAuthorsProofEndpoint(IMediator mediator) : ApiControllerBase(
     /// Uploads new version of Author's Proof Asset.
     /// </summary>
     /// <param name="request">The upload command.</param>
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UploadFileResponse))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FileResponse))]
     [Authorize(Roles = "tsof,pof")]
     [HttpPost("authors-proof:upload")]
     [Consumes("multipart/form-data")]

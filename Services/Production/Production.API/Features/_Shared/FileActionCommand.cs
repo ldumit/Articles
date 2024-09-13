@@ -4,19 +4,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Production.API.Features.Shared;
 
-
-public abstract record AssetActionCommand<TResponse> : ArticleCommand<TResponse>
-{
-    public int AssetId { get; set; }
-}
-
-public abstract record AssetActionCommand : ArticleCommand<AssetActionResponse>
-{
-    public int AssetId { get; set; }
-}
-
-
-
 public interface IFileActionCommand : IArticleAction
 {
 }
@@ -26,32 +13,10 @@ public interface IFileActionResponse
 }
 
 
-public abstract record FileActionCommand<TResponse> : ArticleCommand3<TResponse>, IFileActionCommand, IRequest<TResponse>
+public abstract record FileActionCommand<TResponse> : ArticleCommand<TResponse>, IFileActionCommand, IRequest<TResponse>
         where TResponse : IFileActionResponse
 {
     internal int FileId { get; set; }
-}
-
-public abstract record FileActionWithBodyCommand : FileActionCommand<AssetActionResponse>
-{
-    /// <summary>
-    /// The AssetId.
-    /// </summary>
-    [FromRoute]
-    [Required]
-    public int AssetId { get; set; }
-
-    /// <summary>
-    /// The file action comment.
-    /// </summary>
-    [FromBody]
-    public FileActionBody Body { get; set; }
-
-    protected override string GetActionComment() => Body?.Comment;
-}
-
-public record FileActionBody : CommandBody
-{
 }
 
 public class AssetActionResponse : IFileActionResponse

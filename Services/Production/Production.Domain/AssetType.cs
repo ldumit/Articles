@@ -4,9 +4,10 @@ public enum AssetType
 {
 		Manuscript,
 		ReviewReport,
-		Pdf,
-		Html,
-		Epub,
+		DraftPdf,
+		FinalPdf,
+		FinalHtml,
+		FinalEpub,
 		Figure,
 		DataSheet,
 		SupplementaryFile
@@ -16,9 +17,9 @@ public static class AssetTypeCategories
 {
 		public static HashSet<AssetType> FinalFiles = new()
 		{
-				AssetType.Pdf,
-				AssetType.Html,
-				AssetType.Epub
+				AssetType.FinalPdf,
+				AssetType.FinalHtml,
+				AssetType.FinalEpub
 		};
 		public static HashSet<AssetType> AuthorFiles = new()
 		{

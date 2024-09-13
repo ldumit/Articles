@@ -5,7 +5,7 @@ using Production.Domain.Events;
 
 namespace Production.Domain.Entities;
 
-public partial class Article : AuditedEntity
+public partial class Article 
 {
     public void SetStage(ArticleStage newStage, IArticleAction action)
     {

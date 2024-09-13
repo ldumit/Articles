@@ -4,55 +4,83 @@
     "name": "Manuscript",
     "defaultCategoryId": 1,
     "categoryId": 1,
-    "code": "Manuscript"
+    "code": "Manuscript",
+    "AllowedFileExtentions": [ "pdf" ],
+    "DefaultFileExtension": "pdf"
   },
   {
     "id": 2,
     "name": "Reviewer Report",
     "defaultCategoryId": 3,
     "categoryId": 2,
-    "code": "ReviewReport"
+    "code": "ReviewReport",
+    "AllowedFileExtentions": [ "pdf" ],
+    "DefaultFileExtension": "pdf"
   },
   {
     "id": 3,
-    "name": "Author's Proof",
+    "name": "Draft PDF",
     "defaultCategoryId": 3,
     "categoryId": 3,
-    "code": "AuthorsProof"
+    "code": "DraftPdf",
+    "AllowedFileExtentions": [ "pdf" ],
+    "DefaultFileExtension": "pdf"
   },
   {
     "id": 4,
-    "name": "Publisher's Proof",
+    "name": "Final PDF",
     "defaultCategoryId": 3,
     "categoryId": 3,
-    "code": "PublishersProof"
+    "code": "FinalPdf",
+    "AllowedFileExtentions": [ "pdf" ],
+    "DefaultFileExtension": "pdf"
   },
   {
     "id": 5,
-    "name": "HTML",
+    "name": "Final HTML Zip",
     "defaultCategoryId": 3,
     "categoryId": 3,
-    "code": "HTML"
+    "code": "FinalHtml",
+    "AllowedFileExtentions": [ "zip" ],
+    "DefaultFileExtension": "zip"
   },
   {
     "id": 6,
-    "name": "XML Zip",
+    "name": "Final Epub",
     "defaultCategoryId": 3,
-    "categoryId": 2,
-    "code": "XML"
+    "categoryId": 3,
+    "code": "FinalEpub",
+    "AllowedFileExtentions": [ "epub" ],
+    "DefaultFileExtension": "epub"
   },
   {
     "id": 7,
     "name": "HTML Figure",
     "defaultCategoryId": 2,
     "categoryId": 1,
-    "code": "Figure"
+    "code": "Figure",
+    "maxNumber": 12,
+    "AllowedFileExtentions": [ "jpg", "png", "tif", "tiff", "eps" ],
+    "DefaultFileExtension": "tif"
   },
   {
     "id": 8,
+    "name": "Data Sheet",
+    "defaultCategoryId": 2,
+    "categoryId": 1,
+    "code": "DataSheet",
+    "maxNumber": 12,
+    "AllowedFileExtentions": [ "csv", "xls" ],
+    "DefaultFileExtension": "csv"
+  },
+  {
+    "id": 9,
     "name": "Supplementary File",
     "defaultCategoryId": 2,
     "categoryId": 1,
-    "code": "SupplementaryFile"
+    "code": "SupplementaryFile",
+    "maxNumber": 12,
+    "AllowedFileExtentions": [],
+    "DefaultFileExtension": "pdf"
   }
 ]

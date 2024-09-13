@@ -10,6 +10,7 @@ using FastEndpoints.Swagger;
 using Microsoft.AspNetCore.Http.Json;
 using Articles.System;
 using Articles.FastEnpoints;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,11 +33,13 @@ builder.Services
 		.AddFastEndpoints()
     .SwaggerDocument()
     .AddEndpointsApiExplorer()
+		.AddAutoMapper(new Assembly[] { typeof(Production.API.Features.Shared.FileResponseMapping).Assembly })
 		.AddDistributedMemoryCache() //.AddMemoryCache()
     .AddApplicationServices(builder.Configuration)
     .AddSwaggerGen()
     .AddJwtAuthentication(builder.Configuration)
-    .AddAuthorization();
+    .AddAuthorization()
+		;
 
 builder.Services.AddSingleton(x => new BlobServiceClient(builder.Configuration.GetConnectionString("FileServer")));
 #endregion

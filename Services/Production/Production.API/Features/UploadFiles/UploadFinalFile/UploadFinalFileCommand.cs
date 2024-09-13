@@ -1,60 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Production.API.Features.UploadFiles.Shared;
-using System.ComponentModel.DataAnnotations;
+﻿using Production.API.Features.UploadFiles.Shared;
+using Production.Domain.Enums;
 
 namespace Production.API.Features.UploadFiles.UploadFinalFile;
 
-public record UploadFinalFileCommand : UploadFileCommand
-{
-}
-public record UploadAuthorsProofCommand : UploadFileCommand
-{
-}
-public record UploadPublisherProofCommand : UploadFileCommand
-{
-}
-public record UploadXmlCommand : UploadFileCommand
-{
-}
-public record UploadHtmlCommand : UploadFileCommand
-{
-}
-public record UploadEpubCommand : UploadFileCommand
-{
-}
-public record UploadCorrectionFileCommand : UploadFileCommand
-{
-}
-public record UploadAuthorCorrectionFileCommand : UploadFileCommand
-{
-    /// <summary>
-    /// The asset number of the file.
-    /// </summary>
-    [Required]
-    public byte AssetNumber { get; set; }
+public record UploadFinalFileCommand : UploadFileCommand;
 
-    internal override byte GetAssetNumber() => AssetNumber;
-}
-
-public record FinishUploadBatchCommand : IRequest<FinishUploadBatchResponse>
+public abstract class UploadFinalFileValidator : UploadFileValidator<UploadFinalFileCommand>
 {
-    /// <summary>
-    /// The article Id.
-    /// </summary>
-    [FromRoute, Required]
-    public int ArticleId { get; set; }
-
-    /// <summary>
-    /// The batch id for uplaoding multiple files in a batch.
-    /// </summary>
-    [FromRoute, Required]
-    public Guid BatchId { get; set; }
-}
-
-public record FinishUploadBatchResponse
-{
-    /// <summary>
-    /// Returns the list of details of the uploaded files.
-    /// </summary>
-    public IList<UploadFileResponse> UploadFileResponses { get; set; }
+		public override IReadOnlyCollection<AssetType> AllowedAssetTypes => AssetTypeCategories.FinalFiles;
 }

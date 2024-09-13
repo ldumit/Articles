@@ -5,11 +5,22 @@ namespace Production.Domain.Entities;
 
 public partial class File : AuditedEntity
 {
+    public static File CreateFromRequest(Asset asset)
+    {
+        var file = new File()
+        {
+            Name = asset.Type.Name
+        };
+
+        return file;
+    }
+
+
     //talk - difference between required, null!, default!
-    public required string OriginalName { get; set; }
+    public string OriginalName { get; set; } = default!;
     
     //talk - server id, create the file server server both mongo & azure blob
-    public required string FileServerId { get; set; } = default!;
+    public string FileServerId { get; set; } = default!;
 
     public string FormattedFileServerId => FileServerId.Replace("/", "_").ToLower();
 

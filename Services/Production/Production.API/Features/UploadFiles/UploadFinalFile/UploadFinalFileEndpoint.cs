@@ -6,13 +6,14 @@ using Production.Domain.Enums;
 using FileStorage.Contracts;
 using Production.API.Features.Shared;
 using Production.API.Features.UploadFiles.Shared;
+using Production.Domain;
 
 namespace Production.API.Features.UploadFiles.UploadFinalFile;
 
 [Authorize(Roles = "TSOF")]
-[HttpPut("articles/{articleId:int}/upload")]
+[HttpPut("articles/{articleId:int}/final-files:upload")]
 public class UploadFinalFileEndpoint(IFileService _fileService, IServiceProvider serviceProvider)
-    : BaseEndpoint<UploadFinalFileCommand, UploadFileResponse>(serviceProvider)
+    : BaseEndpoint<UploadFinalFileCommand, FileResponse>(serviceProvider)
 {
     protected readonly AssetRepository _assetRepository;
 
@@ -20,12 +21,12 @@ public class UploadFinalFileEndpoint(IFileService _fileService, IServiceProvider
     {
         using var transaction = _articleRepository.BeginTransaction();
 
-        var article = _articleRepository.GetByIdAsync(command.ArticleId, throwNotFound: true);
+        //var article = _articleRepository.GetByIdAsync(command.ArticleId, throwNotFound: true);
 
         var asset = await FindAsset(command);
         bool isNew = asset is null;
         if (isNew)
-            asset = CreateAsset(command);
+            asset = CreateAsset(command, command.AssetType, command.GetAssetNumber());
 
         var uploadResponse = await UploadFile(command, asset);
 
@@ -74,18 +75,10 @@ public class UploadFinalFileEndpoint(IFileService _fileService, IServiceProvider
         return await _assetRepository.GetByTypeAndNumber(command.ArticleId, command.AssetType, command.GetAssetNumber());
     }
 
-    protected virtual Asset CreateAsset(UploadFileCommand command)
-    {
-        var assetType = _assetRepository.GetAssetType(command.AssetType);
+		protected virtual Asset CreateAsset(IArticleAction action, Domain.Enums.AssetType assetType, byte assetNumber)
+		{
+				var assetTypeEntity = _assetRepository.GetAssetType(assetType);
 
-        return new Asset()
-        {
-            Name = assetType.Name,
-            Type = assetType,
-            CategoryId = assetType.DefaultCategoryId,
-            Status = AssetStatus.Uploaded,
-            ArticleId = command.ArticleId,
-            AssetNumber = command.GetAssetNumber(),
-        };
-    }
+				return Asset.CreateFromRequest(action, assetTypeEntity, assetNumber);
+		}
 }

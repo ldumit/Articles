@@ -14,7 +14,7 @@ public record AssignTypesetterCommand : ArticleCommand<ArticleCommandResponse>
 //todo - validate 
 public class AssignTypesetterCommandValidator : ArticleCommandValidator<AssignTypesetterCommand>
 {
-		public AssignTypesetterCommandValidator(ArticleRepository articleRepository, AssetRepository assetRepository)
+		public AssignTypesetterCommandValidator()
 		{
 				RuleFor(r => r.ArticleId).GreaterThan(0);
 				RuleFor(r => r.TypesetterId).GreaterThan(0);

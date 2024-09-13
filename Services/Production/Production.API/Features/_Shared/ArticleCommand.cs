@@ -26,45 +26,6 @@ public abstract record ArticleCommand<TResponse> : Domain.IArticleAction, IReque
     //ActionType Domain.IArticleAction.ActionType => ActionType.AssignTypesetter;
 }
 
-public abstract record ArticleCommand3<TResponse> : Domain.IArticleAction, IRequest<TResponse>
-{
-    /// <summary>
-    /// The article Id
-    /// </summary>
-    [FromRoute]
-    [Required]
-    public int ArticleId { get; set; }
-
-    //talk - explain why the members have to be implemented explicitly, so they will not apear in swagger
-    // the alternative will be to use JsonIgnore attribute
-    ActionType Domain.IArticleAction.ActionType => GetActionType();
-
-    int IArticleAction.UserId { get; set; }
-
-    string IArticleAction.Comment => GetActionComment();
-
-    protected abstract string GetActionComment();
-    protected abstract ActionType GetActionType();
-}
-
-public abstract record ArticleCommand3<TBody, TResponse> : ArticleCommand3<TResponse>
-        where TBody : CommandBody
-{
-    [FromBody]
-    public TBody Body { get; set; }
-
-    protected override string GetActionComment() => Body?.Comment;
-}
-
-
-public record CommandBody
-{
-    /// <summary>
-    /// Add comments, if any.
-    /// </summary>
-    public string Comment { get; set; }
-}
-
 public record ArticleCommandResponse(int ArticleId);
 
 public abstract class ArticleCommandValidator<TFileActionCommand> : BaseValidator<TFileActionCommand>

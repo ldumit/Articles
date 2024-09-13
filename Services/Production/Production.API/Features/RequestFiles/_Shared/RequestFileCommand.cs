@@ -27,7 +27,7 @@ public abstract record RequestMultipleFilesCommand : RequestFileCommand
 
 public class RequestFilesCommandResponse
 {
-    public List<UploadFileResponse> Assets { get; set; } = new();
+    public List<FileResponse> Assets { get; set; } = new();
 }
 
 public abstract class RequestFilesValidator<TRequestCommand> : ArticleCommandValidator<TRequestCommand>
@@ -41,8 +41,8 @@ public abstract class RequestFilesValidator<TRequestCommand> : ArticleCommandVal
                 .ForEach(r =>
                 {
                     r
-                            .Must(a => a.AssetNumber <= 10).WithMessage("Maximum 10 assets of the same type are allowed")
-                            .Must(a => AllowedAssetTypes.Contains(a.AssetType)).WithMessage("AssetType not allowed");
+                    .Must(a => a.AssetNumber <= 10).WithMessage("Maximum 10 assets of the same type are allowed")
+                    .Must(a => AllowedAssetTypes.Contains(a.AssetType)).WithMessage("AssetType not allowed");
                 });
     }
 

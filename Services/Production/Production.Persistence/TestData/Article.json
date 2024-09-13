@@ -1,6 +1,6 @@
 [
   {
-    "title": "Iris Research",
+    "title": "Covid Research",
     "Doi": "med.2024.2451234",
     "SubmitedOn": "2024-04-23T18:00",
     "SubmitedById": 5,
@@ -23,10 +23,6 @@
         "PersonId": 3,
         "Role": "AUT"
       }
-      //{
-      //  "PersonId": 7,
-      //  "Role": "TSOF"
-      //}
     ],
     "Assets": [
       {
@@ -38,7 +34,7 @@
         "LastModifiedById": 5
       },
       {
-        "Name": "ReviewReport1",
+        "Name": "ReviewReport",
         "AssetNumber": 0,
         "Status": "Uploaded",
         "TypeCode": "ReviewReport",

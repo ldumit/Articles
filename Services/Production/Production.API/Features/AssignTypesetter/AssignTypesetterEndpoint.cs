@@ -11,12 +11,12 @@ namespace Production.API.Features.AssignTypesetter
     [Authorize(Roles = "POF")]
     [HttpPut("articles/{articleId:int}/typesetter/{typesetterId:int}")]
 		[Tags("Articles")]
-		public class AssignTypesetterEndpoint(ProductionDbContext _dbContext, IServiceProvider serviceProvider) 
+		public class AssignTypesetterEndpoint(ArticleRepository _articleRepository2, ProductionDbContext _dbContext, IServiceProvider serviceProvider) 
         : BaseEndpoint<AssignTypesetterCommand, ArticleCommandResponse>(serviceProvider)
     {
 				public override async Task HandleAsync(AssignTypesetterCommand command, CancellationToken ct)
         {
-            var article = await _articleRepository.GetByIdAsync(command.ArticleId, throwNotFound:true);
+            var article = await _articleRepository2.GetByIdAsync(command.ArticleId, throwNotFound:true);
 
 						//todo - maybe is more suitable to create a Person repository and take the Typesetter using that repo istead of using the DbContext
             var typesetter = _dbContext.Typesetters.Single(t => t.UserId == command.TypesetterId);

@@ -12,7 +12,7 @@ using Production.Persistence;
 namespace Production.Persistence.Migrations
 {
     [DbContext(typeof(ProductionDbContext))]
-    [Migration("20240907105400_InitialCreate")]
+    [Migration("20240913074442_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -55,7 +55,7 @@ namespace Production.Persistence.Migrations
                     b.Property<DateTime?>("LasModifiedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 9, 7, 10, 54, 0, 444, DateTimeKind.Utc).AddTicks(1569));
+                        .HasDefaultValue(new DateTime(2024, 9, 13, 7, 44, 42, 500, DateTimeKind.Utc).AddTicks(5186));
 
                     b.Property<int?>("LastModifiedById")
                         .IsRequired()
@@ -168,7 +168,7 @@ namespace Production.Persistence.Migrations
                     b.Property<DateTime?>("LasModifiedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 9, 7, 10, 54, 0, 449, DateTimeKind.Utc).AddTicks(112));
+                        .HasDefaultValue(new DateTime(2024, 9, 13, 7, 44, 42, 505, DateTimeKind.Utc).AddTicks(6506));
 
                     b.Property<int?>("LastModifiedById")
                         .IsRequired()
@@ -223,16 +223,29 @@ namespace Production.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("AllowedFileExtentions")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
-                    b.Property<string>("ContentType")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("DefaultCategoryId")
                         .HasColumnType("int");
+
+                    b.Property<string>("DefaultFileExtension")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)")
+                        .HasDefaultValue("pdf");
+
+                    b.Property<byte>("MaxNumber")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint")
+                        .HasDefaultValue((byte)0);
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -250,57 +263,91 @@ namespace Production.Persistence.Migrations
                         new
                         {
                             Id = 1,
+                            AllowedFileExtentions = "[\"pdf\"]",
                             Code = "Manuscript",
                             DefaultCategoryId = 1,
+                            DefaultFileExtension = "pdf",
+                            MaxNumber = (byte)0,
                             Name = "Manuscript"
                         },
                         new
                         {
                             Id = 2,
+                            AllowedFileExtentions = "[\"pdf\"]",
                             Code = "ReviewReport",
                             DefaultCategoryId = 3,
+                            DefaultFileExtension = "pdf",
+                            MaxNumber = (byte)0,
                             Name = "Reviewer Report"
                         },
                         new
                         {
                             Id = 3,
-                            Code = "AuthorsProof",
+                            AllowedFileExtentions = "[\"pdf\"]",
+                            Code = "DraftPdf",
                             DefaultCategoryId = 3,
-                            Name = "Author's Proof"
+                            DefaultFileExtension = "pdf",
+                            MaxNumber = (byte)0,
+                            Name = "Draft PDF"
                         },
                         new
                         {
                             Id = 4,
-                            Code = "PublishersProof",
+                            AllowedFileExtentions = "[\"pdf\"]",
+                            Code = "FinalPdf",
                             DefaultCategoryId = 3,
-                            Name = "Publisher's Proof"
+                            DefaultFileExtension = "pdf",
+                            MaxNumber = (byte)0,
+                            Name = "Final PDF"
                         },
                         new
                         {
                             Id = 5,
-                            Code = "HTML",
+                            AllowedFileExtentions = "[\"zip\"]",
+                            Code = "FinalHtml",
                             DefaultCategoryId = 3,
-                            Name = "HTML"
+                            DefaultFileExtension = "zip",
+                            MaxNumber = (byte)0,
+                            Name = "Final HTML Zip"
                         },
                         new
                         {
                             Id = 6,
-                            Code = "XML",
+                            AllowedFileExtentions = "[\"epub\"]",
+                            Code = "FinalEpub",
                             DefaultCategoryId = 3,
-                            Name = "XML Zip"
+                            DefaultFileExtension = "epub",
+                            MaxNumber = (byte)0,
+                            Name = "Final Epub"
                         },
                         new
                         {
                             Id = 7,
+                            AllowedFileExtentions = "[\"jpg\",\"png\",\"tif\",\"tiff\",\"eps\"]",
                             Code = "Figure",
                             DefaultCategoryId = 2,
+                            DefaultFileExtension = "tif",
+                            MaxNumber = (byte)12,
                             Name = "HTML Figure"
                         },
                         new
                         {
                             Id = 8,
+                            AllowedFileExtentions = "[\"csv\",\"xls\"]",
+                            Code = "DataSheet",
+                            DefaultCategoryId = 2,
+                            DefaultFileExtension = "csv",
+                            MaxNumber = (byte)12,
+                            Name = "Data Sheet"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            AllowedFileExtentions = "[]",
                             Code = "SupplementaryFile",
                             DefaultCategoryId = 2,
+                            DefaultFileExtension = "pdf",
+                            MaxNumber = (byte)12,
                             Name = "Supplementary File"
                         });
                 });
@@ -376,7 +423,7 @@ namespace Production.Persistence.Migrations
                     b.Property<DateTime?>("LasModifiedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 9, 7, 10, 54, 0, 452, DateTimeKind.Utc).AddTicks(1692));
+                        .HasDefaultValue(new DateTime(2024, 9, 13, 7, 44, 42, 508, DateTimeKind.Utc).AddTicks(9969));
 
                     b.Property<int?>("LastModifiedById")
                         .IsRequired()

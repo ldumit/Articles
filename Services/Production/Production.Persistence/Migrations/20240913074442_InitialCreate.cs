@@ -20,7 +20,9 @@ namespace Production.Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DefaultCategoryId = table.Column<int>(type: "int", nullable: false),
-                    ContentType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AllowedFileExtentions = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DefaultFileExtension = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false, defaultValue: "pdf"),
+                    MaxNumber = table.Column<byte>(type: "tinyint", nullable: false, defaultValue: (byte)0),
                     Code = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false)
                 },
@@ -65,7 +67,7 @@ namespace Production.Persistence.Migrations
                     CreatedById = table.Column<int>(type: "int", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
                     LastModifiedById = table.Column<int>(type: "int", nullable: false),
-                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValue: new DateTime(2024, 9, 7, 10, 54, 0, 444, DateTimeKind.Utc).AddTicks(1569))
+                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValue: new DateTime(2024, 9, 13, 7, 44, 42, 500, DateTimeKind.Utc).AddTicks(5186))
                 },
                 constraints: table =>
                 {
@@ -118,7 +120,7 @@ namespace Production.Persistence.Migrations
                     CreatedById = table.Column<int>(type: "int", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
                     LastModifiedById = table.Column<int>(type: "int", nullable: false),
-                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValue: new DateTime(2024, 9, 7, 10, 54, 0, 449, DateTimeKind.Utc).AddTicks(112))
+                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValue: new DateTime(2024, 9, 13, 7, 44, 42, 505, DateTimeKind.Utc).AddTicks(6506))
                 },
                 constraints: table =>
                 {
@@ -235,7 +237,7 @@ namespace Production.Persistence.Migrations
                     CreatedById = table.Column<int>(type: "int", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
                     LastModifiedById = table.Column<int>(type: "int", nullable: false),
-                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValue: new DateTime(2024, 9, 7, 10, 54, 0, 452, DateTimeKind.Utc).AddTicks(1692))
+                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValue: new DateTime(2024, 9, 13, 7, 44, 42, 508, DateTimeKind.Utc).AddTicks(9969))
                 },
                 constraints: table =>
                 {
@@ -369,17 +371,25 @@ namespace Production.Persistence.Migrations
 
             migrationBuilder.InsertData(
                 table: "AssetType",
-                columns: new[] { "Id", "Code", "ContentType", "DefaultCategoryId", "Name" },
+                columns: new[] { "Id", "AllowedFileExtentions", "Code", "DefaultCategoryId", "DefaultFileExtension", "Name" },
                 values: new object[,]
                 {
-                    { 1, "Manuscript", null, 1, "Manuscript" },
-                    { 2, "ReviewReport", null, 3, "Reviewer Report" },
-                    { 3, "AuthorsProof", null, 3, "Author's Proof" },
-                    { 4, "PublishersProof", null, 3, "Publisher's Proof" },
-                    { 5, "HTML", null, 3, "HTML" },
-                    { 6, "XML", null, 3, "XML Zip" },
-                    { 7, "Figure", null, 2, "HTML Figure" },
-                    { 8, "SupplementaryFile", null, 2, "Supplementary File" }
+                    { 1, "[\"pdf\"]", "Manuscript", 1, "pdf", "Manuscript" },
+                    { 2, "[\"pdf\"]", "ReviewReport", 3, "pdf", "Reviewer Report" },
+                    { 3, "[\"pdf\"]", "DraftPdf", 3, "pdf", "Draft PDF" },
+                    { 4, "[\"pdf\"]", "FinalPdf", 3, "pdf", "Final PDF" },
+                    { 5, "[\"zip\"]", "FinalHtml", 3, "zip", "Final HTML Zip" },
+                    { 6, "[\"epub\"]", "FinalEpub", 3, "epub", "Final Epub" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AssetType",
+                columns: new[] { "Id", "AllowedFileExtentions", "Code", "DefaultCategoryId", "DefaultFileExtension", "MaxNumber", "Name" },
+                values: new object[,]
+                {
+                    { 7, "[\"jpg\",\"png\",\"tif\",\"tiff\",\"eps\"]", "Figure", 2, "tif", (byte)12, "HTML Figure" },
+                    { 8, "[\"csv\",\"xls\"]", "DataSheet", 2, "csv", (byte)12, "Data Sheet" },
+                    { 9, "[]", "SupplementaryFile", 2, "pdf", (byte)12, "Supplementary File" }
                 });
 
             migrationBuilder.InsertData(

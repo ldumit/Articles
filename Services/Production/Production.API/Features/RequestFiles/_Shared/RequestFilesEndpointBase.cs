@@ -1,5 +1,7 @@
 ﻿using Production.API.Features.Shared;
 using Production.API.Features.UploadFiles.Shared;
+using Production.Domain;
+using Production.Domain.Entities;
 using Production.Domain.Enums;
 using Production.Persistence.Repositories;
 
@@ -20,12 +22,23 @@ public class RequestFilesEndpointBase<TCommand>(IServiceProvider serviceProvider
             if (asset != null)
             {
                 asset.SetStatus(AssetStatus.Requested, command);
-
-                response.Assets.Add(_mapper.Map<UploadFileResponse>(asset.LatestFile));
             }
-        }
-        await _assetRepository.SaveChangesAsync();
+            else
+            {
+								asset = CreateAsset(command, assetRequest.AssetType, assetRequest.AssetNumber);
+						}
+
+						response.Assets.Add(_mapper.Map<FileResponse>(asset.LatestFile));
+				}
+				await _assetRepository.SaveChangesAsync();
 
         await SendAsync(response);
     }
+
+		protected virtual Asset CreateAsset(IArticleAction action, Domain.Enums.AssetType assetType, byte assetNumber)
+		{
+				var assetTypeEntity = _assetRepository.GetAssetType(assetType);
+
+				return Asset.CreateFromRequest(action, assetTypeEntity, assetNumber);
+		}
 }

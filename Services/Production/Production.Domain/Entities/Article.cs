@@ -30,10 +30,10 @@ public partial class Article : AuditedEntity
 
     public DateTime AcceptedOn { get; set; }
 
-    public Journal Journal { get; } = null!;
+    public Journal Journal { get; init; } = null!;
 
     // talk - ways to represent collections 
-    public List<Asset> Assets { get; }  = new() ;
+    public List<Asset> Assets { get; init; }  = new() ;
 
     public IEnumerable<Author> Authors => Actors.Where(aa => aa.Person is Author).Select(aa => aa.Person as Author);
 		public Typesetter? Typesetter => Actors.Where(aa => aa.Person is Typesetter).Select(aa => aa.Person as Typesetter).FirstOrDefault();

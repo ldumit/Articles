@@ -1,4 +1,5 @@
 ﻿using Articles.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Production.Domain.Entities;
 
@@ -11,5 +12,9 @@ public class AssetTypeEntityConnfiguration : EnumEntityConfiguration<AssetType, 
         base.Configure(entity);
 
         entity.Property(e => e.DefaultCategoryId);
-    }
+				entity.Property(e => e.MaxNumber).HasDefaultValue(0);
+
+        entity.Property(e => e.AllowedFileExtentions).HasJsonListConversion();
+        entity.Property(e => e.DefaultFileExtension).IsRequired().HasMaxLength(Constraints.C8).HasDefaultValue("pdf");
+		}
 }
