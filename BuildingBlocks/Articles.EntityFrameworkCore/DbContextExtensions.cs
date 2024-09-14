@@ -9,7 +9,8 @@ namespace Articles.EntityFrameworkCore;
 public static class DbContextExtensions
 {
 		public static void Seed<TEntity>(this DbContext context, string folderPath = "TestData")
-				where TEntity : Entity<int>
+				//where TEntity : Entity<int>
+				where TEntity : class
 		{
 				if (context.Set<TEntity>().Any())
 						return;
@@ -25,7 +26,7 @@ public static class DbContextExtensions
 				{
 						context.SaveChanges();
 				}
-				catch (Exception)
+				catch (Exception ex)
 				{
 						context.Database.ExecuteSql($"DBCC CHECKIDENT({typeof(TEntity).Name}, RESEED, 0)");
 						throw;

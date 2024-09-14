@@ -7,7 +7,7 @@ using Production.Domain.Enums;
 
 namespace Production.Persistence.EntityConfigurations;
 
-internal class AssetEntityConnfiguration : AuditedEntityConfiguration<Asset>
+internal class AssetEntityConfiguration : AuditedEntityConfiguration<Asset>
 {
     public override void Configure(EntityTypeBuilder<Asset> entity)
     {
@@ -38,8 +38,8 @@ internal class AssetEntityConnfiguration : AuditedEntityConfiguration<Asset>
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
 
-        entity.HasOne(e => e.LatestFileRef).WithOne(e => e.Asset)
-            .HasForeignKey<AssetLatestFile>(e => e.AssetId)
+        entity.HasOne(e => e.CurrentFileLink).WithOne(e => e.Asset)
+            .HasForeignKey<AssetCurrentFileLink>(e => e.AssetId)
             .IsRequired(true)
             .OnDelete(DeleteBehavior.Cascade);
     }

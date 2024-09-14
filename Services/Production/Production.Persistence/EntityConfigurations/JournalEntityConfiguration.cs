@@ -6,7 +6,7 @@ using Production.Domain.Entities;
 
 namespace Production.Persistence.EntityConfigurations;
 
-public class JournalEntityConnfiguration : EntityConfiguration<Journal>
+public class JournalEntityConfiguration : EntityConfiguration<Journal>
 {
     public override void Configure(EntityTypeBuilder<Journal> entity)
     {

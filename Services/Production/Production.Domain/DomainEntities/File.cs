@@ -2,7 +2,7 @@
 
 namespace Production.Domain.Entities
 {
-		public partial class File : AuditedEntity
+		public partial class File
 		{
 		}
 }

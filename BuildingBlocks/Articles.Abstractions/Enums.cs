@@ -34,7 +34,7 @@ public enum ArticleStage
 		[Description("Typesetter assigned")]
 		InProduction = 300,
 		[Description("Author's proof uploaded")]
-		AuthorsProof = 301,
+		DraftProduction = 301,
 		[Description("Author's proof approved")]
 		FinalProduction = 302,
 		[Description("Publisher's proof uploaded")]

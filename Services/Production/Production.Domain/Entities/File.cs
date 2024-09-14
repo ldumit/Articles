@@ -15,6 +15,7 @@ public partial class File : AuditedEntity
         return file;
     }
 
+    public int FileId => Id;
 
     //talk - difference between required, null!, default!
     public string OriginalName { get; set; } = default!;

@@ -140,19 +140,20 @@ public partial class ProductionDbContext(DbContextOptions<ProductionDbContext> _
 
         modelBuilder.ApplyConfiguration(new ArticleEntityConfiguration());
         modelBuilder.ApplyConfiguration(new ArticleCurrentStageEntityConfiguration());
-        modelBuilder.ApplyConfiguration(new AssetEntityConnfiguration());
+        modelBuilder.ApplyConfiguration(new AssetEntityConfiguration());
         modelBuilder.ApplyConfiguration(new AssetLatestFileEntityConfiguration());
-        modelBuilder.ApplyConfiguration(new AssetTypeEntityConnfiguration());
+        modelBuilder.ApplyConfiguration(new AssetActionEntityConfiguration());
+				modelBuilder.ApplyConfiguration(new AssetTypeEntityConfiguration());
 				modelBuilder.ApplyConfiguration(new ArticleActorEntityConfiguration());
-				modelBuilder.ApplyConfiguration(new AuthorEntityConnfiguration());
-        modelBuilder.ApplyConfiguration(new CommentEntityConnfiguration());
-        modelBuilder.ApplyConfiguration(new FileActionEntityConnfiguration());
+				modelBuilder.ApplyConfiguration(new AuthorEntityConfiguration());
+        modelBuilder.ApplyConfiguration(new CommentEntityConfiguration());
+        modelBuilder.ApplyConfiguration(new FileActionEntityConfiguration());
         modelBuilder.ApplyConfiguration(new FileEntityConnfiguration());
         modelBuilder.ApplyConfiguration(new FileLatestActionEntityConfiguration());
-        modelBuilder.ApplyConfiguration(new JournalEntityConnfiguration());
-        modelBuilder.ApplyConfiguration(new StageEntityConnfiguration());
-        modelBuilder.ApplyConfiguration(new StageHistoryEntityConnfiguration());
-        modelBuilder.ApplyConfiguration(new TypesetterEntityConnfiguration());
+        modelBuilder.ApplyConfiguration(new JournalEntityConfiguration());
+        modelBuilder.ApplyConfiguration(new StageEntityConfiguration());
+        modelBuilder.ApplyConfiguration(new StageHistoryEntityConfiguration());
+        modelBuilder.ApplyConfiguration(new TypesetterEntityConfiguration());
 				modelBuilder.ApplyConfiguration(new PersonEntityConfiguration());
 				//modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
 

@@ -4,16 +4,16 @@ using Production.Domain.Entities;
 
 namespace Production.Persistence.EntityConfigurations;
 
-internal class AssetLatestFileEntityConfiguration : IEntityTypeConfiguration<AssetLatestFile>
+internal class AssetLatestFileEntityConfiguration : IEntityTypeConfiguration<AssetCurrentFileLink>
 {
-    public void Configure(EntityTypeBuilder<AssetLatestFile> entity)
+    public void Configure(EntityTypeBuilder<AssetCurrentFileLink> entity)
     {
         entity.HasKey(e => e.AssetId);
         entity.HasIndex(e => e.FileId).IsUnique();
 
 
         entity.HasOne(e => e.File).WithOne()
-            .HasForeignKey<AssetLatestFile>(e => e.FileId)
+            .HasForeignKey<AssetCurrentFileLink>(e => e.FileId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
     }

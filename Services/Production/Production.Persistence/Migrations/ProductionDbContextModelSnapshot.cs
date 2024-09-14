@@ -39,7 +39,7 @@ namespace Production.Persistence.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getdate()");
+                        .HasDefaultValue(new DateTime(2024, 9, 13, 14, 36, 9, 496, DateTimeKind.Utc).AddTicks(5151));
 
                     b.Property<string>("Doi")
                         .IsRequired()
@@ -50,12 +50,9 @@ namespace Production.Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("LasModifiedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 9, 13, 7, 44, 42, 500, DateTimeKind.Utc).AddTicks(5186));
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("LastModifiedById")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("PublishedById")
@@ -160,15 +157,12 @@ namespace Production.Persistence.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getdate()");
+                        .HasDefaultValue(new DateTime(2024, 9, 13, 14, 36, 9, 507, DateTimeKind.Utc).AddTicks(3385));
 
                     b.Property<DateTime?>("LasModifiedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 9, 13, 7, 44, 42, 505, DateTimeKind.Utc).AddTicks(6506));
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("LastModifiedById")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int>("LatestFileId")
@@ -194,6 +188,44 @@ namespace Production.Persistence.Migrations
                     b.HasIndex("TypeCode");
 
                     b.ToTable("Asset", (string)null);
+                });
+
+            modelBuilder.Entity("Production.Domain.Entities.AssetAction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AssetId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CreatedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LasModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("LastModifiedById")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TypeId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssetId");
+
+                    b.ToTable("AssetAction", (string)null);
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.AssetLatestFile", b =>
@@ -405,7 +437,7 @@ namespace Production.Persistence.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getdate()");
+                        .HasDefaultValue(new DateTime(2024, 9, 13, 14, 36, 9, 514, DateTimeKind.Utc).AddTicks(1682));
 
                     b.Property<string>("Extension")
                         .IsRequired()
@@ -418,12 +450,9 @@ namespace Production.Persistence.Migrations
                         .HasColumnType("nvarchar(64)");
 
                     b.Property<DateTime?>("LasModifiedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 9, 13, 7, 44, 42, 508, DateTimeKind.Utc).AddTicks(9969));
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("LastModifiedById")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int>("LatestActionId")
@@ -839,6 +868,17 @@ namespace Production.Persistence.Migrations
                     b.Navigation("Type");
                 });
 
+            modelBuilder.Entity("Production.Domain.Entities.AssetAction", b =>
+                {
+                    b.HasOne("Production.Domain.Entities.Asset", "Asset")
+                        .WithMany("Actions")
+                        .HasForeignKey("AssetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Asset");
+                });
+
             modelBuilder.Entity("Production.Domain.Entities.AssetLatestFile", b =>
                 {
                     b.HasOne("Production.Domain.Entities.Asset", "Asset")
@@ -965,6 +1005,8 @@ namespace Production.Persistence.Migrations
 
             modelBuilder.Entity("Production.Domain.Entities.Asset", b =>
                 {
+                    b.Navigation("Actions");
+
                     b.Navigation("Files");
 
                     b.Navigation("LatestFileRef")

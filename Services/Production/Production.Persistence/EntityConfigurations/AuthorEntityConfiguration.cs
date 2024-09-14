@@ -4,7 +4,7 @@ using Production.Domain.Entities;
 
 namespace Production.Persistence.EntityConfigurations;
 
-public class AuthorEntityConnfiguration : EntityConfiguration<Author>
+public class AuthorEntityConfiguration : EntityConfiguration<Author>
 {
     public override void Configure(EntityTypeBuilder<Author> entity)
     {

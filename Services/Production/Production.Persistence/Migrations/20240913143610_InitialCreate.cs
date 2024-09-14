@@ -65,9 +65,9 @@ namespace Production.Persistence.Migrations
                     PublishedById = table.Column<int>(type: "int", nullable: true),
                     AcceptedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedById = table.Column<int>(type: "int", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
-                    LastModifiedById = table.Column<int>(type: "int", nullable: false),
-                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValue: new DateTime(2024, 9, 13, 7, 44, 42, 500, DateTimeKind.Utc).AddTicks(5186))
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 9, 13, 14, 36, 9, 496, DateTimeKind.Utc).AddTicks(5151)),
+                    LastModifiedById = table.Column<int>(type: "int", nullable: true),
+                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -118,9 +118,9 @@ namespace Production.Persistence.Migrations
                     TypeCode = table.Column<string>(type: "nvarchar(64)", nullable: false),
                     LatestFileId = table.Column<int>(type: "int", nullable: false),
                     CreatedById = table.Column<int>(type: "int", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
-                    LastModifiedById = table.Column<int>(type: "int", nullable: false),
-                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValue: new DateTime(2024, 9, 13, 7, 44, 42, 505, DateTimeKind.Utc).AddTicks(6506))
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 9, 13, 14, 36, 9, 507, DateTimeKind.Utc).AddTicks(3385)),
+                    LastModifiedById = table.Column<int>(type: "int", nullable: true),
+                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -220,6 +220,31 @@ namespace Production.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AssetAction",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AssetId = table.Column<int>(type: "int", nullable: false),
+                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TypeId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedById = table.Column<int>(type: "int", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastModifiedById = table.Column<int>(type: "int", nullable: true),
+                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AssetAction", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AssetAction_Asset_AssetId",
+                        column: x => x.AssetId,
+                        principalTable: "Asset",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "File",
                 columns: table => new
                 {
@@ -235,9 +260,9 @@ namespace Production.Persistence.Migrations
                     AssetId = table.Column<int>(type: "int", nullable: false),
                     LatestActionId = table.Column<int>(type: "int", nullable: false),
                     CreatedById = table.Column<int>(type: "int", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
-                    LastModifiedById = table.Column<int>(type: "int", nullable: false),
-                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValue: new DateTime(2024, 9, 13, 7, 44, 42, 508, DateTimeKind.Utc).AddTicks(9969))
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 9, 13, 14, 36, 9, 514, DateTimeKind.Utc).AddTicks(1682)),
+                    LastModifiedById = table.Column<int>(type: "int", nullable: true),
+                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -454,6 +479,11 @@ namespace Production.Persistence.Migrations
                 column: "TypeCode");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AssetAction_AssetId",
+                table: "AssetAction",
+                column: "AssetId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AssetLatestFile_FileId",
                 table: "AssetLatestFile",
                 column: "FileId",
@@ -565,6 +595,9 @@ namespace Production.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "ArticleCurrentStage");
+
+            migrationBuilder.DropTable(
+                name: "AssetAction");
 
             migrationBuilder.DropTable(
                 name: "AssetLatestFile");

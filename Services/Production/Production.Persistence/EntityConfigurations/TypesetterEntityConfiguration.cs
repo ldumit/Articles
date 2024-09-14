@@ -5,7 +5,7 @@ using Production.Domain.Entities;
 
 namespace Production.Persistence.EntityConfigurations;
 
-public class TypesetterEntityConnfiguration : EntityConfiguration<Typesetter>
+public class TypesetterEntityConfiguration : EntityConfiguration<Typesetter>
 {
     public override void Configure(EntityTypeBuilder<Typesetter> entity)
     {

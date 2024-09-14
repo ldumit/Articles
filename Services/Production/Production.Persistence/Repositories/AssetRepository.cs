@@ -17,7 +17,7 @@ public class AssetRepository(ProductionDbContext _dbContext, IMemoryCache _cache
     {
         return base.Entity
 						//.Include(x => x.Article)
-						.Include(e => e.LatestFileRef)
+						.Include(e => e.CurrentFileLink)
                 .ThenInclude(e => e.File);
     }
 

@@ -26,6 +26,8 @@ public static class Seed
 
 
 				context.Seed<Article>();
+				
+        context.Seed<AssetCurrentFileLink>();
 
 				transaction.Commit();
 		}

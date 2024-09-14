@@ -6,7 +6,7 @@ using Production.Domain.Entities;
 
 namespace Production.Persistence.EntityConfigurations;
 
-public class StageEntityConnfiguration : EnumEntityConfiguration<Stage, ArticleStage>
+public class StageEntityConfiguration : EnumEntityConfiguration<Stage, ArticleStage>
 {
     public override void Configure(EntityTypeBuilder<Stage> entity)
     {

@@ -25,8 +25,8 @@ public class RequestSingleFileEndpoint(IServiceProvider serviceProvider, AssetRe
         {
             AssetId = asset.Id,
             FileId = asset.LatestFileId,
-            FileServerId = asset.LatestFile.FileServerId,
-            Version = asset.LatestFile.Version
+            FileServerId = asset.CurrentFile.FileServerId,
+            Version = asset.CurrentFile.Version
         });
     }
 }

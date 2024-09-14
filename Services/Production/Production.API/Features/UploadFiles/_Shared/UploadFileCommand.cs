@@ -33,7 +33,8 @@ public abstract record UploadFileCommand : UploadFileCommand<FileResponse>
     internal virtual byte GetAssetNumber() => 0;
 }
 
-public record FileResponse(int Assetid, int FileId, int Version, string FileServerId) : IFileActionResponse;
+public record FileResponse(int AssetId, int? FileId, int? Version, string? FileServerId) : IFileActionResponse;
+public record AssetResponse(int AssetId, int FileId, int Version, string FileServerId) : IFileActionResponse;
 
 public abstract class UploadFileValidator<TUploadFileCommand> : ArticleCommandValidator<TUploadFileCommand>
 				where TUploadFileCommand : UploadFileCommand

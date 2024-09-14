@@ -29,7 +29,7 @@ public class ArticleRepository(ProductionDbContext _dbContext)
 		{
 				return await Query()
 						 .Include(e => e.Assets)
-								 .ThenInclude(e => e.LatestFileRef)
+								 .ThenInclude(e => e.CurrentFileLink)
 										.ThenInclude(e => e.File)
 						.SingleAsync(e => e.Id == id);
 		}

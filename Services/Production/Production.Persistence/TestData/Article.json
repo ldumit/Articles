@@ -31,7 +31,23 @@
         "Status": "Uploaded",
         "TypeCode": "Manuscript",
         "CreatedById": 5,
-        "LastModifiedById": 5
+        //"LastModifiedById": 5,
+        "Files": [
+          {
+            "Name": "Manuscript.pdf",
+            "OriginalName": "Manuscript.pdf",
+            "FileServerId": "articles/1/Manuscript.pdf",
+            "Size": 500,
+            "Version": 1,
+            "StatusId": "Uploaded",
+            "Extension": "pdf",
+            "CreatedById": 5,
+            //"LastModifiedById": 5
+          }
+        ]
+        //"LatestFileRef": {
+        //  "FileId": 1
+        //}
       },
       {
         "Name": "ReviewReport",
@@ -39,7 +55,23 @@
         "Status": "Uploaded",
         "TypeCode": "ReviewReport",
         "CreatedById": 9,
-        "LastModifiedById": 9
+        //"LastModifiedById": 9,
+        "Files": [
+          {
+            "Name": "ReviewReport.pdf",
+            "OriginalName": "ReviewReport.pdf",
+            "FileServerId": "articles/1/ReviewReport.pdf",
+            "Size": 100,
+            "Version": 1,
+            "StatusId": "Uploaded",
+            "Extension": "pdf",
+            "CreatedById": 9,
+            //"LastModifiedById": 9
+          }
+        ]
+        //"LatestFileRef": {
+        //  "FileId": 2
+        //}
       }
     ]
   }

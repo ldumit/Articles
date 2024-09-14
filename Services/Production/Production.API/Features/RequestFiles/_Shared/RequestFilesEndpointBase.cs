@@ -22,13 +22,17 @@ public class RequestFilesEndpointBase<TCommand>(IServiceProvider serviceProvider
             if (asset != null)
             {
                 asset.SetStatus(AssetStatus.Requested, command);
-            }
+								response.Assets.Add(
+		                _mapper.Map<FileResponse>(asset.CurrentFile));
+						}
             else
             {
 								asset = CreateAsset(command, assetRequest.AssetType, assetRequest.AssetNumber);
+								response.Assets.Add(
+		                new FileResponse(asset.Id, asset.CurrentFile?.Id, asset.CurrentFile?.Version, asset.CurrentFile?.FileServerId));
 						}
 
-						response.Assets.Add(_mapper.Map<FileResponse>(asset.LatestFile));
+
 				}
 				await _assetRepository.SaveChangesAsync();
 

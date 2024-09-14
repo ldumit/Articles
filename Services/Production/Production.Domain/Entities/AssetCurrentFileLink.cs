@@ -2,7 +2,7 @@
 
 namespace Production.Domain.Entities;
 
-public class AssetLatestFile : ChildEntity
+public class AssetCurrentFileLink : ChildEntity
 {
     public int AssetId { get; set; }
     public Asset Asset { get; set; } = null!;

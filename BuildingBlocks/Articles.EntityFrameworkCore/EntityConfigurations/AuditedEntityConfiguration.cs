@@ -13,13 +13,13 @@ public abstract class AuditedEntityConfiguration<T, TKey> : EntityConfiguration<
     where T : class, IEntity<TKey>, IAuditedEntity<TKey>
     where TKey : struct
 {
-    public override void Configure(EntityTypeBuilder<T> entity)
+    public override void Configure(EntityTypeBuilder<T> builder)
     {
-        base.Configure(entity);
+        base.Configure(builder);
 
-        entity.Property(u => u.CreatedOn).IsRequired(true).HasDefaultValueSql("getdate()");
-        entity.Property(u => u.CreatedById).IsRequired();
-        entity.Property(u => u.LasModifiedOn).HasDefaultValue(DateTime.UtcNow);
-        entity.Property(u => u.LastModifiedById).IsRequired();
+        builder.Property(e => e.CreatedOn).IsRequired().HasDefaultValue(DateTime.UtcNow);
+        builder.Property(e => e.CreatedById).IsRequired();
+        builder.Property(e => e.LasModifiedOn);
+        builder.Property(e => e.LastModifiedById);
     }
 }
