@@ -1,4 +1,5 @@
-﻿using Production.API.Features.Shared;
+﻿using Articles.Abstractions;
+using Production.API.Features.Shared;
 using Production.API.Features.UploadFiles.Shared;
 using Production.Domain;
 using Production.Domain.Entities;
@@ -39,7 +40,7 @@ public class RequestFilesEndpointBase<TCommand>(IServiceProvider serviceProvider
         await SendAsync(response);
     }
 
-		protected virtual Asset CreateAsset(IArticleAction action, Domain.Enums.AssetType assetType, byte assetNumber)
+		protected virtual Asset CreateAsset(IArticleAction<AssetActionType> action, Domain.Enums.AssetType assetType, byte assetNumber)
 		{
 				var assetTypeEntity = _assetRepository.GetAssetType(assetType);
 

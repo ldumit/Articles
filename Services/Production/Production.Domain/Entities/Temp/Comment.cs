@@ -1,7 +1,7 @@
 ﻿using Articles.Entitities;
 using Production.Domain.Enums;
 
-namespace Production.Domain.Entities;
+namespace Production.Domain.Entities.Temp;
 
 public partial class Comment : AuditedEntity
 {
@@ -11,6 +11,6 @@ public partial class Comment : AuditedEntity
     public CommentType TypeId { get; set; }
 
     public string Text { get; set; } = null!;
-    
+
     public virtual Article Article { get; set; } = null!;
 }

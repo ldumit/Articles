@@ -1,13 +1,14 @@
 ﻿using Articles.Abstractions;
 using Articles.Entitities;
 using Articles.Security;
+using Production.Domain.Enums;
 using Production.Domain.Events;
 
 namespace Production.Domain.Entities;
 
 public partial class Article 
 {
-    public void SetStage(ArticleStage newStage, IArticleAction action)
+    public void SetStage(ArticleStage newStage, IArticleAction<ArticleActionType> action)
     {
         if (newStage == CurrentStage.Stage)
             return;
@@ -24,7 +25,7 @@ public partial class Article
             );
     }
 
-    public void SetTypesetter(Typesetter typesetter, IArticleAction action)
+    public void SetTypesetter(Typesetter typesetter, IArticleAction<ArticleActionType> action)
     {
         if(this.Typesetter is not null)
 				    throw new TypesetterAlreadyAssignedException("Typesetter aldready assigned");

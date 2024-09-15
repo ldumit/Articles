@@ -37,8 +37,6 @@ public enum ArticleStage
 		DraftProduction = 301,
 		[Description("Author's proof approved")]
 		FinalProduction = 302,
-		[Description("Publisher's proof uploaded")]
-		PublisherProof = 303,
 		[Description("Article scheduled for publication")]
 		PublicationScheduled = 304,
 		[Description("Article published")]

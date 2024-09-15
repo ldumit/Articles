@@ -1,10 +1,11 @@
 ﻿using Articles.Abstractions;
 using Microsoft.AspNetCore.Mvc;
+using Production.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace Production.API.Features.Shared;
 
-public interface IFileActionCommand : IArticleAction
+public interface IAssetActionCommand : IArticleAction<AssetActionType>
 {
 }
 
@@ -13,7 +14,7 @@ public interface IFileActionResponse
 }
 
 
-public abstract record FileActionCommand<TResponse> : ArticleCommand<TResponse>, IFileActionCommand, IRequest<TResponse>
+public abstract record FileActionCommand<TResponse> : AssetCommand<TResponse>, IAssetActionCommand, IRequest<TResponse>
         where TResponse : IFileActionResponse
 {
     internal int FileId { get; set; }

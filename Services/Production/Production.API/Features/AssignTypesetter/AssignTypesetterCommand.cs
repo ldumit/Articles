@@ -8,7 +8,7 @@ namespace Production.API.Features.AssignTypesetter;
 public record AssignTypesetterCommand : ArticleCommand<ArticleCommandResponse>
 {
 		public int TypesetterId { get; init; }
-		public override ActionType ActionType => ActionType.AssignTypesetter;
+		public override ArticleActionType ActionType => ArticleActionType.AssignTypesetter;
 }
 
 //todo - validate 

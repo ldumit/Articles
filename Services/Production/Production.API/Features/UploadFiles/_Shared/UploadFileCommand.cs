@@ -28,7 +28,7 @@ public abstract record UploadFileCommand<TResponse> : FileActionCommand<TRespons
 
 public abstract record UploadFileCommand : UploadFileCommand<FileResponse>
 {
-    public override ActionType ActionType => ActionType.Upload;
+    public override AssetActionType ActionType => AssetActionType.Upload;
     //todo remove the following method 
     internal virtual byte GetAssetNumber() => 0;
 }

@@ -10,7 +10,7 @@ public partial class AssetAction : AuditedEntity //talk - modification never hap
     //talk - difference between default! & null!
     public string Comment { get; set; } = default!;
 
-    public ActionType TypeId { get; set; }
+    public AssetActionType TypeId { get; set; }
 
     public virtual Asset Asset { get; set; } = null!;
 }

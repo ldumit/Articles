@@ -15,17 +15,21 @@ public enum DiscussionType
     Public = 1,
     Private = 2
 }
-public enum ActionType
+public enum AssetActionType
 {
-    AssignTypesetter = 0,
-    Upload = 1,
-    Approve = 2,
-    Published = 3,
-    RequestNew = 4,
-    UnApprove = 5,
-    SchedulePublication = 9,
-    Download = 11,
-    Accepted = 101
+    Upload,
+    Approve,
+    Request,
+    CancelRequest,
+    Download
+}
+
+public enum ArticleActionType
+{
+		AssignTypesetter,
+		Publish,
+		SchedulePublication,
+		Accept = 101
 }
 
 //public static List<AssetType> FinalFileAssetTypes = new()

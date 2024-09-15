@@ -19,7 +19,7 @@ namespace Production.Domain.Entities
 
 				public bool IsFileRequested => this.CurrentFileLink?.File.StatusId == Enums.FileStatus.Requested;
 
-				public static Asset CreateFromRequest(IArticleAction articleAction, AssetType assetType, byte assetNumber = 0)
+				public static Asset CreateFromRequest(IArticleAction<AssetActionType> articleAction, AssetType assetType, byte assetNumber = 0)
 				{
 						//talk - the ideal implementation sould have been to actually encapsulate the AssetNumber in  its own class.
 						// the problem is we need to validate against the assetType.MaxNumber, therefore we need to send the AssetType as a parameter.
@@ -63,7 +63,7 @@ namespace Production.Domain.Entities
 						return asset;
 				}
 
-				public void SetStatus(AssetStatus newStatus, IArticleAction action)
+				public void SetStatus(AssetStatus newStatus, IArticleAction<AssetActionType> action)
 				{
 						this.Status = newStatus;
 						this.LasModifiedOn = DateTime.UtcNow;
@@ -74,12 +74,12 @@ namespace Production.Domain.Entities
 						//this.AddFileAction(action);
 				}
 
-				public void CancelRequest(IArticleAction action)
+				public void CancelRequest(IArticleAction<AssetActionType> action)
 				{
 						if (this.Status != AssetStatus.Requested)
 								throw new DomainException("Wrong status");
 
-						this.Status = newStatus;
+						//this.Status = newStatus;
 						this.LasModifiedOn = DateTime.UtcNow;
 						this.LastModifiedById = action.UserId;
 						_actions.Add(
@@ -88,7 +88,7 @@ namespace Production.Domain.Entities
 						//this.AddFileAction(action);
 				}
 
-				private void AddFileAction(IArticleAction action)
+				private void AddFileAction(IArticleAction<AssetActionType> action)
 				{
 						var fileAction = new FileAction()
 						{
@@ -100,7 +100,7 @@ namespace Production.Domain.Entities
 						};
 						this.CurrentFile.FileActions.Add(fileAction);
 
-						this.CurrentFile.AddDomainEvent(new ActionExecutedDomainEvent(
+						this.CurrentFile.AddDomainEvent(new AssetActionExecutedDomainEvent(
 								action,
 								this.TypeCode,
 								this.AssetNumber,

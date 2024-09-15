@@ -10,7 +10,7 @@ public partial class FileAction : AuditedEntity //talk - modification never happ
     //talk - difference between default! & null!
     public string Comment { get; set; } = default!;
 
-    public ActionType TypeId { get; set; }
+    public AssetActionType TypeId { get; set; }
 
     public virtual File File { get; set; } = null!;
 }

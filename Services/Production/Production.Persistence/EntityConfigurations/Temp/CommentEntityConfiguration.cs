@@ -1,9 +1,9 @@
 ﻿using Articles.Entitities;
 using Articles.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Production.Domain.Entities;
+using Production.Domain.Entities.Temp;
 
-namespace Production.Persistence.EntityConfigurations;
+namespace Production.Persistence.EntityConfigurations.Temp;
 
 public class CommentEntityConfiguration : EntityConfiguration<Comment>
 {

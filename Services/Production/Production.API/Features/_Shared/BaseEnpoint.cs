@@ -12,7 +12,7 @@ namespace Production.API.Features.Shared;
 
 public abstract class BaseEndpoint<TCommand, TResponse> : Endpoint<TCommand, TResponse>
         //where TCommand : ArticleCommand<TResponse>
-        where TCommand : Domain.IArticleAction
+        where TCommand : IArticleAction
 {
     protected readonly AutoMapper.IMapper _mapper;
     protected readonly ArticleRepository _articleRepository;
@@ -27,10 +27,10 @@ public abstract class BaseEndpoint<TCommand, TResponse> : Endpoint<TCommand, TRe
     protected virtual ArticleStage GetNextStage(Article article) => article.CurrentStage.Stage;
     #region Methods
 
-    protected void ChangeStage(Article article, TCommand command, Domain.Enums.AssetType? assetType = null)
-    {
-        article.SetStage(GetNextStage(article), command);
-    }
+    //protected void ChangeStage(Article article, TCommand command, Domain.Enums.AssetType? assetType = null)
+    //{
+    //    article.SetStage(GetNextStage(article), command);
+    //}
 
     protected async Task AddFileAction(Asset asset, Domain.Entities.File file, TCommand command)
     {

@@ -1,7 +1,10 @@
-﻿namespace Production.Domain.Events
+﻿using Articles.Abstractions;
+using Production.Domain.Enums;
+
+namespace Production.Domain.Events
 {
-		public record TypesetterAssignedDomainEvent(IArticleAction action, int TypesetterId, int TypesetterUserId) 
-				: DomainEvent(action.ArticleId, action.ActionType, action.UserId, action.Comment)
+		public record TypesetterAssignedDomainEvent(IArticleAction<ArticleActionType> action, int TypesetterId, int TypesetterUserId) 
+				: DomainEvent<ArticleActionType>(action.ArticleId, action.ActionType, action.UserId, action.Comment)
 		{
     }
 }

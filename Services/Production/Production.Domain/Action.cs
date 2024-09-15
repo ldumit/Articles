@@ -2,7 +2,7 @@
 
 namespace Production.Domain;
 
-public interface IArticleAction : Articles.Abstractions.IArticleAction
-{
-		ActionType ActionType { get; }
-}
+//public interface IArticleAction : Articles.Abstractions.IArticleAction
+//{
+//		AssetActionType ActionType { get; }
+//}

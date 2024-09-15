@@ -24,7 +24,7 @@ public class RequestSingleFileEndpoint(IServiceProvider serviceProvider, AssetRe
         await SendAsync(new AssetActionResponse
         {
             AssetId = asset.Id,
-            FileId = asset.LatestFileId,
+            FileId = asset.CurrentFile?.Id,
             FileServerId = asset.CurrentFile.FileServerId,
             Version = asset.CurrentFile.Version
         });

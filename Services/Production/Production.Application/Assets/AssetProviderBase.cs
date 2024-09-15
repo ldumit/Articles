@@ -14,7 +14,7 @@ public abstract class AssetProviderBase
         _assetRepository = assetRepository;
     }
 
-    public async virtual Task<bool> IsActionValid(ArticleStage stage, ActionType action) => true;
+    public async virtual Task<bool> IsActionValid(ArticleStage stage, AssetActionType action) => true;
         //=> (await GetAvailableActions(stage)).Any(a => a == action);
 
 

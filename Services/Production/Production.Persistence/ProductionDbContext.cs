@@ -6,6 +6,7 @@ using Production.Domain.Entities;
 using Production.Persistence.EntityConfigurations;
 using Microsoft.Extensions.Caching.Memory;
 using System.Linq;
+using Production.Domain.Entities.Temp;
 
 namespace Production.Persistence;
 
@@ -35,7 +36,7 @@ public partial class ProductionDbContext(DbContextOptions<ProductionDbContext> _
     //public virtual DbSet<AssetTypeCode> AssetTypeCodes { get; set; }
 
 
-    public virtual DbSet<Comment> Comments { get; set; }
+    //public virtual DbSet<Comment> Comments { get; set; }
 
     //public virtual DbSet<CommentType> CommentTypes { get; set; }
 
@@ -146,7 +147,6 @@ public partial class ProductionDbContext(DbContextOptions<ProductionDbContext> _
 				modelBuilder.ApplyConfiguration(new AssetTypeEntityConfiguration());
 				modelBuilder.ApplyConfiguration(new ArticleActorEntityConfiguration());
 				modelBuilder.ApplyConfiguration(new AuthorEntityConfiguration());
-        modelBuilder.ApplyConfiguration(new CommentEntityConfiguration());
         modelBuilder.ApplyConfiguration(new FileActionEntityConfiguration());
         modelBuilder.ApplyConfiguration(new FileEntityConnfiguration());
         modelBuilder.ApplyConfiguration(new FileLatestActionEntityConfiguration());

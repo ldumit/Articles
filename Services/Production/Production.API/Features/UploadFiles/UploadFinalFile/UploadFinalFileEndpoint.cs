@@ -7,6 +7,7 @@ using FileStorage.Contracts;
 using Production.API.Features.Shared;
 using Production.API.Features.UploadFiles.Shared;
 using Production.Domain;
+using Articles.Abstractions;
 
 namespace Production.API.Features.UploadFiles.UploadFinalFile;
 
@@ -75,7 +76,7 @@ public class UploadFinalFileEndpoint(IFileService _fileService, IServiceProvider
         return await _assetRepository.GetByTypeAndNumber(command.ArticleId, command.AssetType, command.GetAssetNumber());
     }
 
-		protected virtual Asset CreateAsset(IArticleAction action, Domain.Enums.AssetType assetType, byte assetNumber)
+		protected virtual Asset CreateAsset(IArticleAction<AssetActionType> action, Domain.Enums.AssetType assetType, byte assetNumber)
 		{
 				var assetTypeEntity = _assetRepository.GetAssetType(assetType);
 

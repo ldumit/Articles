@@ -1,0 +1,14 @@
+[
+	{
+		"ArticleStage": "InProduction",
+		"AssetType": "DraftPdf",
+		"AssetStatus": "Requested",
+		"ActionType": "CancelRequest"
+	},
+	{
+		"ArticleStage": "InProduction",
+		"AssetType": "DraftPdf",
+		"AssetStatus": "Uploaded",
+		"ActionType": "RequestNew"
+	}
+]

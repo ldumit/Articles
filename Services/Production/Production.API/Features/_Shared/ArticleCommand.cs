@@ -9,14 +9,15 @@ using System.Text.Json.Serialization;
 
 namespace Production.API.Features.Shared;
 
-public abstract record ArticleCommand<TResponse> : Domain.IArticleAction, IRequest<TResponse>
+public abstract record ArticleCommand<TActionType, TResponse> : IArticleAction<TActionType>, IRequest<TResponse>
+    where TActionType : Enum
 {
     public int ArticleId { get; set; }
 
     public string Comment { get; init; }
 
     [JsonIgnore]
-    public abstract ActionType ActionType { get; }
+    public abstract TActionType ActionType { get; }
 
     //todo check why the FromClaim doesn't work
     //[FromClaim(JwtRegisteredClaimNames.Sub)]
@@ -25,6 +26,9 @@ public abstract record ArticleCommand<TResponse> : Domain.IArticleAction, IReque
 
     //ActionType Domain.IArticleAction.ActionType => ActionType.AssignTypesetter;
 }
+
+public abstract record ArticleCommand<TResponse> : ArticleCommand<ArticleActionType, TResponse>;
+public abstract record AssetCommand<TResponse> : ArticleCommand<AssetActionType, TResponse>;
 
 public record ArticleCommandResponse(int ArticleId);
 

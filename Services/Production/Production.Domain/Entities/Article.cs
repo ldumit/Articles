@@ -1,6 +1,7 @@
 ﻿using Articles.Abstractions;
 using Articles.Entitities;
 using Newtonsoft.Json;
+using Production.Domain.Entities.Temp;
 using Production.Domain.Enums;
 
 namespace Production.Domain.Entities;
@@ -43,8 +44,6 @@ public partial class Article : AuditedEntity
 		//private readonly List<ArticleActor> _actors = new();
     //public IReadOnlyCollection<ArticleActor> Actors => _actors.AsReadOnly();
 		public List<ArticleActor> Actors { get; set; } = new() ;
-
-		public ICollection<Comment> Comments { get; } = new List<Comment>();
     
     private readonly List<StageHistory> _stageHistories = new();
     public IReadOnlyList<StageHistory> StageHistories => _stageHistories.AsReadOnly();

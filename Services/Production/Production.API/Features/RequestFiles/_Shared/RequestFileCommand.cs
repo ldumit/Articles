@@ -5,9 +5,9 @@ using Production.Domain.Enums;
 
 namespace Production.API.Features.RequestFiles.Shared;
 
-public abstract record RequestFileCommand : ArticleCommand<RequestFilesCommandResponse>
+public abstract record RequestFileCommand : AssetCommand<RequestFilesCommandResponse>
 {
-    public override ActionType ActionType => ActionType.RequestNew;
+    public override AssetActionType ActionType => AssetActionType.Request;
 
 }
 public abstract record RequestMultipleFilesCommand : RequestFileCommand

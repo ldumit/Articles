@@ -37,14 +37,14 @@ namespace Production.API.Features.UploadFiles.UploadAuthorsProof
             //return AssetProvider.GetAvailableFileExtension().Result.Any(a => a.Extension.Extension == file.GetExtension().ToUpperCase());
         }
 
-        protected override ActionType Action => ActionType.Upload;
+        protected override AssetActionType Action => AssetActionType.Upload;
 
     }
 
     public abstract class UploadActionCommandValidator<TUploadFileCommand> : ArticleCommandValidator<TUploadFileCommand>
     where TUploadFileCommand : UploadFileCommand
     {
-        protected abstract ActionType Action { get; }
+        protected abstract AssetActionType Action { get; }
         protected AssetProviderBase AssetProvider { get; }
         protected ArticleRepository ArticleRepository { get; }
         protected AssetRepository AssetRepository { get; }
@@ -61,7 +61,7 @@ namespace Production.API.Features.UploadFiles.UploadAuthorsProof
         }
 
 
-        public virtual bool IsActionValid(int articleId, ActionType action)
+        public virtual bool IsActionValid(int articleId, AssetActionType action)
         {
             var result = true;
             if (articleId > 0)
