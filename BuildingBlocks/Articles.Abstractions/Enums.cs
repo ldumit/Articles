@@ -23,7 +23,7 @@ namespace Articles.Abstractions;
 //		Accepted = 101
 //}
 
-public enum ArticleStage
+public enum ArticleStage2
 {
 		[Description("Article submitted by the author")]
 		Submitted = 100,
@@ -36,6 +36,22 @@ public enum ArticleStage
 		[Description("Author's proof uploaded")]
 		DraftProduction = 301,
 		[Description("Author's proof approved")]
+		FinalProduction = 302,
+		[Description("Article scheduled for publication")]
+		PublicationScheduled = 304,
+		[Description("Article published")]
+		Published = 305
+}
+
+public enum ArticleStage
+{
+		[Description("Article accepted")]
+		Accepted = 201,
+		[Description("Typesetter assigned")]
+		InProduction = 300,
+		[Description("DraftPdf uploaded")]
+		DraftProduction = 301,
+		[Description("DraftPdf approved")]
 		FinalProduction = 302,
 		[Description("Article scheduled for publication")]
 		PublicationScheduled = 304,

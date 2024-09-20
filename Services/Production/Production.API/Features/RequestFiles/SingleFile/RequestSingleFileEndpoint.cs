@@ -17,7 +17,7 @@ public class RequestSingleFileEndpoint(IServiceProvider serviceProvider, AssetRe
     {
         var asset = await _assetRepository.GetByTypeAndNumber(command.ArticleId, command.AssetType, command.AssetNumber);
 
-        asset.SetStatus(AssetStatus.Requested, command);
+        asset.SetStatus(AssetState.Requested, command);
 
         await _assetRepository.SaveChangesAsync();
 

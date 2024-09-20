@@ -1,16 +1,16 @@
 [
-  {
-    "code": "Submitted",
-    "id": 100,
-    "name": "Article submitted",
-    "Description": "Our editorial specialist is checking your article. We will contact you if we need any further files or information."
-  },
-  {
-    "code": "InReview",
-    "id": 200,
-    "name": "Article approved",
-    "Description": "Your article has been checked and article. Our editorial specialists will start soon revieing it."
-  },
+  //{
+  //  "code": "Submitted",
+  //  "id": 100,
+  //  "name": "Article submitted",
+  //  "Description": "Our editorial specialist is checking your article. We will contact you if we need any further files or information."
+  //},
+  //{
+  //  "code": "InReview",
+  //  "id": 200,
+  //  "name": "Article approved",
+  //  "Description": "Your article has been checked and article. Our editorial specialists will start soon revieing it."
+  //},
   {
     "code": "Accepted",
     "id": 201,
@@ -24,7 +24,7 @@
     "Description": "The typesetter is preparing your Author’s Proof. We will contact you if we need any further files or information."
   },
   {
-    "code": "AuthorsProof",
+    "code": "DraftProduction",
     "id": 301,
     "name": "Author's proof approved",
     "Description": "The Author's Proof is available for you to check and provide corrections. This status is also displayed if we are preparing a further Author's Proof at your request."
@@ -35,12 +35,12 @@
     "name": "Publisher's proof uploaded",
     "Description": "The typesetter is preparing the final version of your article for publication. We will contact you if we need to check anything further before publication."
   },
-  {
-    "code": "PublisherProof",
-    "id": 303,
-    "name": "Article scheduled for publication",
-    "Description": "Your Production Specialist is applying quality checks to ensure your article is ready for publication."
-  },
+  //{
+  //  "code": "PublisherProof",
+  //  "id": 303,
+  //  "name": "Article scheduled for publication",
+  //  "Description": "Your Production Specialist is applying quality checks to ensure your article is ready for publication."
+  //},
   {
     "code": "PublicationScheduled",
     "id": 304,

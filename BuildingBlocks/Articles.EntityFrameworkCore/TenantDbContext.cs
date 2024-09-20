@@ -37,4 +37,17 @@ internal class TenantDbContext : DbContext, IMultitenancy
 						}
 				}
 		}
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		{
+				foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+				{
+						if (typeof(IMultitenancy).IsAssignableFrom(entityType.ClrType))
+						{
+								var entityBuilder = modelBuilder.Entity(entityType.ClrType);
+								entityBuilder.AddQueryFilter<IMultitenancy>(e => e.TenantId.Equals(TenantId));
+						}
+				}
+
+				base.OnModelCreating(modelBuilder);
+		}
 }

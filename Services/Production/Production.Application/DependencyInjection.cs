@@ -3,10 +3,13 @@ using Articles.Security;
 using Articles.System;
 using FileStorage.AzureBlob;
 using FileStorage.Contracts;
+using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Production.Application.StateMachines;
+using Production.Persistence;
 using Production.Persistence.Repositories;
 
 namespace Production.Application;
@@ -48,6 +51,16 @@ public static class DependencyInjection
 				services.AddScoped<IThreadSafeMemoryCache, MemoryCache>();
 				services.AddScoped<IFileService, FileService>();
 
+				services.AddScoped<ArticleStateMachineFactory>(provider => articleStage =>
+				{
+						var dbConntext = provider.GetRequiredService<ProductionDbContext>();
+						return new ArticleStateMachine(articleStage, dbConntext);
+				});
+				services.AddScoped<AssetStateMachineFactory>(provider => assetState =>
+				{
+						var dbConntext = provider.GetRequiredService<ProductionDbContext>();
+						return new AssetStateMachine(assetState, dbConntext);
+				});
 
 				return services;
     }

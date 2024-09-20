@@ -8,6 +8,11 @@ public interface IDomainObject
 {
 }
 
+public interface IDomainMetadata : IDomainObject
+{
+
+}
+
 public interface IEntity : IEntity<int>
 {
 } 

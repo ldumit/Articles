@@ -14,11 +14,51 @@ namespace Production.Persistence.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AssetType",
+                name: "ArticleStageTransition",
+                columns: table => new
+                {
+                    CurrentStage = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ActionType = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    DestinationStage = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ArticleStageTransition", x => new { x.CurrentStage, x.ActionType, x.DestinationStage });
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AssetStateTransition",
+                columns: table => new
+                {
+                    CurrentState = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ActionType = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    DestinationState = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AssetStateTransition", x => new { x.CurrentState, x.ActionType, x.DestinationState });
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AssetStateTransitionCondition",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    ArticleStage = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AssetTypes = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ActionTypes = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AssetStateTransitionCondition", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AssetType",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false),
                     DefaultCategoryId = table.Column<int>(type: "int", nullable: false),
                     AllowedFileExtentions = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DefaultFileExtension = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false, defaultValue: "pdf"),
@@ -36,8 +76,7 @@ namespace Production.Persistence.Migrations
                 name: "Stage",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
                     Code = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false)
@@ -65,7 +104,7 @@ namespace Production.Persistence.Migrations
                     PublishedById = table.Column<int>(type: "int", nullable: true),
                     AcceptedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedById = table.Column<int>(type: "int", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 9, 13, 14, 36, 9, 496, DateTimeKind.Utc).AddTicks(5151)),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 9, 19, 9, 37, 8, 14, DateTimeKind.Utc).AddTicks(85)),
                     LastModifiedById = table.Column<int>(type: "int", nullable: true),
                     LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -112,13 +151,12 @@ namespace Production.Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     AssetNumber = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    State = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
                     ArticleId = table.Column<int>(type: "int", nullable: false),
                     TypeCode = table.Column<string>(type: "nvarchar(64)", nullable: false),
-                    LatestFileId = table.Column<int>(type: "int", nullable: false),
                     CreatedById = table.Column<int>(type: "int", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 9, 13, 14, 36, 9, 507, DateTimeKind.Utc).AddTicks(3385)),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 9, 19, 9, 37, 8, 17, DateTimeKind.Utc).AddTicks(9355)),
                     LastModifiedById = table.Column<int>(type: "int", nullable: true),
                     LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -136,31 +174,6 @@ namespace Production.Persistence.Migrations
                         column: x => x.TypeCode,
                         principalTable: "AssetType",
                         principalColumn: "Code",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Comment",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ArticleId = table.Column<int>(type: "int", nullable: false),
-                    TypeId = table.Column<int>(type: "int", nullable: false),
-                    Text = table.Column<string>(type: "nvarchar(2048)", maxLength: 2048, nullable: false),
-                    CreatedById = table.Column<int>(type: "int", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LastModifiedById = table.Column<int>(type: "int", nullable: true),
-                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Comment", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Comment_Article_ArticleId",
-                        column: x => x.ArticleId,
-                        principalTable: "Article",
-                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -260,7 +273,7 @@ namespace Production.Persistence.Migrations
                     AssetId = table.Column<int>(type: "int", nullable: false),
                     LatestActionId = table.Column<int>(type: "int", nullable: false),
                     CreatedById = table.Column<int>(type: "int", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 9, 13, 14, 36, 9, 514, DateTimeKind.Utc).AddTicks(1682)),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 9, 19, 9, 37, 8, 22, DateTimeKind.Utc).AddTicks(8359)),
                     LastModifiedById = table.Column<int>(type: "int", nullable: true),
                     LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -322,7 +335,7 @@ namespace Production.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AssetLatestFile",
+                name: "AssetCurrentFileLink",
                 columns: table => new
                 {
                     AssetId = table.Column<int>(type: "int", nullable: false),
@@ -330,15 +343,15 @@ namespace Production.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AssetLatestFile", x => x.AssetId);
+                    table.PrimaryKey("PK_AssetCurrentFileLink", x => x.AssetId);
                     table.ForeignKey(
-                        name: "FK_AssetLatestFile_Asset_AssetId",
+                        name: "FK_AssetCurrentFileLink_Asset_AssetId",
                         column: x => x.AssetId,
                         principalTable: "Asset",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AssetLatestFile_File_FileId",
+                        name: "FK_AssetCurrentFileLink_File_FileId",
                         column: x => x.FileId,
                         principalTable: "File",
                         principalColumn: "Id",
@@ -395,6 +408,39 @@ namespace Production.Persistence.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "ArticleStageTransition",
+                columns: new[] { "ActionType", "CurrentStage", "DestinationStage" },
+                values: new object[,]
+                {
+                    { "AssignTypesetter", "Accepted", "InProduction" },
+                    { "SchedulePublication", "FinalProduction", "PublicationScheduled" },
+                    { "Publish", "PublicationScheduled", "Published" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AssetStateTransition",
+                columns: new[] { "ActionType", "CurrentState", "DestinationState" },
+                values: new object[,]
+                {
+                    { "CancelRequest", "Requested", "Uploaded" },
+                    { "Upload", "Requested", "Uploaded" },
+                    { "Request", "Uploaded", "Requested" },
+                    { "Upload", "Uploaded", "Uploaded" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AssetStateTransitionCondition",
+                columns: new[] { "Id", "ActionTypes", "ArticleStage", "AssetTypes" },
+                values: new object[,]
+                {
+                    { 1, "[0,2,3]", "InProduction", "[1,7,8,9]" },
+                    { 2, "[0,2,3]", "DraftProduction", "[1,7,8,9]" },
+                    { 3, "[0]", "InProduction", "[3]" },
+                    { 4, "[0,2,3,1]", "DraftProduction", "[3]" },
+                    { 5, "[0,2,3]", "FinalProduction", "[4,5,6]" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "AssetType",
                 columns: new[] { "Id", "AllowedFileExtentions", "Code", "DefaultCategoryId", "DefaultFileExtension", "Name" },
                 values: new object[,]
@@ -422,13 +468,10 @@ namespace Production.Persistence.Migrations
                 columns: new[] { "Id", "Code", "Description", "Name" },
                 values: new object[,]
                 {
-                    { 100, "Submitted", "Our editorial specialist is checking your article. We will contact you if we need any further files or information.", "Article submitted" },
-                    { 200, "InReview", "Your article has been checked and article. Our editorial specialists will start soon revieing it.", "Article approved" },
                     { 201, "Accepted", "Your article has been reviewed and accepted. The production of the article will start soon.", "Article accepted" },
                     { 300, "InProduction", "The typesetter is preparing your Author’s Proof. We will contact you if we need any further files or information.", "Typesetter assigned" },
-                    { 301, "AuthorsProof", "The Author's Proof is available for you to check and provide corrections. This status is also displayed if we are preparing a further Author's Proof at your request.", "Author's proof approved" },
+                    { 301, "DraftProduction", "The Author's Proof is available for you to check and provide corrections. This status is also displayed if we are preparing a further Author's Proof at your request.", "Author's proof approved" },
                     { 302, "FinalProduction", "The typesetter is preparing the final version of your article for publication. We will contact you if we need to check anything further before publication.", "Publisher's proof uploaded" },
-                    { 303, "PublisherProof", "Your Production Specialist is applying quality checks to ensure your article is ready for publication.", "Article scheduled for publication" },
                     { 304, "PublicationScheduled", "Your Production Specialist has completed their quality checks. Your article is now scheduled for publication on our website and will appear online within the next few working days.", "Article scheduled for publication" },
                     { 305, "Published", "Your article has been published and sent to all relevant repositories, and the publication process is now complete. Please note that repositories have different processing times and your article may not be available yet.", "Article published" }
                 });
@@ -484,8 +527,8 @@ namespace Production.Persistence.Migrations
                 column: "AssetId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AssetLatestFile_FileId",
-                table: "AssetLatestFile",
+                name: "IX_AssetCurrentFileLink_FileId",
+                table: "AssetCurrentFileLink",
                 column: "FileId",
                 unique: true);
 
@@ -493,12 +536,6 @@ namespace Production.Persistence.Migrations
                 name: "IX_AssetType_Code",
                 table: "AssetType",
                 column: "Code",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Comment_ArticleId_TypeId",
-                table: "Comment",
-                columns: new[] { "ArticleId", "TypeId" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -597,13 +634,19 @@ namespace Production.Persistence.Migrations
                 name: "ArticleCurrentStage");
 
             migrationBuilder.DropTable(
+                name: "ArticleStageTransition");
+
+            migrationBuilder.DropTable(
                 name: "AssetAction");
 
             migrationBuilder.DropTable(
-                name: "AssetLatestFile");
+                name: "AssetCurrentFileLink");
 
             migrationBuilder.DropTable(
-                name: "Comment");
+                name: "AssetStateTransition");
+
+            migrationBuilder.DropTable(
+                name: "AssetStateTransitionCondition");
 
             migrationBuilder.DropTable(
                 name: "FileLatestAction");

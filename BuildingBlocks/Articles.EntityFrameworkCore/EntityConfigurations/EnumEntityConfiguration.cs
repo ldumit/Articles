@@ -8,16 +8,16 @@ public abstract class EnumEntityConfiguration<T, TEnum> : EntityConfiguration<T,
     where T : EnumEntity<TEnum>, new()
     where TEnum : struct, Enum
 {
-    public override void Configure(EntityTypeBuilder<T> entity)
+    public override void Configure(EntityTypeBuilder<T> builder)
     {
-        base.Configure(entity);
+        base.Configure(builder);
 
-        entity.HasIndex(e => e.Code).IsUnique();
+        builder.HasIndex(e => e.Code).IsUnique();
 
-        entity.Property(e => e.Code).HasEnumConversion().HasMaxLength(Constraints.C64).IsRequired();
-        entity.Property(e => e.Name).HasMaxLength(Constraints.C64).IsRequired();
+        builder.Property(e => e.Code).HasEnumConversion().HasMaxLength(Constraints.C64).IsRequired();
+        builder.Property(e => e.Name).HasMaxLength(Constraints.C64).IsRequired();
 
-        SeedFromFile(entity);
+				//builder.SeedFromFile();
     }
 
 		protected void SeedFromEnum(EntityTypeBuilder<T> entity)

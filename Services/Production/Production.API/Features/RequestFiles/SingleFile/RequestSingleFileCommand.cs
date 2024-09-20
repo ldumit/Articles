@@ -4,7 +4,7 @@ using Production.Domain.Enums;
 
 namespace Production.API.Features.RequestFiles.SingleFile;
 
-public record RequestSingleFileCommand : RequestFileCommand
+public record RequestSingleFileCommand : RequestAssetCommand
 {
     public AssetType AssetType { get; set; }
     public int AssetNumber { get; init; }

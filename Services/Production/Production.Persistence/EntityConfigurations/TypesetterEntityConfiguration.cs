@@ -5,11 +5,11 @@ using Production.Domain.Entities;
 
 namespace Production.Persistence.EntityConfigurations;
 
-public class TypesetterEntityConfiguration : EntityConfiguration<Typesetter>
+public class TypesetterEntityConfiguration : IEntityTypeConfiguration<Typesetter>
 {
-    public override void Configure(EntityTypeBuilder<Typesetter> entity)
+    public void Configure(EntityTypeBuilder<Typesetter> entity)
     {
-        base.Configure(entity);
+        //base.Configure(entity);
 
         //talk - small table, practically we don't need an index, teoretically we may add it
         //entity.HasKey(e => e.UserId);

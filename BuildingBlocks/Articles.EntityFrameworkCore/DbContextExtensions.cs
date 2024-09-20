@@ -29,6 +29,7 @@ public static class DbContextExtensions
 				catch (Exception ex)
 				{
 						context.Database.ExecuteSql($"DBCC CHECKIDENT({typeof(TEntity).Name}, RESEED, 0)");
+						Console.WriteLine(ex.Message);
 						throw;
 				}
 		}

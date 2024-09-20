@@ -6,14 +6,12 @@ namespace Auth.Persistence.EntityConfigurations;
 
 internal class RoleEntityConfiguration : EntityConfiguration<Role>
 {
-		public override void Configure(EntityTypeBuilder<Role> entity)
+		public override void Configure(EntityTypeBuilder<Role> builder)
 		{
-				base.Configure(entity);
+				base.Configure(builder);
 
-				entity.Property(e => e.Id).ValueGeneratedOnAdd();
-				entity.Property(e => e.Type).HasEnumConversion().HasMaxLength(Constraints.C64).IsRequired();
-				entity.Property(e => e.Description).HasMaxLength(Constraints.C256).IsRequired(); ;
-
-				base.SeedFromFile(entity);
+				builder.Property(e => e.Id).ValueGeneratedOnAdd();
+				builder.Property(e => e.Type).HasEnumConversion().HasMaxLength(Constraints.C64).IsRequired();
+				builder.Property(e => e.Description).HasMaxLength(Constraints.C256).IsRequired(); ;
 		}
 }

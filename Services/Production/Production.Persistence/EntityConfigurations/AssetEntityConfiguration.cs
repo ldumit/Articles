@@ -20,7 +20,7 @@ internal class AssetEntityConfiguration : AuditedEntityConfiguration<Asset>
 
         entity.Property(e => e.Name).HasMaxLength(Constraints.C64).IsRequired();
         entity.Property(e => e.AssetNumber).HasDefaultValue(0);
-        entity.Property(e => e.Status).HasEnumConversion().IsRequired();
+        entity.Property(e => e.State).HasEnumConversion().IsRequired();
         entity.Property(e => e.CategoryId).HasConversion<int>().HasDefaultValue(AssetCategory.Core).IsRequired();
         entity.Property(e => e.TypeCode).HasEnumConversion().IsRequired();
 

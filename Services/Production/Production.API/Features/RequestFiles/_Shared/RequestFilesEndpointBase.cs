@@ -22,7 +22,7 @@ public class RequestFilesEndpointBase<TCommand>(IServiceProvider serviceProvider
                     .SingleOrDefault(asset => asset.TypeCode == assetRequest.AssetType && asset.AssetNumber == assetRequest.AssetNumber);
             if (asset != null)
             {
-                asset.SetStatus(AssetStatus.Requested, command);
+                asset.SetStatus(AssetState.Requested, command);
 								response.Assets.Add(
 		                _mapper.Map<FileResponse>(asset.CurrentFile));
 						}

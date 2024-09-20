@@ -28,7 +28,7 @@
       {
         "Name": "Manuscript",
         "AssetNumber": 0,
-        "Status": "Uploaded",
+        "State": "Uploaded",
         "TypeCode": "Manuscript",
         "CreatedById": 5,
         //"LastModifiedById": 5,
@@ -52,7 +52,7 @@
       {
         "Name": "ReviewReport",
         "AssetNumber": 0,
-        "Status": "Uploaded",
+        "State": "Uploaded",
         "TypeCode": "ReviewReport",
         "CreatedById": 9,
         //"LastModifiedById": 9,

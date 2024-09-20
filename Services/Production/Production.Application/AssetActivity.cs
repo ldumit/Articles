@@ -6,16 +6,16 @@ namespace Production.Application
 {
 		public class AssetActivity
 		{
-				AssetStatus _status = AssetStatus.Requested;
-				StateMachine<AssetStatus, AssetActionType> _machine = null;
+				AssetState _status = AssetState.Requested;
+				StateMachine<AssetState, AssetActionType> _machine = null;
 
         public AssetActivity()
 				{
-            _machine = new StateMachine<AssetStatus, AssetActionType>(() => _status, s => _status = s);
+            _machine = new StateMachine<AssetState, AssetActionType>(() => _status, s => _status = s);
 
-						_machine.Configure(AssetStatus.Uploaded)
-								.Permit(AssetActionType.Approve, AssetStatus.Approved)
-								.Permit(AssetActionType.Request, AssetStatus.Requested);
+						_machine.Configure(AssetState.Uploaded)
+								.Permit(AssetActionType.Approve, AssetState.Approved)
+								.Permit(AssetActionType.Request, AssetState.Requested);
 
 
 				}

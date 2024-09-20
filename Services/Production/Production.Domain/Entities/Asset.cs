@@ -10,7 +10,7 @@ public partial class Asset : AuditedEntity
 		public int AssetNumber { get; init; }
     
     //talk - keep them as enum because they change quite rarely
-    public AssetStatus Status { get; set; }
+    public AssetState State { get; set; }
     public AssetCategory CategoryId { get; private set; }
 
     public int ArticleId { get; set; }

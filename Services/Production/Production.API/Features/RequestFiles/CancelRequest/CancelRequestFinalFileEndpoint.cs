@@ -21,9 +21,9 @@ public class CancelRequestFinalFileEndpoint(IServiceProvider serviceProvider, As
         foreach (var assetRequest in command.AssetRequests)
         {
             var asset = article.Assets.SingleOrDefault(a => a.TypeCode == assetRequest.AssetType);
-            if (asset?.Status == AssetStatus.Requested)
+            if (asset?.State == AssetState.Requested)
             {
-                asset.SetStatus(AssetStatus.Requested, command);
+                asset.SetStatus(AssetState.Requested, command);
             }
         }
         await _assetRepository.SaveChangesAsync();

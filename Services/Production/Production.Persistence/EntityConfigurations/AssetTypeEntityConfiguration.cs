@@ -7,14 +7,14 @@ namespace Production.Persistence.EntityConfigurations;
 
 public class AssetTypeEntityConfiguration : EnumEntityConfiguration<AssetType, Domain.Enums.AssetType>
 {
-    public override void Configure(EntityTypeBuilder<AssetType> entity)
+    public override void Configure(EntityTypeBuilder<AssetType> builder)
     {
-        base.Configure(entity);
+        base.Configure(builder);
 
-        entity.Property(e => e.DefaultCategoryId);
-				entity.Property(e => e.MaxNumber).HasDefaultValue(0);
+        builder.Property(e => e.DefaultCategoryId);
+				builder.Property(e => e.MaxNumber).HasDefaultValue(0);
 
-        entity.Property(e => e.AllowedFileExtentions).HasJsonListConversion();
-        entity.Property(e => e.DefaultFileExtension).IsRequired().HasMaxLength(Constraints.C8).HasDefaultValue("pdf");
+        builder.Property(e => e.AllowedFileExtentions).HasJsonListConversion();
+        builder.Property(e => e.DefaultFileExtension).IsRequired().HasMaxLength(Constraints.C8).HasDefaultValue("pdf");
 		}
 }

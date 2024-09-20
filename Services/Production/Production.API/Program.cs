@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Http.Json;
 using Articles.System;
 using Articles.FastEnpoints;
 using System.Reflection;
+using FluentValidation;
+using Production.API.Features.AssignTypesetter;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,8 +30,11 @@ builder.Services
 //talk - fluid vs normal
 builder.Services.AddControllers();
 
+//builder.Services.AddScoped<IValidator<AssignTypesetterCommand>, AssignTypesetterCommandValidator>();
+
 builder.Services
     .AddMemoryCache()
+		//.AddValidatorsFromAssemblyContaining<Program>()
 		.AddFastEndpoints()
     .SwaggerDocument()
     .AddEndpointsApiExplorer()
@@ -40,6 +45,14 @@ builder.Services
     .AddJwtAuthentication(builder.Configuration)
     .AddAuthorization()
 		;
+
+
+//overides the singleton lifetime for validators done by FastEndpoints
+//builder.Services.Scan(scan => scan
+//		.FromAssemblyOf<Program>()
+//		.AddClasses(classes => classes.AssignableTo(typeof(IValidator<>)))
+//		.AsImplementedInterfaces()
+//		.WithScopedLifetime());
 
 builder.Services.AddSingleton(x => new BlobServiceClient(builder.Configuration.GetConnectionString("FileServer")));
 #endregion

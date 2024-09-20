@@ -1,14 +1,15 @@
 ﻿using Articles.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Production.Domain.Entities;
 
 namespace Production.Persistence.EntityConfigurations;
 
-public class AuthorEntityConfiguration : EntityConfiguration<Author>
+public class AuthorEntityConfiguration : IEntityTypeConfiguration<Author>
 {
-    public override void Configure(EntityTypeBuilder<Author> entity)
+    public void Configure(EntityTypeBuilder<Author> entity)
     {
-        base.Configure(entity);
+        //base.Configure(entity);
 
         entity.Property(e => e.Country).HasMaxLength(Constraints.C64);
 				entity.Property(e => e.Biography).HasMaxLength(Constraints.C2048);

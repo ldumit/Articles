@@ -16,7 +16,7 @@ public class AssetRepository(ProductionDbContext _dbContext, IMemoryCache _cache
     protected override IQueryable<Asset> Query()
     {
         return base.Entity
-						//.Include(x => x.Article)
+						.Include(x => x.Article)
 						.Include(e => e.CurrentFileLink)
                 .ThenInclude(e => e.File);
     }

@@ -20,7 +20,7 @@ public class AssignUserIdMiddleware(RequestDelegate _next)
 
 						var requestModel = JsonSerializer.Deserialize<dynamic>(body);
 
-						if (requestModel is IArticleAction articleCommand)
+						if (requestModel is IArticleCommand articleCommand)
 						{
 								var userId = claimsProvider.GetUserId();
 								var userIdProperty = articleCommand.GetType().GetProperty("UserId", BindingFlags.NonPublic | BindingFlags.Instance);

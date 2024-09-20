@@ -15,6 +15,16 @@ public enum DiscussionType
     Public = 1,
     Private = 2
 }
+
+//decide -  keep AssetActionType & ArticleActionType separetly?
+public enum ArticleActionType
+{
+		AssignTypesetter,
+		Publish,
+		SchedulePublication,
+		//Accept = 101
+}
+
 public enum AssetActionType
 {
     Upload,
@@ -24,30 +34,11 @@ public enum AssetActionType
     Download
 }
 
-public enum ArticleActionType
+public enum AssetState
 {
-		AssignTypesetter,
-		Publish,
-		SchedulePublication,
-		Accept = 101
-}
-
-//public static List<AssetType> FinalFileAssetTypes = new()
-//{
-//		AssetType.Pdf,
-//		AssetType.Html,
-//		AssetType.Epub
-//};
-
-
-public enum AssetStatus
-{
-    Deleted = 0,
     Requested = 1,
     Uploaded = 2,
-    Approved = 3,
-    ScheduledForPublication = 4,
-    Published = 5
+    Approved = 3
 }
 
 //public enum ArticleStage

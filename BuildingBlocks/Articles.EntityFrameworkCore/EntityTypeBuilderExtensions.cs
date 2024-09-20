@@ -1,6 +1,7 @@
 ﻿using Articles.System;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Query;
+using System.IO;
 using System.Linq.Expressions;
 
 namespace Articles.EntityFrameworkCore;
@@ -23,6 +24,20 @@ public static class EntityTypeBuilderExtensions
 				{
 						Console.WriteLine("EX:---->" + ex.ToString());
 				}
+		}
+
+		public static bool SeedFromFile<T>(this EntityTypeBuilder<T> builder)
+				where T : class
+		{
+				var filePath = $"{AppContext.BaseDirectory}MasterData/{typeof(T).Name}.json";
+				if (!File.Exists(filePath))
+						return false;
+				var stagesData = JsonExtensions.DeserializeCaseInsensitive<List<T>>(File.ReadAllText(filePath));
+				if (stagesData != null)
+				{
+						builder.HasData(stagesData);
+				}
+				return true;
 		}
 
 		public static void AddQueryFilter<T>(this EntityTypeBuilder entityTypeBuilder, Expression<Func<T, bool>> expression)

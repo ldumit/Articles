@@ -1,17 +1,17 @@
 ﻿using FluentValidation;
 using Production.API.Features.Shared;
+using Production.Application.StateMachines;
 using Production.Domain.Enums;
 using Production.Persistence.Repositories;
 
 namespace Production.API.Features.AssignTypesetter;
 
-public record AssignTypesetterCommand : ArticleCommand<ArticleCommandResponse>
+public record AssignTypesetterCommand : ArticleCommand
 {
 		public int TypesetterId { get; init; }
 		public override ArticleActionType ActionType => ArticleActionType.AssignTypesetter;
 }
 
-//todo - validate 
 public class AssignTypesetterCommandValidator : ArticleCommandValidator<AssignTypesetterCommand>
 {
 		public AssignTypesetterCommandValidator()
@@ -19,6 +19,18 @@ public class AssignTypesetterCommandValidator : ArticleCommandValidator<AssignTy
 				RuleFor(r => r.ArticleId).GreaterThan(0);
 				RuleFor(r => r.TypesetterId).GreaterThan(0);
 
-				//todo - validate action agaisnt the database
+				RuleFor(r => r).MustAsync(async (r, _, cancellation) => await IsActionValid(r))
+						.WithMessage("Action not allowed");
+		}
+
+		protected virtual async Task<bool> IsActionValid(ArticleCommand action)
+		{
+				var articleRepository = Resolve<ArticleRepository>();
+				var article = await articleRepository.GetByIdAsync(action.ArticleId, throwNotFound: true);
+				
+				var stateMachineFactory = Resolve<ArticleStateMachineFactory>();
+				var stateMachine = stateMachineFactory(article.Stage);
+
+				return stateMachine.CanFire(article.Stage, action.ActionType);
 		}
 }

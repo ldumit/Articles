@@ -1,12 +1,14 @@
 ﻿using Production.API.Features.RequestFiles.Shared;
-using Production.API.Features.RequestFiles.FinalFiles;
 using Production.Domain.Enums;
+using Production.Application.StateMachines;
+using Production.Persistence.Repositories;
 
 namespace Production.API.Features.RequestFiles.AuthorFiles;
 
 public record RequestAuthorFilesCommand : RequestMultipleFilesCommand;
 
-public abstract class RequestAuthorFilesValidator : RequestFilesValidator<RequestFinalFilesCommand>
+public class RequestAuthorFilesValidator() 
+    : RequestFilesValidator<RequestAuthorFilesCommand>()
 {
     public override IReadOnlyCollection<AssetType> AllowedAssetTypes => AssetTypeCategories.AuthorFiles;
 }

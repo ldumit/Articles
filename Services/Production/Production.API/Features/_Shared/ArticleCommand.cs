@@ -22,18 +22,19 @@ public abstract record ArticleCommand<TActionType, TResponse> : IArticleAction<T
     //todo check why the FromClaim doesn't work
     //[FromClaim(JwtRegisteredClaimNames.Sub)]
     //[JsonIgnore]
-    int IArticleAction.UserId { get; set; }
+    int IArticleCommand.UserId { get; set; }
 
     //ActionType Domain.IArticleAction.ActionType => ActionType.AssignTypesetter;
 }
 
+public abstract record ArticleCommand : ArticleCommand<ArticleActionType, ArticleCommandResponse>;
 public abstract record ArticleCommand<TResponse> : ArticleCommand<ArticleActionType, TResponse>;
 public abstract record AssetCommand<TResponse> : ArticleCommand<AssetActionType, TResponse>;
 
 public record ArticleCommandResponse(int ArticleId);
 
 public abstract class ArticleCommandValidator<TFileActionCommand> : BaseValidator<TFileActionCommand>
-    where TFileActionCommand : IArticleAction
+    where TFileActionCommand : IArticleCommand
 {
     public ArticleCommandValidator()
     {

@@ -31,9 +31,9 @@ public record UploadAuthorsProofCommand : UploadFileCommand
 {
 }
 
-public class UploadAuthorsProofCommandValidator : UploadFileCommandValidator<UploadAuthorsProofCommand>
-{
-    public UploadAuthorsProofCommandValidator(HtmlAssetProvider assetProvider, ArticleRepository articleRepository, AssetRepository assetRepository) : base(assetProvider, articleRepository, assetRepository)
-    {
-    }
-}
+//public class UploadAuthorsProofCommandValidator : UploadFileCommandValidator<UploadAuthorsProofCommand>
+//{
+//    public UploadAuthorsProofCommandValidator(HtmlAssetProvider assetProvider, ArticleRepository articleRepository, AssetRepository assetRepository) : base(assetProvider, articleRepository, assetRepository)
+//    {
+//    }
+//}

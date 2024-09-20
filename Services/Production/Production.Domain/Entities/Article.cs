@@ -1,8 +1,5 @@
 ﻿using Articles.Abstractions;
 using Articles.Entitities;
-using Newtonsoft.Json;
-using Production.Domain.Entities.Temp;
-using Production.Domain.Enums;
 
 namespace Production.Domain.Entities;
 

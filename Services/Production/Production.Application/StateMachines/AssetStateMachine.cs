@@ -1,80 +1,58 @@
 ﻿using Articles.Abstractions;
+using Microsoft.EntityFrameworkCore;
+using Production.Domain.Entities;
 using Production.Domain.Enums;
+using Production.Persistence;
 using Stateless;
 
 namespace Production.Application.StateMachines;
 
+public delegate AssetStateMachine AssetStateMachineFactory(AssetState assetState);
+
 public class AssetStateMachine
 {
-		private StateMachine<AssetStatus, AssetActionType> _stateMachine;
-		private ArticleStage _currentArticleStage;
-		private AssetType _assetType;
+		private readonly StateMachine<AssetState, AssetActionType> _stateMachine;
+		private readonly IEnumerable<AssetStateTransitionCondition> _conditions;
+		private readonly Dictionary<AssetActionType, 
+				StateMachine<AssetState, AssetActionType>.TriggerWithParameters<ArticleStage, Domain.Enums.AssetType>> _triggers = new(); 
 
-		public AssetStateMachine(ArticleStage initialArticleStage, AssetType assetType)
+
+		public AssetStateMachine(AssetState assetState, ProductionDbContext dbContext)
 		{
-				_currentArticleStage = initialArticleStage;
-				_assetType = assetType;
+				_stateMachine = new StateMachine<AssetState, AssetActionType>(assetState);
 
-				_stateMachine = new StateMachine<AssetStatus, AssetActionType>(AssetStatus.Requested);
+				var transitions = dbContext.GetCached<AssetStateTransition>();
+				_conditions = dbContext.GetCached<AssetStateTransitionCondition>();
 
-				_stateMachine.Configure(AssetStatus.Requested)
-						.PermitIf(AssetActionType.Upload, AssetStatus.Uploaded, () => CanPerformUpload())
-						.PermitIf(AssetActionType.Request, AssetStatus.Requested, () => CanPerformRequestNew());
-
-				_stateMachine.Configure(AssetStatus.Uploaded)
-						.PermitIf(AssetActionType.Approve, AssetStatus.Approved, () => CanPerformApprove())
-						.PermitIf(AssetActionType.Request, AssetStatus.Requested, () => CanPerformRequestNew());
-
-
-				_stateMachine.Configure(AssetStatus.ScheduledForPublication)
-						.OnEntry(() =>
-						{
-								if (_currentArticleStage == ArticleStage.Published)
-								{
-										_stateMachine.Fire(AssetActionType.Upload);
-								}
-						});
-		}
-
-		public void SetArticleStage(ArticleStage articleStage)
-		{
-				_currentArticleStage = articleStage;
-		}
-
-		public void SetAssetType(AssetType assetType)
-		{
-				_assetType = assetType;
-		}
-
-		public void Fire(AssetActionType action)
-		{
-				_stateMachine.Fire(action);
-		}
-
-		private bool CanPerformUpload()
-		{
-				// Add conditions specific to asset types if needed
-				return true;
-		}
-
-		private bool CanPerformRequestNew()
-		{
-				if (_assetType == AssetType.FinalPdf && _currentArticleStage < ArticleStage.PublicationScheduled)
+				foreach (var transition in transitions)
 				{
-						return false;
+						var trigger = _triggers.GetValueOrDefault(transition.ActionType);
+						if (trigger == null)
+								trigger = _stateMachine.SetTriggerParameters<ArticleStage, Domain.Enums.AssetType>(transition.ActionType);
+
+						_triggers[transition.ActionType] = trigger;
+
+						if(transition.CurrentState != transition.DestinationState)
+								_stateMachine.Configure(transition.CurrentState)
+										.PermitIf(trigger, transition.DestinationState,
+												(stage, assetType) => CanPerform(stage, assetType, transition.ActionType));
+						else
+								_stateMachine.Configure(transition.CurrentState)
+										.PermitReentryIf(trigger, 
+												(stage, assetType) => CanPerform(stage, assetType, transition.ActionType));
+
 				}
-				return true;
 		}
 
-		private bool CanPerformApprove()
+		private bool CanPerform(ArticleStage articleStage, Domain.Enums.AssetType assetType, AssetActionType actionType)
 		{
-				// Add conditions specific to asset types if needed
-				return true;
+				return _conditions
+						.Any(c=> c.ArticleStage == articleStage && c.AssetTypes.Contains(assetType) && c.ActionTypes.Contains(actionType));
 		}
 
-		private bool CanPerformSchedulePublication()
+		public bool CanFire(ArticleStage articleStage, Domain.Enums.AssetType assetType, AssetActionType actionType)
 		{
-				// Add conditions specific to asset types if needed
-				return true;
+				var trigger = _triggers[actionType];
+				return _stateMachine.CanFire(trigger, articleStage, assetType);
 		}
 }

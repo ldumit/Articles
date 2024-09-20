@@ -12,7 +12,7 @@ using Production.Persistence;
 namespace Production.Persistence.Migrations
 {
     [DbContext(typeof(ProductionDbContext))]
-    [Migration("20240913143610_InitialCreate")]
+    [Migration("20240919093709_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -42,7 +42,7 @@ namespace Production.Persistence.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 9, 13, 14, 36, 9, 496, DateTimeKind.Utc).AddTicks(5151));
+                        .HasDefaultValue(new DateTime(2024, 9, 19, 9, 37, 8, 14, DateTimeKind.Utc).AddTicks(85));
 
                     b.Property<string>("Doi")
                         .IsRequired()
@@ -133,6 +133,42 @@ namespace Production.Persistence.Migrations
                     b.ToTable("ArticleCurrentStage", (string)null);
                 });
 
+            modelBuilder.Entity("Production.Domain.Entities.ArticleStageTransition", b =>
+                {
+                    b.Property<string>("CurrentStage")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ActionType")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DestinationStage")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("CurrentStage", "ActionType", "DestinationStage");
+
+                    b.ToTable("ArticleStageTransition", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            CurrentStage = "Accepted",
+                            ActionType = "AssignTypesetter",
+                            DestinationStage = "InProduction"
+                        },
+                        new
+                        {
+                            CurrentStage = "FinalProduction",
+                            ActionType = "SchedulePublication",
+                            DestinationStage = "PublicationScheduled"
+                        },
+                        new
+                        {
+                            CurrentStage = "PublicationScheduled",
+                            ActionType = "Publish",
+                            DestinationStage = "Published"
+                        });
+                });
+
             modelBuilder.Entity("Production.Domain.Entities.Asset", b =>
                 {
                     b.Property<int>("Id")
@@ -160,7 +196,7 @@ namespace Production.Persistence.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 9, 13, 14, 36, 9, 507, DateTimeKind.Utc).AddTicks(3385));
+                        .HasDefaultValue(new DateTime(2024, 9, 19, 9, 37, 8, 17, DateTimeKind.Utc).AddTicks(9355));
 
                     b.Property<DateTime?>("LasModifiedOn")
                         .HasColumnType("datetime2");
@@ -168,15 +204,12 @@ namespace Production.Persistence.Migrations
                     b.Property<int?>("LastModifiedById")
                         .HasColumnType("int");
 
-                    b.Property<int>("LatestFileId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
-                    b.Property<string>("Status")
+                    b.Property<string>("State")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -231,7 +264,7 @@ namespace Production.Persistence.Migrations
                     b.ToTable("AssetAction", (string)null);
                 });
 
-            modelBuilder.Entity("Production.Domain.Entities.AssetLatestFile", b =>
+            modelBuilder.Entity("Production.Domain.Entities.AssetCurrentFileLink", b =>
                 {
                     b.Property<int>("AssetId")
                         .HasColumnType("int");
@@ -244,16 +277,117 @@ namespace Production.Persistence.Migrations
                     b.HasIndex("FileId")
                         .IsUnique();
 
-                    b.ToTable("AssetLatestFile", (string)null);
+                    b.ToTable("AssetCurrentFileLink", (string)null);
                 });
 
-            modelBuilder.Entity("Production.Domain.Entities.AssetType", b =>
+            modelBuilder.Entity("Production.Domain.Entities.AssetStateTransition", b =>
+                {
+                    b.Property<string>("CurrentState")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ActionType")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DestinationState")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("CurrentState", "ActionType", "DestinationState");
+
+                    b.ToTable("AssetStateTransition", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            CurrentState = "Uploaded",
+                            ActionType = "Request",
+                            DestinationState = "Requested"
+                        },
+                        new
+                        {
+                            CurrentState = "Uploaded",
+                            ActionType = "Upload",
+                            DestinationState = "Uploaded"
+                        },
+                        new
+                        {
+                            CurrentState = "Requested",
+                            ActionType = "Upload",
+                            DestinationState = "Uploaded"
+                        },
+                        new
+                        {
+                            CurrentState = "Requested",
+                            ActionType = "CancelRequest",
+                            DestinationState = "Uploaded"
+                        });
+                });
+
+            modelBuilder.Entity("Production.Domain.Entities.AssetStateTransitionCondition", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ActionTypes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ArticleStage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AssetTypes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AssetStateTransitionCondition", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ActionTypes = "[0,2,3]",
+                            ArticleStage = "InProduction",
+                            AssetTypes = "[1,7,8,9]"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ActionTypes = "[0,2,3]",
+                            ArticleStage = "DraftProduction",
+                            AssetTypes = "[1,7,8,9]"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ActionTypes = "[0]",
+                            ArticleStage = "InProduction",
+                            AssetTypes = "[3]"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ActionTypes = "[0,2,3,1]",
+                            ArticleStage = "DraftProduction",
+                            AssetTypes = "[3]"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ActionTypes = "[0,2,3]",
+                            ArticleStage = "FinalProduction",
+                            AssetTypes = "[4,5,6]"
+                        });
+                });
+
+            modelBuilder.Entity("Production.Domain.Entities.AssetType", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
                     b.Property<string>("AllowedFileExtentions")
                         .IsRequired()
@@ -384,45 +518,6 @@ namespace Production.Persistence.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Production.Domain.Entities.Comment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ArticleId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CreatedById")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("LasModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("LastModifiedById")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasMaxLength(2048)
-                        .HasColumnType("nvarchar(2048)");
-
-                    b.Property<int>("TypeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ArticleId", "TypeId")
-                        .IsUnique();
-
-                    b.ToTable("Comment", (string)null);
-                });
-
             modelBuilder.Entity("Production.Domain.Entities.File", b =>
                 {
                     b.Property<int>("Id")
@@ -440,7 +535,7 @@ namespace Production.Persistence.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 9, 13, 14, 36, 9, 514, DateTimeKind.Utc).AddTicks(1682));
+                        .HasDefaultValue(new DateTime(2024, 9, 19, 9, 37, 8, 22, DateTimeKind.Utc).AddTicks(8359));
 
                     b.Property<string>("Extension")
                         .IsRequired()
@@ -622,10 +717,7 @@ namespace Production.Persistence.Migrations
             modelBuilder.Entity("Production.Domain.Entities.Stage", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Code")
                         .IsRequired()
@@ -652,20 +744,6 @@ namespace Production.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 100,
-                            Code = "Submitted",
-                            Description = "Our editorial specialist is checking your article. We will contact you if we need any further files or information.",
-                            Name = "Article submitted"
-                        },
-                        new
-                        {
-                            Id = 200,
-                            Code = "InReview",
-                            Description = "Your article has been checked and article. Our editorial specialists will start soon revieing it.",
-                            Name = "Article approved"
-                        },
-                        new
-                        {
                             Id = 201,
                             Code = "Accepted",
                             Description = "Your article has been reviewed and accepted. The production of the article will start soon.",
@@ -681,7 +759,7 @@ namespace Production.Persistence.Migrations
                         new
                         {
                             Id = 301,
-                            Code = "AuthorsProof",
+                            Code = "DraftProduction",
                             Description = "The Author's Proof is available for you to check and provide corrections. This status is also displayed if we are preparing a further Author's Proof at your request.",
                             Name = "Author's proof approved"
                         },
@@ -691,13 +769,6 @@ namespace Production.Persistence.Migrations
                             Code = "FinalProduction",
                             Description = "The typesetter is preparing the final version of your article for publication. We will contact you if we need to check anything further before publication.",
                             Name = "Publisher's proof uploaded"
-                        },
-                        new
-                        {
-                            Id = 303,
-                            Code = "PublisherProof",
-                            Description = "Your Production Specialist is applying quality checks to ensure your article is ready for publication.",
-                            Name = "Article scheduled for publication"
                         },
                         new
                         {
@@ -882,34 +953,23 @@ namespace Production.Persistence.Migrations
                     b.Navigation("Asset");
                 });
 
-            modelBuilder.Entity("Production.Domain.Entities.AssetLatestFile", b =>
+            modelBuilder.Entity("Production.Domain.Entities.AssetCurrentFileLink", b =>
                 {
                     b.HasOne("Production.Domain.Entities.Asset", "Asset")
-                        .WithOne("LatestFileRef")
-                        .HasForeignKey("Production.Domain.Entities.AssetLatestFile", "AssetId")
+                        .WithOne("CurrentFileLink")
+                        .HasForeignKey("Production.Domain.Entities.AssetCurrentFileLink", "AssetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Production.Domain.Entities.File", "File")
                         .WithOne()
-                        .HasForeignKey("Production.Domain.Entities.AssetLatestFile", "FileId")
+                        .HasForeignKey("Production.Domain.Entities.AssetCurrentFileLink", "FileId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Asset");
 
                     b.Navigation("File");
-                });
-
-            modelBuilder.Entity("Production.Domain.Entities.Comment", b =>
-                {
-                    b.HasOne("Production.Domain.Entities.Article", "Article")
-                        .WithMany("Comments")
-                        .HasForeignKey("ArticleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Article");
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.File", b =>
@@ -998,8 +1058,6 @@ namespace Production.Persistence.Migrations
 
                     b.Navigation("Authors");
 
-                    b.Navigation("Comments");
-
                     b.Navigation("CurrentStage")
                         .IsRequired();
 
@@ -1010,10 +1068,9 @@ namespace Production.Persistence.Migrations
                 {
                     b.Navigation("Actions");
 
-                    b.Navigation("Files");
+                    b.Navigation("CurrentFileLink");
 
-                    b.Navigation("LatestFileRef")
-                        .IsRequired();
+                    b.Navigation("Files");
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.File", b =>

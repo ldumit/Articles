@@ -32,7 +32,7 @@ namespace Production.Domain.Entities
 								TypeCode = assetType.Code,
 								AssetNumber = assetNumber,
 								CategoryId = assetType.DefaultCategoryId,
-								Status = AssetStatus.Requested
+								State = AssetState.Requested
 						};
 						asset._actions.Add(
 								new AssetAction() { CreatedById = articleAction.UserId, Comment = articleAction.Comment, CreatedOn = DateTime.UtcNow, TypeId = articleAction.ActionType }
@@ -57,15 +57,15 @@ namespace Production.Domain.Entities
 								TypeCode = assetType.Code,
 								AssetNumber = assetNumber,
 								CategoryId = assetType.DefaultCategoryId,
-								Status = AssetStatus.Uploaded
+								State = AssetState.Uploaded
 						};
 
 						return asset;
 				}
 
-				public void SetStatus(AssetStatus newStatus, IArticleAction<AssetActionType> action)
+				public void SetStatus(AssetState newStatus, IArticleAction<AssetActionType> action)
 				{
-						this.Status = newStatus;
+						this.State = newStatus;
 						this.LasModifiedOn = DateTime.UtcNow;
 						this.LastModifiedById = action.UserId;
 						_actions.Add(
@@ -76,7 +76,7 @@ namespace Production.Domain.Entities
 
 				public void CancelRequest(IArticleAction<AssetActionType> action)
 				{
-						if (this.Status != AssetStatus.Requested)
+						if (this.State != AssetState.Requested)
 								throw new DomainException("Wrong status");
 
 						//this.Status = newStatus;

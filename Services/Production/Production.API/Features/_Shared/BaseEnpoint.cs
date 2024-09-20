@@ -12,7 +12,7 @@ namespace Production.API.Features.Shared;
 
 public abstract class BaseEndpoint<TCommand, TResponse> : Endpoint<TCommand, TResponse>
         //where TCommand : ArticleCommand<TResponse>
-        where TCommand : IArticleAction
+        where TCommand : IArticleCommand
 {
     protected readonly AutoMapper.IMapper _mapper;
     protected readonly ArticleRepository _articleRepository;
