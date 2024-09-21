@@ -15,14 +15,11 @@ public abstract record RequestAssetCommand : AssetCommand<RequestFilesCommandRes
 }
 public abstract record RequestMultipleFilesCommand : RequestAssetCommand
 {
-
     //talk - about using List, Array, IEnumerable in the input/output models.
     //Preffer IEnumerable if for input since it doesn't change. And List for output since we need to add elements.
     public IEnumerable<AssetRequest> AssetRequests { get; set; }
     public record AssetRequest(AssetType AssetType, byte AssetNumber);
 }
-
-
 
 public class RequestFilesCommandResponse
 {
@@ -34,7 +31,7 @@ public abstract class RequestFilesValidator<TRequestCommand> : ArticleCommandVal
 {
 		public RequestFilesValidator()
     {
-
+				this.ClassLevelCascadeMode = CascadeMode.Stop;
 				RuleFor(r => r.AssetRequests)
                 .Cascade(CascadeMode.Stop)
                 .NotEmpty().WithMessage("Request cannot be empty")
@@ -55,7 +52,7 @@ public abstract class RequestFilesValidator<TRequestCommand> : ArticleCommandVal
 				var assetRequest = action.AssetRequests.FirstOrDefault(); // we only need to validate for one asset
 
 				var assetRepository = Resolve<AssetRepository>();
-				var asset = await assetRepository.GetByTypeAndNumber(action.ArticleId, assetRequest.AssetType, assetRequest.AssetNumber);
+				var asset = await assetRepository.GetByTypeAndNumberAsync(action.ArticleId, assetRequest.AssetType, assetRequest.AssetNumber);
 
 				var stateMachineFactory = Resolve<AssetStateMachineFactory>();
 				var stateMachine = stateMachineFactory(asset.State);
@@ -89,9 +86,10 @@ public class AssetActionValidator : AbstractValidator<AssetAction>
 		{
         return true;
 		}
+
 		public virtual async Task<bool> IsActionValid(AssetAction action)
 		{
-				var asset = await _assetRepository.GetByTypeAndNumber(action.ArticleId, action.AssetRequest.AssetType, action.AssetRequest.AssetNumber);
+				var asset = await _assetRepository.GetByTypeAndNumberAsync(action.ArticleId, action.AssetRequest.AssetType, action.AssetRequest.AssetNumber);
 				return asset != null 
 						&& _assetStateMachine.CanFire(asset.Article.Stage, asset.TypeCode, action.ActionType);
 		}

@@ -73,7 +73,7 @@ public class UploadFinalFileEndpoint(IFileService _fileService, IServiceProvider
 
     protected virtual async Task<Asset> FindAsset(UploadFileCommand command)
     {
-        return await _assetRepository.GetByTypeAndNumber(command.ArticleId, command.AssetType, command.GetAssetNumber());
+        return await _assetRepository.GetByTypeAndNumberAsync(command.ArticleId, command.AssetType, command.GetAssetNumber(), throwNotFound: false);
     }
 
 		protected virtual Asset CreateAsset(IArticleAction<AssetActionType> action, Domain.Enums.AssetType assetType, byte assetNumber)

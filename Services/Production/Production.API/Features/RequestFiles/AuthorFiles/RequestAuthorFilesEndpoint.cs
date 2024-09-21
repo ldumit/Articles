@@ -1,7 +1,6 @@
 ﻿using FastEndpoints;
 using Microsoft.AspNetCore.Authorization;
 using Production.API.Features.RequestFiles.Shared;
-using Production.Domain.Enums;
 using Production.Persistence.Repositories;
 
 namespace Production.API.Features.RequestFiles.AuthorFiles;

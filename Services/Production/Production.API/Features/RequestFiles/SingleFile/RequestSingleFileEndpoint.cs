@@ -15,7 +15,7 @@ public class RequestSingleFileEndpoint(IServiceProvider serviceProvider, AssetRe
 {
     public async override Task HandleAsync(RequestSingleFileCommand command, CancellationToken cancellationToken)
     {
-        var asset = await _assetRepository.GetByTypeAndNumber(command.ArticleId, command.AssetType, command.AssetNumber);
+        var asset = await _assetRepository.GetByTypeAndNumberAsync(command.ArticleId, command.AssetType, command.AssetNumber);
 
         asset.SetStatus(AssetState.Requested, command);
 

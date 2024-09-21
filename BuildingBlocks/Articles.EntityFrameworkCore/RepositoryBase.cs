@@ -65,13 +65,13 @@ public abstract class RepositoryBase<TContext, TEntity, TKey> : IRepository<TEnt
 				return ReturnOrThrow(entity, throwNotFound);
 		}
 
-		public virtual async Task<TEntity> GetByIdAsync(TKey id, bool throwNotFound = false)
+		public virtual async Task<TEntity> GetByIdAsync(TKey id, bool throwNotFound = true)
 		{
 				var entity = await Query().SingleOrDefaultAsync(e => e.Id.Equals(id));
 				return ReturnOrThrow(entity, throwNotFound);
 		}
 
-		private TEntity ReturnOrThrow(TEntity? entity, bool throwNotFound)
+		protected TEntity ReturnOrThrow(TEntity? entity, bool throwNotFound)
 		{
 				if (throwNotFound && entity is null)
 						throw new NotFoundException(NotFoundMessage);

@@ -31,6 +31,6 @@ public class AssignTypesetterCommandValidator : ArticleCommandValidator<AssignTy
 				var stateMachineFactory = Resolve<ArticleStateMachineFactory>();
 				var stateMachine = stateMachineFactory(article.Stage);
 
-				return stateMachine.CanFire(article.Stage, action.ActionType);
+				return stateMachine.CanFire(action.ActionType);
 		}
 }
