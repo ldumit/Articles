@@ -1,5 +1,6 @@
 ﻿using Articles.Abstractions;
 using Articles.Exceptions.Domain;
+using Mapster;
 using Production.Domain.Enums;
 using Production.Domain.Events;
 
@@ -28,25 +29,24 @@ namespace Production.Domain.Entities
 
 						var asset = new Asset()
 						{
+								ArticleId = articleAction.ArticleId,
 								Name = assetType.Name,
 								TypeCode = assetType.Code,
 								AssetNumber = assetNumber,
 								CategoryId = assetType.DefaultCategoryId,
 								State = AssetState.Requested
 						};
-						asset._actions.Add(
-								new AssetAction() { CreatedById = articleAction.UserId, Comment = articleAction.Comment, CreatedOn = DateTime.UtcNow, TypeId = articleAction.ActionType }
-								);
-						//var file = new File() { Name = $"{asset.Name}.{assetType.DefaultFileExtension}", StatusId = FileStatus.Requested };
-						//asset.Files.Add(file);
-						//if(asset.LatestFileRef is null) 
-						//    asset.LatestFileRef = new AssetLatestFile() { Asset= asset, File = file };
-						//else
-						//    asset.LatestFileRef.File = file;
+						asset._actions.Add(articleAction.Adapt<AssetAction>());
 
-						//file.FileActions.Add(
-						//    new FileAction() { CreatedById = articleAction.UserId, Comment = articleAction.Comment, CreatedOn = DateTime.UtcNow, TypeId = articleAction.ActionType }
-						//    );
+						////creating File
+						//var file = new File() { 
+						//		Name = $"{asset.Name}{(asset.AssetNumber>0 ? asset.AssetNumber : string.Empty)}.{assetType.DefaultFileExtension}",
+						//		Extension = assetType.DefaultFileExtension,								
+						//		Version = 1
+						//};
+						//asset.Files.Add(file);
+						//asset.CurrentFileLink = new AssetCurrentFileLink() { File = file };
+
 						return asset;
 				}
 				public static Asset CreateFromUpload(AssetType assetType, string originalFileName, byte assetNumber = 0)
@@ -67,11 +67,10 @@ namespace Production.Domain.Entities
 				{
 						this.State = newStatus;
 						this.LasModifiedOn = DateTime.UtcNow;
-						this.LastModifiedById = action.UserId;
+						this.LastModifiedById = action.CreatedById;
 						_actions.Add(
-								new AssetAction() { CreatedById = action.UserId, Comment = action.Comment, CreatedOn = DateTime.UtcNow, TypeId = action.ActionType }
+								new AssetAction() { CreatedById = action.CreatedById, Comment = action.Comment, CreatedOn = DateTime.UtcNow, TypeId = action.ActionType }
 						);
-						//this.AddFileAction(action);
 				}
 
 				public void CancelRequest(IArticleAction<AssetActionType> action)
@@ -81,9 +80,9 @@ namespace Production.Domain.Entities
 
 						//this.Status = newStatus;
 						this.LasModifiedOn = DateTime.UtcNow;
-						this.LastModifiedById = action.UserId;
+						this.LastModifiedById = action.CreatedById;
 						_actions.Add(
-								new AssetAction() { CreatedById = action.UserId, Comment = action.Comment, CreatedOn = DateTime.UtcNow, TypeId = action.ActionType }
+								new AssetAction() { CreatedById = action.CreatedById, Comment = action.Comment, CreatedOn = DateTime.UtcNow, TypeId = action.ActionType }
 						);
 						//this.AddFileAction(action);
 				}
@@ -95,7 +94,7 @@ namespace Production.Domain.Entities
 								FileId = this.CurrentFile!.Id,
 								TypeId = action.ActionType,
 								Comment = action.Comment,
-								CreatedById = action.UserId,
+								CreatedById = action.CreatedById,
 								CreatedOn = DateTime.UtcNow
 						};
 						this.CurrentFile.FileActions.Add(fileAction);

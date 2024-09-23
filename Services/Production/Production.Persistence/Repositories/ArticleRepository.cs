@@ -1,22 +1,12 @@
-﻿using Articles.EntityFrameworkCore;
-using Articles.Exceptions;
-using Articles.System;
+﻿using Articles.Abstractions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
 using Production.Domain.Entities;
-using System.Net;
-
 
 namespace Production.Persistence.Repositories;
 
-
-public class ArticleRepository(ProductionDbContext _dbContext) 
-		: RepositoryBase<ProductionDbContext, Article>(_dbContext)
+public class ArticleRepository(ProductionDbContext dbContext) 
+		: Repository<Article>(dbContext)
 {
-		//public virtual IList<Stage> GetStages()
-		//		=> _cache.GetOrCreate(entry => _dbContext.Stages.ToList());
-
-
 		protected override IQueryable<Article> Query()
 		{
 				return base.Entity
@@ -25,13 +15,37 @@ public class ArticleRepository(ProductionDbContext _dbContext)
 						.Include(e => e.Actors);
 		}
 
-		public async Task<Article> GetByIdWithAssetsAsync(int id)
+		public async Task<Article> GetByIdWithAssetsAsync(int id, bool throwIfNotFound = true)
 		{
-				return await Query()
+				var article = await Query()
 						 .Include(e => e.Assets)
 								 .ThenInclude(e => e.CurrentFileLink)
 										.ThenInclude(e => e.File)
 						.SingleAsync(e => e.Id == id);
+				
+				return ReturnOrThrow(article, throwIfNotFound);
+		}
+
+		public async Task<Article> GetByIdWithSingleAssetAsync(int id, int assetId, bool throwIfNotFound = true)
+		{
+				var article = await Query()
+						 .Include(e => e.Assets.Where(e => e.Id == assetId))
+								 .ThenInclude(e => e.CurrentFileLink)
+										.ThenInclude(e => e.File)
+						.SingleAsync(e => e.Id == id);
+
+				return ReturnOrThrow(article, throwIfNotFound);
+		}
+
+		public async Task<Article> GetByIdWithSingleAssetAsync(int id, Domain.Enums.AssetType assetType, byte assetNumber, bool throwIfNotFound = true)
+		{
+				var article = await Query()
+						 .Include(e => e.Assets.Where(e => e.TypeCode == assetType && e.AssetNumber == assetNumber))
+								 .ThenInclude(e => e.CurrentFileLink)
+										.ThenInclude(e => e.File)
+						.SingleAsync(e => e.Id == id);
+
+				return ReturnOrThrow(article, throwIfNotFound);
 		}
 }
 

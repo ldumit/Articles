@@ -11,7 +11,7 @@ public class AssignUserIdPreProcessor : IGlobalPreProcessor
 				if (context.Request is IArticleCommand articleCommand)
 				{
 						var claimsProvider = context.HttpContext.Resolve<IClaimsProvider>();
-						articleCommand.UserId = claimsProvider.GetUserId();
+						articleCommand.CreatedById = claimsProvider.GetUserId();
 				}
 
 				return Task.CompletedTask;

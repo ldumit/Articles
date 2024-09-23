@@ -23,7 +23,7 @@ public abstract record RequestMultipleFilesCommand : RequestAssetCommand
 
 public class RequestFilesCommandResponse
 {
-    public List<FileResponse> Assets { get; set; } = new();
+    public IEnumerable<AssetResponse> Assets { get; set; }
 }
 
 public abstract class RequestFilesValidator<TRequestCommand> : ArticleCommandValidator<TRequestCommand>
@@ -51,15 +51,17 @@ public abstract class RequestFilesValidator<TRequestCommand> : ArticleCommandVal
 		{
 				var assetRequest = action.AssetRequests.FirstOrDefault(); // we only need to validate for one asset
 
-				var assetRepository = Resolve<AssetRepository>();
-				var asset = await assetRepository.GetByTypeAndNumberAsync(action.ArticleId, assetRequest.AssetType, assetRequest.AssetNumber);
+				var assetRepository = Resolve<ArticleRepository>();
+				var article = await assetRepository.GetByIdWithSingleAssetAsync(action.ArticleId, assetRequest.AssetType, assetRequest.AssetNumber);
+				var asset = article.Assets.SingleOrDefault();
+				var assetState = asset?.State ?? AssetState.Uploaded;
 
 				var stateMachineFactory = Resolve<AssetStateMachineFactory>();
-				var stateMachine = stateMachineFactory(asset.State);
+				var stateMachine = stateMachineFactory(assetState);
 
 				
-				return asset != null
-						&& stateMachine.CanFire(asset.Article.Stage, asset.TypeCode, action.ActionType);
+				return article != null
+						&& stateMachine.CanFire(article.Stage, assetRequest.AssetType, action.ActionType);
 
 		}
 		public abstract IReadOnlyCollection<AssetType> AllowedAssetTypes { get; }

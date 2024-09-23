@@ -19,10 +19,13 @@ public abstract record ArticleCommand<TActionType, TResponse> : IArticleAction<T
     [JsonIgnore]
     public abstract TActionType ActionType { get; }
 
-    //todo check why the FromClaim doesn't work
-    //[FromClaim(JwtRegisteredClaimNames.Sub)]
-    //[JsonIgnore]
-    int IArticleCommand.UserId { get; set; }
+		[JsonIgnore]
+		public DateTime CreatedOn => DateTime.UtcNow;
+
+		//todo check why the FromClaim doesn't work
+		//[FromClaim(JwtRegisteredClaimNames.Sub)]
+		[JsonIgnore]
+		public int CreatedById { get; set; }
 
     //ActionType Domain.IArticleAction.ActionType => ActionType.AssignTypesetter;
 }

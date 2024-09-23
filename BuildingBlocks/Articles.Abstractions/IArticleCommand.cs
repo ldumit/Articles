@@ -3,8 +3,9 @@
 public interface IArticleCommand
 {
 		int ArticleId { get; }
-		int UserId { get; set; }
 		string Comment { get; }
+		int CreatedById { get; set; }
+		DateTime CreatedOn { get; }
 }
 
 //decide - do we need to keep IArticleAction in this shared library or should we move it into Production domain?

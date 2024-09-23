@@ -8,8 +8,8 @@ namespace Articles.EntityFrameworkCore;
 
 public interface IRepository<Entity> : IRepository<Entity, int>
 {
-
 }
+
 public interface IRepository<TEntity, TKey>
 {
     Task<TEntity> GetByIdAsync(TKey id, bool throwNotFound = true);
@@ -30,13 +30,10 @@ public interface IRepository<TEntity, TKey>
     //bool SoftDelete(TKey id);
 }
 
-public abstract class RepositoryBase<TContext, TEntity> : RepositoryBase<TContext, TEntity, int>
+public class Repository<TContext, TEntity>(TContext dbContext) : RepositoryBase<TContext, TEntity, int>(dbContext)
 		where TContext : DbContext
 		where TEntity : class, IEntity
 {
-    public RepositoryBase(TContext dbContext, IMultitenancy? multitenancy = null) : base(dbContext)
-    {
-    }
 }
 
 public abstract class RepositoryBase<TContext, TEntity, TKey> : IRepository<TEntity, TKey>

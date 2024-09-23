@@ -1,16 +1,19 @@
 ﻿using Articles.AspNetCore;
 using Articles.Security;
 using Articles.System;
+using ArticleTimeline.Application.VariableResolvers;
+using ArticleTimeline.Persistence;
 using FileStorage.AzureBlob;
 using FileStorage.Contracts;
-using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Production.Application.StateMachines;
 using Production.Persistence;
 using Production.Persistence.Repositories;
+using System.Data.Common;
 
 namespace Production.Application;
 public static class DependencyInjection
@@ -19,21 +22,34 @@ public static class DependencyInjection
     {
         var connectionString = configuration.GetConnectionString("Database");
 
-        //services.AddMediatR(config =>
-        //{
-        //    config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
-        //    config.AddOpenBehavior(typeof(ValidationBehavior<,>));
-        //    config.AddOpenBehavior(typeof(LoggingBehavior<,>));
-        //});
+				//services.AddMediatR(config =>
+				//{
+				//    config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+				//    config.AddOpenBehavior(typeof(ValidationBehavior<,>));
+				//    config.AddOpenBehavior(typeof(LoggingBehavior<,>));
+				//});
 
-        //services.AddFeatureManagement();
-        //services.AddMessageBroker(configuration, Assembly.GetExecutingAssembly());
-        services.AddDbContext<Production.Persistence.ProductionDbContext>((sp, options) =>
-        {
-            //options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
-            options.UseSqlServer(connectionString);
-        });
+				//services.AddFeatureManagement();
+				//services.AddMessageBroker(configuration, Assembly.GetExecutingAssembly());
 
+
+				// decide if we need the same DBConnection/Transaction when we are saving the Timeline
+				services.AddScoped<DbConnection>(provider =>
+				{
+						return new SqlConnection(connectionString);
+				});
+				services.AddDbContext<ProductionDbContext>((provider, options) =>
+				{
+						var dbConnection = provider.GetRequiredService<DbConnection>();
+						//options.UseSqlServer(dbConnection);
+						options.UseSqlServer(connectionString);
+
+				});
+				services.AddDbContext<ArticleTimelineDbContext>((provider, options) =>
+				{
+						var dbConnection = provider.GetRequiredService<DbConnection>();
+						options.UseSqlServer(dbConnection);
+				});
 
 				services.AddScoped<IAuthorizationHandler, ArticleRoleAuthorizationHandler>();
 
@@ -47,9 +63,11 @@ public static class DependencyInjection
         services.AddScoped<IArticleRoleChecker, ActorRepository>();
 				services.AddScoped<ArticleRepository>();
 				services.AddScoped<AssetRepository>(); 
+        services.AddScoped<PersonRepository>();
 
 				services.AddScoped<IThreadSafeMemoryCache, MemoryCache>();
 				services.AddScoped<IFileService, FileService>();
+				services.AddArticleTimelineVariableResolvers();
 
 				services.AddScoped<ArticleStateMachineFactory>(provider => articleStage =>
 				{

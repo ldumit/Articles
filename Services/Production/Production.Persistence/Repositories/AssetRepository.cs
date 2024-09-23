@@ -1,18 +1,14 @@
-﻿using Articles.Entitities;
-using Articles.EntityFrameworkCore;
-using Articles.Exceptions;
-using Articles.System;
+﻿using Articles.System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Production.Domain.Entities;
-using Production.Domain.Enums;
 
 using AssetType = Production.Domain.Entities.AssetType;
 
 namespace Production.Persistence.Repositories;
 
 public class AssetRepository(ProductionDbContext _dbContext, IMemoryCache _cache) 
-    : RepositoryBase<ProductionDbContext, Asset>(_dbContext)
+    : Repository<Asset>(_dbContext)
 {
     protected override IQueryable<Asset> Query()
     {

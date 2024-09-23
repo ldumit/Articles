@@ -1,7 +1,7 @@
 ﻿using Articles.Abstractions;
+using Mapster;
 using Production.API.Features.Shared;
 using Production.API.Features.UploadFiles.Shared;
-using Production.Domain;
 using Production.Domain.Entities;
 using Production.Domain.Enums;
 using Production.Persistence.Repositories;
@@ -15,35 +15,34 @@ public class RequestFilesEndpointBase<TCommand>(IServiceProvider serviceProvider
     public async override Task HandleAsync(TCommand command, CancellationToken cancellationToken)
     {
         var article = await _articleRepository.GetByIdWithAssetsAsync(command.ArticleId);
-        var response = new RequestFilesCommandResponse();
+
+        var assets = new List<Asset>();
         foreach (var assetRequest in command.AssetRequests)
         {
             var asset = article.Assets
                     .SingleOrDefault(asset => asset.TypeCode == assetRequest.AssetType && asset.AssetNumber == assetRequest.AssetNumber);
             if (asset != null)
-            {
                 asset.SetStatus(AssetState.Requested, command);
-								response.Assets.Add(
-		                _mapper.Map<FileResponse>(asset.CurrentFile));
-						}
             else
-            {
-								asset = CreateAsset(command, assetRequest.AssetType, assetRequest.AssetNumber);
-								response.Assets.Add(
-		                new FileResponse(asset.Id, asset.CurrentFile?.Id, asset.CurrentFile?.Version, asset.CurrentFile?.FileServerId));
-						}
+								asset = await CreateAsset(command, assetRequest.AssetType, assetRequest.AssetNumber);
 
-
+            assets.Add(asset);
 				}
 				await _assetRepository.SaveChangesAsync();
 
-        await SendAsync(response);
+        var response = new RequestFilesCommandResponse()
+        {
+            Assets = assets.Select(a => a.Adapt<AssetResponse>())
+        };				
+
+				await SendAsync(response);
     }
 
-		protected virtual Asset CreateAsset(IArticleAction<AssetActionType> action, Domain.Enums.AssetType assetType, byte assetNumber)
+		protected async virtual Task<Asset> CreateAsset(IArticleAction<AssetActionType> action, Domain.Enums.AssetType assetType, byte assetNumber)
 		{
 				var assetTypeEntity = _assetRepository.GetAssetType(assetType);
+				var asset = Asset.CreateFromRequest(action, assetTypeEntity, assetNumber);
 
-				return Asset.CreateFromRequest(action, assetTypeEntity, assetNumber);
+        return await _assetRepository.AddAsync(asset);        
 		}
 }

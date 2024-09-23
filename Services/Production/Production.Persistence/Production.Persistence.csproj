@@ -52,7 +52,7 @@
     <None Update="TestData\Article.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="TestData\AssetLatestFile.json">
+    <None Update="TestData\AssetCurrentFileLink.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="TestData\Journal.json">

@@ -33,8 +33,36 @@ public abstract record UploadFileCommand : UploadFileCommand<FileResponse>
     internal virtual byte GetAssetNumber() => 0;
 }
 
-public record FileResponse(int AssetId, int? FileId, int? Version, string? FileServerId) : IFileActionResponse;
-public record AssetResponse(int AssetId, int FileId, int Version, string FileServerId) : IFileActionResponse;
+public class FileResponse2
+{
+    public int FileId { get; set; }
+    public int Version { get; set; }
+    public FileStatus2 Status { get; set; }
+}
+public class FileResponse3
+{
+		public int AssetId { get; set; }
+		public int FileId { get; set; }
+		public int Version { get; set; }
+		public FileStatus2 Status { get; set; }
+}
+
+
+
+
+public record FileResponse(int AssetId, AssetState State, int? FileId, int? Version, string? FileServerId) : IFileActionResponse;
+//public record AssetResponse(int Id, AssetState State, FileDto? File) : IFileActionResponse;
+
+public record AssetResponse : IFileActionResponse
+{
+    public int Id { get; set; }		
+    
+    [JsonConverter(typeof(JsonStringEnumConverter))]
+		public AssetState State { get; set; }
+    public FileDto? File { get; set; }
+}
+
+public record FileDto(int FileId, int Version, string FileServerId);
 
 public abstract class UploadFileValidator<TUploadFileCommand> : ArticleCommandValidator<TUploadFileCommand>
 				where TUploadFileCommand : UploadFileCommand

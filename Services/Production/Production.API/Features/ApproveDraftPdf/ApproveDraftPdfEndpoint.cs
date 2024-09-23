@@ -5,6 +5,7 @@ using Production.API.Features.Shared;
 using Production.API.Features.UploadFiles.Shared;
 using FastEndpoints;
 using Production.Domain.Enums;
+using Mapster;
 
 namespace Production.API.Features.RequestFiles.AuthorFiles;
 
@@ -22,6 +23,7 @@ public class ApproveDraftPdfEndpoint(IServiceProvider serviceProvider, AssetRepo
 				//asset.Article.SetStage(GetNextStage(asset.Article), command);
 
 				await _assetRepository.SaveChangesAsync();
-				await SendAsync(new AssetResponse(asset.Id, asset.CurrentFile.Id, asset.CurrentFile.Version, asset.CurrentFile.FileServerId));
+				await SendAsync(asset.Adapt<AssetResponse>());
+				//await SendAsync(new AssetResponse(asset.Id, asset.CurrentFile.Id, asset.CurrentFile.Version, asset.CurrentFile.FileServerId));
 		}
 }

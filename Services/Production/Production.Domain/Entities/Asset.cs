@@ -16,6 +16,7 @@ public partial class Asset : AuditedEntity
     public int ArticleId { get; set; }
     public virtual Article Article { get; set; } = null!;
 
+    //todo rename them into Type and TypeRef
     public Enums.AssetType TypeCode { get; init; }
     public virtual AssetType Type { get; private set; } = null!;
 

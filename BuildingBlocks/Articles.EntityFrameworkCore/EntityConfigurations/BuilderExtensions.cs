@@ -1,11 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using System.Collections.Immutable;
 using System.Text.Json;
 
 namespace Articles.EntityFrameworkCore
 {
-    public static class BuilderExtensions
+		public static class BuilderExtensions
     {
 				public static PropertyBuilder<TEnum> HasEnumConversion<TEnum>(this PropertyBuilder<TEnum> builder)
             where TEnum : Enum
@@ -28,19 +27,6 @@ namespace Articles.EntityFrameworkCore
 
 						return builder.HasConversion(csvListConverter);
 				}
-
-				//public static PropertyBuilder<IReadOnlyList<string>> HasJsonListConversion(this PropertyBuilder<IReadOnlyList<string>> builder)
-				//{
-				//		Func<List<string>, string> serializeFunc = v => JsonSerializer.Serialize(v);
-				//		Func<string, List<string>> deserializeFunc = v => JsonSerializer.Deserialize<List<string>>(v ?? "[]");
-
-				//		var jsonListConverter = new ValueConverter<List<string>, string>(
-				//				v => serializeFunc(v),
-				//				v => deserializeFunc(v)
-				//		);
-
-				//		return builder.HasConversion(jsonListConverter);
-				//}
 
 				public static PropertyBuilder<IReadOnlyList<T>> HasJsonListConversion<T>(this PropertyBuilder<IReadOnlyList<T>> builder)
 				{

@@ -15,6 +15,6 @@ public class AssetTypeEntityConfiguration : EnumEntityConfiguration<AssetType, D
 				builder.Property(e => e.MaxNumber).HasDefaultValue(0);
 
         builder.Property(e => e.AllowedFileExtentions).HasJsonListConversion();
-        builder.Property(e => e.DefaultFileExtension).IsRequired().HasMaxLength(Constraints.C8).HasDefaultValue("pdf");
+        builder.Property(e => e.DefaultFileExtension).HasDefaultValue("pdf").IsRequired().HasMaxLength(Constraints.C8);
 		}
 }

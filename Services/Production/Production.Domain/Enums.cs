@@ -34,6 +34,13 @@ public enum AssetActionType
     Download
 }
 
+public enum FileStatus2
+{
+		Requested = 1,
+		Uploaded = 2,
+		Approved = 3
+}
+
 public enum AssetState
 {
     Requested = 1,
