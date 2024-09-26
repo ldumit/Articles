@@ -1,5 +1,6 @@
 ﻿using Articles.Abstractions;
 using Articles.Exceptions.Domain;
+using FileStorage.Contracts;
 using Mapster;
 using Production.Domain.Enums;
 using Production.Domain.Events;
@@ -85,6 +86,19 @@ namespace Production.Domain.Entities
 								new AssetAction() { CreatedById = action.CreatedById, Comment = action.Comment, CreatedOn = DateTime.UtcNow, TypeId = action.ActionType }
 						);
 						//this.AddFileAction(action);
+				}
+
+				public void CreateFile(UploadResponse fileInfo, string fileName, int fileSize)
+				{
+						var file = new File()
+						{
+								Name = $"{Name}{(AssetNumber > 0 ? AssetNumber : string.Empty)}.{Path.GetExtension(fileName)}",
+								
+								Extension = this.Type.DefaultFileExtension,
+								Version = 1
+						};
+						Files.Add(file);
+						CurrentFileLink = new AssetCurrentFileLink() { File = file };
 				}
 
 				private void AddFileAction(IArticleAction<AssetActionType> action)

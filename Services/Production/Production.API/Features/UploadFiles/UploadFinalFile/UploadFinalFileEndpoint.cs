@@ -20,12 +20,10 @@ public class UploadFinalFileEndpoint(IFileService _fileService, IServiceProvider
 
     public async override Task HandleAsync(UploadFinalFileCommand command, CancellationToken ct)
     {
-        using var transaction = _articleRepository.BeginTransaction();
+        var article = await _articleRepository.GetByIdWithSingleAssetAsync(command.ArticleId, command.AssetType, command.GetAssetNumber());
+        var asset = article.Assets.SingleOrDefault();
 
-        //var article = _articleRepository.GetByIdAsync(command.ArticleId, throwNotFound: true);
-
-        var asset = await FindAsset(command);
-        bool isNew = asset is null;
+				bool isNew = asset is null;
         if (isNew)
             asset = CreateAsset(command, command.AssetType, command.GetAssetNumber());
 
@@ -41,9 +39,9 @@ public class UploadFinalFileEndpoint(IFileService _fileService, IServiceProvider
         var filePath = $"{command.ArticleId}/{asset.Name}/{asset.AssetNumber}";
         //talk about tags
         return await _fileService.UploadFile(filePath, command.File,
-                new Dictionary<string, string>
-                { {"entity", nameof(Asset)},
-                            {"entityId", asset.Id.ToString()}
+                new Dictionary<string, string>{ 
+                    {"entity", nameof(Asset)},
+                    {"entityId", asset.Id.ToString()}
                 });
     }
 

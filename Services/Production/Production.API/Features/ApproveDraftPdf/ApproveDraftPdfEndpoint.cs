@@ -14,7 +14,7 @@ namespace Production.API.Features.RequestFiles.AuthorFiles;
 [Tags("Assets")]
 
 public class ApproveDraftPdfEndpoint(IServiceProvider serviceProvider, AssetRepository _assetRepository)
-				: BaseEndpoint<ApproveDraftPdfCommand, AssetResponse>(serviceProvider)
+				: BaseEndpoint<ApproveDraftPdfCommand, AsseActiontResponse>(serviceProvider)
 {
 		public override async Task HandleAsync(ApproveDraftPdfCommand command, CancellationToken ct)
 		{
@@ -23,7 +23,7 @@ public class ApproveDraftPdfEndpoint(IServiceProvider serviceProvider, AssetRepo
 				//asset.Article.SetStage(GetNextStage(asset.Article), command);
 
 				await _assetRepository.SaveChangesAsync();
-				await SendAsync(asset.Adapt<AssetResponse>());
+				await SendAsync(asset.Adapt<AsseActiontResponse>());
 				//await SendAsync(new AssetResponse(asset.Id, asset.CurrentFile.Id, asset.CurrentFile.Version, asset.CurrentFile.FileServerId));
 		}
 }

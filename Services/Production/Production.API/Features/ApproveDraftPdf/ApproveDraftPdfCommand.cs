@@ -7,7 +7,7 @@ using Production.Persistence.Repositories;
 
 namespace Production.API.Features.ApproveDraftPdf;
 
-public record ApproveDraftPdfCommand : AssetCommand<AssetResponse>
+public record ApproveDraftPdfCommand : AssetCommand<AsseActiontResponse>
 {
     public int AssetId { get; set; }
     public override AssetActionType ActionType => AssetActionType.Approve;

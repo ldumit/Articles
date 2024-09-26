@@ -1,4 +1,5 @@
 ﻿using FastEndpoints;
+using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Production.API.Features.Shared;
 using Production.Domain.Enums;
@@ -11,7 +12,7 @@ namespace Production.API.Features.RequestFiles.SingleFile;
 [HttpPut("articles/{articleId:int}/single-file:request")]
 [Tags("Assets")]
 public class RequestSingleFileEndpoint(IServiceProvider serviceProvider, AssetRepository _assetRepository)
-        : BaseEndpoint<RequestSingleFileCommand, AssetActionResponse>(serviceProvider)
+        : BaseEndpoint<RequestSingleFileCommand, AsseActiontResponse>(serviceProvider)
 {
     public async override Task HandleAsync(RequestSingleFileCommand command, CancellationToken cancellationToken)
     {
@@ -21,12 +22,6 @@ public class RequestSingleFileEndpoint(IServiceProvider serviceProvider, AssetRe
 
         await _assetRepository.SaveChangesAsync();
 
-        await SendAsync(new AssetActionResponse
-        {
-            AssetId = asset.Id,
-            FileId = asset.CurrentFile?.Id,
-            FileServerId = asset.CurrentFile.FileServerId,
-            Version = asset.CurrentFile.Version
-        });
+        await SendAsync(asset.Adapt<AsseActiontResponse>());
     }
 }
