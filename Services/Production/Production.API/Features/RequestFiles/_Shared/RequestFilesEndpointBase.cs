@@ -20,9 +20,9 @@ public class RequestFilesEndpointBase<TCommand>(IServiceProvider serviceProvider
         foreach (var assetRequest in command.AssetRequests)
         {
             var asset = article.Assets
-                    .SingleOrDefault(asset => asset.TypeCode == assetRequest.AssetType && asset.AssetNumber == assetRequest.AssetNumber);
+                    .SingleOrDefault(asset => asset.Type == assetRequest.AssetType && asset.Number == assetRequest.AssetNumber);
             if (asset != null)
-                asset.SetStatus(AssetState.Requested, command);
+                asset.SetState(AssetState.Requested, command);
             else
 								asset = await CreateAsset(command, assetRequest.AssetType, assetRequest.AssetNumber);
 

@@ -4,6 +4,7 @@ using Production.Domain.Entities;
 using Production.Persistence.EntityConfigurations;
 using Microsoft.Extensions.Caching.Memory;
 using Articles.System.Cache;
+using Articles.EntityFrameworkCore;
 
 namespace Production.Persistence;
 
@@ -86,9 +87,13 @@ public partial class ProductionDbContext(DbContextOptions<ProductionDbContext> _
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        //modelBuilder.HasDefaultSchema("production");
+				//modelBuilder.HasDefaultSchema("production");
 
-        modelBuilder.ApplyConfiguration(new ArticleEntityConfiguration());
+
+				//todo use the following line:
+				//modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
+
+				modelBuilder.ApplyConfiguration(new ArticleEntityConfiguration());
         modelBuilder.ApplyConfiguration(new ArticleCurrentStageEntityConfiguration());
 				modelBuilder.ApplyConfiguration(new ArticleStageTransitionConfiguration());
 				modelBuilder.ApplyConfiguration(new AssetEntityConfiguration());
@@ -108,24 +113,12 @@ public partial class ProductionDbContext(DbContextOptions<ProductionDbContext> _
         modelBuilder.ApplyConfiguration(new TypesetterEntityConfiguration());
 				modelBuilder.ApplyConfiguration(new PersonEntityConfiguration());
 
-				foreach (var entity in modelBuilder.Model.GetEntityTypes())
-				{
-						var baseType = entity.BaseType;
-						if (baseType == null) // check if we have inheritance, in that case we need to use the base class name.
-								modelBuilder.Entity(entity.ClrType).ToTable(entity.ClrType.Name);
-						else
-								modelBuilder.Entity(entity.ClrType).ToTable(baseType.ClrType.Name);
-				}
+        //modelBuilder.ApplyConfiguration(new CustomerEntityConfiguration());
 
-        //foreach (IMutableEntityType entity in modelBuilder.Model.GetEntityTypes())
-        //{
-        //    foreach (IMutableProperty property in entity.GetProperties()
-        //        .Where(p => p.PropertyInfo != null && p.PropertyInfo.DeclaringType != null))
-        //    {
-        //        property.SetColumnName(property.PropertyInfo.Name.ToCamelCase());
-        //    }
-        //}
-        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.UseClrTypeNamesForTables();
+
+
+				base.OnModelCreating(modelBuilder);
     }
-    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

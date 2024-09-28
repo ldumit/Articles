@@ -26,21 +26,20 @@
     ],
     "Assets": [
       {
-        "Name": "Manuscript",
-        "AssetNumber": 0,
+        "Name": {"Value":"Manuscript"},
+        "Number": {"Value":0},
         "State": "Uploaded",
-        "TypeCode": "Manuscript",
+        "Type": "Manuscript",
         "CreatedById": 5,
-        //"LastModifiedById": 5,
-        "Files": [
+        "_files": [
           {
-            "Name": "Manuscript.pdf",
+            "Name": {"Value":"Manuscript.pdf"},
             "OriginalName": "Manuscript.pdf",
             "FileServerId": "articles/1/Manuscript.pdf",
             "Size": 500,
-            "Version": 1,
+            "Version": {"Value":1},
             "StatusId": "Uploaded",
-            "Extension": "pdf",
+            "Extension": {"Value":"pdf"},
             "CreatedById": 5,
             //"LastModifiedById": 5
           }
@@ -50,22 +49,21 @@
         //}
       },
       {
-        "Name": "ReviewReport",
-        "AssetNumber": 0,
+        "Name": {"Value":"ReviewReport"},
+        "Number": {"Value":0},
         "State": "Uploaded",
-        "TypeCode": "ReviewReport",
+        "Type": "ReviewReport",
         "CreatedById": 9,
-        //"LastModifiedById": 9,
-        "Files": [
+        "_files": [
           {
-            "Name": "ReviewReport.pdf",
+            "Name": {"Value":"ReviewReport.pdf"},
             "OriginalName": "ReviewReport.pdf",
             "FileServerId": "articles/1/ReviewReport.pdf",
             "Size": 100,
-            "Version": 1,
+            "Version": {"Value":1},
             "StatusId": "Uploaded",
-            "Extension": "pdf",
-            "CreatedById": 9,
+            "Extension": {"Value":"pdf"},
+            "CreatedById": 9
             //"LastModifiedById": 9
           }
         ]

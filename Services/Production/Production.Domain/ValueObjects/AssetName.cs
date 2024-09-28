@@ -1,13 +1,14 @@
-﻿using Production.Domain.Entities;
+﻿using Articles.Entitities;
+using Newtonsoft.Json;
+using Production.Domain.Entities;
 
 namespace Production.Domain.ValueObjects;
 
-internal class AssetName
+public record AssetName: ValueObject<string>
 {
-		public string Value { get; init; } = default!;
+		[JsonConstructor]
+		private AssetName(string value) => Value = value;
 
-		public static AssetName From(AssetType assetType)
-		{
-				return new AssetName { Value = assetType.ToString() };
-		}
+		public static AssetName FromAssetType(AssetType assetType)
+				=> new AssetName(assetType.ToString());
 }

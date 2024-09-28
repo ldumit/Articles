@@ -32,6 +32,6 @@ public class ApproveDraftPdfCommandValidator
 				var stateMachine = Resolve<AssetStateMachineFactory>()(asset.State);
 
 				return asset != null
-						&& stateMachine.CanFire(asset.Article.Stage, asset.TypeCode, action.ActionType);
+						&& stateMachine.CanFire(asset.Article.Stage, asset.Type, action.ActionType);
 		}
 }

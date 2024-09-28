@@ -34,24 +34,5 @@ public abstract class BaseCommandHandler<TCommand, TResponse> : IRequestHandler<
     {
         //article.SetStage(GetNextStage(article), command.ActionType, command.ActionComment,  _claimsProvider.GetUserId(), assetType,command.DiscussionGroupType);
     }
-
-    protected async Task AddFileAction(Asset asset, Domain.Entities.File file, TCommand command)
-    {
-        var fileAction = _mapper.Map<FileAction>(command);
-        file.FileActions.Add(fileAction);
-
-        //file.AddDomainEvent(new ActionExecutedDomainEvent()
-        //{
-        //    ArticleId = asset.Article.Id,
-        //    AssetType = asset.TypeId,
-        //    File = file,
-        //    NewAction = fileAction.TypeId,
-        //    UserId = fileAction.UserId,
-        //    PreviousStage = asset.Article.StageId,
-        //    AssetNumber = asset.AssetNumber ?? 0,
-        //    Comment = fileAction.Comment,
-        //    DiscussionType = command.DiscussionGroupType
-        //});
-    }
     #endregion
 }

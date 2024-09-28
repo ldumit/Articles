@@ -1,31 +1,32 @@
 ﻿using Articles.Entitities;
 using Production.Domain.Enums;
-using System;
+using Production.Domain.ValueObjects;
 
 namespace Production.Domain.Entities;
 
 public partial class Asset : AuditedEntity
 {
-		public string Name { get; init; } = null!;
-		public int AssetNumber { get; init; }
-    
+		public AssetName Name { get; private set; } = null!;
+    public AssetNumber Number { get; private set; } = null!;    
     //talk - keep them as enum because they change quite rarely
-    public AssetState State { get; set; }
+    public AssetState State { get; private set; }
     public AssetCategory CategoryId { get; private set; }
 
-    public int ArticleId { get; set; }
-    public virtual Article Article { get; set; } = null!;
+    public Enums.AssetType Type { get; private set; }
+    public virtual AssetType TypeRef { get; private set; } = null!;
+		
+    public int ArticleId { get; private set; }
+		public virtual Article Article { get; private set; } = null!;
 
-    //todo rename them into Type and TypeRef
-    public Enums.AssetType TypeCode { get; init; }
-    public virtual AssetType Type { get; private set; } = null!;
 
-    public virtual ICollection<File> Files { get; init; } = new List<File>();
+		private readonly List<File> _files = new();
+		public virtual IReadOnlyCollection<File> Files => _files.AsReadOnly();
 
 		
-		private readonly List<AssetAction> _actions = new ();
+    private readonly List<AssetAction> _actions = new ();
 		public virtual IReadOnlyCollection<AssetAction> Actions => _actions.AsReadOnly();
 
-    public virtual AssetCurrentFileLink? CurrentFileLink { get; set; } = null!;
+    
+    public virtual AssetCurrentFileLink? CurrentFileLink { get; private set; } = null!;
     public File? CurrentFile => this.CurrentFileLink?.File;
 }

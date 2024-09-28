@@ -13,11 +13,11 @@ public interface IDomainMetadata : IDomainObject
 
 }
 
-public interface IEntity : IEntity<int>
+public interface IEntity //: IEntity<int>
 {
 } 
 
-public interface IEntity<TPrimaryKey> : IDomainObject
+public interface IEntity<TPrimaryKey> : IDomainObject, IEntity
 //where TPrimaryKey : struct
 {
     TPrimaryKey Id { get; set; }

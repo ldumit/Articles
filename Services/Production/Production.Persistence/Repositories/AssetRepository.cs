@@ -21,7 +21,7 @@ public class AssetRepository(ProductionDbContext _dbContext, IMemoryCache _cache
     public async Task<Asset?> GetByTypeAndNumberAsync(int articleId, Domain.Enums.AssetType assetTypeId, int assetNumber = 0, bool throwNotFound = true)
     {
         var entity = await Query()
-            .SingleOrDefaultAsync(e => e.ArticleId == articleId && e.TypeCode == assetTypeId && e.AssetNumber == assetNumber);
+            .SingleOrDefaultAsync(e => e.ArticleId == articleId && e.Type == assetTypeId && e.Number == assetNumber);
 				return ReturnOrThrow(entity, throwNotFound);
 		}
 

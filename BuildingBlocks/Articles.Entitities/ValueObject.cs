@@ -1,11 +1,22 @@
 ﻿namespace Articles.Entitities;
 
 
-
 public abstract record ValueObject : IDomainObject
 {
     //protected abstract IEnumerable<object> GetAtomicValues();
 }
+
+public abstract record ValueObject<T> : ValueObject, IEquatable<T>
+{
+    public ValueObject() { }
+
+    public T Value { get; protected set; } = default!;
+
+		public bool Equals(T? other) => Value.Equals(other);
+
+		public override string ToString() => Value.ToString();
+}
+
 
 public abstract class ChildEntity : IDomainObject
 {

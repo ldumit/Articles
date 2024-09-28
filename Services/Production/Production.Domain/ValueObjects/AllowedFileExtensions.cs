@@ -2,12 +2,10 @@
 
 namespace Production.Domain.ValueObjects;
 
-public class AllowedFileExtensions
+public record AllowedFileExtensions
 {
 		public IReadOnlyList<string> Extensions { get; init; } = null!;
 
-		public bool IsValidExtension(string extension)
-		{
-				return Extensions.Contains(extension, StringComparer.OrdinalIgnoreCase);
-		}
+		public bool IsValidExtension(string extension) 
+				=> Extensions.Contains(extension, StringComparer.OrdinalIgnoreCase);
 }

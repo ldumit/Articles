@@ -22,8 +22,8 @@ public class FileActionEntityConfiguration : EntityConfiguration<FileAction>
         //    .OnDelete(DeleteBehavior.Restrict)
         //    .HasConstraintName("fileAction_userId_fkey");
 
-        entity.HasOne(d => d.File).WithMany(p => p.FileActions)
-            .HasForeignKey(d => d.FileId)
-            .OnDelete(DeleteBehavior.Restrict);
+        //entity.HasOne(d => d.File).WithMany(p => p.FileActions)
+        //    .HasForeignKey(d => d.FileId)
+        //    .OnDelete(DeleteBehavior.Restrict);
     }
 }

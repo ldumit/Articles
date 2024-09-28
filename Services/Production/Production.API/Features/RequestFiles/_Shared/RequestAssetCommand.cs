@@ -51,48 +51,49 @@ public abstract class RequestFilesValidator<TRequestCommand> : ArticleCommandVal
 		{
 				var assetRequest = action.AssetRequests.FirstOrDefault(); // we only need to validate for one asset
 
-				var assetRepository = Resolve<ArticleRepository>();
-				var article = await assetRepository.GetByIdWithSingleAssetAsync(action.ArticleId, assetRequest.AssetType, assetRequest.AssetNumber);
+				var articleRepository = Resolve<ArticleRepository>();
+				var article = await articleRepository.GetByIdWithSingleAssetAsync(action.ArticleId, assetRequest.AssetType, assetRequest.AssetNumber);
+				if (article == null) 
+						return false;
+
 				var asset = article.Assets.SingleOrDefault();
-				var assetState = asset?.State ?? AssetState.Uploaded;
+				var assetState = asset?.State ?? AssetState.None;
 
 				var stateMachineFactory = Resolve<AssetStateMachineFactory>();
 				var stateMachine = stateMachineFactory(assetState);
-
 				
 				return article != null
 						&& stateMachine.CanFire(article.Stage, assetRequest.AssetType, action.ActionType);
-
 		}
 		public abstract IReadOnlyCollection<AssetType> AllowedAssetTypes { get; }
 }
 
 
-public record AssetAction(AssetActionType ActionType, int ArticleId, AssetRequest AssetRequest);
+//public record AssetAction(AssetActionType ActionType, int ArticleId, AssetRequest AssetRequest);
 
-public class AssetActionValidator : AbstractValidator<AssetAction>
-{
-		AssetStateMachine _assetStateMachine;
-		AssetRepository _assetRepository;
+//public class AssetActionValidator : AbstractValidator<AssetAction>
+//{
+//		AssetStateMachine _assetStateMachine;
+//		AssetRepository _assetRepository;
 		
-		public AssetActionValidator(AssetStateMachine assetStateMachine, AssetRepository assetRepository)
-		{
-				_assetStateMachine = assetStateMachine;
-				_assetRepository = assetRepository;
+//		public AssetActionValidator(AssetStateMachine assetStateMachine, AssetRepository assetRepository)
+//		{
+//				_assetStateMachine = assetStateMachine;
+//				_assetRepository = assetRepository;
 
-				RuleFor(r => r).MustAsync(async (r, _ , cancellation) => await IsActionValid(r))
-						.WithMessage("Action not allowed");
-		}
+//				RuleFor(r => r).MustAsync(async (r, _ , cancellation) => await IsActionValid(r))
+//						.WithMessage("Action not allowed");
+//		}
 
-		public virtual bool IsActionValid(int articleId, int assetId, AssetActionType actionType)
-		{
-        return true;
-		}
+//		public virtual bool IsActionValid(int articleId, int assetId, AssetActionType actionType)
+//		{
+//        return true;
+//		}
 
-		public virtual async Task<bool> IsActionValid(AssetAction action)
-		{
-				var asset = await _assetRepository.GetByTypeAndNumberAsync(action.ArticleId, action.AssetRequest.AssetType, action.AssetRequest.AssetNumber);
-				return asset != null 
-						&& _assetStateMachine.CanFire(asset.Article.Stage, asset.TypeCode, action.ActionType);
-		}
-}
+//		public virtual async Task<bool> IsActionValid(AssetAction action)
+//		{
+//				var asset = await _assetRepository.GetByTypeAndNumberAsync(action.ArticleId, action.AssetRequest.AssetType, action.AssetRequest.AssetNumber);
+//				return asset != null 
+//						&& _assetStateMachine.CanFire(asset.Article.Stage, asset.Type, action.ActionType);
+//		}
+//}

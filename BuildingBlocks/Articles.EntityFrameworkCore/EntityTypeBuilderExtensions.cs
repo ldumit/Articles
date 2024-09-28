@@ -32,10 +32,10 @@ public static class EntityTypeBuilderExtensions
 				var filePath = $"{AppContext.BaseDirectory}MasterData/{typeof(T).Name}.json";
 				if (!File.Exists(filePath))
 						return false;
-				var stagesData = JsonExtensions.DeserializeCaseInsensitive<List<T>>(File.ReadAllText(filePath));
-				if (stagesData != null)
+				var data = JsonExtensions.DeserializeCaseInsensitive<List<T>>(File.ReadAllText(filePath));
+				if (data != null)
 				{
-						builder.HasData(stagesData);
+						builder.HasData(data);
 				}
 				return true;
 		}

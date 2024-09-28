@@ -3,6 +3,7 @@ using Azure.Core;
 using Azure.Storage.Blobs;
 using FileStorage.Contracts;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
 namespace FileStorage.AzureBlob;
@@ -26,7 +27,7 @@ public class FileService(BlobServiceClient _blobServiceClient, IOptions<FileServ
 				if(tags.IsNullOrEmpty())
 						blob.SetTags(tags);
 
-				return new UploadResponse(filePath, result.Value.VersionId);
+				return new UploadResponse(filePath, file.FileName, file.Length, result.Value.VersionId);
 		}
 
 		//public async Task<UploadResponse> UploadFile(string fileName, IFormFile file)

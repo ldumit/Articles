@@ -30,14 +30,14 @@ public class CustomerEntityConfiguration : EntityConfiguration<Customer>
 							phoneNumber.Property(a => a.CountryCode).IsRequired();
 					});
 
-				JsonSerializerOptions _jsonSettings = new();
-				entity.Property(e => e.Address).HasConversion(
-						v => JsonSerializer.Serialize(v, _jsonSettings),
-						v => JsonSerializer.Deserialize<Address>(v, _jsonSettings));
+				//JsonSerializerOptions _jsonSettings = new();
+				//entity.Property(e => e.Address).HasConversion(
+				//		v => JsonSerializer.Serialize(v, _jsonSettings),
+				//		v => JsonSerializer.Deserialize<Address>(v, _jsonSettings));
 
-				entity.Property(e => e.PhoneNumber).HasConversion(
-						v => JsonSerializer.Serialize(v, _jsonSettings),
-						v => JsonSerializer.Deserialize<PhoneNumber>(v, _jsonSettings));
+				//entity.Property(e => e.PhoneNumber).HasConversion(
+				//		v => JsonSerializer.Serialize(v, _jsonSettings),
+				//		v => JsonSerializer.Deserialize<PhoneNumber>(v, _jsonSettings));
 
 		}
 }

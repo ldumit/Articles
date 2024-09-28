@@ -32,7 +32,7 @@ public interface IRepository<TEntity, TKey>
 
 public class Repository<TContext, TEntity>(TContext dbContext) : RepositoryBase<TContext, TEntity, int>(dbContext)
 		where TContext : DbContext
-		where TEntity : class, IEntity
+		where TEntity : class, IEntity<int>
 {
 }
 

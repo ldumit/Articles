@@ -19,11 +19,10 @@ public class ApproveDraftPdfEndpoint(IServiceProvider serviceProvider, AssetRepo
 		public override async Task HandleAsync(ApproveDraftPdfCommand command, CancellationToken ct)
 		{
 				var asset = await _assetRepository.GetByIdAsync(command.ArticleId, command.AssetId);
-				asset.SetStatus(AssetState.Approved, command);
+				asset.SetState(AssetState.Approved, command);
 				//asset.Article.SetStage(GetNextStage(asset.Article), command);
 
 				await _assetRepository.SaveChangesAsync();
 				await SendAsync(asset.Adapt<AssetActionResponse>());
-				//await SendAsync(new AssetResponse(asset.Id, asset.CurrentFile.Id, asset.CurrentFile.Version, asset.CurrentFile.FileServerId));
 		}
 }

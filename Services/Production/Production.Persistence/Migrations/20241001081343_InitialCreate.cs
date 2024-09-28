@@ -1,0 +1,666 @@
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
+
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
+namespace Production.Persistence.Migrations
+{
+    /// <inheritdoc />
+    public partial class InitialCreate : Migration
+    {
+        /// <inheritdoc />
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.CreateTable(
+                name: "ArticleStageTransition",
+                columns: table => new
+                {
+                    CurrentStage = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ActionType = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    DestinationStage = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ArticleStageTransition", x => new { x.CurrentStage, x.ActionType, x.DestinationStage });
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AssetStateTransition",
+                columns: table => new
+                {
+                    CurrentState = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ActionType = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    DestinationState = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AssetStateTransition", x => new { x.CurrentState, x.ActionType, x.DestinationState });
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AssetStateTransitionCondition",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ArticleStage = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AssetTypes = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ActionTypes = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AssetStateTransitionCondition", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AssetType",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    DefaultCategoryId = table.Column<int>(type: "int", nullable: false),
+                    DefaultFileExtension = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false, defaultValue: "pdf"),
+                    MaxNumber = table.Column<byte>(type: "tinyint", nullable: false, defaultValue: (byte)0),
+                    AllowedFileExtensions = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AssetType", x => x.Id);
+                    table.UniqueConstraint("AK_AssetType_Code", x => x.Code);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Stage",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Stage", x => x.Id);
+                    table.UniqueConstraint("AK_Stage_Code", x => x.Code);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Article",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    Doi = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    SubmitedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SubmitedById = table.Column<int>(type: "int", nullable: false),
+                    Stage = table.Column<string>(type: "nvarchar(64)", nullable: false),
+                    JournalId = table.Column<int>(type: "int", nullable: false),
+                    VolumeId = table.Column<int>(type: "int", nullable: false),
+                    PublishedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    PublishedById = table.Column<int>(type: "int", nullable: true),
+                    AcceptedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedById = table.Column<int>(type: "int", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
+                    LastModifiedById = table.Column<int>(type: "int", nullable: true),
+                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Article", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Article_Stage_Stage",
+                        column: x => x.Stage,
+                        principalTable: "Stage",
+                        principalColumn: "Code",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ArticleCurrentStage",
+                columns: table => new
+                {
+                    ArticleId = table.Column<int>(type: "int", nullable: false),
+                    Stage = table.Column<string>(type: "nvarchar(64)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ArticleCurrentStage", x => x.ArticleId);
+                    table.ForeignKey(
+                        name: "FK_ArticleCurrentStage_Article_ArticleId",
+                        column: x => x.ArticleId,
+                        principalTable: "Article",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ArticleCurrentStage_Stage_Stage",
+                        column: x => x.Stage,
+                        principalTable: "Stage",
+                        principalColumn: "Code",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Asset",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    State = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
+                    Type = table.Column<string>(type: "nvarchar(64)", nullable: false),
+                    ArticleId = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    Number = table.Column<byte>(type: "tinyint", nullable: false, defaultValue: (byte)0),
+                    CreatedById = table.Column<int>(type: "int", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
+                    LastModifiedById = table.Column<int>(type: "int", nullable: true),
+                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Asset", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Asset_Article_ArticleId",
+                        column: x => x.ArticleId,
+                        principalTable: "Article",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Asset_AssetType_Type",
+                        column: x => x.Type,
+                        principalTable: "AssetType",
+                        principalColumn: "Code",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Person",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: true),
+                    PersonType = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
+                    Country = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
+                    Biography = table.Column<string>(type: "nvarchar(2048)", maxLength: 2048, nullable: true),
+                    ArticleId = table.Column<int>(type: "int", nullable: true),
+                    IsDefault = table.Column<bool>(type: "bit", nullable: true, defaultValue: false),
+                    CompanyName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Person", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Person_Article_ArticleId",
+                        column: x => x.ArticleId,
+                        principalTable: "Article",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StageHistory",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    StageId = table.Column<int>(type: "int", nullable: false),
+                    ArticleId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StageHistory", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_StageHistory_Article_ArticleId",
+                        column: x => x.ArticleId,
+                        principalTable: "Article",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_StageHistory_Stage_StageId",
+                        column: x => x.StageId,
+                        principalTable: "Stage",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AssetAction",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AssetId = table.Column<int>(type: "int", nullable: false),
+                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TypeId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedById = table.Column<int>(type: "int", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastModifiedById = table.Column<int>(type: "int", nullable: true),
+                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AssetAction", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AssetAction_Asset_AssetId",
+                        column: x => x.AssetId,
+                        principalTable: "Asset",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "File",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OriginalName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false, comment: "Original full file name, with extension"),
+                    FileServerId = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    Size = table.Column<long>(type: "bigint", nullable: false, comment: "Size of the file in kilobytes"),
+                    AssetId = table.Column<int>(type: "int", nullable: false),
+                    Extension = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false, comment: "Final name of the file after renaming"),
+                    Version = table.Column<byte>(type: "tinyint", nullable: false, defaultValue: (byte)1),
+                    CreatedById = table.Column<int>(type: "int", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
+                    LastModifiedById = table.Column<int>(type: "int", nullable: true),
+                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_File", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_File_Asset_AssetId",
+                        column: x => x.AssetId,
+                        principalTable: "Asset",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ArticleActors",
+                columns: table => new
+                {
+                    ArticleId = table.Column<int>(type: "int", nullable: false),
+                    PersonId = table.Column<int>(type: "int", nullable: false),
+                    Role = table.Column<string>(type: "nvarchar(450)", nullable: false, defaultValue: "AUT")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ArticleActors", x => new { x.ArticleId, x.PersonId, x.Role });
+                    table.ForeignKey(
+                        name: "FK_ArticleActors_Article_ArticleId",
+                        column: x => x.ArticleId,
+                        principalTable: "Article",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ArticleActors_Person_PersonId",
+                        column: x => x.PersonId,
+                        principalTable: "Person",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Journal",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    Abbreviation = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
+                    DefaultTypesetterId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Journal", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Journal_Person_DefaultTypesetterId",
+                        column: x => x.DefaultTypesetterId,
+                        principalTable: "Person",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AssetCurrentFileLink",
+                columns: table => new
+                {
+                    AssetId = table.Column<int>(type: "int", nullable: false),
+                    FileId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AssetCurrentFileLink", x => x.AssetId);
+                    table.ForeignKey(
+                        name: "FK_AssetCurrentFileLink_Asset_AssetId",
+                        column: x => x.AssetId,
+                        principalTable: "Asset",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AssetCurrentFileLink_File_FileId",
+                        column: x => x.FileId,
+                        principalTable: "File",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FileAction",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FileId = table.Column<int>(type: "int", nullable: false),
+                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TypeId = table.Column<int>(type: "int", nullable: false),
+                    CreatedById = table.Column<int>(type: "int", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastModifiedById = table.Column<int>(type: "int", nullable: true),
+                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FileAction", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FileAction_File_FileId",
+                        column: x => x.FileId,
+                        principalTable: "File",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FileLatestAction",
+                columns: table => new
+                {
+                    FileId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FileId1 = table.Column<int>(type: "int", nullable: false),
+                    ActionId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FileLatestAction", x => x.FileId);
+                    table.ForeignKey(
+                        name: "FK_FileLatestAction_FileAction_ActionId",
+                        column: x => x.ActionId,
+                        principalTable: "FileAction",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_FileLatestAction_File_FileId1",
+                        column: x => x.FileId1,
+                        principalTable: "File",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "ArticleStageTransition",
+                columns: new[] { "ActionType", "CurrentStage", "DestinationStage" },
+                values: new object[,]
+                {
+                    { "AssignTypesetter", "Accepted", "InProduction" },
+                    { "SchedulePublication", "FinalProduction", "PublicationScheduled" },
+                    { "Publish", "PublicationScheduled", "Published" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AssetStateTransition",
+                columns: new[] { "ActionType", "CurrentState", "DestinationState" },
+                values: new object[,]
+                {
+                    { "Request", "None", "Requested" },
+                    { "Upload", "None", "Uploaded" },
+                    { "CancelRequest", "Requested", "Uploaded" },
+                    { "Upload", "Requested", "Uploaded" },
+                    { "Request", "Uploaded", "Requested" },
+                    { "Upload", "Uploaded", "Uploaded" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AssetStateTransitionCondition",
+                columns: new[] { "Id", "ActionTypes", "ArticleStage", "AssetTypes" },
+                values: new object[,]
+                {
+                    { 1, "[0,2,3]", "InProduction", "[1,7,8,9]" },
+                    { 2, "[0,2,3]", "DraftProduction", "[1,7,8,9]" },
+                    { 3, "[0]", "InProduction", "[3]" },
+                    { 4, "[0,2,3,1]", "DraftProduction", "[3]" },
+                    { 5, "[0,2,3]", "FinalProduction", "[4,5,6]" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Stage",
+                columns: new[] { "Id", "Code", "Description", "Name" },
+                values: new object[,]
+                {
+                    { 201, "Accepted", "Your article has been reviewed and accepted. The production of the article will start soon.", "Article accepted" },
+                    { 300, "InProduction", "The typesetter is preparing your Author’s Proof. We will contact you if we need any further files or information.", "Typesetter assigned" },
+                    { 301, "DraftProduction", "The Author's Proof is available for you to check and provide corrections. This status is also displayed if we are preparing a further Author's Proof at your request.", "Author's proof approved" },
+                    { 302, "FinalProduction", "The typesetter is preparing the final version of your article for publication. We will contact you if we need to check anything further before publication.", "Publisher's proof uploaded" },
+                    { 304, "PublicationScheduled", "Your Production Specialist has completed their quality checks. Your article is now scheduled for publication on our website and will appear online within the next few working days.", "Article scheduled for publication" },
+                    { 305, "Published", "Your article has been published and sent to all relevant repositories, and the publication process is now complete. Please note that repositories have different processing times and your article may not be available yet.", "Article published" }
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Article_JournalId",
+                table: "Article",
+                column: "JournalId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Article_PublishedById",
+                table: "Article",
+                column: "PublishedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Article_Stage",
+                table: "Article",
+                column: "Stage");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Article_SubmitedById",
+                table: "Article",
+                column: "SubmitedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Article_Title",
+                table: "Article",
+                column: "Title");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ArticleActors_PersonId",
+                table: "ArticleActors",
+                column: "PersonId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ArticleCurrentStage_Stage",
+                table: "ArticleCurrentStage",
+                column: "Stage");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Asset_ArticleId",
+                table: "Asset",
+                column: "ArticleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Asset_Type",
+                table: "Asset",
+                column: "Type");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AssetAction_AssetId",
+                table: "AssetAction",
+                column: "AssetId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AssetCurrentFileLink_FileId",
+                table: "AssetCurrentFileLink",
+                column: "FileId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AssetType_Code",
+                table: "AssetType",
+                column: "Code",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_File_AssetId",
+                table: "File",
+                column: "AssetId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FileAction_FileId",
+                table: "FileAction",
+                column: "FileId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FileLatestAction_ActionId",
+                table: "FileLatestAction",
+                column: "ActionId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FileLatestAction_FileId1",
+                table: "FileLatestAction",
+                column: "FileId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Journal_DefaultTypesetterId",
+                table: "Journal",
+                column: "DefaultTypesetterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Person_ArticleId",
+                table: "Person",
+                column: "ArticleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Person_UserId",
+                table: "Person",
+                column: "UserId",
+                unique: true,
+                filter: "[UserId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Stage_Code",
+                table: "Stage",
+                column: "Code",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StageHistory_ArticleId",
+                table: "StageHistory",
+                column: "ArticleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StageHistory_StageId",
+                table: "StageHistory",
+                column: "StageId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Article_Journal_JournalId",
+                table: "Article",
+                column: "JournalId",
+                principalTable: "Journal",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Article_Person_PublishedById",
+                table: "Article",
+                column: "PublishedById",
+                principalTable: "Person",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Article_Person_SubmitedById",
+                table: "Article",
+                column: "SubmitedById",
+                principalTable: "Person",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
+        }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Article_Journal_JournalId",
+                table: "Article");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Article_Person_PublishedById",
+                table: "Article");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Article_Person_SubmitedById",
+                table: "Article");
+
+            migrationBuilder.DropTable(
+                name: "ArticleActors");
+
+            migrationBuilder.DropTable(
+                name: "ArticleCurrentStage");
+
+            migrationBuilder.DropTable(
+                name: "ArticleStageTransition");
+
+            migrationBuilder.DropTable(
+                name: "AssetAction");
+
+            migrationBuilder.DropTable(
+                name: "AssetCurrentFileLink");
+
+            migrationBuilder.DropTable(
+                name: "AssetStateTransition");
+
+            migrationBuilder.DropTable(
+                name: "AssetStateTransitionCondition");
+
+            migrationBuilder.DropTable(
+                name: "FileLatestAction");
+
+            migrationBuilder.DropTable(
+                name: "StageHistory");
+
+            migrationBuilder.DropTable(
+                name: "FileAction");
+
+            migrationBuilder.DropTable(
+                name: "File");
+
+            migrationBuilder.DropTable(
+                name: "Asset");
+
+            migrationBuilder.DropTable(
+                name: "AssetType");
+
+            migrationBuilder.DropTable(
+                name: "Journal");
+
+            migrationBuilder.DropTable(
+                name: "Person");
+
+            migrationBuilder.DropTable(
+                name: "Article");
+
+            migrationBuilder.DropTable(
+                name: "Stage");
+        }
+    }
+}

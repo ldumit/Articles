@@ -17,7 +17,7 @@ public abstract class AuditedEntityConfiguration<T, TKey> : EntityConfiguration<
     {
         base.Configure(builder);
 
-        builder.Property(e => e.CreatedOn).IsRequired().HasDefaultValue(DateTime.UtcNow);
+        builder.Property(e => e.CreatedOn).IsRequired().HasDefaultValueSql("GETUTCDATE()");
         builder.Property(e => e.CreatedById).IsRequired();
         builder.Property(e => e.LasModifiedOn);
         builder.Property(e => e.LastModifiedById);

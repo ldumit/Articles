@@ -18,18 +18,34 @@ internal class AssetEntityConfiguration : AuditedEntityConfiguration<Asset>
         //entity.HasIndex(e => e.StatusId);
         //entity.HasIndex(e => e.TypeId);
 
-        builder.Property(e => e.Name).HasMaxLength(Constraints.C64).IsRequired();
-        builder.Property(e => e.AssetNumber).HasDefaultValue(0);
-        builder.Property(e => e.State).HasEnumConversion().IsRequired();
+        //builder.Property(e => e.Name).HasMaxLength(Constraints.C64).IsRequired();
+				builder.ComplexProperty(
+	         o => o.Name, builder =>
+	         {
+			         builder.Property(n => n.Value)
+					         .HasColumnName(builder.Metadata.PropertyInfo!.Name)
+					         .HasMaxLength(Constraints.C64).IsRequired();
+	         });
+
+				//builder.Property(e => e.AssetNumber).HasDefaultValue(0);
+				builder.ComplexProperty(
+	         o => o.Number, builder =>
+	         {
+			         builder.Property(n => n.Value)
+					         .HasColumnName(builder.Metadata.PropertyInfo!.Name)
+                   .HasDefaultValue(0).IsRequired();
+	         });
+
+				builder.Property(e => e.State).HasEnumConversion().IsRequired();
         builder.Property(e => e.CategoryId).HasConversion<int>().HasDefaultValue(AssetCategory.Core).IsRequired();
-        builder.Property(e => e.TypeCode).HasEnumConversion().IsRequired();
+        builder.Property(e => e.Type).HasEnumConversion().IsRequired();
 
         builder.HasOne(d => d.Article).WithMany(p => p.Assets)
             .HasForeignKey(d => d.ArticleId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasOne(e => e.Type).WithMany()
-            .HasForeignKey(e => e.TypeCode)
+        builder.HasOne(e => e.TypeRef).WithMany()
+            .HasForeignKey(e => e.Type)
             .HasPrincipalKey(e => e.Code)
             .IsRequired();
 

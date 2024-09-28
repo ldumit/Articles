@@ -1,9 +1,6 @@
-﻿using Articles.Entitities;
-using Articles.EntityFrameworkCore;
+﻿using Articles.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Ordering.Domain.Models;
-using Production.Domain.Entities;
 
 namespace Production.Persistence.EntityConfigurations;
 
@@ -16,38 +13,41 @@ public class FileEntityConfiguration : AuditedEntityConfiguration<Domain.Entitie
         builder.HasIndex(e => e.AssetId);
 
         builder.Property(e => e.FileServerId).HasMaxLength(Constraints.C64);
-        builder.Property(e => e.Name).HasMaxLength(Constraints.C64).HasComment("Final name of the file after renaming");
-        builder.Property(e => e.OriginalName).HasMaxLength(Constraints.C256).HasComment("Full file name, with extension");
+        builder.Property(e => e.OriginalName).HasMaxLength(Constraints.C256).HasComment("Original full file name, with extension");
         builder.Property(e => e.Size).HasComment("Size of the file in kilobytes");
 
-        builder.ComplexProperty(
-           o => o.Extension, nameBuilder =>
-           {
-               nameBuilder.Property(n => n.Value)
-                   .HasColumnName(nameof(Domain.Entities.File.Extension))
-                   .HasMaxLength(Constraints.C8);
-           });
+				builder.ComplexProperty(
+					 o => o.Extension, builder =>
+					 {
+							 builder.Property(n => n.Value)
+									 .HasColumnName(builder.Metadata.PropertyInfo!.Name)
+									 .HasMaxLength(Constraints.C8);
+					 });
+				builder.ComplexProperty(
+	         o => o.Name, builder =>
+	         {
+               builder.Property(n => n.Value)
+                   .HasColumnName(builder.Metadata.PropertyInfo!.Name)
+									 .HasMaxLength(Constraints.C64).HasComment("Final name of the file after renaming");
+					 });
+				builder.ComplexProperty(
+	         o => o.Version, builder =>
+	         {
+			         builder.Property(n => n.Value)
+					         .HasColumnName(builder.Metadata.PropertyInfo!.Name)
+					         .HasDefaultValue(1);
+	         });
 
-        //    builder.ComplexProperty(e => e.Extension, builder =>
-        //{
-        //		builder.Property(f => f.Value)
-        //					 .HasColumnName("Extension")
-        //					 .IsRequired();
-        //});
+				//builder.Property(e => e.StatusId).HasConversion<int>();
 
-
-
-        builder.Property(e => e.StatusId).HasConversion<int>();
-        builder.Property(e => e.Version);
-
-        builder.HasMany(e => e.FileActions).WithOne(e => e.File)
-            .HasForeignKey(e => e.FileId).IsRequired()
-            .OnDelete(DeleteBehavior.Cascade);
+        //builder.HasMany(e => e.FileActions).WithOne(e => e.File)
+        //    .HasForeignKey(e => e.FileId).IsRequired()
+        //    .OnDelete(DeleteBehavior.Cascade);
         
-        builder.HasOne(e => e.LatestAction).WithOne(e => e.File)
-            .HasForeignKey<FileLatestAction>(e => e.FileId)
-            .IsRequired()
-            .OnDelete(DeleteBehavior.Cascade);
+        //builder.HasOne(e => e.LatestAction).WithOne(e => e.File)
+        //    .HasForeignKey<FileLatestAction>(e => e.FileId)
+        //    .IsRequired()
+        //    .OnDelete(DeleteBehavior.Cascade);
 
     }
 }

@@ -1,6 +1,8 @@
 [
-		{"CurrentState": "Uploaded", "ActionType": "Request", "DestinationState": "Requested"},
-		{"CurrentState": "Uploaded", "ActionType": "Upload", "DestinationState": "Uploaded"},
-		{"CurrentState": "Requested", "ActionType": "Upload", "DestinationState": "Uploaded"},
-		{"CurrentState": "Requested", "ActionType": "CancelRequest", "DestinationState": "Uploaded"}
+	{"CurrentState": "None", "ActionType": "Upload", "DestinationState": "Uploaded"},
+	{"CurrentState": "None", "ActionType": "Request", "DestinationState": "Requested"},
+	{"CurrentState": "Uploaded", "ActionType": "Request", "DestinationState": "Requested"},
+	{"CurrentState": "Uploaded", "ActionType": "Upload", "DestinationState": "Uploaded"},
+	{"CurrentState": "Requested", "ActionType": "Upload", "DestinationState": "Uploaded"},
+	{"CurrentState": "Requested", "ActionType": "CancelRequest", "DestinationState": "Uploaded"}
 ]

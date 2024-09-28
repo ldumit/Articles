@@ -1,7 +1,9 @@
 ﻿using FastEndpoints;
+using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Production.API.Features.RequestFiles.Shared;
 using Production.API.Features.Shared;
+using Production.Domain.Entities;
 using Production.Domain.Enums;
 using Production.Persistence.Repositories;
 
@@ -18,19 +20,23 @@ public class CancelRequestFinalFileEndpoint(IServiceProvider serviceProvider, As
     {
         var article = await _articleRepository.GetByIdWithAssetsAsync(command.ArticleId);
 
-        foreach (var assetRequest in command.AssetRequests)
+				var assets = new List<Asset>();
+				foreach (var assetRequest in command.AssetRequests)
         {
-            var asset = article.Assets.SingleOrDefault(a => a.TypeCode == assetRequest.AssetType);
+						var asset = article.Assets
+            				.SingleOrDefault(asset => asset.Type == assetRequest.AssetType && asset.Number == assetRequest.AssetNumber);
+
             if (asset?.State == AssetState.Requested)
-            {
-                asset.SetStatus(AssetState.Requested, command);
-            }
-        }
-        await _assetRepository.SaveChangesAsync();
+                continue;
+            
+            asset.SetState(AssetState.Uploaded, command);
+						assets.Add(asset);
+				}
+				await _assetRepository.SaveChangesAsync();
 
         await SendAsync(new RequestFilesCommandResponse
         {
-
-        });
+						Assets = assets.Select(a => a.Adapt<AssetActionResponse>())
+				});
     }
 }

@@ -1,51 +1,30 @@
 ﻿using Articles.Entitities;
-using Production.Domain.Enums;
 using Production.Domain.ValueObjects;
 
 namespace Production.Domain.Entities;
 
 public partial class File : AuditedEntity
 {
-    public static File CreateFromRequest(Asset asset)
-    {
-        var file = new File()
-        {
-            Name = asset.Type.Name
-        };
-
-        return file;
-    }
-
-    public int FileId => Id;
-
     //talk - difference between required, null!, default!
-    public string OriginalName { get; set; } = default!;
+    public string OriginalName { get; init; } = default!;
     
     //talk - server id, create the file server server both mongo & azure blob
-    public string FileServerId { get; set; } = default!;
+    public string FileServerId { get; init; } = default!;
 
-    public string FormattedFileServerId => FileServerId.Replace("/", "_").ToLower();
+    public long Size { get; set; }
 
-    public int Size { get; set; }
+    public FileVersion Version { get; init; } = null!;
 
-    public int Version { get; set; }
+    public required FileName Name { get; init; }
 
-    public FileStatus StatusId { get; set; }
+		public FileExtension Extension { get; init; } = default!;
 
-    public required string Name { get; set; }
+		public int AssetId { get; private set; }
 
-		//public OrderName OrderName { get; private set; } = default!;
+    public virtual Asset? Asset { get; private set; }
 
-		public FileExtension Extension { get; set; } = default!;
-		//public string Extension { get; set; } = default!;
-
-		public int AssetId { get; set; }
-
-    public virtual Asset? Asset { get; set; }
-
-    public int LatestActionId { get; set; }
-    public FileLatestAction LatestAction { get; set; } = null!;
-    public virtual ICollection<FileAction> FileActions { get; } = new List<FileAction>();
-
-    //public virtual ICollection<PublishedFile> PublishedFiles { get; } = new List<PublishedFile>();
+		//public FileStatus StatusId { get; init; }
+		//public int LatestActionId { get; set; }
+		//public FileLatestAction LatestAction { get; set; } = null!;
+		//public virtual ICollection<FileAction> FileActions { get; } = new List<FileAction>();
 }

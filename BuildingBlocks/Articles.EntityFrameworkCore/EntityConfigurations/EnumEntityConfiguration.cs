@@ -16,8 +16,6 @@ public abstract class EnumEntityConfiguration<T, TEnum> : EntityConfiguration<T,
 
         builder.Property(e => e.Code).HasEnumConversion().HasMaxLength(Constraints.C64).IsRequired();
         builder.Property(e => e.Name).HasMaxLength(Constraints.C64).IsRequired();
-
-				//builder.SeedFromFile();
     }
 
 		protected void SeedFromEnum(EntityTypeBuilder<T> entity)
