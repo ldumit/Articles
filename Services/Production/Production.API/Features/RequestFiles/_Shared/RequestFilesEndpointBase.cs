@@ -32,7 +32,7 @@ public class RequestFilesEndpointBase<TCommand>(IServiceProvider serviceProvider
 
         var response = new RequestFilesCommandResponse()
         {
-            Assets = assets.Select(a => a.Adapt<AsseActiontResponse>())
+            Assets = assets.Select(a => a.Adapt<AssetActionResponse>())
         };				
 
 				await SendAsync(response);

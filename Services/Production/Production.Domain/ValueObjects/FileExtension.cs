@@ -1,24 +1,36 @@
 ﻿using Production.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Production.Domain.ValueObjects;
 
+
+//public record OrderName
+//{
+//		private const int DefaultLength = 5;
+//		public string Value { get; }
+//		private OrderName(string value) => Value = value;
+//		public static OrderName Of(string value)
+//		{
+//				ArgumentException.ThrowIfNullOrWhiteSpace(value);
+//				//ArgumentOutOfRangeException.ThrowIfNotEqual(value.Length, DefaultLength);
+
+//				return new OrderName(value);
+//		}
+//}
+
 public record FileExtension
 {
-    private FileExtension(string file)
-    {
-        
-    }
-    public static  FileExtension FromFileName(string fileName, AssetType assetType)
+		public string Value { get; set; }
+    public FileExtension(string value) => Value = value;
+		public static FileExtension FromAssetType(AssetType assetType)
+		{
+				return new FileExtension(assetType.DefaultFileExtension);
+		}
+
+		public static  FileExtension FromFileName(string fileName, AssetType assetType)
     {
 				var extension = Path.GetExtension(fileName);
+        assetType.AllowedFileExtensions.IsValidExtension(extension);
 
-        assetType.AllowedFileExtentions.Contains(extension);
-
-        return new FileExtension(extension);
+				return new FileExtension(extension);
     }
 }

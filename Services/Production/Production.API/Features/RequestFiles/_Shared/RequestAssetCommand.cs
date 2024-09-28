@@ -23,7 +23,7 @@ public abstract record RequestMultipleFilesCommand : RequestAssetCommand
 
 public class RequestFilesCommandResponse
 {
-    public IEnumerable<AsseActiontResponse> Assets { get; set; }
+    public IEnumerable<AssetActionResponse> Assets { get; set; }
 }
 
 public abstract class RequestFilesValidator<TRequestCommand> : ArticleCommandValidator<TRequestCommand>

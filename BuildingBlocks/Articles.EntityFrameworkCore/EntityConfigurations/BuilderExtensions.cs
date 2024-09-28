@@ -28,17 +28,30 @@ namespace Articles.EntityFrameworkCore
 						return builder.HasConversion(csvListConverter);
 				}
 
-				public static PropertyBuilder<IReadOnlyList<T>> HasJsonListConversion<T>(this PropertyBuilder<IReadOnlyList<T>> builder)
+				public static ValueConverter<IReadOnlyList<T>, string> BuildJsonListConvertor<T>()
 				{
 						Func<IReadOnlyList<T>, string> serializeFunc = v => JsonSerializer.Serialize(v);
 						Func<string, IReadOnlyList<T>> deserializeFunc = v => JsonSerializer.Deserialize<IReadOnlyList<T>>(v ?? "[]");
 
-						var jsonListConverter = new ValueConverter<IReadOnlyList<T>, string>(
+						return new ValueConverter<IReadOnlyList<T>, string>(
 								v => serializeFunc(v),
-								v => deserializeFunc(v)
-						);
+								v => deserializeFunc(v));
+				}
 
-						return builder.HasConversion(jsonListConverter);
+				public static PropertyBuilder<IReadOnlyList<T>> HasJsonListConversion<T>(this PropertyBuilder<IReadOnlyList<T>> builder)
+				{
+						return builder.HasConversion(BuildJsonListConvertor<T>());
+				}
+
+				public static ComplexTypePropertyBuilder<T> HasJsonListConversion<T>(this ComplexTypePropertyBuilder<T> builder)
+				{
+						return builder.HasConversion(BuildJsonListConvertor<T>());
+				}
+
+				public static PropertyBuilder<TCollection> HasJsonListConversion<TCollection, T>(this PropertyBuilder<TCollection> builder)
+						where TCollection : IReadOnlyList<T>
+				{
+						return builder.HasConversion(BuildJsonListConvertor<T>());
 				}
 		}
 }

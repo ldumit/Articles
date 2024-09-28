@@ -1,5 +1,6 @@
 ﻿using Articles.Entitities;
 using Production.Domain.Enums;
+using Production.Domain.ValueObjects;
 
 namespace Production.Domain.Entities;
 
@@ -33,9 +34,12 @@ public partial class File : AuditedEntity
 
     public required string Name { get; set; }
 
-    public string Extension { get; set; } = default!;
+		//public OrderName OrderName { get; private set; } = default!;
 
-    public int AssetId { get; set; }
+		public FileExtension Extension { get; set; } = default!;
+		//public string Extension { get; set; } = default!;
+
+		public int AssetId { get; set; }
 
     public virtual Asset? Asset { get; set; }
 

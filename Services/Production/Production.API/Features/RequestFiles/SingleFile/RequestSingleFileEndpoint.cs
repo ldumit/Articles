@@ -12,7 +12,7 @@ namespace Production.API.Features.RequestFiles.SingleFile;
 [HttpPut("articles/{articleId:int}/single-file:request")]
 [Tags("Assets")]
 public class RequestSingleFileEndpoint(IServiceProvider serviceProvider, AssetRepository _assetRepository)
-        : BaseEndpoint<RequestSingleFileCommand, AsseActiontResponse>(serviceProvider)
+        : BaseEndpoint<RequestSingleFileCommand, AssetActionResponse>(serviceProvider)
 {
     public async override Task HandleAsync(RequestSingleFileCommand command, CancellationToken cancellationToken)
     {
@@ -22,6 +22,6 @@ public class RequestSingleFileEndpoint(IServiceProvider serviceProvider, AssetRe
 
         await _assetRepository.SaveChangesAsync();
 
-        await SendAsync(asset.Adapt<AsseActiontResponse>());
+        await SendAsync(asset.Adapt<AssetActionResponse>());
     }
 }

@@ -13,6 +13,7 @@ public static class JsonExtensions
 				{ 
 						PropertyNameCaseInsensitive = true,
 						AllowTrailingCommas = true,
+						IncludeFields = true,
 						ReadCommentHandling = JsonCommentHandling.Skip
 				};
 				DefaultOptions.Converters.Add(new JsonStringEnumConverter());

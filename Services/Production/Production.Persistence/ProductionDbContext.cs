@@ -100,7 +100,7 @@ public partial class ProductionDbContext(DbContextOptions<ProductionDbContext> _
 				modelBuilder.ApplyConfiguration(new ArticleActorEntityConfiguration());
 				modelBuilder.ApplyConfiguration(new AuthorEntityConfiguration());
         modelBuilder.ApplyConfiguration(new FileActionEntityConfiguration());
-        modelBuilder.ApplyConfiguration(new FileEntityConnfiguration());
+        modelBuilder.ApplyConfiguration(new FileEntityConfiguration());
         modelBuilder.ApplyConfiguration(new FileLatestActionEntityConfiguration());
         modelBuilder.ApplyConfiguration(new JournalEntityConfiguration());
         modelBuilder.ApplyConfiguration(new StageEntityConfiguration());

@@ -4,6 +4,7 @@ using FileStorage.Contracts;
 using Mapster;
 using Production.Domain.Enums;
 using Production.Domain.Events;
+using Production.Domain.ValueObjects;
 
 namespace Production.Domain.Entities
 {
@@ -94,7 +95,7 @@ namespace Production.Domain.Entities
 						{
 								Name = $"{Name}{(AssetNumber > 0 ? AssetNumber : string.Empty)}.{Path.GetExtension(fileName)}",
 								
-								Extension = this.Type.DefaultFileExtension,
+								//Extension = FileExtension.FromAssetType(this.Type),
 								Version = 1
 						};
 						Files.Add(file);

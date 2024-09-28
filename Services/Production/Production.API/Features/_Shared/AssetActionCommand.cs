@@ -20,7 +20,7 @@ public abstract record AssetActionCommand<TResponse> : AssetCommand<TResponse>, 
     internal int FileId { get; set; }
 }
 
-public record AsseActiontResponse : IAssetActionResponse
+public record AssetActionResponse : IAssetActionResponse
 {
 		public int Id { get; set; }
 

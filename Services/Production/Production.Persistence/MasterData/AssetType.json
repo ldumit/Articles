@@ -5,8 +5,8 @@
     "defaultCategoryId": 1,
     "categoryId": 1,
     "code": "Manuscript",
-    "AllowedFileExtentions": [ "pdf" ],
-    "DefaultFileExtension": "pdf"
+     "allowedFileExtensions": {"Extensions": ["pdf"]},
+    "defaultFileExtension": "pdf"
   },
   {
     "id": 2,
@@ -14,7 +14,7 @@
     "defaultCategoryId": 3,
     "categoryId": 2,
     "code": "ReviewReport",
-    "AllowedFileExtentions": [ "pdf" ],
+    "AllowedFileExtentions": {"Extensions": [ "pdf" ]},
     "DefaultFileExtension": "pdf"
   },
   {
@@ -23,7 +23,7 @@
     "defaultCategoryId": 3,
     "categoryId": 3,
     "code": "DraftPdf",
-    "AllowedFileExtentions": [ "pdf" ],
+    "AllowedFileExtentions": {"Extensions": [ "pdf" ]},
     "DefaultFileExtension": "pdf"
   },
   {
@@ -32,7 +32,7 @@
     "defaultCategoryId": 3,
     "categoryId": 3,
     "code": "FinalPdf",
-    "AllowedFileExtentions": [ "pdf" ],
+    "AllowedFileExtentions": {"Extensions": [ "pdf" ]},
     "DefaultFileExtension": "pdf"
   },
   {
@@ -41,7 +41,7 @@
     "defaultCategoryId": 3,
     "categoryId": 3,
     "code": "FinalHtml",
-    "AllowedFileExtentions": [ "zip" ],
+    "AllowedFileExtentions": {"Extensions": [ "zip" ]},
     "DefaultFileExtension": "zip"
   },
   {
@@ -50,7 +50,7 @@
     "defaultCategoryId": 3,
     "categoryId": 3,
     "code": "FinalEpub",
-    "AllowedFileExtentions": [ "epub" ],
+    "AllowedFileExtentions": {"Extensions": [ "epub" ]},
     "DefaultFileExtension": "epub"
   },
   {
@@ -60,7 +60,7 @@
     "categoryId": 1,
     "code": "Figure",
     "maxNumber": 12,
-    "AllowedFileExtentions": [ "jpg", "png", "tif", "tiff", "eps" ],
+    "AllowedFileExtentions": {"Extensions": [ "jpg", "png", "tif", "tiff", "eps" ]},
     "DefaultFileExtension": "tif"
   },
   {
@@ -70,7 +70,7 @@
     "categoryId": 1,
     "code": "DataSheet",
     "maxNumber": 12,
-    "AllowedFileExtentions": [ "csv", "xls" ],
+    "AllowedFileExtentions": {"Extensions": [ "csv", "xls" ]},
     "DefaultFileExtension": "csv"
   },
   {
@@ -80,7 +80,7 @@
     "categoryId": 1,
     "code": "SupplementaryFile",
     "maxNumber": 12,
-    "AllowedFileExtentions": [],
+    "AllowedFileExtentions": {"Extensions": []},
     "DefaultFileExtension": "pdf"
   }
 ]

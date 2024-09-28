@@ -4,13 +4,13 @@ using Production.API.Features.UploadFiles.Shared;
 using Production.Domain.Entities;
 using Production.Domain.Enums;
 
-namespace Production.API.Features._Shared;
+namespace Production.API.Features.Shared;
 
 public class MappingConfig : IRegister
 {
 		public void Register(TypeAdapterConfig config)
 		{
-				config.NewConfig<Asset, AssetResponse>()
+				config.NewConfig<Asset, AssetActionResponse>()
 						.Map(dest => dest.File, src => src.CurrentFile);
 
 				config.NewConfig<Asset, FileResponse>()
