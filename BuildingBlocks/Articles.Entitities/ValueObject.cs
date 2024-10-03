@@ -8,8 +8,6 @@ public abstract record ValueObject : IDomainObject
 
 public abstract record ValueObject<T> : ValueObject, IEquatable<T>
 {
-    public ValueObject() { }
-
     public T Value { get; protected set; } = default!;
 
 		public bool Equals(T? other) => Value.Equals(other);

@@ -13,8 +13,8 @@ namespace Production.API.Features.RequestFiles.Cancel;
 //talk about custom verbs
 [HttpPut("articles/{articleId:int}/final-file:cancel-request")]
 [Tags("Assets")]
-public class CancelRequestFinalFileEndpoint(IServiceProvider serviceProvider, AssetRepository _assetRepository)
-        : BaseEndpoint<CancelRequestFinalFilesCommand, RequestFilesCommandResponse>(serviceProvider)
+public class CancelRequestFinalFileEndpoint(ArticleRepository articleRepository, AssetRepository _assetRepository)
+        : BaseEndpoint<CancelRequestFinalFilesCommand, RequestFilesCommandResponse>(articleRepository)
 {
     public async override Task HandleAsync(CancelRequestFinalFilesCommand command, CancellationToken cancellationToken)
     {

@@ -13,8 +13,8 @@ namespace Production.API.Features.RequestFiles.AuthorFiles;
 [HttpPut("articles/{articleId:int}/draft-pdf/{assetId:int}:approve")]
 [Tags("Assets")]
 
-public class ApproveDraftPdfEndpoint(IServiceProvider serviceProvider, AssetRepository _assetRepository)
-				: BaseEndpoint<ApproveDraftPdfCommand, AssetActionResponse>(serviceProvider)
+public class ApproveDraftPdfEndpoint(ArticleRepository articleRepository, AssetRepository _assetRepository)
+				: BaseEndpoint<ApproveDraftPdfCommand, AssetActionResponse>(articleRepository)
 {
 		public override async Task HandleAsync(ApproveDraftPdfCommand command, CancellationToken ct)
 		{

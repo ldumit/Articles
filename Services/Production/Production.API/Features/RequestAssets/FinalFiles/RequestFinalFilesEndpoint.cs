@@ -9,8 +9,8 @@ namespace Production.API.Features.RequestFiles.FinalFiles;
 //talk about custom verbs
 [HttpPut("articles/{articleId:int}/final-files:request")]
 [Tags("Assets")]
-public class RequestFinalFilesEndpoint(IServiceProvider serviceProvider, AssetRepository assetRepository)
-        : RequestFilesEndpointBase<RequestFinalFilesCommand>(serviceProvider, assetRepository)
+public class RequestFinalFilesEndpoint(ArticleRepository articleRepository, AssetRepository assetRepository)
+        : RequestAssetsEndpointBase<RequestFinalFilesCommand>(articleRepository, assetRepository)
 {
     //configure
 }

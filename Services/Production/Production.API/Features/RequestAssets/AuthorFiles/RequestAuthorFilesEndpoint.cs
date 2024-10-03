@@ -10,8 +10,8 @@ namespace Production.API.Features.RequestFiles.AuthorFiles;
 [HttpPut("articles/{articleId:int}/author-files:request")]
 [Tags("Assets")]
 
-public class RequestAuthorFilesEndpoint(IServiceProvider serviceProvider, AssetRepository assetRepository)
-        : RequestFilesEndpointBase<RequestAuthorFilesCommand>(serviceProvider, assetRepository)
+public class RequestAuthorFilesEndpoint(ArticleRepository articleRepository, AssetRepository assetRepository)
+        : RequestAssetsEndpointBase<RequestAuthorFilesCommand>(articleRepository, assetRepository)
 {
     //configure
 }

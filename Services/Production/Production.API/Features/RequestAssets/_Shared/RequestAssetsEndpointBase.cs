@@ -8,8 +8,8 @@ using Production.Persistence.Repositories;
 
 namespace Production.API.Features.RequestFiles.Shared;
 
-public class RequestFilesEndpointBase<TCommand>(IServiceProvider serviceProvider, AssetRepository _assetRepository)
-        : BaseEndpoint<TCommand, RequestFilesCommandResponse>(serviceProvider)
+public class RequestAssetsEndpointBase<TCommand>(ArticleRepository articleRepository, AssetRepository _assetRepository)
+        : BaseEndpoint<TCommand, RequestFilesCommandResponse>(articleRepository)
         where TCommand : RequestMultipleFilesCommand
 {
     public async override Task HandleAsync(TCommand command, CancellationToken cancellationToken)
