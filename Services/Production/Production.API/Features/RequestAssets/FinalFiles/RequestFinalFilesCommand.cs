@@ -5,10 +5,10 @@ using Production.Persistence.Repositories;
 
 namespace Production.API.Features.RequestFiles.FinalFiles;
 
-public record RequestFinalFilesCommand : RequestMultipleFilesCommand;
+public record RequestFinalFilesCommand : RequestMultipleAssetsCommand;
 
 public class RequestFinalFilesValidator() 
-    : RequestFilesValidator<RequestFinalFilesCommand>()
+    : RequestAssetsValidator<RequestFinalFilesCommand>()
 {
     public override IReadOnlyCollection<AssetType> AllowedAssetTypes => AssetTypeCategories.FinalFiles;
 }

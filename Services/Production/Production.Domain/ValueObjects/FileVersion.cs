@@ -4,15 +4,17 @@ using Production.Domain.Entities;
 
 namespace Production.Domain.ValueObjects;
 
-public record FileVersion: ValueObject<byte>, IEquatable<byte>
+public class FileVersion: ValueObject<byte>
 {
 		[JsonConstructor]
 		private FileVersion(byte value) => Value = value;
 
 		public static FileVersion FromAsset(Asset asset)
 		{
-				ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(asset.CurrentFile!.Version.Value, byte.MaxValue);
+				ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(asset.CurrentVersion, byte.MaxValue);
 
-				return new FileVersion((byte)(asset.CurrentFile!.Version.Value + 1));
+				return new FileVersion(asset.CalculateNextVersion());
 		}
+
+		public static implicit operator byte(FileVersion version) => version.Value;
 }

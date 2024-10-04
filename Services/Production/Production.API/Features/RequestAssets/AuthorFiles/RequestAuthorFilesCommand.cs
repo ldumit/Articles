@@ -3,10 +3,10 @@ using Production.Domain.Enums;
 
 namespace Production.API.Features.RequestFiles.AuthorFiles;
 
-public record RequestAuthorFilesCommand : RequestMultipleFilesCommand;
+public record RequestAuthorFilesCommand : RequestMultipleAssetsCommand;
 
 public class RequestAuthorFilesValidator() 
-    : RequestFilesValidator<RequestAuthorFilesCommand>()
+    : RequestAssetsValidator<RequestAuthorFilesCommand>()
 {
     public override IReadOnlyCollection<AssetType> AllowedAssetTypes => AssetTypeCategories.AuthorFiles;
 }

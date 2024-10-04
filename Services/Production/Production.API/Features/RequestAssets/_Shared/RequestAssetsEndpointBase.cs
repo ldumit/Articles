@@ -1,7 +1,6 @@
 ﻿using Articles.Abstractions;
 using Mapster;
 using Production.API.Features.Shared;
-using Production.API.Features.UploadFiles.Shared;
 using Production.Domain.Entities;
 using Production.Domain.Enums;
 using Production.Persistence.Repositories;
@@ -9,8 +8,8 @@ using Production.Persistence.Repositories;
 namespace Production.API.Features.RequestFiles.Shared;
 
 public class RequestAssetsEndpointBase<TCommand>(ArticleRepository articleRepository, AssetRepository _assetRepository)
-        : BaseEndpoint<TCommand, RequestFilesCommandResponse>(articleRepository)
-        where TCommand : RequestMultipleFilesCommand
+        : BaseEndpoint<TCommand, RequestAssetsResponse>(articleRepository)
+        where TCommand : RequestMultipleAssetsCommand
 {
     public async override Task HandleAsync(TCommand command, CancellationToken cancellationToken)
     {
@@ -30,7 +29,7 @@ public class RequestAssetsEndpointBase<TCommand>(ArticleRepository articleReposi
 				}
 				await _assetRepository.SaveChangesAsync();
 
-        var response = new RequestFilesCommandResponse()
+        var response = new RequestAssetsResponse()
         {
             Assets = assets.Select(a => a.Adapt<AssetActionResponse>())
         };				

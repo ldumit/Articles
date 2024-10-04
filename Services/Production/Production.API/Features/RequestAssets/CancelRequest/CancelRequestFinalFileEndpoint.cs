@@ -14,7 +14,7 @@ namespace Production.API.Features.RequestFiles.Cancel;
 [HttpPut("articles/{articleId:int}/final-file:cancel-request")]
 [Tags("Assets")]
 public class CancelRequestFinalFileEndpoint(ArticleRepository articleRepository, AssetRepository _assetRepository)
-        : BaseEndpoint<CancelRequestFinalFilesCommand, RequestFilesCommandResponse>(articleRepository)
+        : BaseEndpoint<CancelRequestFinalFilesCommand, RequestAssetsResponse>(articleRepository)
 {
     public async override Task HandleAsync(CancelRequestFinalFilesCommand command, CancellationToken cancellationToken)
     {
@@ -34,7 +34,7 @@ public class CancelRequestFinalFileEndpoint(ArticleRepository articleRepository,
 				}
 				await _assetRepository.SaveChangesAsync();
 
-        await SendAsync(new RequestFilesCommandResponse
+        await SendAsync(new RequestAssetsResponse
         {
 						Assets = assets.Select(a => a.Adapt<AssetActionResponse>())
 				});

@@ -2,11 +2,10 @@
 using Production.Domain.Entities;
 using FileStorage.Contracts;
 using Production.API.Features.Shared;
-using Production.API.Features.UploadFiles.Shared;
 using Mapster;
 using Production.Application.StateMachines;
 
-namespace Production.API.Features.UploadFiles.UploadFinalFile;
+namespace Production.API.Features.UploadFiles.Shared;
 
 public class UploadFileEndpoint<TUploadCommand>
     (ArticleRepository articleRepository, AssetRepository _assetRepository, IFileService _fileService, AssetStateMachineFactory _factory)
@@ -18,28 +17,41 @@ public class UploadFileEndpoint<TUploadCommand>
     public async override Task HandleAsync(TUploadCommand command, CancellationToken ct)
     {
         var article = await _articleRepository.GetByIdWithSingleAssetAsync(command.ArticleId, command.AssetType, command.GetAssetNumber());
+        
         var asset = article.Assets.SingleOrDefault();
-
         if (asset is null)
+						asset = CreateAsset(command, article);
+
+				var uploadResponse = await UploadFile(command, asset);
+
+        try
         {
-						var assetTypeEntity = _assetRepository.GetAssetType(command.AssetType);
+            asset.CreateAndAddFile(uploadResponse);
 
-            //var stateMachine = _factory(Domain.Enums.AssetState.None);
-						asset = Asset.CreateFromUpload(command, assetTypeEntity, command.GetAssetNumber());
-        }
-
-        var uploadResponse = await UploadFile(command, asset);
-
-        asset.CreateAndAddFile(uploadResponse);
+				    await _articleRepository.SaveChangesAsync();
+				}
+				catch (Exception)
+				{
+            await _fileService.TryDeleteFileAsync(uploadResponse.FilePath); // delete the file if 
+            throw;
+				}
 
 				await SendAsync(asset.Adapt<AssetActionResponse>());
 		}
 
-    private async Task<UploadResponse> UploadFile(UploadFileCommand command, Asset asset)
+		private Asset CreateAsset(TUploadCommand command, Article article)
+		{
+				var assetTypeEntity = _assetRepository.GetAssetType(command.AssetType);
+				var asset = Asset.CreateFromUpload(command, assetTypeEntity, command.GetAssetNumber());
+				article.Assets.Add(asset);
+				return asset;
+		}
+
+		private async Task<UploadResponse> UploadFile(UploadFileCommand command, Asset asset)
     {
-        var filePath = $"{command.ArticleId}/{asset.Name}/{asset.Number}";
+        var filePath = asset.CreateServerFilePath(command.File.FileName);
         //talk about tags
-        return await _fileService.UploadFile(filePath, command.File,
+        return await _fileService.UploadFileAsync(filePath, command.File,
                 new Dictionary<string, string>{ 
                     {"entity", nameof(Asset)},
                     {"entityId", asset.Id.ToString()}

@@ -1,19 +1,17 @@
 ﻿using FluentValidation;
 using Production.API.Features.Shared;
-using Production.API.Features.UploadFiles.Shared;
 using Production.Application.StateMachines;
 using Production.Domain.Enums;
 using Production.Persistence.Repositories;
-using static Production.API.Features.RequestFiles.Shared.RequestMultipleFilesCommand;
 
 namespace Production.API.Features.RequestFiles.Shared;
 
-public abstract record RequestAssetCommand : AssetCommand<RequestFilesCommandResponse>
+public abstract record RequestAssetCommand : AssetCommand<RequestAssetsResponse>
 {
     public override AssetActionType ActionType => AssetActionType.Request;
 
 }
-public abstract record RequestMultipleFilesCommand : RequestAssetCommand
+public abstract record RequestMultipleAssetsCommand : RequestAssetCommand
 {
     //talk - about using List, Array, IEnumerable in the input/output models.
     //Preffer IEnumerable if for input since it doesn't change. And List for output since we need to add elements.
@@ -21,15 +19,15 @@ public abstract record RequestMultipleFilesCommand : RequestAssetCommand
     public record AssetRequest(AssetType AssetType, byte AssetNumber);
 }
 
-public class RequestFilesCommandResponse
+public class RequestAssetsResponse
 {
     public IEnumerable<AssetActionResponse> Assets { get; set; }
 }
 
-public abstract class RequestFilesValidator<TRequestCommand> : ArticleCommandValidator<TRequestCommand>
-        where TRequestCommand : RequestMultipleFilesCommand
+public abstract class RequestAssetsValidator<TRequestCommand> : ArticleCommandValidator<TRequestCommand>
+        where TRequestCommand : RequestMultipleAssetsCommand
 {
-		public RequestFilesValidator()
+		public RequestAssetsValidator()
     {
 				this.ClassLevelCascadeMode = CascadeMode.Stop;
 				RuleFor(r => r.AssetRequests)
@@ -47,7 +45,7 @@ public abstract class RequestFilesValidator<TRequestCommand> : ArticleCommandVal
 		}
 
 
-		protected virtual async Task<bool> IsActionValid(RequestMultipleFilesCommand action)
+		protected virtual async Task<bool> IsActionValid(RequestMultipleAssetsCommand action)
 		{
 				var assetRequest = action.AssetRequests.FirstOrDefault(); // we only need to validate for one asset
 
@@ -62,8 +60,7 @@ public abstract class RequestFilesValidator<TRequestCommand> : ArticleCommandVal
 				var stateMachineFactory = Resolve<AssetStateMachineFactory>();
 				var stateMachine = stateMachineFactory(assetState);
 				
-				return article != null
-						&& stateMachine.CanFire(article.Stage, assetRequest.AssetType, action.ActionType);
+				return stateMachine.CanFire(article.Stage, assetRequest.AssetType, action.ActionType);
 		}
 		public abstract IReadOnlyCollection<AssetType> AllowedAssetTypes { get; }
 }

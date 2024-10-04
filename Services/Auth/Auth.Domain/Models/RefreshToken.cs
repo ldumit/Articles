@@ -1,6 +1,4 @@
 ﻿using Articles.Entitities;
-using Production.Domain.ValueObjects;
-
 namespace Auth.Domain.Models;
 
 public class RefreshToken : Entity
@@ -16,6 +14,4 @@ public class RefreshToken : Entity
     //todo do I need this field?
     public string? ReplacedByToken { get; set; }
     public bool IsActive => Revoked == null && !IsExpired;
-
-    public FileExtension Extension { get; init; } = null!;
 }

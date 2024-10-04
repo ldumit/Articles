@@ -15,6 +15,10 @@ public enum AssetType
 
 public static class AssetTypeCategories
 {
+		public static HashSet<AssetType> DraftFiles = new()
+		{
+				AssetType.DraftPdf
+		};
 		public static HashSet<AssetType> FinalFiles = new()
 		{
 				AssetType.FinalPdf,

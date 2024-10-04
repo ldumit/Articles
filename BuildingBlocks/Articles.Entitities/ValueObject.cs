@@ -6,13 +6,30 @@ public abstract record ValueObject : IDomainObject
     //protected abstract IEnumerable<object> GetAtomicValues();
 }
 
-public abstract record ValueObject<T> : ValueObject, IEquatable<T>
+public abstract class ValueObject<T> : IEquatable<ValueObject<T>>
 {
     public T Value { get; protected set; } = default!;
 
-		public bool Equals(T? other) => Value.Equals(other);
+		//public bool Equals(T? other) => Value.Equals(other);
 
 		public override string ToString() => Value.ToString();
+		public virtual bool Equals(ValueObject<T>? other)
+		{
+				if (other is null) return false;
+
+				if (ReferenceEquals(this, other)) return true;
+
+				return Value.Equals(other.Value);
+		}
+
+    //public override bool Equals(object? obj)
+    //{
+    //    if (obj is ValueObject<T> other)
+    //        return Equals(other);
+    //    return false;
+    //}
+
+    public override int GetHashCode() => Value.GetHashCode();
 }
 
 

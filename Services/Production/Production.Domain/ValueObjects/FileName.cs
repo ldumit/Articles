@@ -4,7 +4,7 @@ using Production.Domain.Entities;
 
 namespace Production.Domain.ValueObjects;
 
-public record FileName: ValueObject<string>
+public class FileName: ValueObject<string>
 {
 		[JsonConstructor]
 		private FileName(string value) => Value = value;

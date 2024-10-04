@@ -13,11 +13,10 @@ public class MappingConfig : IRegister
 				config.NewConfig<Asset, AssetActionResponse>()
 						.Map(dest => dest.File, src => src.CurrentFile);
 
-				config.NewConfig<Asset, FileResponse>()
-						.Map(dest => dest.AssetId, src => src.Id);
+				config.NewConfig<Domain.Entities.File, FileDto>()
+						.Map(dest => dest.FileId, src => src.Id)
+						.Map(dest => dest.Version, src => src.Version.Value);
 
-				config.NewConfig<Domain.Entities.File, FileResponse>()
-						.Map(dest => dest.FileId, src => src.Id);
 
 				config.NewConfig<IArticleAction<AssetActionType>, AssetAction>()
 						.Map(dest => dest.TypeId, src => src.ActionType);

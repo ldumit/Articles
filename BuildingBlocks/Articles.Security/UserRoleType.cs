@@ -26,7 +26,7 @@ public enum UserRoleType : int
 
 public static class Role
 {
-		public const string AUT = nameof(UserRoleType.AUT);
+		public const string AUT = nameof(UserRoleType.CORAUT);
 		public const string POF = nameof(UserRoleType.POF);
 		public const string TSOF = nameof(UserRoleType.TSOF);
 }

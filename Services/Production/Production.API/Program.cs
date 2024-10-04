@@ -8,18 +8,15 @@ using Azure.Storage.Blobs;
 using System.Text.Json.Serialization;
 using FastEndpoints.Swagger;
 using Microsoft.AspNetCore.Http.Json;
-using Articles.System;
 using Articles.FastEnpoints;
 using System.Reflection;
-using FluentValidation;
-using Production.API.Features.AssignTypesetter;
 
 var builder = WebApplication.CreateBuilder(args);
 
 #region Add
 
 builder.Services
-    .ConfigureOptions<FileServerOptions>(builder.Configuration)
+    .ConfigureOptions<FileStorage.Contracts.FileServerOptions>(builder.Configuration)
     .Configure<JsonOptions>(opt =>
     {
 				opt.SerializerOptions.PropertyNameCaseInsensitive = true;

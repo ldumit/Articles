@@ -4,7 +4,7 @@ using Production.Domain.Entities;
 
 namespace Production.Domain.ValueObjects;
 
-public record FileExtension: ValueObject<string>
+public class FileExtension: ValueObject<string>
 {
 		[JsonConstructor]
 		private FileExtension(string value) => Value = value;
@@ -16,10 +16,10 @@ public record FileExtension: ValueObject<string>
 
     public static FileExtension FromFileName(string fileName, AssetType assetType)
     {
-        var extension = Path.GetExtension(fileName);
+        var extension = Path.GetExtension(fileName).Remove(0, 1); //removing the '.'
 				ArgumentException.ThrowIfNullOrWhiteSpace(extension);
 				ArgumentOutOfRangeException.ThrowIfNotEqual(
-            assetType.AllowedFileExtensions.IsValidExtension(extension), true);
+            assetType.AllowedFileExtensions.IsValidExtension(extension), true); 
 
 				return new FileExtension(extension);
     }

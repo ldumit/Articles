@@ -13,7 +13,7 @@ using Production.Persistence;
 namespace Production.Persistence.Migrations
 {
     [DbContext(typeof(ProductionDbContext))]
-    [Migration("20241001081343_InitialCreate")]
+    [Migration("20241003093141_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -428,6 +428,9 @@ namespace Production.Persistence.Migrations
                         .HasMaxLength(8)
                         .HasColumnType("nvarchar(8)")
                         .HasDefaultValue("pdf");
+
+                    b.Property<byte>("MaxFileSizeInMB")
+                        .HasColumnType("tinyint");
 
                     b.Property<byte>("MaxNumber")
                         .ValueGeneratedOnAdd()

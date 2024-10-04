@@ -426,6 +426,9 @@ namespace Production.Persistence.Migrations
                         .HasColumnType("nvarchar(8)")
                         .HasDefaultValue("pdf");
 
+                    b.Property<byte>("MaxFileSizeInMB")
+                        .HasColumnType("tinyint");
+
                     b.Property<byte>("MaxNumber")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("tinyint")

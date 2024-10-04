@@ -62,6 +62,7 @@ namespace Production.Persistence.Migrations
                     DefaultCategoryId = table.Column<int>(type: "int", nullable: false),
                     DefaultFileExtension = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false, defaultValue: "pdf"),
                     MaxNumber = table.Column<byte>(type: "tinyint", nullable: false, defaultValue: (byte)0),
+                    MaxFileSizeInMB = table.Column<byte>(type: "tinyint", nullable: false),
                     AllowedFileExtensions = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Code = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false)

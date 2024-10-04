@@ -40,9 +40,11 @@ public class ArticleRepository(ProductionDbContext dbContext)
 		public async Task<Article> GetByIdWithSingleAssetAsync(int id, Domain.Enums.AssetType assetType, byte assetNumber, bool throwIfNotFound = true)
 		{
 				var article = await Query()
-						 .Include(e => e.Assets.SingleOrDefault(e => e.Type == assetType && e.Number == assetNumber))
+						 .Include(e => e.Assets.Where(e => e.Type == assetType && e.Number.Value == assetNumber))
 								 .ThenInclude(e => e.CurrentFileLink)
 										.ThenInclude(e => e.File)
+						.Include(e => e.Assets)
+								.ThenInclude(e => e.TypeRef)
 						.SingleAsync(e => e.Id == id);
 
 				return ReturnOrThrow(article, throwIfNotFound);

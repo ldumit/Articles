@@ -45,7 +45,7 @@ namespace Auth.Persistence.Migrations
                     RegistrationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastLogin = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedById = table.Column<int>(type: "int", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 9, 29, 5, 39, 48, 166, DateTimeKind.Utc).AddTicks(345)),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
                     LastModifiedById = table.Column<int>(type: "int", nullable: true),
                     LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -190,8 +190,7 @@ namespace Auth.Persistence.Migrations
                     CreatedByIp = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     Revoked = table.Column<DateTime>(type: "datetime2", nullable: true),
                     RevokedByIp = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
-                    ReplacedByToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Extension = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                    ReplacedByToken = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

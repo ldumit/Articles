@@ -11,8 +11,8 @@ namespace Production.API.Features.RequestFiles.SingleFile;
 //talk about custom verbs
 [HttpPut("articles/{articleId:int}/single-file:request")]
 [Tags("Assets")]
-public class RequestSingleFileEndpoint(IServiceProvider serviceProvider, AssetRepository _assetRepository)
-        : BaseEndpoint<RequestSingleFileCommand, AssetActionResponse>(serviceProvider)
+public class RequestSingleFileEndpoint(ArticleRepository articleRepository, AssetRepository _assetRepository)
+        : BaseEndpoint<RequestSingleFileCommand, AssetActionResponse>(articleRepository)
 {
     public async override Task HandleAsync(RequestSingleFileCommand command, CancellationToken cancellationToken)
     {

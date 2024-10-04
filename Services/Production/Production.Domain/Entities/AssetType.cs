@@ -12,4 +12,5 @@ public partial class AssetType : EnumEntity<Enums.AssetType>
     public AllowedFileExtensions AllowedFileExtensions { get; init; } = null!;
 		public string DefaultFileExtension { get; init; } = default!;
     public byte MaxNumber { get; init; }
+		public byte MaxFileSizeInMB{ get; init; }
 }

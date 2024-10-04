@@ -11,9 +11,11 @@ public partial class Asset
 {
 		private Asset() {/* use factory method*/}
 
-		//todo consider asset number also
-		//public string CreateFileServerId(int articleId, string fileExtension) => $"{base.CreateFileServerId(articleId)}/{AssetNumber}";
-		public string CreateFileServerId(int articleId, string fileExtension) => $"{articleId}/{Name.Value.ToLower().Replace("'", "").Replace(" ", "-")}";
+		public string CreateServerFilePath(string fileName) 
+				=> $"Articles/{Article.Id}/{Name}/{Number}/{CalculateNextVersion()}/{fileName}";
+		
+		public byte CalculateNextVersion() => (byte)(CurrentVersion + 1);
+		public byte CurrentVersion => CurrentFile?.Version.Value ?? 0;
 
 		public string CreateFileName(string fileExtension)
 		{
@@ -44,6 +46,7 @@ public partial class Asset
 						Number = AssetNumber.FromNumber(assetNumber, type),
 						Name = AssetName.FromAssetType(type),
 						Type = type.Code,
+						TypeRef = type,
 						CategoryId = type.DefaultCategoryId,
 						State = state
 				};
@@ -82,7 +85,7 @@ public partial class Asset
 
 				_files.Add(file);
 				CurrentFileLink = new AssetCurrentFileLink() { File = file };
-
+				State = AssetState.Uploaded;
 				return file;
 		}
 }
