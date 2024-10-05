@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Production.API.Features.UploadFiles.UploadAuthorFile;
 
-public record UploadAuthorFileCommand : UploadFileCommand
+public record UploadSupplementaryFileCommand : UploadFileCommand
 {
 		[Required]
 		public byte AssetNumber { get; set; }
@@ -12,7 +12,7 @@ public record UploadAuthorFileCommand : UploadFileCommand
 		internal override byte GetAssetNumber() => AssetNumber;
 }
 
-public abstract class UploadAuthorFileValidator : UploadFileValidator<UploadAuthorFileCommand>
+public abstract class UploadSupplementaryFileValidator : UploadFileValidator<UploadSupplementaryFileCommand>
 {
-		public override IReadOnlyCollection<AssetType> AllowedAssetTypes => AssetTypeCategories.AuthorFiles;
+		public override IReadOnlyCollection<AssetType> AllowedAssetTypes => AssetTypeCategories.SupplementaryAssets;
 }

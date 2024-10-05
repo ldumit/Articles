@@ -49,7 +49,7 @@ public class UploadFileEndpoint<TUploadCommand>
 
 		private async Task<UploadResponse> UploadFile(UploadFileCommand command, Asset asset)
     {
-        var filePath = asset.CreateServerFilePath(command.File.FileName);
+        var filePath = asset.GenerateStorageFilePath(command.File.FileName);
         //talk about tags
         return await _fileService.UploadFileAsync(filePath, command.File,
                 new Dictionary<string, string>{ 

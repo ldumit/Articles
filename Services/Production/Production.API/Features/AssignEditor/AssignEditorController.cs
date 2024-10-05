@@ -15,6 +15,7 @@ namespace Production.API.Features.AssignEditor;
 [Authorize(AuthenticationSchemes = "Cookie")]
 [Route("api/articles/{articleId:int}")]
 [ApiController]
+[Tags("Articles")]
 public class AssignEditorController(IMediator mediator) : ApiControllerBase(mediator)
 {
     //[Authorize(Roles = "pof")]

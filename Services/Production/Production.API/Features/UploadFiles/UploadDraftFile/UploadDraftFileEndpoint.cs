@@ -9,9 +9,9 @@ using Production.API.Features.UploadFiles.Shared;
 namespace Production.API.Features.UploadFiles.UploadDraftFile;
 
 [Authorize(Roles = Role.TSOF)]
-[HttpPost("articles/{articleId:int}/draft-files:upload")]
-//[HttpPost("articles/{articleId:int}/draft-files/")]
+[HttpPost("articles/{articleId:int}/assets/draft/files:upload")]
 [AllowFileUploads]
+[Tags("Files")]
 public class UploadDraftFileEndpoint(ArticleRepository articleRepository, AssetRepository assetRepository, IFileService fileService, AssetStateMachineFactory factory)
 		: UploadFileEndpoint<UploadDraftFileCommand>(articleRepository, assetRepository, fileService, factory)
 {

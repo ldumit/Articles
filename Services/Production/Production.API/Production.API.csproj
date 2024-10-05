@@ -45,4 +45,8 @@
     <ProjectReference Include="..\Production.Application\Production.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\RequestAssets\Draft\" />
+  </ItemGroup>
+
 </Project>

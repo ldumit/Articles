@@ -3,7 +3,7 @@ using Production.Domain.Enums;
 
 namespace Production.API.Features.RequestFiles.Cancel;
 
-public record CancelRequestFinalFilesCommand : RequestMultipleAssetsCommand
+public record CancelRequestFinalAssetsCommand : RequestMultipleAssetsCommand
 {
 		public override AssetActionType ActionType => AssetActionType.CancelRequest;
 }

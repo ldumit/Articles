@@ -7,5 +7,5 @@ public record UploadFinalFileCommand : UploadFileCommand;
 
 public abstract class UploadFinalFileValidator : UploadFileValidator<UploadFinalFileCommand>
 {
-		public override IReadOnlyCollection<AssetType> AllowedAssetTypes => AssetTypeCategories.FinalFiles;
+		public override IReadOnlyCollection<AssetType> AllowedAssetTypes => AssetTypeCategories.FinalAssets;
 }

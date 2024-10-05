@@ -10,13 +10,12 @@ using Production.Persistence.Repositories;
 namespace Production.API.Features.RequestFiles.Cancel;
 
 [Authorize(Roles = "POF")]
-//talk about custom verbs
-[HttpPut("articles/{articleId:int}/final-file:cancel-request")]
+[HttpPut("articles/{articleId:int}/assets/final:cancel-request")]
 [Tags("Assets")]
-public class CancelRequestFinalFileEndpoint(ArticleRepository articleRepository, AssetRepository _assetRepository)
-        : BaseEndpoint<CancelRequestFinalFilesCommand, RequestAssetsResponse>(articleRepository)
+public class CancelRequestFinalAssetsEndpoint(ArticleRepository articleRepository, AssetRepository _assetRepository)
+        : BaseEndpoint<CancelRequestFinalAssetsCommand, RequestAssetsResponse>(articleRepository)
 {
-    public async override Task HandleAsync(CancelRequestFinalFilesCommand command, CancellationToken cancellationToken)
+    public async override Task HandleAsync(CancelRequestFinalAssetsCommand command, CancellationToken cancellationToken)
     {
         var article = await _articleRepository.GetByIdWithAssetsAsync(command.ArticleId);
 

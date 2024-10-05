@@ -7,10 +7,10 @@ namespace Production.API.Features.RequestFiles.FinalFiles;
 
 [Authorize(Roles = "POF")]
 //talk about custom verbs
-[HttpPut("articles/{articleId:int}/final-files:request")]
+[HttpPut("articles/{articleId:int}/assets/final:request")]
 [Tags("Assets")]
-public class RequestFinalFilesEndpoint(ArticleRepository articleRepository, AssetRepository assetRepository)
-        : RequestAssetsEndpointBase<RequestFinalFilesCommand>(articleRepository, assetRepository)
+public class RequestFinalAssetsEndpoint(ArticleRepository articleRepository, AssetRepository assetRepository)
+        : RequestAssetsEndpointBase<RequestFinalAssetsCommand>(articleRepository, assetRepository)
 {
     //configure
 }

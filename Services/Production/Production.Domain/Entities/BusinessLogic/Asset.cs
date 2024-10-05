@@ -11,13 +11,13 @@ public partial class Asset
 {
 		private Asset() {/* use factory method*/}
 
-		public string CreateServerFilePath(string fileName) 
+		public string GenerateStorageFilePath(string fileName) 
 				=> $"Articles/{Article.Id}/{Name}/{Number}/{CalculateNextVersion()}/{fileName}";
 		
 		public byte CalculateNextVersion() => (byte)(CurrentVersion + 1);
 		public byte CurrentVersion => CurrentFile?.Version.Value ?? 0;
 
-		public string CreateFileName(string fileExtension)
+		public string GenerateFileName(string fileExtension)
 		{
 				var assetName = Name.Value.Replace("'", "").Replace(" ", "-");
 				var assetNumber = Number > 0 ? Number.ToString() : string.Empty;
