@@ -4,7 +4,7 @@ using FileStorage.Contracts;
 using Production.API.Features.Shared;
 using Mapster;
 using Production.Application.StateMachines;
-using Articles.Abstractions;
+using Production.Application.Dtos;
 
 namespace Production.API.Features.UploadFiles.Shared;
 
@@ -38,14 +38,15 @@ public class UploadFileEndpoint<TUploadCommand>
             throw;
 				}
 
-				await SendAsync(asset.Adapt<AssetActionResponse>());
+				await SendAsync(new AssetActionResponse(asset.Adapt<AssetMinimalDto>()));
 		}
 
 		private Asset CreateAsset(TUploadCommand command, Article article)
 		{
 				var assetTypeEntity = _assetRepository.GetAssetType(command.AssetType);
 				var asset = Asset.CreateFromUpload(command, assetTypeEntity, command.GetAssetNumber());
-				article.Assets.Add(asset);
+        _articleRepository.Context.Assets.Add(asset);
+				//article.Assets.Add(asset);
 				return asset;
 		}
 

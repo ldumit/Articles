@@ -9,4 +9,6 @@ public interface IFileService
 		//Task<UploadResponse> UploadFile(UploadRequest request);
 
 		Task<bool> TryDeleteFileAsync(string filePath);
+
+		Task<(Stream FileStream, string ContentType)> DownloadFileAsync(string filePath);
 }

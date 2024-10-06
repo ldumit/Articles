@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Production.API.Features.Shared;
+using Production.Application.Dtos;
 using Production.Application.StateMachines;
 using Production.Domain.Enums;
 using Production.Persistence.Repositories;
@@ -21,7 +22,7 @@ public abstract record RequestMultipleAssetsCommand : RequestAssetCommand
 
 public class RequestAssetsResponse
 {
-    public IEnumerable<AssetActionResponse> Assets { get; set; }
+    public IEnumerable<AssetMinimalDto> Assets { get; set; }
 }
 
 public abstract class RequestAssetsValidator<TRequestCommand> : ArticleCommandValidator<TRequestCommand>

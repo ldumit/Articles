@@ -1,6 +1,8 @@
-﻿using Articles.System.Json;
+﻿using Articles.System.Cache;
+using Articles.System.Json;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 
@@ -40,6 +42,15 @@ public static class DbContextExtensions
 						context.Database.ExecuteSql($"DBCC CHECKIDENT({typeof(TEntity).Name}, RESEED, 0)");
 						Console.WriteLine(ex.Message);
 						throw;
+				}
+		}
+
+		public static void UnTrackCacheableEntities(this DbContext context)
+		{
+				foreach (var entry in context.ChangeTracker.Entries())
+				{
+						if (entry.Entity is ICacheable)
+								entry.State = EntityState.Unchanged; // Mark as Unchanged to prevent modifications
 				}
 		}
 

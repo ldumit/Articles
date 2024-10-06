@@ -6,6 +6,7 @@ using Production.Domain.Enums;
 using Mapster;
 using Articles.Security;
 using Articles.Abstractions;
+using Production.Application.Dtos;
 
 namespace Production.API.Features.ApproveAssets.ApproveDraftAsset;
 
@@ -24,6 +25,6 @@ public class ApproveDraftAssetEndpoint(ArticleRepository articleRepository, Asse
         asset.Article.SetStage(ArticleStage.FinalProduction, command);
 
         await _assetRepository.SaveChangesAsync();
-        await SendAsync(asset.Adapt<AssetActionResponse>());
+        await SendAsync(new AssetActionResponse(asset.Adapt<AssetMinimalDto>()));
     }
 }

@@ -29,21 +29,4 @@ public abstract class EntityConfiguration<T, TKey> : IEntityTypeConfiguration<T>
     }
 
     protected virtual string EntityName => typeof(T).Name;
-
-		public virtual void SeedFromFile(string path, EntityTypeBuilder<T> builder)
-    {
-        try
-        {
-
-            var data = JsonExtensions.DeserializeCaseInsensitive<List<T>>(File.ReadAllText(path));
-            if (data != null)
-            {
-                builder.HasData(data);
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("EX:---->" + ex.ToString());
-        }
-    }
 }

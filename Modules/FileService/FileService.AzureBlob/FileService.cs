@@ -1,5 +1,6 @@
 ﻿using Articles.System;
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using FileStorage.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
@@ -39,6 +40,16 @@ public class FileService : IFileService
 						return await blob.DeleteIfExistsAsync();
 				}
 				catch (Exception) { return false; }
+		}
+		public async Task<(Stream FileStream, string ContentType)> DownloadFileAsync(string filePath)
+		{
+				var blob = GetBlob(filePath);
+
+				if (!await blob.ExistsAsync())
+						throw new FileNotFoundException($"File '{filePath}' not found in container '{_fileServerOptions.Container}'.");
+
+				BlobDownloadInfo download = await blob.DownloadAsync();
+				return (download.Content, download.ContentType);				
 		}
 
 		private BlobClient GetBlob(string filePath)

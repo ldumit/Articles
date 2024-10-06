@@ -1,0 +1,14 @@
+[
+	{"SourceType": "StageTransition", "SourceId": "Accepted->InProduction", "RoleType": "POF"},
+	{"SourceType": "StageTransition", "SourceId": "InProduction->DraftProduction", "RoleType": "POF"},
+	{"SourceType": "StageTransition", "SourceId": "DraftProduction->FinalProduction", "RoleType": "POF"},
+	{"SourceType": "StageTransition", "SourceId": "FinalProduction->Published", "RoleType": "POF"},
+
+	{"SourceType": "StageTransition", "SourceId": "Accepted->InProduction", "RoleType": "TSOF"},
+	{"SourceType": "StageTransition", "SourceId": "InProduction->DraftProduction", "RoleType": "TSOF"},
+	{"SourceType": "StageTransition", "SourceId": "DraftProduction->FinalProduction", "RoleType": "TSOF"},
+	{"SourceType": "StageTransition", "SourceId": "FinalProduction->Published", "RoleType": "TSOF"},
+
+	{"SourceType": "StageTransition", "SourceId": "InProduction->DraftProduction", "RoleType": "CORAUT"},
+	{"SourceType": "StageTransition", "SourceId": "FinalProduction->Published", "RoleType": "CORAUT"},
+]

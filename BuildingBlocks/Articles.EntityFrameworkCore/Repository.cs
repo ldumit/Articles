@@ -49,8 +49,8 @@ public abstract class RepositoryBase<TContext, TEntity, TKey> : IRepository<TEnt
         _dbContext = dbContext;
         _entity = _dbContext.Set<TEntity>();
 		}
-
-    protected virtual DbSet<TEntity> Entity => _entity;
+    public TContext Context => _dbContext;
+		protected virtual DbSet<TEntity> Entity => _entity;
 
     protected virtual IQueryable<TEntity> Query() => _entity;
 

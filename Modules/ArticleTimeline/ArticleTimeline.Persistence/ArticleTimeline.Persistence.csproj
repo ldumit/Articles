@@ -30,7 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="MasterData\" />
     <Folder Include="Migrations\" />
     <Folder Include="TestData\" />
   </ItemGroup>

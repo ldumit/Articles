@@ -1,4 +1,5 @@
 ﻿using Articles.Entitities;
+using Articles.System.Cache;
 using Production.Domain.Enums;
 using Production.Domain.ValueObjects;
 
@@ -6,7 +7,7 @@ using Production.Domain.ValueObjects;
 namespace Production.Domain.Entities;
 
 //talk - mix enums & tables togheter
-public partial class AssetType : EnumEntity<Enums.AssetType>
+public partial class AssetType : EnumEntity<Enums.AssetType>, ICacheable
 {
 		public AssetCategory DefaultCategoryId { get; init; }
     public AllowedFileExtensions AllowedFileExtensions { get; init; } = null!;

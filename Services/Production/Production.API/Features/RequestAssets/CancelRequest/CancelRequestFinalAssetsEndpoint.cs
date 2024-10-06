@@ -3,6 +3,7 @@ using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Production.API.Features.RequestFiles.Shared;
 using Production.API.Features.Shared;
+using Production.Application.Dtos;
 using Production.Domain.Entities;
 using Production.Domain.Enums;
 using Production.Persistence.Repositories;
@@ -35,7 +36,7 @@ public class CancelRequestFinalAssetsEndpoint(ArticleRepository articleRepositor
 
         await SendAsync(new RequestAssetsResponse
         {
-						Assets = assets.Select(a => a.Adapt<AssetActionResponse>())
+						Assets = assets.Select(a => a.Adapt<AssetMinimalDto>())
 				});
     }
 }

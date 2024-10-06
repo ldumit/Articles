@@ -1,6 +1,7 @@
 ﻿using Articles.Abstractions;
 using Mapster;
 using Production.API.Features.Shared;
+using Production.Application.Dtos;
 using Production.Domain.Entities;
 using Production.Domain.Enums;
 using Production.Persistence.Repositories;
@@ -31,7 +32,7 @@ public class RequestAssetsEndpointBase<TCommand>(ArticleRepository articleReposi
 
         var response = new RequestAssetsResponse()
         {
-            Assets = assets.Select(a => a.Adapt<AssetActionResponse>())
+            Assets = assets.Select(a => a.Adapt<AssetMinimalDto>())
         };				
 
 				await SendAsync(response);

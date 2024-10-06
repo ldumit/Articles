@@ -45,11 +45,11 @@ public static class DependencyInjection
 						options.UseSqlServer(connectionString);
 
 				});
-				//services.AddDbContext<ArticleTimelineDbContext>((provider, options) =>
-				//{
-				//		var dbConnection = provider.GetRequiredService<DbConnection>();
-				//		options.UseSqlServer(dbConnection);
-				//});
+				services.AddDbContext<ArticleTimelineDbContext>((provider, options) =>
+				{
+						var dbConnection = provider.GetRequiredService<DbConnection>();
+						options.UseSqlServer(dbConnection);
+				});
 
 				services.AddScoped<IAuthorizationHandler, ArticleRoleAuthorizationHandler>();
 
@@ -62,8 +62,9 @@ public static class DependencyInjection
 
         services.AddScoped<IArticleRoleChecker, ActorRepository>();
 				services.AddScoped<ArticleRepository>();
-				services.AddScoped<AssetRepository>(); 
-        services.AddScoped<PersonRepository>();
+				services.AddScoped<AssetRepository>();
+				services.AddScoped<FileRepository>();
+				services.AddScoped<PersonRepository>();
 
 				services.AddScoped<IThreadSafeMemoryCache, MemoryCache>();
 				services.AddScoped<IFileService, FileService>();

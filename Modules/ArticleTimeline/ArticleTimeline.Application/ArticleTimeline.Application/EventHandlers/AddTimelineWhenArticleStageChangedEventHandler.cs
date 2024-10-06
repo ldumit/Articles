@@ -17,14 +17,16 @@ internal class AddTimelineWhenArticleStageChangedEventHandler(TimelineRepository
 
 		public async Task HandleAsync(ArticleStageChangedDomainEvent eventModel, CancellationToken ct)
 		{
-				var template  = await _timelineRepository.GetTimelineTemplate(SourceType.StageTransition, (int) eventModel.NewStage, eventModel.PreviousStage);
+				var sourceId = $"{ eventModel.PreviousStage}->{eventModel.NewStage}";
+
+				var template  = await _timelineRepository.GetTimelineTemplate(SourceType.StageTransition, sourceId);
 
 				var resolverModel = new TimelineResolverModel();
 				var timeline = new Timeline()
 				{
 						ArticleId = eventModel.ArticleId,
-						Stage = eventModel.PreviousStage,
-						SourceId = (int)eventModel.NewStage,
+						PreviousStage = eventModel.PreviousStage,
+						SourceId = sourceId,
 						SourceType = SourceType.StageTransition,
 						CreatedById = eventModel.UserId,
 						Title = template.TitleTemplate,

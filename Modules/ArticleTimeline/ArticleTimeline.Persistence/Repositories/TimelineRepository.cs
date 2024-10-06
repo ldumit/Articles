@@ -14,8 +14,8 @@ public class TimelineRepository(ArticleTimelineDbContext dbContext)
     {
         return base.Query()
             .Join(_dbContext.TimelineVisibilities.Where(v => v.RoleType == role), 
-            h => new { h.SourceType, h.SourceId ,h.Stage}, 
-            v => new { v.SourceType, v.SourceId,v.Stage }, 
+            h => new { h.SourceType, h.SourceId }, 
+            v => new { v.SourceType, v.SourceId }, 
             (h, v) => h)
             .OrderByDescending(x => x.Id)
             .Where(h => h.ArticleId == articleId&&(h.Id< lastTakenId|| lastTakenId==0))              
@@ -25,22 +25,18 @@ public class TimelineRepository(ArticleTimelineDbContext dbContext)
     {
         return await this.Entity
             .Join(_dbContext.TimelineVisibilities.Where(v => v.RoleType == role),
-            h => new { h.SourceType, h.SourceId, h.Stage},
-            v => new { v.SourceType, v.SourceId, v.Stage },
+            h => new { h.SourceType, h.SourceId},
+            v => new { v.SourceType, v.SourceId},
             (h, v) => h)
             .OrderByDescending(x => x.Id)
             .Where(h => h.ArticleId == articleId)
             .CountAsync();
     }
 
-    public async Task<TimelineTemplate> GetTimelineTemplate(SourceType sourceType,
-        int sourceId,
-        ArticleStage stage)
+    public async Task<TimelineTemplate> GetTimelineTemplate(SourceType sourceType, string sourceId)
     {
         return _dbContext.GetCached<TimelineTemplate>()
-            .FirstOrDefault(x => x.SourceType == sourceType &&
-            x.SourceId == sourceId
-            && x.ArticleStage == stage);
+            .FirstOrDefault(x => x.SourceType == sourceType && x.SourceId == sourceId);
     }
 
     public async Task<List<Domain.Timeline>> GetAllArticleHistoriesByArticleIdAsync(int articleId)

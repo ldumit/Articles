@@ -12,6 +12,6 @@ public class TimelineVisibilityEntityConfiguration : EntityConfiguration<Timelin
         entity.Property(e => e.SourceType);
         entity.Property(e => e.SourceId);
         entity.Property(e => e.RoleType);
-        entity.Property(e => e.Stage);
+        //entity.Property(e => e.Stage);
     }
 }

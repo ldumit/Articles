@@ -20,11 +20,11 @@ public partial class Asset : AuditedEntity
 
 
 		private readonly List<File> _files = new();
-		public virtual IReadOnlyCollection<File> Files => _files.AsReadOnly();
+		public virtual IReadOnlyList<File> Files => _files.AsReadOnly();
 
 		
     private readonly List<AssetAction> _actions = new ();
-		public virtual IReadOnlyCollection<AssetAction> Actions => _actions.AsReadOnly();
+		public virtual IReadOnlyList<AssetAction> Actions => _actions.AsReadOnly();
 
     
     public virtual AssetCurrentFileLink? CurrentFileLink { get; private set; } = null!;

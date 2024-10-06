@@ -29,13 +29,6 @@ public abstract class Entity : Entity<int>, IEntity
 {
 }
 
-
-[Serializable]
-//todo - find out what's this class
-public abstract class DefaultEntity : IDomainObject
-{
-}
-
 //todo find out if we need Seriazable attribute
 //todo clean up all the methods we don't need
 [Serializable]

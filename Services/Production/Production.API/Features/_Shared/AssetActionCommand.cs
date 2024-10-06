@@ -1,4 +1,5 @@
 ﻿using Articles.Abstractions;
+using Production.Application.Dtos;
 using Production.Domain.Enums;
 using System.Text.Json.Serialization;
 
@@ -20,13 +21,13 @@ public abstract record AssetActionCommand<TResponse> : AssetCommand<TResponse>, 
     internal int FileId { get; set; }
 }
 
-public record AssetActionResponse : IAssetActionResponse
+public record AssetActionResponse(AssetMinimalDto Asset) : IAssetActionResponse;
+
+public record AssetActionResponse2 : IAssetActionResponse
 {
 		public int Id { get; set; }
 
 		[JsonConverter(typeof(JsonStringEnumConverter))]
 		public AssetState State { get; set; }
-		public FileDto? File { get; set; }
+		public FileMinimalDto? File { get; set; }
 }
-
-public record FileDto(int FileId, int Version, string FileServerId);

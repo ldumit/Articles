@@ -8,7 +8,7 @@ public class TimelineEntityConfiguration : EntityConfiguration<Timeline>
 {
     public override void Configure(EntityTypeBuilder<Timeline> entity)
     {
-        entity.Property(e => e.Stage).HasEnumConversion();
+        entity.Property(e => e.PreviousStage).HasEnumConversion();
         entity.Property(e => e.SourceType).HasEnumConversion();
         entity.Property(e => e.Title).HasMaxLength(Constraints.C256);
         entity.Property(e => e.Description);

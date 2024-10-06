@@ -58,7 +58,7 @@ public class ApplicationDbContext<TDbContext>(DbContextOptions<TDbContext> _opti
 				return counter;
 		}
 
-		private async Task<int> SaveChangesImpl(CancellationToken cancellationToken = default)
+		protected virtual async Task<int> SaveChangesImpl(CancellationToken cancellationToken = default)
 		{
 				return await base.SaveChangesAsync(cancellationToken);
 		}
