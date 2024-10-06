@@ -3,7 +3,7 @@ using Production.Domain.Enums;
 
 namespace Production.Domain.Events;
 
-public record ArticleStageChangedDomainEvent(IArticleAction<ArticleActionType> action, ArticleStage PreviousStage, ArticleStage NewStage) 
-    : DomainEvent<ArticleActionType>(action.ArticleId, action.ActionType, action.CreatedById, action.Comment)
+public record ArticleStageChangedDomainEvent(IArticleAction action, ArticleStage PreviousStage, ArticleStage NewStage) 
+    : DomainEvent(action.ArticleId, action.Action, action.CreatedById, action.Comment)
 {
 }

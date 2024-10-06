@@ -1,14 +1,13 @@
 ﻿using FastEndpoints;
 using Microsoft.AspNetCore.Authorization;
 using Production.Persistence.Repositories;
-using Production.Domain.Entities;
 using Production.Persistence;
 using Articles.Abstractions;
 using Production.API.Features.Shared;
 
 namespace Production.API.Features.AssignTypesetter
 {
-    [Authorize(Roles = "POF")]
+		[Authorize(Roles = "POF")]
     [HttpPut("articles/{articleId:int}/typesetter/{typesetterId:int}")]
 		[Tags("Articles")]
 		public class AssignTypesetterEndpoint(ArticleRepository articleRepository, ProductionDbContext _dbContext) 
@@ -23,12 +22,12 @@ namespace Production.API.Features.AssignTypesetter
 
 						article.SetTypesetter(typesetter, command);
 
-						article.SetStage(GetNextStage(article), command);
+						article.SetStage(NextStage, command);
 
 						await _articleRepository.SaveChangesAsync();
 
             await SendAsync( new ArticleCommandResponse(command.ArticleId));
         }
-        protected override ArticleStage GetNextStage(Article article) => ArticleStage.InProduction;
+        protected override ArticleStage NextStage => ArticleStage.InProduction;
     }
 }

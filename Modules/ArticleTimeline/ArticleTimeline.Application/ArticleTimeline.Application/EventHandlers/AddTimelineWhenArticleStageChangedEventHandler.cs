@@ -20,7 +20,6 @@ internal class AddTimelineWhenArticleStageChangedEventHandler(TimelineRepository
 				var template  = await _timelineRepository.GetTimelineTemplate(SourceType.StageTransition, (int) eventModel.NewStage, eventModel.PreviousStage);
 
 				var resolverModel = new TimelineResolverModel();
-
 				var timeline = new Timeline()
 				{
 						ArticleId = eventModel.ArticleId,

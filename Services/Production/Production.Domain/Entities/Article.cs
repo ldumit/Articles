@@ -17,8 +17,7 @@ public partial class Article : AuditedEntity
     public virtual Person SubmitedBy { get; set; } = null!;
 
     public ArticleStage Stage { get; set; }
-    public ArticleCurrentStage CurrentStage { get; set; } = null!;
-    //public ArticleStage Stage => CurrentStage.StageId;
+//    public ArticleCurrentStage CurrentStage { get; set; } = null!;
 
     public required int JournalId { get; set; }
     public int VolumeId { get; set; }

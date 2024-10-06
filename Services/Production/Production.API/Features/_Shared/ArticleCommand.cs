@@ -18,6 +18,9 @@ public abstract record ArticleCommand<TActionType, TResponse> : IArticleAction<T
     public abstract TActionType ActionType { get; }
 
 		[JsonIgnore]
+		public string Action => ActionType.ToString();
+
+		[JsonIgnore]
 		public DateTime CreatedOn => DateTime.UtcNow;
 
 		//todo check why the FromClaim doesn't work
@@ -35,7 +38,7 @@ public abstract record AssetCommand<TResponse> : ArticleCommand<AssetActionType,
 public record ArticleCommandResponse(int ArticleId);
 
 public abstract class ArticleCommandValidator<TFileActionCommand> : BaseValidator<TFileActionCommand>
-    where TFileActionCommand : IArticleCommand
+    where TFileActionCommand : IArticleAction
 {
     public ArticleCommandValidator()
     {

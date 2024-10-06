@@ -53,13 +53,6 @@ public class ArticleEntityConfiguration : AuditedEntityConfiguration<Article>
             .OnDelete(DeleteBehavior.Cascade);
 
 
-
-        entity.HasOne(e => e.CurrentStage).WithOne(e => e.Article)
-            .HasForeignKey<ArticleCurrentStage>(e => e.ArticleId)
-            .IsRequired()
-            .OnDelete(DeleteBehavior.Cascade);
-
-
         //entity.ComplexProperty(
         //   e => e.ReadOnlyData, ro =>
         //   {

@@ -46,6 +46,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Features\Publish\" />
     <Folder Include="Features\RequestAssets\Draft\" />
   </ItemGroup>
 

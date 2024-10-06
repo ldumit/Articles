@@ -10,8 +10,6 @@ public class ArticleRepository(ProductionDbContext dbContext)
 		protected override IQueryable<Article> Query()
 		{
 				return base.Entity
-						.Include(e => e.CurrentStage)
-						//.Include(e => e.CurrentStage.Stage)
 						.Include(e => e.Actors);
 		}
 

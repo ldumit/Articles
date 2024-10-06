@@ -12,7 +12,7 @@ public partial class Asset
 		private Asset() {/* use factory method*/}
 
 		public string GenerateStorageFilePath(string fileName) 
-				=> $"Articles/{Article.Id}/{Name}/{Number}/{CalculateNextVersion()}/{fileName}";
+				=> $"Articles/{ArticleId}/{Name}/{Number}/{CalculateNextVersion()}/{fileName}";
 		
 		public byte CalculateNextVersion() => (byte)(CurrentVersion + 1);
 		public byte CurrentVersion => CurrentFile?.Version.Value ?? 0;

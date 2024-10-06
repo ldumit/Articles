@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Production.Domain.Events
 {
 		public record AssetActionExecutedDomainEvent(IArticleAction<AssetActionType> action, AssetType AssetType, int AssetNumber, Entities.File? File)
-		: DomainEvent<AssetActionType>(action.ArticleId, action.ActionType, action.CreatedById, action.Comment)
+		: DomainEvent(action.ArticleId, action.Action, action.CreatedById, action.Comment)
 		{
 		}
 }

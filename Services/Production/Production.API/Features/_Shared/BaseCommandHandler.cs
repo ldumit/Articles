@@ -27,7 +27,7 @@ public abstract class BaseCommandHandler<TCommand, TResponse> : IRequestHandler<
     }
 
     public abstract Task<TResponse> Handle(TCommand request, CancellationToken cancellationToken);
-    protected virtual ArticleStage GetNextStage(Article article) => article.CurrentStage.Stage;
+    protected virtual ArticleStage GetNextStage(Article article) => article.Stage;
     #region Methods
 
     protected void ChangeStage(Article article, TCommand command, Domain.Enums.AssetType? assetType = null)

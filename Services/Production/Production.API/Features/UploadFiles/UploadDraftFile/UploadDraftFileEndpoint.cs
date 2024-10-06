@@ -5,6 +5,7 @@ using FileStorage.Contracts;
 using Production.Application.StateMachines;
 using Articles.Security;
 using Production.API.Features.UploadFiles.Shared;
+using Articles.Abstractions;
 
 namespace Production.API.Features.UploadFiles.UploadDraftFile;
 
@@ -15,4 +16,6 @@ namespace Production.API.Features.UploadFiles.UploadDraftFile;
 public class UploadDraftFileEndpoint(ArticleRepository articleRepository, AssetRepository assetRepository, IFileService fileService, AssetStateMachineFactory factory)
 		: UploadFileEndpoint<UploadDraftFileCommand>(articleRepository, assetRepository, fileService, factory)
 {
+
+		protected override ArticleStage NextStage => ArticleStage.DraftProduction;
 }

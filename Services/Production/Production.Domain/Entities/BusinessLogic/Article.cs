@@ -1,5 +1,4 @@
 ﻿using Articles.Abstractions;
-using Articles.Entitities;
 using Articles.Security;
 using Production.Domain.Enums;
 using Production.Domain.Events;
@@ -8,14 +7,12 @@ namespace Production.Domain.Entities;
 
 public partial class Article 
 {
-    public void SetStage(ArticleStage newStage, IArticleAction<ArticleActionType> action)
+    public void SetStage(ArticleStage newStage, IArticleAction action)
     {
-        if (newStage == CurrentStage.Stage)
+        if (newStage == Stage)
             return;
 
-        var previousStage = CurrentStage.Stage;
-				//todo chose between the next 2 aproaches
-				CurrentStage.Stage = newStage;
+        var previousStage = Stage;
 				Stage = newStage;
 
 				_stageHistories.Add(new StageHistory { ArticleId = Id, StageId = newStage, StartDate = DateTime.UtcNow });

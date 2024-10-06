@@ -4,6 +4,7 @@ using FileStorage.Contracts;
 using Production.API.Features.Shared;
 using Mapster;
 using Production.Application.StateMachines;
+using Articles.Abstractions;
 
 namespace Production.API.Features.UploadFiles.Shared;
 
@@ -13,20 +14,21 @@ public class UploadFileEndpoint<TUploadCommand>
     where TUploadCommand : UploadFileCommand
 {
     //talk - readonly fields in primary constructors are not supported yet but they will be
-
     public async override Task HandleAsync(TUploadCommand command, CancellationToken ct)
     {
-        var article = await _articleRepository.GetByIdWithSingleAssetAsync(command.ArticleId, command.AssetType, command.GetAssetNumber());
+        _article = await _articleRepository.GetByIdWithSingleAssetAsync(command.ArticleId, command.AssetType, command.GetAssetNumber());
         
-        var asset = article.Assets.SingleOrDefault();
+        var asset = _article.Assets.SingleOrDefault();
         if (asset is null)
-						asset = CreateAsset(command, article);
+						asset = CreateAsset(command, _article);
 
 				var uploadResponse = await UploadFile(command, asset);
 
         try
         {
             asset.CreateAndAddFile(uploadResponse);
+
+            _article.SetStage(NextStage, command);
 
 				    await _articleRepository.SaveChangesAsync();
 				}
@@ -56,5 +58,5 @@ public class UploadFileEndpoint<TUploadCommand>
                     {"entity", nameof(Asset)},
                     {"entityId", asset.Id.ToString()}
                 });
-    }
+    }    
 }

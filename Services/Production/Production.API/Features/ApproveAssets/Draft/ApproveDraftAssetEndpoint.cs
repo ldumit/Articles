@@ -9,7 +9,7 @@ using Articles.Abstractions;
 
 namespace Production.API.Features.ApproveAssets.ApproveDraftAsset;
 
-[Authorize(Roles = $"{Role.POF},{Role.AUT}")]
+[Authorize(Roles = $"{Role.POF},{Role.CORAUT}")]
 [HttpPut("articles/{articleId:int}/assets/draft/{assetId:int}:approve")]
 //[HttpPut("articles/{articleId:int}/assets/draft/{assetId:int}/actions/approve")]
 [Tags("Assets")]
@@ -21,7 +21,7 @@ public class ApproveDraftAssetEndpoint(ArticleRepository articleRepository, Asse
     {
         var asset = await _assetRepository.GetByIdAsync(command.ArticleId, command.AssetId);
         asset.SetState(AssetState.Approved, command);
-        //asset.Article.SetStage(ArticleStage.FinalProduction, command);
+        asset.Article.SetStage(ArticleStage.FinalProduction, command);
 
         await _assetRepository.SaveChangesAsync();
         await SendAsync(asset.Adapt<AssetActionResponse>());
