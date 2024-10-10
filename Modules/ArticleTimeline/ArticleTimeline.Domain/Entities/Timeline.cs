@@ -5,7 +5,7 @@ using ArticleTimeline.Domain.Enums;
 
 namespace ArticleTimeline.Domain;
 
-public class Timeline : AuditedEntity
+public class Timeline : AggregateEntity
 {
     public int ArticleId { get; set; }
     public ArticleStage CurrentStage { get; set; }
@@ -15,7 +15,7 @@ public class Timeline : AuditedEntity
     public string Title { get; set; } = default!;
     public string Description { get; set; } = default!;
     public int? FileId { get; set; }
-    public UserRoleType RoleType { get; set; }
+    //public UserRoleType RoleType { get; set; }
     public int TemplateId { get; set; }
     public TimelineTemplate Template { get; set; } = default!;
 

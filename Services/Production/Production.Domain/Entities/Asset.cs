@@ -4,7 +4,7 @@ using Production.Domain.ValueObjects;
 
 namespace Production.Domain.Entities;
 
-public partial class Asset : AuditedEntity
+public partial class Asset : AggregateEntity
 {
 		public AssetName Name { get; private set; } = null!;
     public AssetNumber Number { get; private set; } = null!;    

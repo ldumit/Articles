@@ -3,7 +3,8 @@ using Articles.Security;
 
 namespace Production.Domain.Entities
 {
-		public class ArticleActor : ChildEntity
+		//todo define agregators, entities, child entities and value objects
+		public class ArticleActor : IChildEntity
 		{
         public int ArticleId { get; set; }
 				public virtual Article Article { get; set; } = null!;

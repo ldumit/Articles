@@ -1,40 +1,33 @@
 ﻿namespace Articles.Entitities;
 
-
-public abstract record ValueObject : IDomainObject
+public abstract class StringValueObject : IEquatable<StringValueObject>, IEquatable<string>
 {
-    //protected abstract IEnumerable<object> GetAtomicValues();
+    public string Value { get; protected set; } = default!;
+
+    public bool Equals(StringValueObject? other) => Value.Equals(other?.Value);
+    public bool Equals(string? other) => Value.Equals(other);
+
+		public override int GetHashCode() => Value.GetHashCode(); 
+    public override string ToString() => Value.ToString();
 }
 
-public abstract class ValueObject<T> : IEquatable<ValueObject<T>>
+public abstract class ValueObject<T> : IEquatable<ValueObject<T>>, IEquatable<T>
+		where T : struct
 {
     public T Value { get; protected set; } = default!;
 
-		//public bool Equals(T? other) => Value.Equals(other);
+		public override string ToString()  => Value.ToString();
+		public override int GetHashCode()  => Value.GetHashCode();
 
-		public override string ToString() => Value.ToString();
 		public virtual bool Equals(ValueObject<T>? other)
-		{
-				if (other is null) return false;
+    {
+        if (other is null)
+            return false;
 
-				if (ReferenceEquals(this, other)) return true;
-
-				return Value.Equals(other.Value);
-		}
-
-    //public override bool Equals(object? obj)
-    //{
-    //    if (obj is ValueObject<T> other)
-    //        return Equals(other);
-    //    return false;
-    //}
-
-    public override int GetHashCode() => Value.GetHashCode();
-}
-
-
-public abstract class ChildEntity : IDomainObject
-{
+        return Value.Equals(other.Value);
+    }
+    public bool Equals(T other) => Value.Equals(other);
+    public override bool Equals(object? other)  => Equals(other as ValueObject<T>);
 }
 
 public abstract class ValueObjectOld : IDomainObject

@@ -45,7 +45,7 @@ public partial class Asset
 						ArticleId = articleAction.ArticleId,
 						Number = AssetNumber.FromNumber(assetNumber, type),
 						Name = AssetName.FromAssetType(type),
-						Type = type.Code,
+						Type = type.Name,
 						TypeRef = type,
 						CategoryId = type.DefaultCategoryId,
 						State = state

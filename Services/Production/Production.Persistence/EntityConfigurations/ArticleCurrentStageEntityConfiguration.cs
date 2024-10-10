@@ -17,7 +17,7 @@ internal class ArticleCurrentStageEntityConfiguration : IEntityTypeConfiguration
 
 				entity.HasOne<Stage>().WithMany()
 					 .HasForeignKey(e => e.Stage)
-					 .HasPrincipalKey(e => e.Code)
+					 .HasPrincipalKey(e => e.Name)
 					 .IsRequired()
 					 .OnDelete(DeleteBehavior.Restrict);
 		}

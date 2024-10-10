@@ -5,12 +5,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace Articles.EntityFrameworkCore;
 
 public abstract class AuditedEntityConfiguration<T> : AuditedEntityConfiguration<T, int>
-	  where T : class, IEntity<int>, IAuditedEntity<int>
+	  where T : class, IEntity<int>, IAggregateEntity<int>
 {
 }
 
 public abstract class AuditedEntityConfiguration<T, TKey> : EntityConfiguration<T, TKey> 
-    where T : class, IEntity<TKey>, IAuditedEntity<TKey>
+    where T : class, IEntity<TKey>, IAggregateEntity<TKey>
     where TKey : struct
 {
     public override void Configure(EntityTypeBuilder<T> builder)

@@ -3,17 +3,16 @@ using Production.Domain.Entities;
 using Articles.EntityFrameworkCore;
 using Articles.EntityFrameworkCore.EntityConfigurations;
 
-namespace Production.Persistence.EntityConfigurations
-{
-		internal class AssetStateTransitionConditionConfiguration : EntityConfiguration<AssetStateTransitionCondition>
-		{
-				public override void Configure(EntityTypeBuilder<AssetStateTransitionCondition> builder)
-				{
-						base.Configure(builder);
+namespace Production.Persistence.EntityConfigurations;
 
-						builder.Property(e => e.ArticleStage).HasEnumConversion().IsRequired();
-						builder.Property(e => e.ActionTypes).HasJsonListConversion().IsRequired(); //todo provide a version for enums
-						builder.Property(e => e.AssetTypes).HasJsonListConversion().IsRequired();
-				}
+internal class AssetStateTransitionConditionConfiguration : EntityConfiguration<AssetStateTransitionCondition>
+{
+		public override void Configure(EntityTypeBuilder<AssetStateTransitionCondition> builder)
+		{
+				base.Configure(builder);
+
+				builder.Property(e => e.ArticleStage).HasEnumConversion().IsRequired();
+				builder.Property(e => e.ActionTypes).HasJsonListConversion().IsRequired(); //todo provide a version for enums
+				builder.Property(e => e.AssetTypes).HasJsonListConversion().IsRequired();
 		}
 }

@@ -2,21 +2,9 @@
 
 
 [Serializable]
-public abstract class EnumEntity<TEnum> : Entity<TEnum>, IEnumEntity<TEnum>
+public abstract class EnumEntity<TEnum> : Entity<TEnum>
 		where TEnum : struct, Enum
 {
-		public TEnum Code { get; set; } = default!;
-		public string Name { get; set; } = null!;
-}
-
-public interface IEnumEntity<TEnum>
-{
-		public TEnum Code { get; set; }
-}
-
-[Serializable]
-public abstract class EnumEntityCode<TEnum> : IEnumEntity<TEnum>
-		where TEnum : struct, Enum
-{
-		public TEnum Code { get; set; }
+		public TEnum Name { get; set; } = default!;
+		public string Description { get; set; } = null!;
 }

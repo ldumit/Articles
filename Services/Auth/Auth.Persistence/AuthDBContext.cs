@@ -6,7 +6,7 @@ using Auth.Domain.Models;
 
 namespace Auth.Persistence;
 
-public class ApplicationDbContext :
+public class AuthDBContext :
 				//IdentityDbContext<User, Role, Guid, IdentityUserClaim<Guid>, UserRole, IdentityUserLogin<Guid>, IdentityRoleClaim<Guid>, IdentityUserToken<Guid>>
 				IdentityDbContext<User, Role, int>
 		{
@@ -15,7 +15,7 @@ public class ApplicationDbContext :
 
     //JsonSerializerSettings jsonSettings;
 
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,IHttpContextAccessor httpContextAccessor)
+    public AuthDBContext(DbContextOptions<AuthDBContext> options,IHttpContextAccessor httpContextAccessor)
         : base(options)
     {
         //this.httpContextAccessor = httpContextAccessor;

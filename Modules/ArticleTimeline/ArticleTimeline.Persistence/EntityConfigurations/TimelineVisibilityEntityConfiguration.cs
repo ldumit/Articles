@@ -1,17 +1,21 @@
 ﻿using Articles.EntityFrameworkCore;
+using Articles.EntityFrameworkCore.EntityConfigurations;
 using ArticleTimeline.Domain;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ArticleTimeline.Persistence.EntityConfigurations;
 
-public class TimelineVisibilityEntityConfiguration : EntityConfiguration<TimelineVisibility>
+public class TimelineVisibilityEntityConfiguration : MetadataConfiguration<TimelineVisibility>
 {
-    public override void Configure(EntityTypeBuilder<TimelineVisibility> entity)
+    public override void Configure(EntityTypeBuilder<TimelineVisibility> builder)
     {
-        entity.Property(e => e.SourceType);
-        entity.Property(e => e.SourceId);
-        entity.Property(e => e.RoleType);
+				base.Configure(builder);
+				
+				builder.HasKey(e => new { e.SourceType, e.SourceId, e.RoleType });
+
+				builder.Property(e => e.SourceType).HasEnumConversion().IsRequired();
+				builder.Property(e => e.SourceId).HasMaxLength(Constraints.C64).IsRequired();
+				builder.Property(e => e.RoleType).HasEnumConversion().IsRequired();
         //entity.Property(e => e.Stage);
     }
 }

@@ -14,7 +14,7 @@ public static class DependencyInjection
     public static IServiceCollection AddApplicationServices (this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("Database");
-				services.AddDbContext<ApplicationDbContext>(opts => opts.UseSqlServer(connectionString));
+				services.AddDbContext<AuthDBContext>(opts => opts.UseSqlServer(connectionString));
 
 
 				///services.AddScoped<UserManager<User>>();

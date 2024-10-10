@@ -5,7 +5,7 @@ using ArticleTimeline.Domain.Enums;
 
 namespace ArticleTimeline.Domain;
 
-public class TimelineTemplate : Entity, ICacheable
+public class TimelineTemplate : ICacheable, IMetadataEntity
 {
     public SourceType SourceType { get; set; }
     public string SourceId { get; set; } = null!;

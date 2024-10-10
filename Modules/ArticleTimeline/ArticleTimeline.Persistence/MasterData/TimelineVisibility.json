@@ -10,5 +10,5 @@
 	{"SourceType": "StageTransition", "SourceId": "FinalProduction->Published", "RoleType": "TSOF"},
 
 	{"SourceType": "StageTransition", "SourceId": "InProduction->DraftProduction", "RoleType": "CORAUT"},
-	{"SourceType": "StageTransition", "SourceId": "FinalProduction->Published", "RoleType": "CORAUT"},
+	{"SourceType": "StageTransition", "SourceId": "FinalProduction->Published", "RoleType": "CORAUT"}
 ]

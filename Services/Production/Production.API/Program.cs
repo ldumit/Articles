@@ -10,6 +10,8 @@ using FastEndpoints.Swagger;
 using Microsoft.AspNetCore.Http.Json;
 using Articles.FastEnpoints;
 using System.Reflection;
+using ArticleTimeline.Persistence;
+using ArticleTimeline.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,7 +41,8 @@ builder.Services
 		.AddAutoMapper(new Assembly[] { typeof(Production.API.Features.Shared.FileResponseMappingProfile).Assembly })
 		.AddDistributedMemoryCache() //.AddMemoryCache()
     .AddApplicationServices(builder.Configuration)
-    .AddSwaggerGen()
+		.AddTimelineApplicationServices(builder.Configuration)
+		.AddSwaggerGen()
     .AddJwtAuthentication(builder.Configuration)
     .AddAuthorization()
 		;
@@ -65,6 +68,7 @@ app.UseSwaggerUI();
 
 //talk - explain when is the best time to run the migration, integrate the migration in the CI pipeline
 app.Migrate<ProductionDbContext>();
+app.Migrate<ArticleTimelineDbContext>();
 if (app.Environment.IsDevelopment())
 {
     app.SeedTestData();

@@ -34,4 +34,13 @@
     <Folder Include="TestData\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="MasterData\TimelineTemplate.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="MasterData\TimelineVisibility.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

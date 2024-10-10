@@ -4,11 +4,11 @@ using Production.Domain.Entities;
 
 namespace Production.Domain.ValueObjects;
 
-public class AssetName: ValueObject<string>
+public class AssetName: StringValueObject
 {
 		[JsonConstructor]
 		private AssetName(string value) => Value = value;
 
 		public static AssetName FromAssetType(AssetType assetType)
-				=> new AssetName(assetType.Code.ToString());
+				=> new AssetName(assetType.Name.ToString());
 }

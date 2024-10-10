@@ -3,7 +3,7 @@ using Production.Domain.ValueObjects;
 
 namespace Production.Domain.Entities;
 
-public partial class File : AuditedEntity
+public partial class File : AggregateEntity
 {
     //talk - difference between required, null!, default!
     public string OriginalName { get; init; } = default!;

@@ -6,5 +6,5 @@ namespace Production.Domain.Entities;
 
 public partial class Stage : EnumEntity<ArticleStage>
 {
-    public string Description { get; set; } = null!;
+    public string Info { get; set; } = null!;
 }

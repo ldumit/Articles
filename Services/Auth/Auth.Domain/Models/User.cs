@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Auth.Domain.Models;
 
-public class User : IdentityUser<int>, IAuditedEntity<int>, IEntity<int>
+public class User : IdentityUser<int>, IAggregateEntity<int>, IEntity<int>
 {
 		public required string FirstName { get; set; }
     public required string LastName { get; set; }

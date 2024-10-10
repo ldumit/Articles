@@ -40,7 +40,7 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.Migrate<ApplicationDbContext>();
+app.Migrate<AuthDBContext>();
 if (app.Environment.IsDevelopment())
 {
 		app.SeedTestData();

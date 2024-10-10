@@ -45,17 +45,15 @@ public class ApplicationDbContext<TDbContext>(DbContextOptions<TDbContext> _opti
 		private async Task<int> SaveChangesAndDispatchEventsAsync(CancellationToken cancellationToken = default)
 		{
 				// save first the main changes
-				int counter = await SaveChangesImpl(cancellationToken);
+				//int counter = await SaveChangesImpl(cancellationToken);
 
-				//todo implement events dispatching with fastendpoints
-				int dispatchedEventsCounter = 0;
-				//int dispatchedEventsCounter = (await _mediator.DispatchDomainEventsAsync(this));
+				int dispatchedEventsCounter = (await this.DispatchDomainEventsAsync());
 				if (dispatchedEventsCounter > 0)
 						// save changes from event handlers
 						// todo domain events handlers should save their own changes
 						await TrySaveChangesAsync(cancellationToken);
 
-				return counter;
+				return 0;
 		}
 
 		protected virtual async Task<int> SaveChangesImpl(CancellationToken cancellationToken = default)

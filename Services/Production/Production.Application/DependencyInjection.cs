@@ -10,6 +10,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Production.Application.StateMachines;
 using Production.Persistence;
 using Production.Persistence.Repositories;
@@ -41,14 +42,18 @@ public static class DependencyInjection
 				services.AddDbContext<ProductionDbContext>((provider, options) =>
 				{
 						var dbConnection = provider.GetRequiredService<DbConnection>();
-						//options.UseSqlServer(dbConnection);
-						options.UseSqlServer(connectionString);
+						options.UseSqlServer(dbConnection);
+						//options.UseSqlServer(connectionString);
 
 				});
 				services.AddDbContext<ArticleTimelineDbContext>((provider, options) =>
 				{
 						var dbConnection = provider.GetRequiredService<DbConnection>();
-						options.UseSqlServer(dbConnection);
+						//options.UseSqlServer(dbConnection);
+						options.UseSqlServer(dbConnection, options =>
+						{
+								options.MigrationsHistoryTable("__EFMigrationsHistory", "ArticleTimeline");
+						});
 				});
 
 				services.AddScoped<IAuthorizationHandler, ArticleRoleAuthorizationHandler>();

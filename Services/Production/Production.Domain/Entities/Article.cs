@@ -3,7 +3,7 @@ using Articles.Entitities;
 
 namespace Production.Domain.Entities;
 
-public partial class Article : AuditedEntity
+public partial class Article : AggregateEntity
 {
     //decide - do I need this complex property here?
     //public Submission ReadOnlyData { get; private set; } = default!;

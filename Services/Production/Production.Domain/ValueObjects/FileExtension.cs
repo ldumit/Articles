@@ -4,7 +4,7 @@ using Production.Domain.Entities;
 
 namespace Production.Domain.ValueObjects;
 
-public class FileExtension: ValueObject<string>
+public class FileExtension: StringValueObject
 {
 		[JsonConstructor]
 		private FileExtension(string value) => Value = value;

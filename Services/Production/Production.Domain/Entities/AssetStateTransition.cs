@@ -4,7 +4,7 @@ using Production.Domain.Enums;
 
 namespace Production.Domain.Entities;
 
-public class AssetStateTransition : IDomainMetadata, ICacheable
+public class AssetStateTransition : IMetadataEntity, ICacheable
 {
 		public AssetState CurrentState{ get; set; }
 		public AssetActionType ActionType { get; set; }

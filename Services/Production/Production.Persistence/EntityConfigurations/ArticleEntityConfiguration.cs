@@ -24,7 +24,7 @@ public class ArticleEntityConfiguration : AuditedEntityConfiguration<Article>
 
 				entity.HasOne<Stage>().WithMany()
 					 .HasForeignKey(e => e.Stage)
-					 .HasPrincipalKey(e => e.Code)
+					 .HasPrincipalKey(e => e.Name)
 					 .IsRequired()
 					 .OnDelete(DeleteBehavior.Restrict);
 

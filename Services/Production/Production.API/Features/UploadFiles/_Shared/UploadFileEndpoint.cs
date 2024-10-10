@@ -45,6 +45,7 @@ public class UploadFileEndpoint<TUploadCommand>
 		{
 				var assetTypeEntity = _assetRepository.GetAssetType(command.AssetType);
 				var asset = Asset.CreateFromUpload(command, assetTypeEntity, command.GetAssetNumber());
+        //todo the next line doesn't look nice
         _articleRepository.Context.Assets.Add(asset);
 				//article.Assets.Add(asset);
 				return asset;

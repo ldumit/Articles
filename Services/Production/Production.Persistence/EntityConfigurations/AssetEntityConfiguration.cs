@@ -46,7 +46,7 @@ internal class AssetEntityConfiguration : AuditedEntityConfiguration<Asset>
 
         builder.HasOne(e => e.TypeRef).WithMany()
             .HasForeignKey(e => e.Type)
-            .HasPrincipalKey(e => e.Code)
+            .HasPrincipalKey(e => e.Name)
             .IsRequired();
 
         builder.HasMany(e => e.Files).WithOne(e => e.Asset)

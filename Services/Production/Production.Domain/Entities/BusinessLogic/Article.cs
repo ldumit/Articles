@@ -1,5 +1,6 @@
 ﻿using Articles.Abstractions;
 using Articles.Security;
+using FastEndpoints;
 using Production.Domain.Enums;
 using Production.Domain.Events;
 
@@ -14,9 +15,10 @@ public partial class Article
 
         var previousStage = Stage;
 				Stage = newStage;
+        LasModifiedOn = action.CreatedOn;
+				LastModifiedById = action.CreatedById;
 
 				_stageHistories.Add(new StageHistory { ArticleId = Id, StageId = newStage, StartDate = DateTime.UtcNow });
-
 				AddDomainEvent(
             new ArticleStageChangedDomainEvent(action, newStage, previousStage)
             );

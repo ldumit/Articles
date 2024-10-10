@@ -29,6 +29,7 @@ public static class EntityTypeBuilderExtensions
 		public static bool SeedFromFile<T>(this EntityTypeBuilder<T> builder)
 				where T : class
 		{
+				Console.WriteLine(AppContext.BaseDirectory);
 				var filePath = $"{AppContext.BaseDirectory}MasterData/{typeof(T).Name}.json";
 				if (!File.Exists(filePath))
 						return false;

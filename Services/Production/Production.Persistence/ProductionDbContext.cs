@@ -41,7 +41,7 @@ public partial class ProductionDbContext(DbContextOptions<ProductionDbContext> o
 				modelBuilder.ApplyConfiguration(new AssetEntityConfiguration());
 				modelBuilder.ApplyConfiguration(new AssetStateTransitionConfiguration());
 				modelBuilder.ApplyConfiguration(new AssetStateTransitionConditionConfiguration());
-				modelBuilder.ApplyConfiguration(new AssetLatestFileEntityConfiguration());
+				modelBuilder.ApplyConfiguration(new AssetCurrentFileLinkEntityConfiguration());
         modelBuilder.ApplyConfiguration(new AssetActionEntityConfiguration());
 				modelBuilder.ApplyConfiguration(new AssetTypeEntityConfiguration());
 				modelBuilder.ApplyConfiguration(new ArticleActorEntityConfiguration());

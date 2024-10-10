@@ -14,12 +14,12 @@ public static class Seed
     public static void SeedTestData(this IHost host)
     {
         using var scope = host.Services.CreateScope();
-        using var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        using var context = scope.ServiceProvider.GetRequiredService<AuthDBContext>();
 				using var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
 				context.SeedTestData(userManager);
     }
 
-    public static void SeedTestData(this ApplicationDbContext context, UserManager<User> userManager)
+    public static void SeedTestData(this AuthDBContext context, UserManager<User> userManager)
     {
         const string DefaultPassword = "Pass.123!";
         using var transaction = context.Database.BeginTransaction();
@@ -34,7 +34,7 @@ public static class Seed
         transaction.Commit();
     }
 
-    private static TEntity[] LoadFromJson<TEntity>(ApplicationDbContext context)
+    private static TEntity[] LoadFromJson<TEntity>(AuthDBContext context)
         where TEntity : class, IEntity<int>
     {
         if (context.Set<TEntity>().Any())

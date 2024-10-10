@@ -2,7 +2,7 @@
 
 namespace Production.Domain.Entities;
 
-public class FileLatestAction : ChildEntity
+public class FileLatestAction : IChildEntity
 {
     public int FileId { get; set; }
     public File File  { get; set; } = null!;

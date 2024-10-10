@@ -3,7 +3,7 @@ using Production.Domain.Enums;
 
 namespace Production.Domain.Entities;
 
-public partial class AssetAction : AuditedEntity //talk - modification never happens for an action
+public partial class AssetAction : AggregateEntity //talk - modification never happens for an action
 {
     public int AssetId { get; set; }
 

@@ -6,7 +6,7 @@ using Production.Domain.Enums;
 
 namespace Production.Domain.Entities;
 
-public class ArticleStageTransition : IDomainMetadata, ICacheable
+public class ArticleStageTransition : IMetadataEntity, ICacheable
 {
     public ArticleStage CurrentStage { get; set; }
     public ArticleActionType ActionType { get; set; }

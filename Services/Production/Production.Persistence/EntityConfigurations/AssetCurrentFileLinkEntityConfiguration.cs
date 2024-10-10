@@ -4,7 +4,7 @@ using Production.Domain.Entities;
 
 namespace Production.Persistence.EntityConfigurations;
 
-internal class AssetLatestFileEntityConfiguration : IEntityTypeConfiguration<AssetCurrentFileLink>
+internal class AssetCurrentFileLinkEntityConfiguration : IEntityTypeConfiguration<AssetCurrentFileLink>
 {
     public void Configure(EntityTypeBuilder<AssetCurrentFileLink> entity)
     {
