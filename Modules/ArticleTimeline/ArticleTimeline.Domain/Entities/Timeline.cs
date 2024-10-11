@@ -8,7 +8,7 @@ namespace ArticleTimeline.Domain;
 public class Timeline : AggregateEntity
 {
     public int ArticleId { get; set; }
-    public ArticleStage CurrentStage { get; set; }
+    public ArticleStage NextStage { get; set; }
 		public ArticleStage PreviousStage { get; set; }
 		public SourceType SourceType { get; set; }
     public string SourceId { get; set; } = null!;

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ArticleTimeline.Persistence.Migrations
 {
     [DbContext(typeof(ArticleTimelineDbContext))]
-    [Migration("20241009060625_InitialCreate")]
+    [Migration("20241012081144_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -30,7 +30,8 @@ namespace ArticleTimeline.Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnOrder(0);
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
@@ -42,9 +43,6 @@ namespace ArticleTimeline.Persistence.Migrations
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("CurrentStage")
-                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -58,6 +56,10 @@ namespace ArticleTimeline.Persistence.Migrations
 
                     b.Property<int?>("LastModifiedById")
                         .HasColumnType("int");
+
+                    b.Property<string>("NextStage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PreviousStage")
                         .IsRequired()

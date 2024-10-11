@@ -13,8 +13,8 @@ using Production.Persistence;
 namespace Production.Persistence.Migrations
 {
     [DbContext(typeof(ProductionDbContext))]
-    [Migration("20241003093141_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20241010104400_SeedMasterData")]
+    partial class SeedMasterData
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -115,12 +115,18 @@ namespace Production.Persistence.Migrations
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("ArticleActors");
+                    b.ToTable("ArticleActor", (string)null);
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.ArticleCurrentStage", b =>
                 {
                     b.Property<int>("ArticleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ArticleId"));
+
+                    b.Property<int>("ArticleId1")
                         .HasColumnType("int");
 
                     b.Property<string>("Stage")
@@ -129,9 +135,11 @@ namespace Production.Persistence.Migrations
 
                     b.HasKey("ArticleId");
 
+                    b.HasIndex("ArticleId1");
+
                     b.HasIndex("Stage");
 
-                    b.ToTable("ArticleCurrentStage");
+                    b.ToTable("ArticleCurrentStage", (string)null);
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.ArticleStageTransition", b =>
@@ -243,7 +251,8 @@ namespace Production.Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnOrder(0);
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
@@ -290,7 +299,7 @@ namespace Production.Persistence.Migrations
                     b.HasIndex("FileId")
                         .IsUnique();
 
-                    b.ToTable("AssetCurrentFileLink");
+                    b.ToTable("AssetCurrentFileLink", (string)null);
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.AssetStateTransition", b =>
@@ -335,6 +344,12 @@ namespace Production.Persistence.Migrations
                         },
                         new
                         {
+                            CurrentState = "Uploaded",
+                            ActionType = "Approve",
+                            DestinationState = "Approved"
+                        },
+                        new
+                        {
                             CurrentState = "Requested",
                             ActionType = "Upload",
                             DestinationState = "Uploaded"
@@ -351,7 +366,8 @@ namespace Production.Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnOrder(0);
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
@@ -414,11 +430,6 @@ namespace Production.Persistence.Migrations
                     b.Property<int>("Id")
                         .HasColumnType("int");
 
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
                     b.Property<int>("DefaultCategoryId")
                         .HasColumnType("int");
 
@@ -428,6 +439,12 @@ namespace Production.Persistence.Migrations
                         .HasMaxLength(8)
                         .HasColumnType("nvarchar(8)")
                         .HasDefaultValue("pdf");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)")
+                        .HasColumnOrder(2);
 
                     b.Property<byte>("MaxFileSizeInMB")
                         .HasColumnType("tinyint");
@@ -440,7 +457,8 @@ namespace Production.Persistence.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
+                        .HasColumnType("nvarchar(64)")
+                        .HasColumnOrder(1);
 
                     b.ComplexProperty<Dictionary<string, object>>("AllowedFileExtensions", "Production.Domain.Entities.AssetType.AllowedFileExtensions#AllowedFileExtensions", b1 =>
                         {
@@ -454,7 +472,7 @@ namespace Production.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Code")
+                    b.HasIndex("Name")
                         .IsUnique();
 
                     b.ToTable("AssetType", (string)null);
@@ -545,7 +563,8 @@ namespace Production.Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnOrder(0);
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
@@ -599,14 +618,15 @@ namespace Production.Persistence.Migrations
 
                     b.HasIndex("FileId1");
 
-                    b.ToTable("FileLatestAction");
+                    b.ToTable("FileLatestAction", (string)null);
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.Journal", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnOrder(0);
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
@@ -634,7 +654,8 @@ namespace Production.Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnOrder(0);
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
@@ -683,12 +704,13 @@ namespace Production.Persistence.Migrations
                     b.Property<int>("Id")
                         .HasColumnType("int");
 
-                    b.Property<string>("Code")
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
+                        .HasColumnType("nvarchar(64)")
+                        .HasColumnOrder(2);
 
-                    b.Property<string>("Description")
+                    b.Property<string>("Info")
                         .IsRequired()
                         .HasMaxLength(512)
                         .HasColumnType("nvarchar(512)");
@@ -696,11 +718,12 @@ namespace Production.Persistence.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
+                        .HasColumnType("nvarchar(64)")
+                        .HasColumnOrder(1);
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Code")
+                    b.HasIndex("Name")
                         .IsUnique();
 
                     b.ToTable("Stage", (string)null);
@@ -709,44 +732,44 @@ namespace Production.Persistence.Migrations
                         new
                         {
                             Id = 201,
-                            Code = "Accepted",
-                            Description = "Your article has been reviewed and accepted. The production of the article will start soon.",
-                            Name = "Article accepted"
+                            Description = "Article accepted",
+                            Info = "Your article has been reviewed and accepted. The production of the article will start soon.",
+                            Name = "Accepted"
                         },
                         new
                         {
                             Id = 300,
-                            Code = "InProduction",
-                            Description = "The typesetter is preparing your Author’s Proof. We will contact you if we need any further files or information.",
-                            Name = "Typesetter assigned"
+                            Description = "Typesetter assigned",
+                            Info = "The typesetter is preparing your Author’s Proof. We will contact you if we need any further files or information.",
+                            Name = "InProduction"
                         },
                         new
                         {
                             Id = 301,
-                            Code = "DraftProduction",
-                            Description = "The Author's Proof is available for you to check and provide corrections. This status is also displayed if we are preparing a further Author's Proof at your request.",
-                            Name = "Author's proof approved"
+                            Description = "Author's proof approved",
+                            Info = "The Author's Proof is available for you to check and provide corrections. This status is also displayed if we are preparing a further Author's Proof at your request.",
+                            Name = "DraftProduction"
                         },
                         new
                         {
                             Id = 302,
-                            Code = "FinalProduction",
-                            Description = "The typesetter is preparing the final version of your article for publication. We will contact you if we need to check anything further before publication.",
-                            Name = "Publisher's proof uploaded"
+                            Description = "Publisher's proof uploaded",
+                            Info = "The typesetter is preparing the final version of your article for publication. We will contact you if we need to check anything further before publication.",
+                            Name = "FinalProduction"
                         },
                         new
                         {
                             Id = 304,
-                            Code = "PublicationScheduled",
-                            Description = "Your Production Specialist has completed their quality checks. Your article is now scheduled for publication on our website and will appear online within the next few working days.",
-                            Name = "Article scheduled for publication"
+                            Description = "Article scheduled for publication",
+                            Info = "Your Production Specialist has completed their quality checks. Your article is now scheduled for publication on our website and will appear online within the next few working days.",
+                            Name = "PublicationScheduled"
                         },
                         new
                         {
                             Id = 305,
-                            Code = "Published",
-                            Description = "Your article has been published and sent to all relevant repositories, and the publication process is now complete. Please note that repositories have different processing times and your article may not be available yet.",
-                            Name = "Article published"
+                            Description = "Article published",
+                            Info = "Your article has been published and sent to all relevant repositories, and the publication process is now complete. Please note that repositories have different processing times and your article may not be available yet.",
+                            Name = "Published"
                         });
                 });
 
@@ -754,7 +777,8 @@ namespace Production.Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnOrder(0);
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
@@ -832,7 +856,7 @@ namespace Production.Persistence.Migrations
                     b.HasOne("Production.Domain.Entities.Stage", null)
                         .WithMany()
                         .HasForeignKey("Stage")
-                        .HasPrincipalKey("Code")
+                        .HasPrincipalKey("Name")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -871,15 +895,15 @@ namespace Production.Persistence.Migrations
             modelBuilder.Entity("Production.Domain.Entities.ArticleCurrentStage", b =>
                 {
                     b.HasOne("Production.Domain.Entities.Article", "Article")
-                        .WithOne("CurrentStage")
-                        .HasForeignKey("Production.Domain.Entities.ArticleCurrentStage", "ArticleId")
+                        .WithMany()
+                        .HasForeignKey("ArticleId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Production.Domain.Entities.Stage", null)
                         .WithMany()
                         .HasForeignKey("Stage")
-                        .HasPrincipalKey("Code")
+                        .HasPrincipalKey("Name")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -897,7 +921,7 @@ namespace Production.Persistence.Migrations
                     b.HasOne("Production.Domain.Entities.AssetType", "TypeRef")
                         .WithMany()
                         .HasForeignKey("Type")
-                        .HasPrincipalKey("Code")
+                        .HasPrincipalKey("Name")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1021,9 +1045,6 @@ namespace Production.Persistence.Migrations
                     b.Navigation("Assets");
 
                     b.Navigation("Authors");
-
-                    b.Navigation("CurrentStage")
-                        .IsRequired();
 
                     b.Navigation("StageHistories");
                 });

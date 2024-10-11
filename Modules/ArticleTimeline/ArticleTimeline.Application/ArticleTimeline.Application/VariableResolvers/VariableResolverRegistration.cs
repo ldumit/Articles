@@ -10,8 +10,9 @@ public static class VariableResolverRegistration
     {
         services.AddScoped<CurrentUserRoleResolver>();
         services.AddScoped<UploadedFileResolver>();
-        services.AddScoped<ArticleStageFileResolver>();
-        services.AddScoped<UserNameFileResolver>();
+        services.AddScoped<ArticlePreviousStageFileResolver>();
+				services.AddScoped<ArticleNewStageFileResolver>();
+				services.AddScoped<UserNameFileResolver>();
         services.AddScoped<MessageResolver>();
         services.AddScoped<SubmittedUserNameResolver>();
         services.AddScoped<SubmittedUserRoleResolver>();
@@ -22,7 +23,8 @@ public static class VariableResolverRegistration
             {
                 VariableResolverType.RoleUser => serviceProvider.GetService<CurrentUserRoleResolver>(),
                 VariableResolverType.UploadedFile => serviceProvider.GetService<UploadedFileResolver>(),
-                VariableResolverType.ArticleStage => serviceProvider.GetService<ArticleStageFileResolver>(),
+								VariableResolverType.PreviousStage => serviceProvider.GetService<ArticlePreviousStageFileResolver>(),
+								VariableResolverType.NewStage => serviceProvider.GetService<ArticleNewStageFileResolver>(),
                 VariableResolverType.UserName => serviceProvider.GetService<UserNameFileResolver>(),
                 VariableResolverType.Message => serviceProvider.GetService<MessageResolver>(),
                 VariableResolverType.SubmittedUserName => serviceProvider.GetService<SubmittedUserNameResolver>(),

@@ -1,23 +1,14 @@
-﻿using System.ComponentModel;
-
-namespace ArticleTimeline.Application.VariableResolvers;
+﻿namespace ArticleTimeline.Application.VariableResolvers;
 
 public enum VariableResolverType
 {
-		[Description("DateTime")]
 		DateTime,
-		[Description("RoleUser")]
 		RoleUser,
-		[Description("UploadedFile")]
 		UploadedFile,
-		[Description("ArticleStage")]
-		ArticleStage,
-		[Description("UserName")]
+		PreviousStage,
+		NewStage,
 		UserName,
-		[Description("Message")]
 		Message,
-		[Description("SubmittedUserName")]
 		SubmittedUserName,
-		[Description("SubmittedUserRole")]
 		SubmittedUserRole
 }

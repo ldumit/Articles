@@ -27,11 +27,18 @@ public class UploadedFileResolver : IVariableResolver
     }
 }
 
-public class ArticleStageFileResolver : IVariableResolver
+public class ArticleNewStageFileResolver : IVariableResolver
 {
     public Task<string> GetValue(TimelineResolverModel resolverCommand) =>
-				Task.FromResult(resolverCommand.Stage.ToString());
+				Task.FromResult(resolverCommand.NextStage.ToString());
 }
+
+public class ArticlePreviousStageFileResolver : IVariableResolver
+{
+		public Task<string> GetValue(TimelineResolverModel resolverCommand) =>
+				Task.FromResult(resolverCommand.PreviousStage.ToString());
+}
+
 
 public class UserNameFileResolver(PersonRepository _personRepository) : IVariableResolver
 {

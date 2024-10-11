@@ -10,7 +10,7 @@ namespace Articles.EntityFrameworkCore
 				{
 						foreach (var entity in modelBuilder.Model.GetEntityTypes())
 						{
-								if (!typeof(IEntity).IsAssignableFrom(entity.ClrType)) // we don't create tables for value objects
+								if (typeof(IValueObject).IsAssignableFrom(entity.ClrType)) // we don't create tables for value objects
 										continue;
 
 								var baseType = entity.BaseType;

@@ -1,9 +1,10 @@
-﻿using Articles.Entitities;
+﻿using Articles.Domain;
+using Articles.Entitities;
 using Microsoft.AspNetCore.Identity;
 
 namespace Auth.Domain.Models;
 
-public class User : IdentityUser<int>, IAggregateEntity<int>, IEntity<int>
+public class User : IdentityUser<int>, IAggregateEntity<int>
 {
 		public required string FirstName { get; set; }
     public required string LastName { get; set; }
@@ -22,9 +23,14 @@ public class User : IdentityUser<int>, IAggregateEntity<int>, IEntity<int>
 		public List<RefreshToken> RefreshTokens { get; set; } = new();
 		public virtual List<UserRole> UserRoles { get; set; } = new();
 
-		//audited
+		//Aggregate
 		public int CreatedById { get; set; } = default!;
 		public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
 		public int? LastModifiedById { get; set; } = 0;
 		public DateTime? LasModifiedOn { get; set; } = DateTime.UtcNow;
+
+		private List<IDomainEvent> _domainEvents = new();
+		public IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents;
+		public void AddDomainEvent(IDomainEvent eventItem) => _domainEvents.Add(eventItem);
+		public void ClearDomainEvents() => _domainEvents.Clear();
 }

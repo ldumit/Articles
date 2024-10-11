@@ -1,16 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Articles.Entitities;
-using Articles.System;
 
 namespace Articles.EntityFrameworkCore;
 
 public abstract class EntityConfiguration<T> : EntityConfiguration<T, int> 
-    where T : class, IEntity<int>
+    where T : class, IEntity
 {
     public override void Configure(EntityTypeBuilder<T> builder)
     {
-        builder.Property(col => col.Id).ValueGeneratedOnAdd();
+        builder.Property(col => col.Id).ValueGeneratedOnAdd().HasColumnOrder(0);
 				base.Configure(builder);
 		}
 }

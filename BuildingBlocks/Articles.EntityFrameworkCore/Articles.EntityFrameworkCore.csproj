@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Services\Production\Production.Domain\Production.Domain.csproj" />
     <ProjectReference Include="..\Articles.Entitities\Articles.Entitities.csproj" />
     <ProjectReference Include="..\Articles.Exceptions\Articles.Exceptions.csproj" />
     <ProjectReference Include="..\Articles.System\Articles.System.csproj" />

@@ -6,9 +6,7 @@ using Articles.Exceptions;
 
 namespace Articles.EntityFrameworkCore;
 
-public interface IRepository<Entity> : IRepository<Entity, int>
-{
-}
+public interface IRepository<Entity> : IRepository<Entity, int>;
 
 public interface IRepository<TEntity, TKey>
 {
@@ -24,7 +22,7 @@ public interface IRepository<TEntity, TKey>
     Task AddRangeAsync(IEnumerable<TEntity> entities);
     void RemoveRange(IEnumerable<TEntity> entities);
     void UpdateRange(IEnumerable<TEntity> entities);
-    Task<int> SaveChangesAsync();
+    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     void ClearTracking();
 
     //bool SoftDelete(TKey id);
@@ -32,9 +30,7 @@ public interface IRepository<TEntity, TKey>
 
 public class Repository<TContext, TEntity>(TContext dbContext) : RepositoryBase<TContext, TEntity, int>(dbContext)
 		where TContext : DbContext
-		where TEntity : class, IEntity<int>
-{
-}
+		where TEntity : class, IEntity<int>;
 
 public abstract class RepositoryBase<TContext, TEntity, TKey> : IRepository<TEntity, TKey>
 		where TContext : DbContext
@@ -135,7 +131,7 @@ public abstract class RepositoryBase<TContext, TEntity, TKey> : IRepository<TEnt
 		{
         // talk - executing an SQL is the most eficient way
         // talk - setting the state to Deleted doesn't work
-        // because it required to instantiate an empty entity first which is not possible for an entity with required properties
+        // because it requires to instantiate an empty entity first which is not possible if the entity has required properties
 				//		var entity = new TEntity { Id = id };
 				//		_dbContext.Entry(entity).State = EntityState.Deleted;
 				var rowsAffected = await _dbContext.Database.ExecuteSqlInterpolatedAsync($"DELETE FROM {TableName} WHERE Id = {id}");
@@ -158,10 +154,8 @@ public abstract class RepositoryBase<TContext, TEntity, TKey> : IRepository<TEnt
         _entity.UpdateRange(entities);
     }
 
-    public Task<int> SaveChangesAsync()
-    {
-        return _dbContext.SaveChangesAsync();
-    }
+    public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+				=> await _dbContext.SaveChangesAsync(cancellationToken);
 
     public IDbContextTransaction BeginTransaction()
     {

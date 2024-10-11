@@ -4,7 +4,7 @@ using Production.Domain.Entities;
 
 namespace Production.Domain.ValueObjects;
 
-public class FileVersion: ValueObject<byte>
+public class FileVersion: SingleValueObject<byte>
 {
 		[JsonConstructor]
 		private FileVersion(byte value) => Value = value;

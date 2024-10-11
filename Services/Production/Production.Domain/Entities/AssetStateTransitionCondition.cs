@@ -5,7 +5,7 @@ using System.Collections.Immutable;
 
 namespace Production.Domain.Entities;
 
-public class AssetStateTransitionCondition : Entity<int>, ICacheable
+public class AssetStateTransitionCondition : Entity, ICacheable
 {
 		public ArticleStage ArticleStage { get; set; }
 		public IReadOnlyList<Enums.AssetType> AssetTypes { get; init; } = ImmutableList<Enums.AssetType>.Empty;

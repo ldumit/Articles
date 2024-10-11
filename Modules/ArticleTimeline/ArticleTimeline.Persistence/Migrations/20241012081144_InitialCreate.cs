@@ -53,7 +53,7 @@ namespace ArticleTimeline.Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ArticleId = table.Column<int>(type: "int", nullable: false),
-                    CurrentStage = table.Column<int>(type: "int", nullable: false),
+                    NextStage = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PreviousStage = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SourceType = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     SourceId = table.Column<string>(type: "nvarchar(64)", nullable: false),

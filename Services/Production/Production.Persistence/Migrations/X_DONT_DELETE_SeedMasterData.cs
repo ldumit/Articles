@@ -5,14 +5,14 @@
 namespace Production.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class SeedMasterData : Migration
+    public partial class X_DONT_DELETE_SeedMasterData : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
 						migrationBuilder.Sql(@"
             INSERT INTO [AssetType] 
-            (id, code, name, defaultCategoryId, maxNumber, allowedFileExtensions, defaultFileExtension, MaxFileSizeInMB)
+            (id, name, description, defaultCategoryId, maxNumber, allowedFileExtensions, defaultFileExtension, MaxFileSizeInMB)
             VALUES
             (1, 'Manuscript', 'Manuscript', 1, 0, '[""pdf""]', 'pdf', 50),
             (2, 'ReviewReport', 'Reviewer Report', 3, 0, '[""pdf""]', 'pdf', 50),

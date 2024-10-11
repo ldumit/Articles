@@ -1,56 +1,56 @@
 [
   //{
-  //  "code": "Submitted",
+  //  "name": "Submitted",
   //  "id": 100,
-  //  "name": "Article submitted",
-  //  "Description": "Our editorial specialist is checking your article. We will contact you if we need any further files or information."
+  //  "description": "Article submitted",
+  //  "info": "Our editorial specialist is checking your article. We will contact you if we need any further files or information."
   //},
   //{
-  //  "code": "InReview",
+  //  "name": "InReview",
   //  "id": 200,
-  //  "name": "Article approved",
-  //  "Description": "Your article has been checked and article. Our editorial specialists will start soon revieing it."
+  //  "description": "Article approved",
+  //  "info": "Your article has been checked and article. Our editorial specialists will start soon revieing it."
   //},
   {
-    "code": "Accepted",
+    "name": "Accepted",
     "id": 201,
-    "name": "Article accepted",
-    "Description": "Your article has been reviewed and accepted. The production of the article will start soon."
+    "description": "Article accepted",
+    "info": "Your article has been reviewed and accepted. The production of the article will start soon."
   },
   {
-    "code": "InProduction",
+    "name": "InProduction",
     "id": 300,
-    "name": "Typesetter assigned",
-    "Description": "The typesetter is preparing your Author’s Proof. We will contact you if we need any further files or information."
+    "description": "Typesetter assigned",
+    "info": "The typesetter is preparing your Author’s Proof. We will contact you if we need any further files or information."
   },
   {
-    "code": "DraftProduction",
+    "name": "DraftProduction",
     "id": 301,
-    "name": "Author's proof approved",
-    "Description": "The Author's Proof is available for you to check and provide corrections. This status is also displayed if we are preparing a further Author's Proof at your request."
+    "description": "Author's proof approved",
+    "info": "The Author's Proof is available for you to check and provide corrections. This status is also displayed if we are preparing a further Author's Proof at your request."
   },
   {
-    "code": "FinalProduction",
+    "name": "FinalProduction",
     "id": 302,
-    "name": "Publisher's proof uploaded",
-    "Description": "The typesetter is preparing the final version of your article for publication. We will contact you if we need to check anything further before publication."
+    "description": "Publisher's proof uploaded",
+    "info": "The typesetter is preparing the final version of your article for publication. We will contact you if we need to check anything further before publication."
   },
   //{
-  //  "code": "PublisherProof",
+  //  "name": "PublisherProof",
   //  "id": 303,
-  //  "name": "Article scheduled for publication",
-  //  "Description": "Your Production Specialist is applying quality checks to ensure your article is ready for publication."
+  //  "description": "Article scheduled for publication",
+  //  "info": "Your Production Specialist is applying quality checks to ensure your article is ready for publication."
   //},
   {
-    "code": "PublicationScheduled",
+    "name": "PublicationScheduled",
     "id": 304,
-    "name": "Article scheduled for publication",
-    "Description": "Your Production Specialist has completed their quality checks. Your article is now scheduled for publication on our website and will appear online within the next few working days."
+    "description": "Article scheduled for publication",
+    "info": "Your Production Specialist has completed their quality checks. Your article is now scheduled for publication on our website and will appear online within the next few working days."
   },
   {
-    "code": "Published",
+    "name": "Published",
     "id": 305,
-    "name": "Article published",
-    "Description": "Your article has been published and sent to all relevant repositories, and the publication process is now complete. Please note that repositories have different processing times and your article may not be available yet."
+    "description": "Article published",
+    "info": "Your article has been published and sent to all relevant repositories, and the publication process is now complete. Please note that repositories have different processing times and your article may not be available yet."
   }
 ]

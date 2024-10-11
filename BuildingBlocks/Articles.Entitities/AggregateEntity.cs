@@ -1,5 +1,4 @@
 ﻿using Articles.Domain;
-using System.Collections.Immutable;
 
 namespace Articles.Entitities;
 
@@ -10,6 +9,10 @@ public interface IAggregateEntity : IAggregateEntity<int>
 public interface IAggregateEntity<TPrimaryKey> : IEntity<TPrimaryKey>
 		where TPrimaryKey : struct
 {
+		public IReadOnlyList<IDomainEvent> DomainEvents { get; }
+		public void AddDomainEvent(IDomainEvent eventItem);
+		public void ClearDomainEvents();
+
 		public TPrimaryKey CreatedById { get; set; }
 		public DateTime CreatedOn { get; set; }
 		public TPrimaryKey? LastModifiedById { get; set; }
@@ -33,8 +36,9 @@ public abstract class AggregateEntity<TPrimaryKey> : Entity<TPrimaryKey>, IAggre
 
 		#region Domain Events
 		// talk if you want your colletions to be trully imutable we need to use ImmutableList, the others can be cast back to its original class
-		private ImmutableList<IDomainEvent> _domainEvents = ImmutableList<IDomainEvent>.Empty;
-		public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents;		
+		//private ImmutableList<IDomainEvent> _domainEvents = ImmutableList<IDomainEvent>.Empty;
+		private List<IDomainEvent> _domainEvents = new();
+		public IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents;
 		public void AddDomainEvent(IDomainEvent eventItem) => _domainEvents.Add(eventItem);		
 		public void ClearDomainEvents() => _domainEvents.Clear();
 		#endregion

@@ -1,8 +1,9 @@
-﻿using System.Collections.Immutable;
+﻿using Articles.Entitities;
+using System.Collections.Immutable;
 
 namespace Production.Domain.ValueObjects;
 
-public record AllowedFileExtensions
+public class AllowedFileExtensions : IValueObject
 {
 		public IReadOnlyList<string> Extensions { get; init; } = null!;
 

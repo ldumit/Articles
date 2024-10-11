@@ -1,7 +1,5 @@
 ﻿namespace Articles.Entitities;
 
-
-[Serializable]
 public abstract class EnumEntity<TEnum> : Entity<TEnum>
 		where TEnum : struct, Enum
 {

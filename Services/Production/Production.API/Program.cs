@@ -18,12 +18,13 @@ var builder = WebApplication.CreateBuilder(args);
 #region Add
 
 builder.Services
-    .ConfigureOptions<FileStorage.Contracts.FileServerOptions>(builder.Configuration)
-    .Configure<JsonOptions>(opt =>
-    {
+		.ConfigureOptions<FileStorage.Contracts.FileServerOptions>(builder.Configuration)
+		.ConfigureOptions<TransactionOptions>(builder.Configuration)
+		.Configure<JsonOptions>(opt =>
+		{
 				opt.SerializerOptions.PropertyNameCaseInsensitive = true;
 				opt.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
-    });
+		});
 
 
 //talk - fluid vs normal

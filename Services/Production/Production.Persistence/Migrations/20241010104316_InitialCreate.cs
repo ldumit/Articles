@@ -58,34 +58,34 @@ namespace Production.Persistence.Migrations
                 name: "AssetType",
                 columns: table => new
                 {
+                    Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     Id = table.Column<int>(type: "int", nullable: false),
                     DefaultCategoryId = table.Column<int>(type: "int", nullable: false),
                     DefaultFileExtension = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false, defaultValue: "pdf"),
                     MaxNumber = table.Column<byte>(type: "tinyint", nullable: false, defaultValue: (byte)0),
                     MaxFileSizeInMB = table.Column<byte>(type: "tinyint", nullable: false),
-                    AllowedFileExtensions = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Code = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false)
+                    AllowedFileExtensions = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AssetType", x => x.Id);
-                    table.UniqueConstraint("AK_AssetType_Code", x => x.Code);
+                    table.UniqueConstraint("AK_AssetType_Name", x => x.Name);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Stage",
                 columns: table => new
                 {
+                    Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     Id = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
-                    Code = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false)
+                    Info = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Stage", x => x.Id);
-                    table.UniqueConstraint("AK_Stage_Code", x => x.Code);
+                    table.UniqueConstraint("AK_Stage_Name", x => x.Name);
                 });
 
             migrationBuilder.CreateTable(
@@ -116,7 +116,7 @@ namespace Production.Persistence.Migrations
                         name: "FK_Article_Stage_Stage",
                         column: x => x.Stage,
                         principalTable: "Stage",
-                        principalColumn: "Code",
+                        principalColumn: "Name",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -124,15 +124,17 @@ namespace Production.Persistence.Migrations
                 name: "ArticleCurrentStage",
                 columns: table => new
                 {
-                    ArticleId = table.Column<int>(type: "int", nullable: false),
+                    ArticleId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ArticleId1 = table.Column<int>(type: "int", nullable: false),
                     Stage = table.Column<string>(type: "nvarchar(64)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ArticleCurrentStage", x => x.ArticleId);
                     table.ForeignKey(
-                        name: "FK_ArticleCurrentStage_Article_ArticleId",
-                        column: x => x.ArticleId,
+                        name: "FK_ArticleCurrentStage_Article_ArticleId1",
+                        column: x => x.ArticleId1,
                         principalTable: "Article",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -140,7 +142,7 @@ namespace Production.Persistence.Migrations
                         name: "FK_ArticleCurrentStage_Stage_Stage",
                         column: x => x.Stage,
                         principalTable: "Stage",
-                        principalColumn: "Code",
+                        principalColumn: "Name",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -174,7 +176,7 @@ namespace Production.Persistence.Migrations
                         name: "FK_Asset_AssetType_Type",
                         column: x => x.Type,
                         principalTable: "AssetType",
-                        principalColumn: "Code",
+                        principalColumn: "Name",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -288,7 +290,7 @@ namespace Production.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ArticleActors",
+                name: "ArticleActor",
                 columns: table => new
                 {
                     ArticleId = table.Column<int>(type: "int", nullable: false),
@@ -297,15 +299,15 @@ namespace Production.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ArticleActors", x => new { x.ArticleId, x.PersonId, x.Role });
+                    table.PrimaryKey("PK_ArticleActor", x => new { x.ArticleId, x.PersonId, x.Role });
                     table.ForeignKey(
-                        name: "FK_ArticleActors_Article_ArticleId",
+                        name: "FK_ArticleActor_Article_ArticleId",
                         column: x => x.ArticleId,
                         principalTable: "Article",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ArticleActors_Person_PersonId",
+                        name: "FK_ArticleActor_Person_PersonId",
                         column: x => x.PersonId,
                         principalTable: "Person",
                         principalColumn: "Id",
@@ -427,6 +429,7 @@ namespace Production.Persistence.Migrations
                     { "Upload", "None", "Uploaded" },
                     { "CancelRequest", "Requested", "Uploaded" },
                     { "Upload", "Requested", "Uploaded" },
+                    { "Approve", "Uploaded", "Approved" },
                     { "Request", "Uploaded", "Requested" },
                     { "Upload", "Uploaded", "Uploaded" }
                 });
@@ -445,15 +448,15 @@ namespace Production.Persistence.Migrations
 
             migrationBuilder.InsertData(
                 table: "Stage",
-                columns: new[] { "Id", "Code", "Description", "Name" },
+                columns: new[] { "Id", "Description", "Info", "Name" },
                 values: new object[,]
                 {
-                    { 201, "Accepted", "Your article has been reviewed and accepted. The production of the article will start soon.", "Article accepted" },
-                    { 300, "InProduction", "The typesetter is preparing your Author’s Proof. We will contact you if we need any further files or information.", "Typesetter assigned" },
-                    { 301, "DraftProduction", "The Author's Proof is available for you to check and provide corrections. This status is also displayed if we are preparing a further Author's Proof at your request.", "Author's proof approved" },
-                    { 302, "FinalProduction", "The typesetter is preparing the final version of your article for publication. We will contact you if we need to check anything further before publication.", "Publisher's proof uploaded" },
-                    { 304, "PublicationScheduled", "Your Production Specialist has completed their quality checks. Your article is now scheduled for publication on our website and will appear online within the next few working days.", "Article scheduled for publication" },
-                    { 305, "Published", "Your article has been published and sent to all relevant repositories, and the publication process is now complete. Please note that repositories have different processing times and your article may not be available yet.", "Article published" }
+                    { 201, "Article accepted", "Your article has been reviewed and accepted. The production of the article will start soon.", "Accepted" },
+                    { 300, "Typesetter assigned", "The typesetter is preparing your Author’s Proof. We will contact you if we need any further files or information.", "InProduction" },
+                    { 301, "Author's proof approved", "The Author's Proof is available for you to check and provide corrections. This status is also displayed if we are preparing a further Author's Proof at your request.", "DraftProduction" },
+                    { 302, "Publisher's proof uploaded", "The typesetter is preparing the final version of your article for publication. We will contact you if we need to check anything further before publication.", "FinalProduction" },
+                    { 304, "Article scheduled for publication", "Your Production Specialist has completed their quality checks. Your article is now scheduled for publication on our website and will appear online within the next few working days.", "PublicationScheduled" },
+                    { 305, "Article published", "Your article has been published and sent to all relevant repositories, and the publication process is now complete. Please note that repositories have different processing times and your article may not be available yet.", "Published" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -482,9 +485,14 @@ namespace Production.Persistence.Migrations
                 column: "Title");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ArticleActors_PersonId",
-                table: "ArticleActors",
+                name: "IX_ArticleActor_PersonId",
+                table: "ArticleActor",
                 column: "PersonId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ArticleCurrentStage_ArticleId1",
+                table: "ArticleCurrentStage",
+                column: "ArticleId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ArticleCurrentStage_Stage",
@@ -513,9 +521,9 @@ namespace Production.Persistence.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_AssetType_Code",
+                name: "IX_AssetType_Name",
                 table: "AssetType",
-                column: "Code",
+                column: "Name",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -557,9 +565,9 @@ namespace Production.Persistence.Migrations
                 filter: "[UserId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Stage_Code",
+                name: "IX_Stage_Name",
                 table: "Stage",
-                column: "Code",
+                column: "Name",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -613,7 +621,7 @@ namespace Production.Persistence.Migrations
                 table: "Article");
 
             migrationBuilder.DropTable(
-                name: "ArticleActors");
+                name: "ArticleActor");
 
             migrationBuilder.DropTable(
                 name: "ArticleCurrentStage");

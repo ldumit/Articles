@@ -1,17 +1,22 @@
 ﻿using Articles.AspNetCore;
+using Articles.EntityFrameworkCore;
 using Articles.Security;
 using Articles.System;
+using ArticleTimeline.Application.EventHandlers;
 using ArticleTimeline.Application.VariableResolvers;
 using ArticleTimeline.Persistence;
+using FastEndpoints;
 using FileStorage.AzureBlob;
 using FileStorage.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Production.Application.StateMachines;
+using Production.Domain.Events;
 using Production.Persistence;
 using Production.Persistence.Repositories;
 using System.Data.Common;
@@ -34,6 +39,8 @@ public static class DependencyInjection
 				//services.AddMessageBroker(configuration, Assembly.GetExecutingAssembly());
 
 
+				services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
+
 				// decide if we need the same DBConnection/Transaction when we are saving the Timeline
 				services.AddScoped<DbConnection>(provider =>
 				{
@@ -42,6 +49,7 @@ public static class DependencyInjection
 				services.AddDbContext<ProductionDbContext>((provider, options) =>
 				{
 						var dbConnection = provider.GetRequiredService<DbConnection>();
+						options.AddInterceptors(provider.GetServices<ISaveChangesInterceptor>());
 						options.UseSqlServer(dbConnection);
 						//options.UseSqlServer(connectionString);
 
@@ -50,6 +58,7 @@ public static class DependencyInjection
 				{
 						var dbConnection = provider.GetRequiredService<DbConnection>();
 						//options.UseSqlServer(dbConnection);
+						options.AddInterceptors(provider.GetServices<ISaveChangesInterceptor>());
 						options.UseSqlServer(dbConnection, options =>
 						{
 								options.MigrationsHistoryTable("__EFMigrationsHistory", "ArticleTimeline");
@@ -74,6 +83,9 @@ public static class DependencyInjection
 				services.AddScoped<IThreadSafeMemoryCache, MemoryCache>();
 				services.AddScoped<IFileService, FileService>();
 				services.AddArticleTimelineVariableResolvers();
+
+				//services.AddScoped<IEventHandler<ArticleStageChangedDomainEvent>, AddTimelineWhenArticleStageChangedEventHandler>();
+				//services.AddEventHandlersFromAssembly(typeof(AddTimelineWhenArticleStageChangedEventHandler).Assembly);			
 
 				//services.AddScoped<ArticleStateMachine>(); 
 				services.AddScoped<ArticleStateMachineFactory>(provider => articleStage =>

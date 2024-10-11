@@ -27,21 +27,21 @@ public static class MediatorExtension
         return domainEvents.Count;
     }
 
-		public static async Task<int> DispatchDomainEventsAsync(this DbContext ctx)
+		public static async Task<int> DispatchDomainEventsAsync(this DbContext ctx, CancellationToken cancellationToken = default)
 		{
 				var domainEntities = ctx.ChangeTracker
-						.Entries<AggregateEntity>()
-						.Where(x => x.Entity.DomainEvents != null && x.Entity.DomainEvents.Any());
+						.Entries<IAggregateEntity>();
 
 				var domainEvents = domainEntities
 						.SelectMany(x => x.Entity.DomainEvents)
+						.Select(x => (IEvent)x) //there is a bug in FastEndpoints regarding interface inheritance, therefore we need IEvent here
 						.ToList();
 
 				domainEntities.ToList()
-						.ForEach(entity => entity.Entity.ClearDomainEvents());
+						.ForEach(a => a.Entity.ClearDomainEvents());
 
 				foreach (var domainEvent in domainEvents)
-						await domainEvent.PublishAsync(Mode.WaitForAll);
+						await domainEvent.PublishAsync(Mode.WaitForAll, cancellationToken);
 
 				return domainEvents.Count;
 		}

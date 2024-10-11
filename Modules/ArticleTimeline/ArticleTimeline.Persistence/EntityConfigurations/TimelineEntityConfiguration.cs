@@ -11,7 +11,8 @@ public class TimelineEntityConfiguration : EntityConfiguration<Timeline>
 				base.Configure(entity);
 
 				entity.Property(e => e.PreviousStage).HasEnumConversion().IsRequired();
-        entity.Property(e => e.SourceType).HasEnumConversion().IsRequired();
+				entity.Property(e => e.NextStage).HasEnumConversion().IsRequired();
+				entity.Property(e => e.SourceType).HasEnumConversion().IsRequired();
         entity.Property(e => e.Title).HasMaxLength(Constraints.C256).IsRequired();
         entity.Property(e => e.Description).IsRequired();
         entity.Property(e => e.FileId);

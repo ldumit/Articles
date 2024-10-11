@@ -5,7 +5,7 @@ using Production.Domain.Entities;
 namespace Production.Domain.ValueObjects;
 
 //talk - explain why class and not record. the record provides its own set of ToString, GethashCode implementations and it doesn't work with inheritence
-public class AssetNumber : ValueObject<byte>
+public class AssetNumber : SingleValueObject<byte>
 {
 		[JsonConstructor]
 		private AssetNumber(byte value) => Value = value;

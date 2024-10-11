@@ -1,6 +1,8 @@
 ﻿namespace Articles.Entitities;
 
-public abstract class StringValueObject : IEquatable<StringValueObject>, IEquatable<string>
+public interface IValueObject;
+
+public abstract class StringValueObject : IValueObject, IEquatable<StringValueObject>, IEquatable<string>
 {
     public string Value { get; protected set; } = default!;
 
@@ -11,7 +13,7 @@ public abstract class StringValueObject : IEquatable<StringValueObject>, IEquata
     public override string ToString() => Value.ToString();
 }
 
-public abstract class ValueObject<T> : IEquatable<ValueObject<T>>, IEquatable<T>
+public abstract class SingleValueObject<T> : IValueObject, IEquatable<SingleValueObject<T>>, IEquatable<T>
 		where T : struct
 {
     public T Value { get; protected set; } = default!;
@@ -19,7 +21,7 @@ public abstract class ValueObject<T> : IEquatable<ValueObject<T>>, IEquatable<T>
 		public override string ToString()  => Value.ToString();
 		public override int GetHashCode()  => Value.GetHashCode();
 
-		public virtual bool Equals(ValueObject<T>? other)
+		public virtual bool Equals(SingleValueObject<T>? other)
     {
         if (other is null)
             return false;
@@ -27,7 +29,7 @@ public abstract class ValueObject<T> : IEquatable<ValueObject<T>>, IEquatable<T>
         return Value.Equals(other.Value);
     }
     public bool Equals(T other) => Value.Equals(other);
-    public override bool Equals(object? other)  => Equals(other as ValueObject<T>);
+    public override bool Equals(object? other)  => Equals(other as SingleValueObject<T>);
 }
 
 public abstract class ValueObjectOld : IDomainObject

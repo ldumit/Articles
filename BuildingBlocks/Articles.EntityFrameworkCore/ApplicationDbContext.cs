@@ -27,33 +27,34 @@ public class ApplicationDbContext<TDbContext>(DbContextOptions<TDbContext> _opti
 
 		public async override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
 		{
-				if (base.Database.CurrentTransaction == null)
-				{
-						using var transaction = base.Database.BeginTransaction();
-						var counter = await SaveChangesAndDispatchEventsAsync(cancellationToken);
-						transaction.Commit();
+				return await SaveChangesAndDispatchEventsAsync(cancellationToken);
 
-						return counter;
-				}
-				else
-				{
-						return await SaveChangesAndDispatchEventsAsync(cancellationToken);
-				}
+				//if (base.Database.CurrentTransaction == null)
+				//{
+				//		using var transaction = base.Database.BeginTransaction();
+				//		var counter = await SaveChangesAndDispatchEventsAsync(cancellationToken);
+				//		transaction.Commit();
+
+				//		return counter;
+				//}
+				//else
+				//{
+				//		return await SaveChangesAndDispatchEventsAsync(cancellationToken);
+				//}
 
 		}
 
 		private async Task<int> SaveChangesAndDispatchEventsAsync(CancellationToken cancellationToken = default)
 		{
 				// save first the main changes
-				//int counter = await SaveChangesImpl(cancellationToken);
+				int counter = await SaveChangesImpl(cancellationToken);
+				//int dispatchedEventsCounter = await this.DispatchDomainEventsAsync(cancellationToken);
+				//if (dispatchedEventsCounter > 0)
+				//		// save changes from event handlers
+				//		// todo domain events handlers should save their own changes
+				//		await TrySaveChangesAsync(cancellationToken);
 
-				int dispatchedEventsCounter = (await this.DispatchDomainEventsAsync());
-				if (dispatchedEventsCounter > 0)
-						// save changes from event handlers
-						// todo domain events handlers should save their own changes
-						await TrySaveChangesAsync(cancellationToken);
-
-				return 0;
+				return counter;
 		}
 
 		protected virtual async Task<int> SaveChangesImpl(CancellationToken cancellationToken = default)
