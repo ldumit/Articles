@@ -1,7 +1,5 @@
 ﻿using Articles.AspNetCore;
 using Articles.System;
-using Production.Persistence.Repositories;
-using System.Security.Claims;
 
 namespace ArticleTimeline.Application.VariableResolvers;
 
@@ -13,7 +11,12 @@ public interface IVariableResolver
 public class CurrentUserRoleResolver(IClaimsProvider _claimsProvider) : IVariableResolver
 {
     public async Task<string> GetValue(TimelineResolverModel resolverCommand) => 
-        _claimsProvider.GetClaimValue(ClaimTypes.Role);
+        _claimsProvider.GetUserRole();
+}
+public class CurrentUserNameResolver(IClaimsProvider _claimsProvider) : IVariableResolver
+{
+		public async Task<string> GetValue(TimelineResolverModel resolverCommand) =>
+				_claimsProvider.GetUserName();
 }
 public class UploadedFileResolver : IVariableResolver
 {
@@ -27,40 +30,30 @@ public class UploadedFileResolver : IVariableResolver
     }
 }
 
-public class ArticleNewStageFileResolver : IVariableResolver
+public class ArticleNewStageResolver : IVariableResolver
 {
     public Task<string> GetValue(TimelineResolverModel resolverCommand) =>
-				Task.FromResult(resolverCommand.NextStage.ToString());
+				Task.FromResult(resolverCommand.NewStage.ToString());
 }
 
-public class ArticlePreviousStageFileResolver : IVariableResolver
+public class ArticleCurrentStageResolver : IVariableResolver
 {
 		public Task<string> GetValue(TimelineResolverModel resolverCommand) =>
-				Task.FromResult(resolverCommand.PreviousStage.ToString());
+				Task.FromResult(resolverCommand.CurrentStage.ToString());
 }
 
 
-public class UserNameFileResolver(PersonRepository _personRepository) : IVariableResolver
-{
-    public async Task<string> GetValue(TimelineResolverModel resolverCommand)
-    {
-        var user = await _personRepository.GetByUserId(resolverCommand.UserId);
-				return user.FullName;
-    }
-}
+//public class UserNameFileResolver(PersonRepository _personRepository) : IVariableResolver
+//{
+//    public async Task<string> GetValue(TimelineResolverModel resolverCommand)
+//    {
+//        var user = await _personRepository.GetByUserId(resolverCommand.Action.CreatedById);
+//				return user.FullName;
+//    }
+//}
 
 public class MessageResolver : IVariableResolver
 {
     public async Task<string> GetValue(TimelineResolverModel resolverCommand)=> 
-        resolverCommand.Message;
-}
-public class SubmittedUserNameResolver : IVariableResolver
-{
-    public async Task<string> GetValue(TimelineResolverModel resolverCommand)=>
-        await Task.FromResult(resolverCommand.UserName);
-}
-public class SubmittedUserRoleResolver : IVariableResolver
-{
-    public async Task<string> GetValue(TimelineResolverModel resolverCommand)=>
-        await Task.FromResult(resolverCommand.UserRole.ToDescription());
+        resolverCommand.Action.Comment;
 }

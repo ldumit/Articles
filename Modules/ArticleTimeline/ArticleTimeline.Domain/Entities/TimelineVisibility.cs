@@ -7,7 +7,7 @@ namespace ArticleTimeline.Domain;
 
 public class TimelineVisibility : ICacheable, IMetadataEntity
 {
-    public SourceType SourceType { get; set; }
-    public string SourceId { get; set; } = null!; // todo - this should hold ActionType for both Article & Asset
-    public UserRoleType RoleType{ get; set; }
+    public SourceType SourceType { get; init; }
+    public string SourceId { get; init; } = null!;
+    public UserRoleType RoleType{ get; init; }
 }

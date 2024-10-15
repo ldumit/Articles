@@ -5,10 +5,8 @@ public enum VariableResolverType
 		DateTime,
 		RoleUser,
 		UploadedFile,
-		PreviousStage,
+		CurrentStage,
 		NewStage,
 		UserName,
-		Message,
-		SubmittedUserName,
-		SubmittedUserRole
+		Message
 }

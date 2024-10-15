@@ -41,8 +41,8 @@ public abstract class RequestAssetsValidator<TRequestCommand> : ArticleCommandVa
 										.Must(a => AllowedAssetTypes.Contains(a.AssetType)).WithMessage("Asset type not allowed");
                 });
 
-				RuleFor(r => r).MustAsync(async (r, _, cancellation) => await IsActionValid(r))
-						.WithMessage("Action not allowed");
+				//RuleFor(r => r).MustAsync(async (r, _, cancellation) => await IsActionValid(r))
+				//		.WithMessage("Action not allowed");
 		}
 
 

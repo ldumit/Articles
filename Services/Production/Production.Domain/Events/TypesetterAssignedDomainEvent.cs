@@ -4,7 +4,7 @@ using Production.Domain.Enums;
 namespace Production.Domain.Events
 {
 		public record TypesetterAssignedDomainEvent(IArticleAction<ArticleActionType> action, int TypesetterId, int TypesetterUserId) 
-				: DomainEvent(action.ArticleId, action.Action, action.CreatedById, action.Comment)
+				: DomainEvent(action)
 		{
     }
 }

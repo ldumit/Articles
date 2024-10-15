@@ -10,7 +10,7 @@ public record TestDomainEvent(string Value): IDomainEvent;
 //{
 //}
 
-public record ArticleStageChangedDomainEvent(IArticleAction action, ArticleStage PreviousStage, ArticleStage NewStage)
-		: DomainEvent(action.ArticleId, action.Action, action.CreatedById, action.Comment)
+public record ArticleStageChangedDomainEvent(IArticleAction action, ArticleStage CurrentStage, ArticleStage NewStage)
+		: DomainEvent(action)
 {
 }

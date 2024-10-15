@@ -29,8 +29,9 @@ public partial class Article : AggregateEntity
 
     public Journal Journal { get; init; } = null!;
 
-    // talk - ways to represent collections 
-    public List<Asset> Assets { get; init; }  = new() ;
+		// talk - ways to represent collections 
+		private readonly List<Asset> _assets = new();
+    public IReadOnlyList<Asset> Assets => _assets.AsReadOnly();
 
     public IEnumerable<Author> Authors => Actors.Where(aa => aa.Person is Author).Select(aa => aa.Person as Author);
 		public Typesetter? Typesetter => Actors.Where(aa => aa.Person is Typesetter).Select(aa => aa.Person as Typesetter).FirstOrDefault();

@@ -7,6 +7,7 @@ using Mapster;
 using Articles.Security;
 using Articles.Abstractions;
 using Production.Application.Dtos;
+using Production.Application.StateMachines;
 
 namespace Production.API.Features.ApproveAssets.ApproveDraftAsset;
 
@@ -15,13 +16,15 @@ namespace Production.API.Features.ApproveAssets.ApproveDraftAsset;
 //[HttpPut("articles/{articleId:int}/assets/draft/{assetId:int}/actions/approve")]
 [Tags("Assets")]
 
-public class ApproveDraftAssetEndpoint(ArticleRepository articleRepository, AssetRepository _assetRepository)
-    : BaseEndpoint<ApproveDraftAssetCommand, AssetActionResponse>(articleRepository)
+public class ApproveDraftAssetEndpoint(AssetRepository _assetRepository, AssetStateMachineFactory stateMachineFactory)
+    : AssetBaseEndpoint<ApproveDraftAssetCommand, AssetActionResponse>(stateMachineFactory)
 {
     public override async Task HandleAsync(ApproveDraftAssetCommand command, CancellationToken ct)
     {
         var asset = await _assetRepository.GetByIdAsync(command.ArticleId, command.AssetId);
-        asset.SetState(AssetState.Approved, command);
+        CheckAndThrowStateTransition(asset!, command.ActionType);
+
+				asset.SetState(AssetState.Approved, command);
         asset.Article.SetStage(ArticleStage.FinalProduction, command);
 
         await _assetRepository.SaveChangesAsync();

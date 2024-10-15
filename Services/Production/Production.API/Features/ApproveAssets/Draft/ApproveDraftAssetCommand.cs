@@ -21,8 +21,8 @@ public class ApproveDraftAssetCommandValidator
 
         RuleFor(r => r.AssetId).GreaterThan(0);
 
-        RuleFor(r => r).MustAsync(async (r, _, cancellation) => await IsActionValid(r))
-                .WithMessage("Action not allowed");
+        //RuleFor(r => r).MustAsync(async (r, _, cancellation) => await IsActionValid(r))
+        //        .WithMessage("Action not allowed");
     }
 
     protected virtual async Task<bool> IsActionValid(ApproveDraftAssetCommand action)

@@ -5,28 +5,30 @@ using Production.API.Features.Shared;
 using Mapster;
 using Production.Application.StateMachines;
 using Production.Application.Dtos;
+using Production.Domain.Enums;
 
 namespace Production.API.Features.UploadFiles.Shared;
 
 public class UploadFileEndpoint<TUploadCommand>
-    (ArticleRepository articleRepository, AssetRepository _assetRepository, IFileService _fileService, AssetStateMachineFactory _factory)
-    : BaseEndpoint<TUploadCommand, AssetActionResponse>(articleRepository)
+    (ArticleRepository _articleRepository, AssetRepository _assetRepository, IFileService _fileService, AssetStateMachineFactory factory)
+    : AssetBaseEndpoint<TUploadCommand, AssetActionResponse>(factory)
     where TUploadCommand : UploadFileCommand
 {
     //talk - readonly fields in primary constructors are not supported yet but they will be
     public async override Task HandleAsync(TUploadCommand command, CancellationToken ct)
     {
         _article = await _articleRepository.GetByIdWithSingleAssetAsync(command.ArticleId, command.AssetType, command.GetAssetNumber());
-        
-        var asset = _article.Assets.SingleOrDefault();
-        if (asset is null)
+				var asset = _article.Assets.SingleOrDefault();
+				if (asset is null)
 						asset = CreateAsset(command, _article);
 
-				var uploadResponse = await UploadFile(command, asset);
+				CheckAndThrowStateTransition(asset, command.ActionType);
+				asset.SetState(AssetState.Uploaded, command);
 
-        try
-        {
-            asset.CreateAndAddFile(uploadResponse);
+				var uploadResponse = await UploadFile(command, asset);
+				try
+				{
+						asset.CreateAndAddFile(uploadResponse);
 
             _article.SetStage(NextStage, command);
 
@@ -34,7 +36,7 @@ public class UploadFileEndpoint<TUploadCommand>
 				}
 				catch (Exception)
 				{
-            await _fileService.TryDeleteFileAsync(uploadResponse.FilePath); // delete the file if 
+            await _fileService.TryDeleteFileAsync(uploadResponse.FilePath); // delete the file if something is wrong
             throw;
 				}
 
@@ -44,9 +46,10 @@ public class UploadFileEndpoint<TUploadCommand>
 		private Asset CreateAsset(TUploadCommand command, Article article)
 		{
 				var assetTypeEntity = _assetRepository.GetAssetType(command.AssetType);
-				var asset = Asset.CreateFromUpload(command, assetTypeEntity, command.GetAssetNumber());
+        var asset = article.CreateAsset(assetTypeEntity, command.GetAssetNumber());
+				//var asset = Asset.CreateFromUpload(command, article, assetTypeEntity, command.GetAssetNumber());
         //todo the next line doesn't look nice
-        _articleRepository.Context.Assets.Add(asset);
+        //_articleRepository.Context.Assets.Add(asset);
 				//article.Assets.Add(asset);
 				return asset;
 		}

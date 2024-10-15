@@ -3,6 +3,7 @@ using Articles.Exceptions.Domain;
 using FileStorage.Contracts;
 using Mapster;
 using Production.Domain.Enums;
+using Production.Domain.Events;
 using Production.Domain.ValueObjects;
 
 namespace Production.Domain.Entities;
@@ -28,41 +29,28 @@ public partial class Asset
 
 		public bool IsFileRequested => this.State == AssetState.Requested;
 
-		public static Asset CreateFromRequest(IArticleAction<AssetActionType> articleAction, AssetType assetType, byte assetNumber = 0)
-		{
-				return Create(articleAction, assetType, AssetState.Requested, assetNumber);
-		}
-		public static Asset CreateFromUpload(IArticleAction<AssetActionType> articleAction, AssetType assetType, byte assetNumber = 0)
-		{
-				return Create(articleAction, assetType, AssetState.Uploaded, assetNumber);
-		}
-
-		private static Asset Create(IArticleAction<AssetActionType> articleAction, AssetType type, AssetState state, byte assetNumber = 0)
+		public static Asset Create(Article article, AssetType type, byte assetNumber = 0)
 		{
 				//talk - value objects for AssetName & AssetNumber, encapsulate validation						
-				var asset = new Asset()
+				return new Asset()
 				{
-						ArticleId = articleAction.ArticleId,
+						ArticleId = article.Id,
+						Article = article,
 						Number = AssetNumber.FromNumber(assetNumber, type),
 						Name = AssetName.FromAssetType(type),
 						Type = type.Name,
 						TypeRef = type,
 						CategoryId = type.DefaultCategoryId,
-						State = state
+						State = AssetState.None
 				};
-				asset._actions.Add(articleAction.Adapt<AssetAction>());
-
-				return asset;
 		}
 
-		public void SetState(AssetState newStatus, IArticleAction<AssetActionType> action)
+		public void SetState(AssetState newState, IArticleAction<AssetActionType> action)
 		{
-				this.State = newStatus;
+				this.State = newState;
 				this.LasModifiedOn = DateTime.UtcNow;
 				this.LastModifiedById = action.CreatedById;
-				_actions.Add(
-						new AssetAction() { CreatedById = action.CreatedById, Comment = action.Comment, CreatedOn = DateTime.UtcNow, TypeId = action.ActionType }
-				);
+				AddAction(action);
 		}
 
 		public void CancelRequest(IArticleAction<AssetActionType> action)
@@ -73,10 +61,7 @@ public partial class Asset
 				//this.Status = newStatus;
 				this.LasModifiedOn = DateTime.UtcNow;
 				this.LastModifiedById = action.CreatedById;
-				_actions.Add(
-						new AssetAction() { CreatedById = action.CreatedById, Comment = action.Comment, CreatedOn = DateTime.UtcNow, TypeId = action.ActionType }
-				);
-				//this.AddFileAction(action);
+				AddAction(action);
 		}
 
 		public File CreateAndAddFile(UploadResponse uploadResponse)
@@ -87,5 +72,11 @@ public partial class Asset
 				CurrentFileLink = new AssetCurrentFileLink() { File = file };
 				State = AssetState.Uploaded;
 				return file;
+		}
+
+		private void AddAction(IArticleAction<AssetActionType> action)
+		{
+				_actions.Add(action.Adapt<AssetAction>());
+				AddDomainEvent(new AssetActionExecutedDomainEvent(action, this.Article.Stage, this.Type, this.Number, this.CurrentFile));
 		}
 }

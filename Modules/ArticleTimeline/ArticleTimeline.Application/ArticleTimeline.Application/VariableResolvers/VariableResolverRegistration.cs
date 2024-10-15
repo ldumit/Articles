@@ -9,13 +9,11 @@ public static class VariableResolverRegistration
     public static IServiceCollection AddArticleTimelineVariableResolvers(this IServiceCollection services)
     {
         services.AddScoped<CurrentUserRoleResolver>();
-        services.AddScoped<UploadedFileResolver>();
-        services.AddScoped<ArticlePreviousStageFileResolver>();
-				services.AddScoped<ArticleNewStageFileResolver>();
-				services.AddScoped<UserNameFileResolver>();
+				services.AddScoped<CurrentUserNameResolver>();
+				services.AddScoped<UploadedFileResolver>();
+        services.AddScoped<ArticleCurrentStageResolver>();
+				services.AddScoped<ArticleNewStageResolver>();
         services.AddScoped<MessageResolver>();
-        services.AddScoped<SubmittedUserNameResolver>();
-        services.AddScoped<SubmittedUserRoleResolver>();
 
         services.AddScoped<VariableResolverFactory>(serviceProvider => variableType =>
         {
@@ -23,12 +21,10 @@ public static class VariableResolverRegistration
             {
                 VariableResolverType.RoleUser => serviceProvider.GetService<CurrentUserRoleResolver>(),
                 VariableResolverType.UploadedFile => serviceProvider.GetService<UploadedFileResolver>(),
-								VariableResolverType.PreviousStage => serviceProvider.GetService<ArticlePreviousStageFileResolver>(),
-								VariableResolverType.NewStage => serviceProvider.GetService<ArticleNewStageFileResolver>(),
-                VariableResolverType.UserName => serviceProvider.GetService<UserNameFileResolver>(),
+								VariableResolverType.CurrentStage => serviceProvider.GetService<ArticleCurrentStageResolver>(),
+								VariableResolverType.NewStage => serviceProvider.GetService<ArticleNewStageResolver>(),
+                VariableResolverType.UserName => serviceProvider.GetService<CurrentUserNameResolver>(),
                 VariableResolverType.Message => serviceProvider.GetService<MessageResolver>(),
-                VariableResolverType.SubmittedUserName => serviceProvider.GetService<SubmittedUserNameResolver>(),
-                VariableResolverType.SubmittedUserRole => serviceProvider.GetService<SubmittedUserRoleResolver>(),
 
                 _ => throw new ApplicationException(),
             };

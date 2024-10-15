@@ -10,6 +10,8 @@ public interface IClaimsProvider
 		public string GetClaimValue(string claimName);
 		public int GetUserId();
 		public string GetUserEmail();
+		public string GetUserName();
+		public string GetUserRole();
 }
 
 public interface IRouteProvider
@@ -27,14 +29,18 @@ public class HttpContextProvider(IHttpContextAccessor _httpContextAccessor)
 				=> _httpContextAccessor.GetClaimValue(claimName);
 		public int GetUserId() 
 				=> _httpContextAccessor.GetClaimValue(ClaimTypes.NameIdentifier).ToInt().Value;
-
+		public string GetUserName()
+				=> _httpContextAccessor.GetClaimValue(ClaimTypes.Name);		
 		public string GetUserEmail() 
 				=> _httpContextAccessor.GetClaimValue(ClaimTypes.Email);
+		public string GetUserRole()
+				=> _httpContextAccessor.GetClaimValue(ClaimTypes.Role);
 
 		public string GetRouteValue(string key)
 				=> _httpContextAccessor.GetRouteValue(key);
 		public int? GetArticleId() 
 				=> _httpContextAccessor.GetRouteValue("articleId").ToInt();
+
 }
 
 public static class HttpContextExtensions

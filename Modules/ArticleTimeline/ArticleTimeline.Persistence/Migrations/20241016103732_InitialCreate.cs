@@ -53,8 +53,8 @@ namespace ArticleTimeline.Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ArticleId = table.Column<int>(type: "int", nullable: false),
-                    NextStage = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PreviousStage = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NewStage = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CurrentStage = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SourceType = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     SourceId = table.Column<string>(type: "nvarchar(64)", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
@@ -84,10 +84,14 @@ namespace ArticleTimeline.Persistence.Migrations
                 columns: new[] { "SourceId", "SourceType", "DescriptionTemplate", "TitleTemplate" },
                 values: new object[,]
                 {
-                    { "Accepted->InProduction", "StageTransition", "<<RoleUser>> has started production.", "<<PreviousStage>> stage completed" },
-                    { "DraftProduction->FinalProduction", "StageTransition", "<<RoleUser>> has aproved production.", "<<PreviousStage>> stage completed" },
-                    { "FinalProduction->Published", "StageTransition", "<<RoleUser>> has published the article.", "<<PreviousStage>> stage completed" },
-                    { "InProduction->DraftProduction", "StageTransition", "<<RoleUser>> has uploaded the Draft Pdf.", "<<PreviousStage>> stage completed" }
+                    { "Approve", "ActionExecuted", "<<RoleUser>> has approved the <<UploadedFile>>.", "<<UserName>> approved <<UploadedFile>>" },
+                    { "CancelRequest", "ActionExecuted", "<<RoleUser>> has cancelled the request for a new version of the <<UploadedFile>>.", "<<UserName>> unrequested the new <<UploadedFile>>" },
+                    { "Request", "ActionExecuted", "<<RoleUser>> has requested for <<UploadedFile>>.", "<<UserName>> requested a new <<UploadedFile>>" },
+                    { "Upload", "ActionExecuted", "<<RoleUser>> has uploaded the <<UploadedFile>>", "<<UserName>> uploaded the <<UploadedFile>>" },
+                    { "Accepted->InProduction", "StageTransition", "<<RoleUser>> has started production.", "<<CurrentStage>> stage completed" },
+                    { "DraftProduction->FinalProduction", "StageTransition", "<<RoleUser>> has aproved production.", "<<CurrentStage>> stage completed" },
+                    { "FinalProduction->Published", "StageTransition", "<<RoleUser>> has published the article.", "<<CurrentStage>> stage completed" },
+                    { "InProduction->DraftProduction", "StageTransition", "<<RoleUser>> has uploaded the Draft Pdf.", "<<CurrentStage>> stage completed" }
                 });
 
             migrationBuilder.InsertData(
@@ -96,6 +100,18 @@ namespace ArticleTimeline.Persistence.Migrations
                 columns: new[] { "RoleType", "SourceId", "SourceType" },
                 values: new object[,]
                 {
+                    { "CORAUT", "Approve", "ActionExecuted" },
+                    { "POF", "Approve", "ActionExecuted" },
+                    { "TSOF", "Approve", "ActionExecuted" },
+                    { "CORAUT", "CancelRequest", "ActionExecuted" },
+                    { "POF", "CancelRequest", "ActionExecuted" },
+                    { "TSOF", "CancelRequest", "ActionExecuted" },
+                    { "CORAUT", "Request", "ActionExecuted" },
+                    { "POF", "Request", "ActionExecuted" },
+                    { "TSOF", "Request", "ActionExecuted" },
+                    { "CORAUT", "Upload", "ActionExecuted" },
+                    { "POF", "Upload", "ActionExecuted" },
+                    { "TSOF", "Upload", "ActionExecuted" },
                     { "POF", "Accepted->InProduction", "StageTransition" },
                     { "TSOF", "Accepted->InProduction", "StageTransition" },
                     { "POF", "DraftProduction->FinalProduction", "StageTransition" },

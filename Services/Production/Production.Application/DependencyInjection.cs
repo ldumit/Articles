@@ -20,6 +20,7 @@ using Production.Domain.Events;
 using Production.Persistence;
 using Production.Persistence.Repositories;
 using System.Data.Common;
+using System.Reflection;
 
 namespace Production.Application;
 public static class DependencyInjection
@@ -28,12 +29,12 @@ public static class DependencyInjection
     {
         var connectionString = configuration.GetConnectionString("Database");
 
-				//services.AddMediatR(config =>
-				//{
-				//    config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
-				//    config.AddOpenBehavior(typeof(ValidationBehavior<,>));
-				//    config.AddOpenBehavior(typeof(LoggingBehavior<,>));
-				//});
+				services.AddMediatR(config =>
+				{
+						config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+						//config.AddOpenBehavior(typeof(ValidationBehavior<,>));
+						//config.AddOpenBehavior(typeof(LoggingBehavior<,>));
+				});
 
 				//services.AddFeatureManagement();
 				//services.AddMessageBroker(configuration, Assembly.GetExecutingAssembly());
@@ -51,19 +52,19 @@ public static class DependencyInjection
 						var dbConnection = provider.GetRequiredService<DbConnection>();
 						options.AddInterceptors(provider.GetServices<ISaveChangesInterceptor>());
 						options.UseSqlServer(dbConnection);
-						//options.UseSqlServer(connectionString);
-
 				});
-				services.AddDbContext<ArticleTimelineDbContext>((provider, options) =>
-				{
-						var dbConnection = provider.GetRequiredService<DbConnection>();
-						//options.UseSqlServer(dbConnection);
-						options.AddInterceptors(provider.GetServices<ISaveChangesInterceptor>());
-						options.UseSqlServer(dbConnection, options =>
-						{
-								options.MigrationsHistoryTable("__EFMigrationsHistory", "ArticleTimeline");
-						});
-				});
+				
+				services.AddScoped<TransactionProvider>();
+				//services.AddDbContext<ArticleTimelineDbContext>((provider, options) =>
+				//{
+				//		var dbConnection = provider.GetRequiredService<DbConnection>();
+				//		//options.UseSqlServer(dbConnection);
+				//		options.AddInterceptors(provider.GetServices<ISaveChangesInterceptor>());
+				//		options.UseSqlServer(dbConnection, options =>
+				//		{
+				//				options.MigrationsHistoryTable("__EFMigrationsHistory", "ArticleTimeline");
+				//		});
+				//});
 
 				services.AddScoped<IAuthorizationHandler, ArticleRoleAuthorizationHandler>();
 

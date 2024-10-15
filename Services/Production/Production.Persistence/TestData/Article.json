@@ -24,7 +24,7 @@
         "Role": "AUT"
       }
     ],
-    "Assets": [
+    "_assets": [
       {
         "Name": {"Value":"Manuscript"},
         "Number": {"Value":0},

@@ -41,6 +41,10 @@ namespace ArticleTimeline.Persistence.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("CurrentStage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -54,11 +58,7 @@ namespace ArticleTimeline.Persistence.Migrations
                     b.Property<int?>("LastModifiedById")
                         .HasColumnType("int");
 
-                    b.Property<string>("NextStage")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PreviousStage")
+                    b.Property<string>("NewStage")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -113,28 +113,56 @@ namespace ArticleTimeline.Persistence.Migrations
                             SourceType = "StageTransition",
                             SourceId = "Accepted->InProduction",
                             DescriptionTemplate = "<<RoleUser>> has started production.",
-                            TitleTemplate = "<<PreviousStage>> stage completed"
+                            TitleTemplate = "<<CurrentStage>> stage completed"
                         },
                         new
                         {
                             SourceType = "StageTransition",
                             SourceId = "InProduction->DraftProduction",
                             DescriptionTemplate = "<<RoleUser>> has uploaded the Draft Pdf.",
-                            TitleTemplate = "<<PreviousStage>> stage completed"
+                            TitleTemplate = "<<CurrentStage>> stage completed"
                         },
                         new
                         {
                             SourceType = "StageTransition",
                             SourceId = "DraftProduction->FinalProduction",
                             DescriptionTemplate = "<<RoleUser>> has aproved production.",
-                            TitleTemplate = "<<PreviousStage>> stage completed"
+                            TitleTemplate = "<<CurrentStage>> stage completed"
                         },
                         new
                         {
                             SourceType = "StageTransition",
                             SourceId = "FinalProduction->Published",
                             DescriptionTemplate = "<<RoleUser>> has published the article.",
-                            TitleTemplate = "<<PreviousStage>> stage completed"
+                            TitleTemplate = "<<CurrentStage>> stage completed"
+                        },
+                        new
+                        {
+                            SourceType = "ActionExecuted",
+                            SourceId = "Upload",
+                            DescriptionTemplate = "<<RoleUser>> has uploaded the <<UploadedFile>>",
+                            TitleTemplate = "<<UserName>> uploaded the <<UploadedFile>>"
+                        },
+                        new
+                        {
+                            SourceType = "ActionExecuted",
+                            SourceId = "Request",
+                            DescriptionTemplate = "<<RoleUser>> has requested for <<UploadedFile>>.",
+                            TitleTemplate = "<<UserName>> requested a new <<UploadedFile>>"
+                        },
+                        new
+                        {
+                            SourceType = "ActionExecuted",
+                            SourceId = "CancelRequest",
+                            DescriptionTemplate = "<<RoleUser>> has cancelled the request for a new version of the <<UploadedFile>>.",
+                            TitleTemplate = "<<UserName>> unrequested the new <<UploadedFile>>"
+                        },
+                        new
+                        {
+                            SourceType = "ActionExecuted",
+                            SourceId = "Approve",
+                            DescriptionTemplate = "<<RoleUser>> has approved the <<UploadedFile>>.",
+                            TitleTemplate = "<<UserName>> approved <<UploadedFile>>"
                         });
                 });
 
@@ -213,6 +241,78 @@ namespace ArticleTimeline.Persistence.Migrations
                         {
                             SourceType = "StageTransition",
                             SourceId = "FinalProduction->Published",
+                            RoleType = "CORAUT"
+                        },
+                        new
+                        {
+                            SourceType = "ActionExecuted",
+                            SourceId = "Upload",
+                            RoleType = "POF"
+                        },
+                        new
+                        {
+                            SourceType = "ActionExecuted",
+                            SourceId = "Request",
+                            RoleType = "POF"
+                        },
+                        new
+                        {
+                            SourceType = "ActionExecuted",
+                            SourceId = "CancelRequest",
+                            RoleType = "POF"
+                        },
+                        new
+                        {
+                            SourceType = "ActionExecuted",
+                            SourceId = "Approve",
+                            RoleType = "POF"
+                        },
+                        new
+                        {
+                            SourceType = "ActionExecuted",
+                            SourceId = "Upload",
+                            RoleType = "TSOF"
+                        },
+                        new
+                        {
+                            SourceType = "ActionExecuted",
+                            SourceId = "Request",
+                            RoleType = "TSOF"
+                        },
+                        new
+                        {
+                            SourceType = "ActionExecuted",
+                            SourceId = "CancelRequest",
+                            RoleType = "TSOF"
+                        },
+                        new
+                        {
+                            SourceType = "ActionExecuted",
+                            SourceId = "Approve",
+                            RoleType = "TSOF"
+                        },
+                        new
+                        {
+                            SourceType = "ActionExecuted",
+                            SourceId = "Upload",
+                            RoleType = "CORAUT"
+                        },
+                        new
+                        {
+                            SourceType = "ActionExecuted",
+                            SourceId = "Request",
+                            RoleType = "CORAUT"
+                        },
+                        new
+                        {
+                            SourceType = "ActionExecuted",
+                            SourceId = "CancelRequest",
+                            RoleType = "CORAUT"
+                        },
+                        new
+                        {
+                            SourceType = "ActionExecuted",
+                            SourceId = "Approve",
                             RoleType = "CORAUT"
                         });
                 });

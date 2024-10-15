@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Options;
-using System.Data;
 using System.Data.Common;
 
 namespace Articles.EntityFrameworkCore;
@@ -9,23 +9,22 @@ namespace Articles.EntityFrameworkCore;
 public class DispatchDomainEventsInterceptor : SaveChangesInterceptor
 {
 		private readonly TransactionOptions _transactionOptions;
-		private readonly DbConnection _dbConection;
+		private readonly IMediator _mediator;
+		private readonly TransactionProvider _transactionProvider;
 		private DbTransaction? _transaction;
 
-		public DispatchDomainEventsInterceptor(DbConnection dbConection,  IOptions<TransactionOptions> transactionOptions)
-				=> (_dbConection, _transactionOptions) = (dbConection, transactionOptions.Value);
+		public DispatchDomainEventsInterceptor(TransactionProvider transactionProvider, IOptions<TransactionOptions> transactionOptions, IMediator mediator)
+				=> (_transactionProvider, _transactionOptions, _mediator) = (transactionProvider, transactionOptions.Value, mediator);
 
 		public override async ValueTask<InterceptionResult<int>> SavingChangesAsync(DbContextEventData eventData, InterceptionResult<int> result, CancellationToken cancellationToken = default)
 		{
-				if (eventData.Context != null 
-						&& eventData.Context.Database.CurrentTransaction == null 
-						&& _transactionOptions.UseSingleTransaction
-						&& _transaction == null)
+				if (_transactionOptions.UseSingleTransaction
+						&& eventData.Context is not null 
+						&& eventData.Context.Database.CurrentTransaction is null
+						&& _transaction is null)
 				{
-						if(_dbConection.State == ConnectionState.Closed)
-								await _dbConection.OpenAsync(cancellationToken);
-						_transaction = await _dbConection.BeginTransactionAsync(cancellationToken);
-						await eventData.Context.Database.UseTransactionAsync(_transaction);
+						_transaction =  await _transactionProvider.BeginTransactionAsync(cancellationToken);
+						await eventData.Context.Database.UseTransactionAsync(_transaction, cancellationToken);
 				}
 
 				return await base.SavingChangesAsync(eventData, result, cancellationToken);
@@ -36,7 +35,8 @@ public class DispatchDomainEventsInterceptor : SaveChangesInterceptor
 				result = await base.SavedChangesAsync(eventData, result, cancellationToken);
 
 				if(eventData.Context is not null)
-						await eventData.Context.DispatchDomainEventsAsync(cancellationToken);
+						//await eventData.Context.DispatchDomainEventsAsync(cancellationToken);
+						await _mediator.DispatchDomainEventsAsync(eventData.Context);
 
 				if (_transaction != null)
 						await _transaction.CommitAsync(cancellationToken);
