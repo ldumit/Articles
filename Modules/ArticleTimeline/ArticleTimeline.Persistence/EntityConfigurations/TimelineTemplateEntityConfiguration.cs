@@ -14,7 +14,6 @@ public class TimelineTemplateEntityConfiguration : MetadataConfiguration<Timelin
 				builder.HasKey(e => new { e.SourceType, e.SourceId});
 
 				builder.Property(e => e.SourceType).HasEnumConversion().IsRequired();
-				//entity.Property(e => e.ArticleStage).HasEnumConversion()IsRequired();
 				builder.Property(e => e.SourceId).HasMaxLength(Constraints.C64).IsRequired();
 				builder.Property(e => e.TitleTemplate).HasMaxLength(Constraints.C256).IsRequired();
     }

@@ -9,7 +9,6 @@ namespace Production.API.Features.RequestFiles.AuthorFiles;
 [Authorize(Roles = "TSOF")]
 [HttpPut("articles/{articleId:int}/assets/supplementary:request")]
 [Tags("Assets")]
-
 public class RequestSupplementaryAssetsEndpoint(ArticleRepository articleRepository, AssetRepository assetRepository, AssetStateMachineFactory factory)
     : RequestAssetsEndpointBase<RequestSupplementaryAssetsCommand>(articleRepository, assetRepository, factory)
 {

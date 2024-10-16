@@ -3,7 +3,6 @@ using Production.Domain.Entities;
 using Production.Persistence.EntityConfigurations;
 using Microsoft.Extensions.Caching.Memory;
 using Articles.EntityFrameworkCore;
-using Articles.System.Cache;
 
 namespace Production.Persistence;
 
@@ -64,10 +63,10 @@ public partial class ProductionDbContext(DbContextOptions<ProductionDbContext> o
 				base.OnModelCreating(modelBuilder);
     }
 
-		protected override async Task<int> SaveChangesImpl(CancellationToken cancellationToken = default)
+		public async override Task<int> SaveChangesAsync(CancellationToken ct = default)
 		{
 				this.UnTrackCacheableEntities();
 
-				return await base.SaveChangesImpl(cancellationToken);
+				return await base.SaveChangesAsync(ct);
 		}
 }

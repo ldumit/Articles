@@ -16,18 +16,21 @@ namespace Production.API.Features.ApproveAssets.ApproveDraftAsset;
 //[HttpPut("articles/{articleId:int}/assets/draft/{assetId:int}/actions/approve")]
 [Tags("Assets")]
 
-public class ApproveDraftAssetEndpoint(AssetRepository _assetRepository, AssetStateMachineFactory stateMachineFactory)
-    : AssetBaseEndpoint<ApproveDraftAssetCommand, AssetActionResponse>(stateMachineFactory)
+public class ApproveDraftAssetEndpoint(AssetRepository assetRepository, AssetStateMachineFactory stateMachineFactory)
+    : AssetBaseEndpoint<ApproveDraftAssetCommand, AssetActionResponse>(assetRepository, stateMachineFactory)
 {
     public override async Task HandleAsync(ApproveDraftAssetCommand command, CancellationToken ct)
     {
         var asset = await _assetRepository.GetByIdAsync(command.ArticleId, command.AssetId);
+        _article = asset!.Article;
         CheckAndThrowStateTransition(asset!, command.ActionType);
 
 				asset.SetState(AssetState.Approved, command);
-        asset.Article.SetStage(ArticleStage.FinalProduction, command);
+				_article.SetStage(NextStage, command);
 
         await _assetRepository.SaveChangesAsync();
         await SendAsync(new AssetActionResponse(asset.Adapt<AssetMinimalDto>()));
     }
+
+		protected override ArticleStage NextStage => ArticleStage.FinalProduction;
 }

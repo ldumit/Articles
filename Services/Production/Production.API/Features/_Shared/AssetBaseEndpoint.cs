@@ -3,27 +3,29 @@ using Production.Domain.Entities;
 using Articles.Abstractions;
 using Production.Application.StateMachines;
 using Production.Domain.Enums;
-using AssetType = Production.Domain.Enums.AssetType;
+using Production.Persistence.Repositories;
 
 namespace Production.API.Features.Shared;
 
-public abstract class AssetBaseEndpoint<TCommand, TResponse>(AssetStateMachineFactory _stateMachineFactory) 
+public abstract class AssetBaseEndpoint<TCommand, TResponse>(AssetRepository assetRepository, AssetStateMachineFactory stateMachineFactory)
 		: Endpoint<TCommand, TResponse>
 		where TCommand : IArticleAction
 {
-		protected Article? _article;
+		protected readonly AssetRepository _assetRepository = assetRepository;
+		protected readonly AssetStateMachineFactory _stateMachineFactory = stateMachineFactory;
+		protected Article _article = null!;
 
-		protected virtual ArticleStage NextStage => _article.Stage;
-
-		//protected virtual void CheckAndThrowStateTransition(Article article, AssetState assetState, AssetType assetType, AssetActionType actionType)
-		//{
-		//		if(!_stateMachineFactory(assetState).CanFire(article.Stage, assetType, actionType))
-		//				throw new BadHttpRequestException("Action not allowed");
-		//}
+		protected virtual ArticleStage NextStage => _article!.Stage; // by default the stage doesn't change
 
 		protected virtual void CheckAndThrowStateTransition(Asset asset, AssetActionType actionType)
 		{
 				if (!_stateMachineFactory(asset.State).CanFire(asset.Article.Stage, asset.Type, actionType))
 						throw new BadHttpRequestException("Action not allowed");
+		}
+
+		protected Asset CreateAsset(Domain.Enums.AssetType assetType, byte assetNumber)
+		{
+				var assetTypeEntity = _assetRepository.GetAssetType(assetType);
+				return _article.CreateAsset(assetTypeEntity, assetNumber);
 		}
 }

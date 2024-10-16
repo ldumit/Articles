@@ -16,6 +16,5 @@ public class TimelineVisibilityEntityConfiguration : MetadataConfiguration<Timel
 				builder.Property(e => e.SourceType).HasEnumConversion().IsRequired();
 				builder.Property(e => e.SourceId).HasMaxLength(Constraints.C64).IsRequired();
 				builder.Property(e => e.RoleType).HasEnumConversion().IsRequired();
-        //entity.Property(e => e.Stage);
     }
 }
