@@ -1,6 +1,12 @@
 version: '3.4'
 
 services:
+  journals.api:
+    image: ${DOCKER_REGISTRY-}journalsapi
+    build:
+      context: .
+      dockerfile: Services/Journals/Journals.API/Dockerfile
+
   production.api:
     image: ${DOCKER_REGISTRY-}productionapi
     build:
@@ -14,3 +20,6 @@ services:
   
   productiondb:
     image: mcr.microsoft.com/mssql/server
+
+  redisdb:
+    image: redis/redis-stack

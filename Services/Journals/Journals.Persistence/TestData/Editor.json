@@ -1,0 +1,62 @@
+[
+	{
+		"Id": "1",
+		"FullName": "Editor 1",
+		"Location": "Phoenix, USA",
+		"University": "Yale University"
+	},
+	{
+		"Id": "2",
+		"FullName": "Editor 2",
+		"Location": "Dallas,USA",
+		"University": "Harvard University"
+	},
+	{
+		"Id": "3",
+		"FullName": "Editor 3",
+		"Location": "Barcelona, Spain",
+		"University": "University of Barcelona"
+	},
+	{
+		"Id": "4",
+		"FullName": "Editor 4",
+		"Location": "Dublin, Ireland",
+		"University": "Trinity College Dublin"
+	},
+	{
+		"Id": "5",
+		"FullName": "Editor 5",
+		"Location": "Mumbai, India",
+		"University": "Indian Institute of Technology Bombay"
+	},
+	{
+		"Id": "6",
+		"FullName": "Editor 6",
+		"Location": "Tokyo, Japan",
+		"University": "University of Tokyo"
+	},
+	{
+		"Id": "7",
+		"FullName": "Editor 7",
+		"Location": "Cairo, Egypt",
+		"University": "Cairo University"
+	},
+	{
+		"Id": "8",
+		"FullName": "Editor 8",
+		"Location": "Warsaw, Poland",
+		"University": "University of Warsaw"
+	},
+	{
+		"Id": "9",
+		"FullName": "Editor 9",
+		"Location": "Santiago, Chile",
+		"University": "University of Chile"
+	},
+	{
+		"Id": "10",
+		"FullName": "Editor 10",
+		"Location": "Buenos Aires, Argentina",
+		"University": "University of Buenos Aires"
+	}
+]
