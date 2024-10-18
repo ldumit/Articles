@@ -1,0 +1,76 @@
+[
+	{
+		"Id": 1,
+		"Abbreviation": "apace",
+		"Name": "Aerospace Engineering",
+		"Description": "Aerospace Engineering is a multidisciplinary journal that advances sustainable aviation research focusing on zero environmental impact",
+		"ISSN": "1234-4321",
+		"ChiefEditorId": 1,
+		"Sections": [
+			{
+				"Id": 1,
+				"Name": "Energetics and Propulsion",
+				"Description": "Explores Energetics and Propulsion for aviation",
+				"EditorRoles": [
+					{
+						"SectionId": 1,
+						"EditorId": 1,
+						"EditorRole": "ChiefEditor"
+					},
+					{
+						"SectionId": 1,
+						"EditorId": 2,
+						"EditorRole": "AssociateEditor"
+					},
+					{
+						"SectionId": 1,
+						"EditorId": 3,
+						"EditorRole": "AssociateEditor"
+					},
+					{
+						"SectionId": 1,
+						"EditorId": 4,
+						"EditorRole": "ReviewEditor"
+					},
+					{
+						"SectionId": 1,
+						"EditorId": 5,
+						"EditorRole": "ReviewEditor"
+					}
+				]
+			},
+			{
+				"Id": 2,
+				"Name": "Intelligent Aerospace Systems",
+				"Description": "Explores Intelligent Aerospace Systems for aviation",
+				"EditorRoles": [
+					{
+						"SectionId": 2,
+						"EditorId": 6,
+						"EditorRole": "ChiefEditor"
+					},
+					{
+						"SectionId": 2,
+						"EditorId": 7,
+						"EditorRole": "AssociateEditor"
+					},
+					{
+						"SectionId": 2,
+						"EditorId": 8,
+						"EditorRole": "AssociateEditor"
+					},
+					{
+						"SectionId": 2,
+						"EditorId": 9,
+						"EditorRole": "ReviewEditor"
+					},
+					{
+						"SectionId": 2,
+						"EditorId": 10,
+						"EditorRole": "ReviewEditor"
+					}
+				]
+			}
+		]
+	}
+]

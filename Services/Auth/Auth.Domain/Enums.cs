@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace Auth.Domain;
+﻿namespace Auth.Domain;
 
 public enum Gender
 {

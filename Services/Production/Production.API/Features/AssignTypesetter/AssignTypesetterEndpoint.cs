@@ -6,10 +6,11 @@ using Articles.Abstractions;
 using Production.API.Features.Shared;
 using Production.Application.StateMachines;
 using Production.Domain.Enums;
+using Articles.Security;
 
 namespace Production.API.Features.AssignTypesetter
 {
-		[Authorize(Roles = "POF")]
+		[Authorize(Roles = Role.POF)]
     [HttpPut("articles/{articleId:int}/typesetter/{typesetterId:int}")]
 		[Tags("Articles")]
 		public class AssignTypesetterEndpoint(ArticleRepository articleRepository, ProductionDbContext _dbContext, ArticleStateMachineFactory _stateMachineFactory) 

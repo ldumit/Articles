@@ -29,4 +29,6 @@ public static class Role
 		public const string CORAUT = nameof(UserRoleType.CORAUT);
 		public const string POF = nameof(UserRoleType.POF);
 		public const string TSOF = nameof(UserRoleType.TSOF);
+
+		public const string EOF = nameof(UserRoleType.EOF);
 }

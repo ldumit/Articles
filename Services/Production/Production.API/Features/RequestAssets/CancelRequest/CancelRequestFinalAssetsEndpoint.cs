@@ -1,4 +1,5 @@
-﻿using FastEndpoints;
+﻿using Articles.Security;
+using FastEndpoints;
 using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Production.API.Features.RequestFiles.Shared;
@@ -10,7 +11,7 @@ using Production.Persistence.Repositories;
 
 namespace Production.API.Features.RequestFiles.Cancel;
 
-[Authorize(Roles = "POF")]
+[Authorize(Roles = Role.POF)]
 [HttpPut("articles/{articleId:int}/assets/final:cancel-request")]
 [Tags("Assets")]
 public class CancelRequestFinalAssetsEndpoint(ArticleRepository articleRepository, AssetRepository _assetRepository)

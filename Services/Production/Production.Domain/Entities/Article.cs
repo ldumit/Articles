@@ -10,9 +10,10 @@ public partial class Article : AggregateEntity
 
     public required string Title { get; set; }
     public required string Doi { get; set; }
-    
-    //todo create a separate entity for referenced users and use it uniformly for all kind of users(sumbission, author, typesetter etc.)
-    public DateTime SubmitedOn { get; set; }
+    //public string JournalSection { get; set; } = default!;
+
+		//todo create a separate entity for referenced users and use it uniformly for all kind of users(sumbission, author, typesetter etc.)
+		public DateTime SubmitedOn { get; set; }
     public required virtual int SubmitedById { get; set; }
     public virtual Person SubmitedBy { get; set; } = null!;
 

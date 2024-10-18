@@ -133,5 +133,20 @@
         "beginDate": "2024-08-01"
       }
     ]
+  },
+  {
+    "email": "eof.1@articles.cs",
+    "firstName": "EOF",
+    "lastName": "1",
+    "gender": "Male",
+    "nickname": "EOF1",
+    "companyName": "Articles",
+    "position": "Editorial Office Admin",
+    "userRoles": [
+      {
+        "roleId": 1,
+        "beginDate": "2024-08-01"
+      }
+    ]
   }
 ]

@@ -1,0 +1,122 @@
+[
+	{
+		"Id": "1",
+		"FullName": "Editor 1",
+		"Location": "Phoenix, USA",
+		"University": "Yale University"
+	},
+	{
+		"Id": "2",
+		"FullName": "Editor 2",
+		"Location": "Dallas,USA",
+		"University": "Harvard University"
+	},
+	{
+		"Id": "3",
+		"FullName": "Editor 3",
+		"Location": "Barcelona, Spain",
+		"University": "University of Barcelona"
+	},
+	{
+		"Id": "4",
+		"FullName": "Editor 4",
+		"Location": "Dublin, Ireland",
+		"University": "Trinity College Dublin"
+	},
+	{
+		"Id": "5",
+		"FullName": "Editor 5",
+		"Location": "Mumbai, India",
+		"University": "Indian Institute of Technology Bombay"
+	},
+	{
+		"Id": "6",
+		"FullName": "Editor 6",
+		"Location": "Tokyo, Japan",
+		"University": "University of Tokyo"
+	},
+	{
+		"Id": "7",
+		"FullName": "Editor 7",
+		"Location": "Cairo, Egypt",
+		"University": "Cairo University"
+	},
+	{
+		"Id": "8",
+		"FullName": "Editor 8",
+		"Location": "Warsaw, Poland",
+		"University": "University of Warsaw"
+	},
+	{
+		"Id": "9",
+		"FullName": "Editor 9",
+		"Location": "Santiago, Chile",
+		"University": "University of Chile"
+	},
+	{
+		"Id": "10",
+		"FullName": "Editor 10",
+		"Location": "Buenos Aires, Argentina",
+		"University": "University of Buenos Aires"
+	},
+	{
+		"Id": 11,
+		"FullName": "Editor 11",
+		"Location": "Sydney, Australia",
+		"University": "University of Sydney"
+	},
+	{
+		"Id": 12,
+		"FullName": "Editor 12",
+		"Location": "Melbourne, Australia",
+		"University": "Monash University"
+	},
+	{
+		"Id": 13,
+		"FullName": "Editor 13",
+		"Location": "Cairo, Egypt",
+		"University": "Cairo University"
+	},
+	{
+		"Id": 14,
+		"FullName": "Editor 14",
+		"Location": "Nairobi, Kenya",
+		"University": "University of Nairobi"
+	},
+	{
+		"Id": 15,
+		"FullName": "Editor 15",
+		"Location": "Berlin, Germany",
+		"University": "Humboldt University of Berlin"
+	},
+	{
+		"Id": 16,
+		"FullName": "Editor 16",
+		"Location": "Paris, France",
+		"University": "Sorbonne University"
+	},
+	{
+		"Id": 17,
+		"FullName": "Editor 17",
+		"Location": "Mumbai, India",
+		"University": "University of Mumbai"
+	},
+	{
+		"Id": 18,
+		"FullName": "Editor 18",
+		"Location": "Beijing, China",
+		"University": "Peking University"
+	},
+	{
+		"Id": 19,
+		"FullName": "Editor 19",
+		"Location": "New York, USA",
+		"University": "Columbia University"
+	},
+	{
+		"Id": 20,
+		"FullName": "Editor 20",
+		"Location": "Toronto, Canada",
+		"University": "University of Toronto"
+	}
+]
