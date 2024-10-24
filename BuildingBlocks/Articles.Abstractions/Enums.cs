@@ -23,35 +23,35 @@ namespace Articles.Abstractions;
 //		Accepted = 101
 //}
 
-public enum ArticleStage2
-{
-		[Description("Article submitted by the author")]
-		Submitted = 100,
-		[Description("Article approved")]
-		InReview = 200,
-		[Description("Article accepted")]
-		Accepted = 201,
-		[Description("Typesetter assigned")]
-		InProduction = 300,
-		[Description("Author's proof uploaded")]
-		DraftProduction = 301,
-		[Description("Author's proof approved")]
-		FinalProduction = 302,
-		[Description("Article scheduled for publication")]
-		PublicationScheduled = 304,
-		[Description("Article published")]
-		Published = 305
-}
 
-public enum ArticleStage
+public enum ArticleStage : int
 {
+		//Submission
+		[Description("Author uploaded the Draft Manuscript")]
+		DraftSubmission = 1,
+		[Description("Author finished the Draft Manuscript")]
+		Submitted = 2,
+		[Description("Editorial team performs the initial check")]
+		UnderInitialCheck = 3,
+
+		//Review
+		[Description("Article is under review")]
+		UnderReview = 101,
+		[Description("Reviewer feedback received")]
+		ReviewerFeedback = 102,
+		[Description("Revision requested")]
+		RevisionRequested = 103,
 		[Description("Article accepted")]
-		Accepted = 201,
+		Accepted = 104,
+		[Description("Article rejected")]
+		Rejected = 105,
+
+		//Production
 		[Description("Typesetter assigned")]
 		InProduction = 300,
-		[Description("DraftPdf uploaded")]
+		[Description("Draft PDF uploaded")]
 		DraftProduction = 301,
-		[Description("DraftPdf approved")]
+		[Description("Draft PDF approved")]
 		FinalProduction = 302,
 		[Description("Article scheduled for publication")]
 		PublicationScheduled = 304,

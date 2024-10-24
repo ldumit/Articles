@@ -1,0 +1,104 @@
+[
+  {
+    "UserId": 1,
+    "PersonType": "Person",
+    "FirstName": "Laurentiu",
+    "LastName": "Dumitrescu",
+    "Title": "Mr",
+    "Email": "dumitrescu.laurentiu@gmail.com"
+  },
+  {
+    "UserId": 2,
+    "PersonType": "Author",
+    "FirstName": "Author",
+    "LastName": "1",
+    "Title": "Mr",
+    "Email": "author.1@articles.org",
+    "Country": "Mars"
+  },
+  {
+    "UserId": 3,
+    "PersonType": "Author",
+    "FirstName": "Author",
+    "LastName": "2",
+    "Title": "Ms",
+    "Email": "author.2@articles.com",
+    "Biography": "He is a novelist, filmmaker and Zen Buddhist priest."
+  },
+  {
+    "UserId": 4,
+    "PersonType": "Author",
+    "FirstName": "Author",
+    "LastName": "3",
+    "Title": "Dr",
+    "Email": "author.3@articles.com"
+  },
+  {
+    "UserId":5,
+    "PersonType": "Author",
+    "FirstName": "Co-Author",
+    "LastName": "1",
+    "Title": "Ms",
+    "Email": "coauthor.1@articles.com"
+  },
+  {
+    "UserId": 6,
+    "PersonType": "Author",
+    "FirstName": "Co-Author",
+    "LastName": "2",
+    "Title": "Mr",
+    "Email": "coauthor.2@articles.com"
+  },
+  {
+    "UserId": 7,
+    "PersonType": "Typesetter",
+    "FirstName": "Typesetter",
+    "LastName": "1",
+    "Title": "Mr",
+    "Email": "typesetter.1@articles.com",
+    "CompanyName": "Tyepesetter1",
+    "isDefault": true
+  },
+  {
+    "UserId": 8,
+    "PersonType": "Typesetter",
+    "FirstName": "Typesetter",
+    "LastName": "2",
+    "Title": "Ms",
+    "Email": "typesetter.2@articles.com",
+    "CompanyName": "Tyepesetter2",
+    "isDefault": false
+  },
+  {
+    "UserId": 9,
+    "PersonType": "Person",
+    "FirstName": "Reviewer",
+    "LastName": "1",
+    "Title": "Mr",
+    "Email": "reviewer.1@articles.com"
+  },
+  {
+    "UserId": 10,
+    "PersonType": "Person",
+    "FirstName": "Reviewer",
+    "LastName": "2",
+    "Title": "Ms",
+    "Email": "reviewer.2@articles.com"
+  },
+  {
+    "UserId": 11,
+    "PersonType": "Person",
+    "FirstName": "POF",
+    "LastName": "1",
+    "Title": "Ms",
+    "Email": "pof.1@articles.com"
+  },
+  {
+    "UserId": null,
+    "PersonType": "Author",
+    "FirstName": "Author",
+    "LastName": "4-NoUser",
+    "Title": "Mr",
+    "Email": "author.4@articles.org"
+  }
+]

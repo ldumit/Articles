@@ -1,0 +1,20 @@
+﻿using Articles.Entitities;
+
+namespace Submission.Domain.Entities
+{
+		public class Person : Entity
+		{
+				public required string FirstName { get; set; }
+				public required string LastName { get; set; }
+				public string FullName => FirstName + " " + LastName;
+
+				public string? Title { get; set; }
+				public required string Email { get; set; }
+
+				public int? UserId { get; set; }
+
+				public string PersonType { get; set; } = null!;
+
+				public List<ArticleActor> ArticleActors { get; set; } = new();
+		}
+}

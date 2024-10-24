@@ -2,7 +2,6 @@
 
 namespace Journals.Domain.Events;
 
-
 public record UpdateJournalEvent(
 		int Id,
 		string Abbreviation,
