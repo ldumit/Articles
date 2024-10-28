@@ -16,9 +16,9 @@ public class JournalEntityConfiguration : EntityConfiguration<Journal>
         entity.Property(e => e.Name).HasMaxLength(Constraints.C64).IsRequired();
         //entity.Property(e => e.ShortName).HasMaxLength(Constraints.Twenty).IsRequired();
         
-        entity.HasOne(e => e.DefaultTypesetter).WithMany()
-            .HasForeignKey(e => e.DefaultTypesetterId)
-            .HasPrincipalKey(e=> e.Id)
-            .OnDelete(DeleteBehavior.Restrict);
+        //entity.HasOne(e => e.DefaultTypesetter).WithMany()
+        //    .HasForeignKey(e => e.DefaultTypesetterId)
+        //    .HasPrincipalKey(e=> e.Id)
+        //    .OnDelete(DeleteBehavior.Restrict);
     }
 }

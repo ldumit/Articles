@@ -11,10 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Azure.Storage.Blobs" Version="12.22.1" />
-    <PackageReference Include="FastEndpoints" Version="5.30.0" />
-    <PackageReference Include="FastEndpoints.Swagger" Version="5.30.0" />
     <PackageReference Include="Mapster" Version="7.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
@@ -37,11 +34,6 @@
     <ProjectReference Include="..\..\..\BuildingBlocks\Articles.System\Articles.System.csproj" />
     <ProjectReference Include="..\..\..\Modules\FileService\FileService.Contracts\FileStorage.Contracts.csproj" />
     <ProjectReference Include="..\Submission.Application\Submission.Application.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Features\_Production\Publish\" />
-    <Folder Include="Features\_Production\RequestAssets\Draft\" />
   </ItemGroup>
 
 </Project>

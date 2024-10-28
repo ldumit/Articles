@@ -9,10 +9,10 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Services/Production/Production.API/Production.API.csproj", "Services/Production/Production.API/"]
-COPY ["Services/Production/Production.Application/Production.Application.csproj", "Services/Production/Production.Application/"]
-COPY ["Services/Production/Production.Persistence/Production.Persistence.csproj", "Services/Production/Production.Persistence/"]
-COPY ["Services/Production/Production.Domain/Production.Domain.csproj", "Services/Production/Production.Domain/"]
+COPY ["Services/Submission/Submission.API/Submission.API.csproj", "Services/Submission/Submission.API/"]
+COPY ["Services/Submission/Submission.Application/Submission.Application.csproj", "Services/Submission/Submission.Application/"]
+COPY ["Services/Submission/Submission.Persistence/Submission.Persistence.csproj", "Services/Submission/Submission.Persistence/"]
+COPY ["Services/Submission/Submission.Domain/Submission.Domain.csproj", "Services/Submission/Submission.Domain/"]
 COPY ["BuildingBlocks/Articles.AspNetCore/Articles.AspNetCore.csproj", "BuildingBlocks/Articles.AspNetCore/"]
 COPY ["BuildingBlocks/Articles.AspNetCore/Articles.Entitities.csproj", "BuildingBlocks/Articles.Entitities/"]
 COPY ["BuildingBlocks/Articles.AspNetCore/Articles.EntityFrameworkCore.csproj", "BuildingBlocks/Articles.EntityFrameworkCore/"]

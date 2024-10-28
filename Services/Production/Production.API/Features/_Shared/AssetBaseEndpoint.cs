@@ -4,6 +4,7 @@ using Articles.Abstractions;
 using Production.Application.StateMachines;
 using Production.Domain.Enums;
 using Production.Persistence.Repositories;
+using Articles.Exceptions;
 
 namespace Production.API.Features.Shared;
 
@@ -20,7 +21,7 @@ public abstract class AssetBaseEndpoint<TCommand, TResponse>(AssetRepository ass
 		protected virtual void CheckAndThrowStateTransition(Asset asset, AssetActionType actionType)
 		{
 				if (!_stateMachineFactory(asset.State).CanFire(asset.Article.Stage, asset.Type, actionType))
-						throw new BadHttpRequestException("Action not allowed");
+						throw new BadRequestException("Action not allowed");
 		}
 
 		protected Asset CreateAsset(Domain.Enums.AssetType assetType, byte assetNumber)

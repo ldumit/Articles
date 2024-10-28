@@ -23,7 +23,7 @@ public partial class Article : AggregateEntity
 
 		//todo create a separate entity for referenced users and use it uniformly for all kind of users(sumbission, author, typesetter etc.)
 		public DateTime SubmitedOn { get; set; }
-    public required virtual int SubmitedById { get; set; }
+    public virtual int SubmitedById { get; set; }
     public virtual Person SubmitedBy { get; set; } = null!;
 
     public ArticleStage Stage { get; set; }

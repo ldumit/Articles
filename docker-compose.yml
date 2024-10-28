@@ -7,11 +7,18 @@ services:
       context: .
       dockerfile: Services/Journals/Journals.API/Dockerfile
 
+  # submission.api:
+  #   image: ${DOCKER_REGISTRY-}submissionapi
+  #   build:
+  #     context: .
+  #     dockerfile: Services/Submission/Submission.API/Dockerfile
+
   production.api:
     image: ${DOCKER_REGISTRY-}productionapi
     build:
       context: .
       dockerfile: Services/Production/Production.API/Dockerfile
+
   auth.api:
     image: ${DOCKER_REGISTRY-}authapi
     build:

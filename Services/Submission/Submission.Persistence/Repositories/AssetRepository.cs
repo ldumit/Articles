@@ -6,7 +6,7 @@ using AssetType = Submission.Domain.Entities.AssetType;
 
 namespace Submission.Persistence.Repositories;
 
-public class AssetRepository(ProductionDbContext _dbContext, IMemoryCache _cache) 
+public class AssetRepository(SubmissionDbContext _dbContext, IMemoryCache _cache) 
     : Repository<Asset>(_dbContext)
 {
     protected override IQueryable<Asset> Query()

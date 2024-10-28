@@ -17,7 +17,7 @@ public class AssetStateMachine
 				StateMachine<AssetState, AssetActionType>.TriggerWithParameters<ArticleStage, Domain.Enums.AssetType>> _triggers = new(); 
 
 
-		public AssetStateMachine(AssetState assetState, ProductionDbContext dbContext)
+		public AssetStateMachine(AssetState assetState, SubmissionDbContext dbContext)
 		{
 				_stateMachine = new StateMachine<AssetState, AssetActionType>(assetState);
 

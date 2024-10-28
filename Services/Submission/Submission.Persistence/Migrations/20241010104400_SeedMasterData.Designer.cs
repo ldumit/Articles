@@ -12,7 +12,7 @@ using Submission.Persistence;
 
 namespace Submission.Persistence.Migrations
 {
-    [DbContext(typeof(ProductionDbContext))]
+    [DbContext(typeof(SubmissionDbContext))]
     [Migration("20241010104400_SeedMasterData")]
     partial class SeedMasterData
     {

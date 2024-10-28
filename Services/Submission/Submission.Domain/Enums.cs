@@ -19,10 +19,8 @@ public enum DiscussionType
 //decide -  keep AssetActionType & ArticleActionType separetly?
 public enum ArticleActionType
 {
-		AssignTypesetter,
-		Publish,
-		SchedulePublication,
-		//Accept = 101
+		Create,
+		Submit
 }
 
 public enum AssetActionType

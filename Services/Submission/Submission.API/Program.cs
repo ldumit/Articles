@@ -1,17 +1,15 @@
 using Articles.Security;
-using FastEndpoints;
 using Submission.Application;
 using Articles.EntityFrameworkCore;
 using Submission.Persistence;
 using Articles.AspNetCore;
 using Azure.Storage.Blobs;
 using System.Text.Json.Serialization;
-using FastEndpoints.Swagger;
 using Microsoft.AspNetCore.Http.Json;
-using Articles.FastEnpoints;
 using System.Reflection;
 using ArticleTimeline.Persistence;
 using ArticleTimeline.Application;
+using Submission.API.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,19 +32,20 @@ builder.Services.AddControllers();
 
 builder.Services
     .AddMemoryCache()
-		//.AddValidatorsFromAssemblyContaining<Program>()
-		.AddFastEndpoints()
     .AddMapster()
-    .SwaggerDocument()
     .AddEndpointsApiExplorer()
-		.AddAutoMapper(new Assembly[] { typeof(Submission.API.Features.Shared.FileResponseMappingProfile).Assembly })
 		.AddDistributedMemoryCache() //.AddMemoryCache()
     .AddApplicationServices(builder.Configuration)
 		.AddTimelineApplicationServices(builder.Configuration)
 		.AddSwaggerGen()
     .AddJwtAuthentication(builder.Configuration)
     .AddAuthorization()
-		;
+		.AddMediatR(config =>
+		{
+				config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+				//config.AddOpenBehavior(typeof(ValidationBehavior<,>));
+				//config.AddOpenBehavior(typeof(LoggingBehavior<,>));
+		});
 
 
 //overides the singleton lifetime for validators done by FastEndpoints
@@ -68,33 +67,19 @@ app.UseSwaggerUI();
 
 
 //talk - explain when is the best time to run the migration, integrate the migration in the CI pipeline
-app.Migrate<ProductionDbContext>();
-app.Migrate<ArticleTimelineDbContext>();
-if (app.Environment.IsDevelopment())
-{
-    app.SeedTestData();
-}
+//app.Migrate<ProductionDbContext>();
+//app.Migrate<ArticleTimelineDbContext>();
+//if (app.Environment.IsDevelopment())
+//{
+//    app.SeedTestData();
+//}
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseRouting();
 app.UseAuthorization();
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllers();
-		endpoints.MapDefaultControllerRoute();
 
-});
-app
-    .UseFastEndpoints(config =>
-    {
-		    config.Serializer.Options.Converters.Add(new JsonStringEnumConverter());
-		    config.Endpoints.Configurator = ep =>
-		    {
-				    ep.PreProcessor<AssignUserIdPreProcessor>(FastEndpoints.Order.Before);
-		    };
-    })
-		.UseSwaggerGen();
+app.MapAllEndpoints();
 
 #endregion
 

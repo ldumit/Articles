@@ -47,7 +47,7 @@ public static class DependencyInjection
 				{
 						return new SqlConnection(connectionString);
 				});
-				services.AddDbContext<ProductionDbContext>((provider, options) =>
+				services.AddDbContext<SubmissionDbContext>((provider, options) =>
 				{
 						var dbConnection = provider.GetRequiredService<DbConnection>();
 						options.AddInterceptors(provider.GetServices<ISaveChangesInterceptor>());
@@ -91,14 +91,14 @@ public static class DependencyInjection
 				//services.AddScoped<ArticleStateMachine>(); 
 				services.AddScoped<ArticleStateMachineFactory>(provider => articleStage =>
 				{
-						var dbConntext = provider.GetRequiredService<ProductionDbContext>();
+						var dbConntext = provider.GetRequiredService<SubmissionDbContext>();
 						return new ArticleStateMachine(articleStage, dbConntext);
 				});
 				
 				//services.AddScoped<AssetStateMachine>();
 				services.AddScoped<AssetStateMachineFactory>(provider => assetState =>
 				{
-						var dbConntext = provider.GetRequiredService<ProductionDbContext>();
+						var dbConntext = provider.GetRequiredService<SubmissionDbContext>();
 						return new AssetStateMachine(assetState, dbConntext);
 				});
 

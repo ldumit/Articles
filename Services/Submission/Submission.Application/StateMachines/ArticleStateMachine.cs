@@ -12,7 +12,7 @@ public class ArticleStateMachine
 {
 		private StateMachine<ArticleStage, ArticleActionType> _stateMachine;
 
-		public ArticleStateMachine(ArticleStage articleStage, ProductionDbContext _dbContext)
+		public ArticleStateMachine(ArticleStage articleStage, SubmissionDbContext _dbContext)
     {
 				 _stateMachine = new(articleStage);
 				var transitions = _dbContext.GetCached<ArticleStageTransition>();

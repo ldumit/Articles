@@ -3,7 +3,7 @@ using Submission.Domain.Entities;
 
 namespace Submission.Persistence.Repositories;
 
-public class ArticleRepository(ProductionDbContext dbContext) 
+public class ArticleRepository(SubmissionDbContext dbContext) 
 		: Repository<Article>(dbContext)
 {
 		protected override IQueryable<Article> Query()

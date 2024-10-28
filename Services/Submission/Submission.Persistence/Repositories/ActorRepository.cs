@@ -6,7 +6,7 @@ using Submission.Domain.Entities;
 
 namespace Submission.Persistence.Repositories;
 
-public class ActorRepository(ProductionDbContext _dbContext, IMemoryCache _cache) 
+public class ActorRepository(SubmissionDbContext _dbContext, IMemoryCache _cache) 
 		: Repository<Article>(_dbContext), IArticleRoleChecker
 {
 		public async Task<bool> CheckRolesForUser(int? articleId, int? userId, IEnumerable<UserRoleType> roles)

@@ -15,7 +15,22 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
-  
+
+  # submission.api:
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - ASPNETCORE_HTTP_PORTS=8080
+  #     - ASPNETCORE_HTTPS_PORTS=8081
+  #     - ConnectionStrings__Database=Server=productiondb;Database=SubmissionDb;User Id=sa;Password=Production123;Encrypt=False;TrustServerCertificate=True
+  #   depends_on:
+  #     - productiondb
+  #   ports:
+  #     - "9004:8080"
+  #     - "9054:8081"
+  #   volumes:
+  #     - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+  #     - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro  
+
   production.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development

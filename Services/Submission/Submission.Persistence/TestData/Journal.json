@@ -1,27 +1,22 @@
 [
   {
     "name": "Medicine",
-    "abbreviation": "med",
-    "defaultTypesetterId": 7
+    "abbreviation": "med"
   },
   {
     "name": "Public Health",
-    "abbreviation": "pubh",
-    "defaultTypesetterId": 8
+    "abbreviation": "pubh"
   },
   {
     "name": "Young Minds",
-    "abbreviation": "ymind",
-    "defaultTypesetterId": 7
+    "abbreviation": "ymind"
   },
   {
     "name": "Aerospace Engineering",
-    "abbreviation": "apace",
-    "defaultTypesetterId": 7
+    "abbreviation": "apace"
   },
   {
     "name": " Aquaculture",
-    "abbreviation": "aquac",
-    "defaultTypesetterId": 8
+    "abbreviation": "aquac"
   }  
 ]

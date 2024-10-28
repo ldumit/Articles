@@ -27,9 +27,11 @@ namespace Articles.Abstractions;
 public enum ArticleStage : int
 {
 		//Submission
-		[Description("Author uploaded the Draft Manuscript")]
-		DraftSubmission = 1,
+		[Description("Author created the article & uploaded the Draft Manuscript")]
+		ArticleCreated = 1,
 		[Description("Author finished the Draft Manuscript")]
+		DraftSubmission = 2,
+		[Description("The Manuscript passed the initial checks")]
 		Submitted = 2,
 		[Description("Editorial team performs the initial check")]
 		UnderInitialCheck = 3,

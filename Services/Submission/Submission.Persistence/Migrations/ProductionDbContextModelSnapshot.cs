@@ -11,7 +11,7 @@ using Submission.Persistence;
 
 namespace Submission.Persistence.Migrations
 {
-    [DbContext(typeof(ProductionDbContext))]
+    [DbContext(typeof(SubmissionDbContext))]
     partial class ProductionDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

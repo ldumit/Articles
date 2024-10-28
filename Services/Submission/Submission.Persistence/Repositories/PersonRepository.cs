@@ -3,7 +3,7 @@ using Submission.Domain.Entities;
 
 namespace Submission.Persistence.Repositories;
 
-public class PersonRepository(ProductionDbContext dbContext) 
+public class PersonRepository(SubmissionDbContext dbContext) 
 		: Repository<Person>(dbContext)
 {
 		public async Task<Person> GetByUserId(int userId, bool throwIfNotFound = true)

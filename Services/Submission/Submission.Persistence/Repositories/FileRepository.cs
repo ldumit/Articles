@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-using File = Production.Domain.Entities.File;
+using File = Submission.Domain.Entities.File;
 
 namespace Submission.Persistence.Repositories;
 
-public class FileRepository(ProductionDbContext _dbContext) 
+public class FileRepository(SubmissionDbContext _dbContext) 
     : Repository<File>(_dbContext)
 {
     protected override IQueryable<File> Query()
