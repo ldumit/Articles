@@ -1,19 +1,20 @@
-﻿using FluentValidation;
+﻿using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Mvc;
+using FluentValidation;
 using Articles.System;
 using Articles.Abstractions;
-
 using Submission.Domain.Enums;
-using System.Text.Json.Serialization;
-using MediatR;
+using Articles.MediatR;
 
 namespace Submission.Application.Features.Shared;
 
-public abstract record ArticleCommand<TActionType, TResponse> : IArticleAction<TActionType>, IRequest<TResponse>
+public abstract record ArticleCommand<TActionType, TResponse> : IArticleAction<TActionType>, ICommand<TResponse>
     where TActionType : Enum
 {
+    [FromRoute]
     public int ArticleId { get; set; }
 
-    public string Comment { get; init; }
+    public string? Comment { get; init; }
 
     [JsonIgnore]
     public abstract TActionType ActionType { get; }
@@ -30,11 +31,7 @@ public abstract record ArticleCommand<TActionType, TResponse> : IArticleAction<T
 		public int CreatedById { get; set; }
 }
 
-public abstract record ArticleCommand : ArticleCommand<ArticleActionType, ArticleCommandResponse>;
-public abstract record ArticleCommand<TResponse> : ArticleCommand<ArticleActionType, TResponse>;
-public abstract record AssetCommand<TResponse> : ArticleCommand<AssetActionType, TResponse>;
-
-public record ArticleCommandResponse(int ArticleId);
+public abstract record ArticleCommand : ArticleCommand<ArticleActionType, IdResponse>;
 
 public abstract class ArticleCommandValidator<TFileActionCommand> : BaseValidator<TFileActionCommand>
     where TFileActionCommand : IArticleAction

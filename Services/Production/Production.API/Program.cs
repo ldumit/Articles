@@ -34,7 +34,6 @@ builder.Services.AddControllers();
 
 builder.Services
     .AddMemoryCache()
-		//.AddValidatorsFromAssemblyContaining<Program>()
 		.AddFastEndpoints()
     .AddMapster()
     .SwaggerDocument()

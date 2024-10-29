@@ -11,7 +11,7 @@ namespace Submission.Persistence.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
 						migrationBuilder.Sql(@"
-            INSERT INTO [AssetType] 
+            INSERT INTO [AssetTypeDefinition] 
             (id, name, description, defaultCategoryId, maxNumber, allowedFileExtensions, defaultFileExtension, MaxFileSizeInMB)
             VALUES
             (1, 'Manuscript', 'Manuscript', 1, 0, '[""pdf""]', 'pdf', 50),
@@ -29,7 +29,7 @@ namespace Submission.Persistence.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-						migrationBuilder.Sql("DELETE FROM [AssetType]");
+						migrationBuilder.Sql("DELETE FROM [AssetTypeDefinition]");
 				}
     }
 }

@@ -7,14 +7,9 @@ namespace Production.Persistence.EntityConfigurations;
 
 public class AuthorEntityConfiguration : IEntityTypeConfiguration<Author>
 {
-    public void Configure(EntityTypeBuilder<Author> entity)
+    public void Configure(EntityTypeBuilder<Author> builder)
     {
-        //base.Configure(entity);
-
-        entity.Property(e => e.Country).HasMaxLength(Constraints.C64);
-				entity.Property(e => e.Biography).HasMaxLength(Constraints.C2048);
-
-				//talk - storing enums as int vs string, leasibility
-				//entity.Property(e => e.Role).HasConversion<int>().IsRequired();
+        builder.Property(e => e.Country).HasMaxLength(Constraints.C64);
+				builder.Property(e => e.Biography).HasMaxLength(Constraints.C2048);
     }
 }

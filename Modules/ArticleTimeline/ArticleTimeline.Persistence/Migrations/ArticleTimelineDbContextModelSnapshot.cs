@@ -18,7 +18,7 @@ namespace ArticleTimeline.Persistence.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("ArticleTimeline")
-                .HasAnnotation("ProductVersion", "8.0.8")
+                .HasAnnotation("ProductVersion", "8.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -49,9 +49,6 @@ namespace ArticleTimeline.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("FileId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("LasModifiedOn")
                         .HasColumnType("datetime2");
 
@@ -69,9 +66,6 @@ namespace ArticleTimeline.Persistence.Migrations
                     b.Property<string>("SourceType")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("TemplateId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()

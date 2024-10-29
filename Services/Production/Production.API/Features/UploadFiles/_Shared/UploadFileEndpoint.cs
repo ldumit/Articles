@@ -17,8 +17,10 @@ public class UploadFileEndpoint<TUploadCommand>
 		//talk - readonly fields in primary constructors are not supported yet but they will be
 		public async override Task HandleAsync(TUploadCommand command, CancellationToken ct)
     {
-        _article = await _articleRepository.GetByIdWithSingleAssetAsync(command.ArticleId, command.AssetType, command.GetAssetNumber());
-				var asset = _article.Assets.SingleOrDefault();
+        //_article = await _articleRepository.GetByIdWithSingleAssetAsync(command.ArticleId, command.AssetType, command.GetAssetNumber());
+				_article = await _articleRepository.GetByIdWithAssetsAsync(command.ArticleId);
+
+				var asset = _article.Assets.SingleOrDefault(a => a.Type == command.AssetType && a.Number == command.GetAssetNumber());
 				if (asset is null)
 						asset = CreateAsset(command.AssetType, command.GetAssetNumber());
 
@@ -47,7 +49,7 @@ public class UploadFileEndpoint<TUploadCommand>
     {
         var filePath = asset.GenerateStorageFilePath(command.File.FileName);
         //talk about tags
-        return await _fileService.UploadFileAsync(filePath, command.File,
+        return await _fileService.UploadFileAsync(filePath, command.File, overwrite:true,
                 new Dictionary<string, string>{ 
                     {"entity", nameof(Asset)},
                     {"entityId", asset.Id.ToString()}

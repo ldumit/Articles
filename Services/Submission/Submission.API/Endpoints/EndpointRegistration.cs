@@ -2,9 +2,18 @@
 
 public static class EndpointRegistration
 {
-		public static void MapAllEndpoints(this IEndpointRouteBuilder app)
+		public static IEndpointRouteBuilder MapAllEndpoints(this IEndpointRouteBuilder app)
 		{
-				app.MapCreateArticleEndpoint();
-				// Add more endpoint mappings as needed
+				GetArticleEndpoint.Map(app);
+				CreateArticleEndpoint.Map(app);
+				AssignAuthorEndpoint.Map(app);
+				UploadManuscriptFileEndpoint.Map(app);
+				UploadSupplimentaryMaterialFileEndpoint.Map(app);
+				ApproveArticleEndpoint.Map(app);
+				RejectArticleEndpoint.Map(app);
+				SubmitArticleEndpoint.Map(app);
+				DownloadFileEndpoint.Map(app);
+				
+				return app;
 		}
 }

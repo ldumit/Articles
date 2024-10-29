@@ -8,10 +8,12 @@ using System.Net;
 using Articles.AspNetCore;
 using Flurl;
 using Microsoft.Extensions.Options;
+using Auth.Domain.Events;
+using Mapster;
 
 namespace Auth.API.Features;
 
-[AllowAnonymous]
+[Authorize(Roles = Articles.Security.Role.ADMIN)]
 [HttpPost("users")]
 public class CreateUserEndpoint(UserManager<User> userManager, AutoMapper.IMapper mapper, IEmailService emailService, IHttpContextAccessor httpContextAccessor, IOptions<EmailOptions> emailOptions) 
 		: Endpoint<CreateUserCommand, CreateUserResponse>
@@ -23,9 +25,8 @@ public class CreateUserEndpoint(UserManager<User> userManager, AutoMapper.IMappe
         if(user != null)
 						throw new BadRequestException($"User with email {command.Email} already exists");
 
-        //ValidateUserRoles(command.UserRoles);
-
-        user = mapper.Map<User>(command);
+				// todo, consider using a factory in the domain
+				user = mapper.Map<User>(command);
 
         var result = await userManager.CreateAsync(user);
 
@@ -36,6 +37,8 @@ public class CreateUserEndpoint(UserManager<User> userManager, AutoMapper.IMappe
 
 				var emailMessage = BuildEmailMessage(user, ressetPasswordToken);
 				await emailService.SendEmailAsync(emailMessage);
+
+				await PublishAsync(user.Adapt<UserCreatedDomainEvent>());
 
 				await SendAsync(new CreateUserResponse(command.Email, user.Id, ressetPasswordToken));
     }
@@ -57,15 +60,5 @@ public class CreateUserEndpoint(UserManager<User> userManager, AutoMapper.IMappe
 						new EmailAddress("articles", emailOptions.Value.EmailFromAddress),
 						new List<EmailAddress> { new EmailAddress(user.FullName, user.Email) }
 						);
-		}
-
-		public void ValidateUserRoles(List<UserRoleDto> roles)
-		{
-				if (roles.Any(role => role.BeginDate.HasValue && role.ExpiringDate.HasValue && role.BeginDate.Value.Date > role.ExpiringDate.Value.Date ||
-															role.BeginDate.HasValue && role.BeginDate.Value.Date < DateTime.Now.Date ||
-															role.ExpiringDate.HasValue && role.ExpiringDate.Value.Date < DateTime.Now.Date))
-				{
-						throw new BadRequestException("Invalid Role");
-				}
 		}
 }

@@ -5,7 +5,7 @@
     "FirstName": "Laurentiu",
     "LastName": "Dumitrescu",
     "Title": "Mr",
-    "Email": "dumitrescu.laurentiu@gmail.com"
+    "Email": {"Value":"dumitrescu.laurentiu@gmail.com"}
   },
   {
     "UserId": 2,
@@ -13,8 +13,8 @@
     "FirstName": "Author",
     "LastName": "1",
     "Title": "Mr",
-    "Email": "author.1@articles.org",
-    "Country": "Mars"
+    "Email": {"Value":"author.1@articles.org"},
+    "Affiliation": "Japan Aerospace Exploration Agency (JAXA)"
   },
   {
     "UserId": 3,
@@ -22,8 +22,8 @@
     "FirstName": "Author",
     "LastName": "2",
     "Title": "Ms",
-    "Email": "author.2@articles.com",
-    "Biography": "He is a novelist, filmmaker and Zen Buddhist priest."
+    "Email": {"Value":"author.2@articles.com"},
+    "Affiliation": "University of Maryland, College Park"
   },
   {
     "UserId": 4,
@@ -31,7 +31,8 @@
     "FirstName": "Author",
     "LastName": "3",
     "Title": "Dr",
-    "Email": "author.3@articles.com"
+    "Email": {"Value":"author.3@articles.com"},
+     "Affiliation": "Tata Institute of Fundamental Research"
   },
   {
     "UserId":5,
@@ -39,7 +40,8 @@
     "FirstName": "Co-Author",
     "LastName": "1",
     "Title": "Ms",
-    "Email": "coauthor.1@articles.com"
+    "Email": {"Value":"coauthor.1@articles.com"},
+    "Affiliation": "Indian Institute of Science Education and Research, Bhopal"
   },
   {
     "UserId": 6,
@@ -47,27 +49,8 @@
     "FirstName": "Co-Author",
     "LastName": "2",
     "Title": "Mr",
-    "Email": "coauthor.2@articles.com"
-  },
-  {
-    "UserId": 7,
-    "PersonType": "Typesetter",
-    "FirstName": "Typesetter",
-    "LastName": "1",
-    "Title": "Mr",
-    "Email": "typesetter.1@articles.com",
-    "CompanyName": "Tyepesetter1",
-    "isDefault": true
-  },
-  {
-    "UserId": 8,
-    "PersonType": "Typesetter",
-    "FirstName": "Typesetter",
-    "LastName": "2",
-    "Title": "Ms",
-    "Email": "typesetter.2@articles.com",
-    "CompanyName": "Tyepesetter2",
-    "isDefault": false
+    "Email": {"Value":"coauthor.2@articles.com"},
+    "Affiliation": "Helmholtz Centre for Materials and Coastal Research (HZG)"
   },
   {
     "UserId": 9,
@@ -75,7 +58,7 @@
     "FirstName": "Reviewer",
     "LastName": "1",
     "Title": "Mr",
-    "Email": "reviewer.1@articles.com"
+    "Email": {"Value":"reviewer.1@articles.com"}
   },
   {
     "UserId": 10,
@@ -83,15 +66,7 @@
     "FirstName": "Reviewer",
     "LastName": "2",
     "Title": "Ms",
-    "Email": "reviewer.2@articles.com"
-  },
-  {
-    "UserId": 11,
-    "PersonType": "Person",
-    "FirstName": "POF",
-    "LastName": "1",
-    "Title": "Ms",
-    "Email": "pof.1@articles.com"
+    "Email": {"Value":"reviewer.2@articles.com"}
   },
   {
     "UserId": null,
@@ -99,6 +74,7 @@
     "FirstName": "Author",
     "LastName": "4-NoUser",
     "Title": "Mr",
-    "Email": "author.4@articles.org"
+    "Email": {"Value":"author.4@articles.org"},
+    "Affiliation": "Tokyo University of Technology"
   }
 ]

@@ -25,9 +25,9 @@ public static class Seed
 				context.Seed<Journal>();
 
 
-				context.Seed<Article>();
+				//context.Seed<Article>();
 				
-        context.Seed<AssetCurrentFileLink>();
+        //context.Seed<AssetCurrentFileLink>();
 
 				transaction.Commit();
 		}

@@ -6,25 +6,24 @@ using Microsoft.AspNetCore.Http;
 
 namespace Submission.Application.Features.UploadFiles.Shared;
 
-public abstract record UploadFileCommand : AssetActionCommand<AssetActionResponse>
+public abstract record UploadFileCommand : ArticleCommand
 {
     /// <summary>
     /// The asset type of the file.
     /// </summary>
     [Required]
-    public AssetType AssetType { get; set; }
+    public AssetType AssetType { get; init; }
 
     /// <summary>
     /// The file to be uploaded.
     /// </summary>
     [Required]
-    public IFormFile File { get; set; }
+    public IFormFile File { get; init; } = null!;
 
-		public override AssetActionType ActionType => AssetActionType.Upload;
-
-    internal virtual byte GetAssetNumber() => 0;
+		public override ArticleActionType ActionType => ArticleActionType.Upload;
 }
 
+//todo validate file properties:size exttensio etc
 public abstract class UploadFileValidator<TUploadFileCommand> : ArticleCommandValidator<TUploadFileCommand>
 				where TUploadFileCommand : UploadFileCommand
 {

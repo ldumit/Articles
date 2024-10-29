@@ -1,52 +1,35 @@
-﻿//namespace Articles.Abstractions;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace Articles.Abstractions;
 
-//public enum DiscussionType
-//{
-//    Default = 0,
-//    Public = 1,
-//    Private = 2
-//}
-
-//public enum ActionType
-//{
-//		AssignTypesetter = 0,
-//		Upload = 1,
-//		Approve = 2,
-//		Published = 3,
-//		RequestNew = 4,
-//		UnApprove = 5,
-//		SchedulePublication = 9,
-//		Download = 11,
-//		Accepted = 101
-//}
-
-
 public enum ArticleStage : int
 {
+		None = 0,
+
 		//Submission
-		[Description("Author created the article & uploaded the Draft Manuscript")]
-		ArticleCreated = 1,
-		[Description("Author finished the Draft Manuscript")]
-		DraftSubmission = 2,
-		[Description("The Manuscript passed the initial checks")]
-		Submitted = 2,
-		[Description("Editorial team performs the initial check")]
-		UnderInitialCheck = 3,
+		[Description("The Author created the article")]
+		Created = 101,
+		//todo - intruduce DraftSubmission when the author is upload the Manuscript
+		[Description("Author uploaded the Manuscript")]
+		ManuscriptUploaded = 102,
+		[Description("The Manuscript was submitted by the author")]
+		Submitted = 103,
+		[Description("The Manuscript didn't pass the initial checks")]
+		InitialRejected = 104,
+		[Description("The Manuscript passed the initial editorial checks")]
+		InitialApproved = 105,
 
 		//Review
 		[Description("Article is under review")]
-		UnderReview = 101,
+		InReview = 201,
 		[Description("Reviewer feedback received")]
-		ReviewerFeedback = 102,
+		ReviewerFeedback = 202,
 		[Description("Revision requested")]
-		RevisionRequested = 103,
+		RevisionRequested = 203,
 		[Description("Article accepted")]
-		Accepted = 104,
+		Accepted = 204,
 		[Description("Article rejected")]
-		Rejected = 105,
+		Rejected = 205,
 
 		//Production
 		[Description("Typesetter assigned")]

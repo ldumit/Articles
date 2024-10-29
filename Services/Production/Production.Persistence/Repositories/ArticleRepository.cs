@@ -37,8 +37,11 @@ public class ArticleRepository(ProductionDbContext dbContext)
 		{
 				var article = await Query()
 						 .Include(e => e.Assets)
+								 .ThenInclude(e => e.TypeRef)
+						 .Include(e => e.Assets)
 								 .ThenInclude(e => e.CurrentFileLink)
 										.ThenInclude(e => e.File)
+
 						.SingleAsync(e => e.Id == id);
 				
 				return ReturnOrThrow(article, throwIfNotFound);

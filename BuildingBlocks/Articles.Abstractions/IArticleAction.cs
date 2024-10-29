@@ -1,12 +1,15 @@
 ﻿namespace Articles.Abstractions;
 
-public interface IArticleAction
+public interface IAction
 {
-		int ArticleId { get; }
-		string Comment { get; }
 		int CreatedById { get; set; }
 		DateTime CreatedOn { get; }
-    public string Action { get; }
+		public string Action { get; }
+}
+public interface IArticleAction : IAction
+{
+		int ArticleId { get; }
+		string? Comment { get; }
 }
 
 //decide - do we need to keep IArticleAction in this shared library or should we move it into Production domain?

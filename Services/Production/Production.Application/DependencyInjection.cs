@@ -68,8 +68,6 @@ public static class DependencyInjection
 
 				services.AddScoped<IAuthorizationHandler, ArticleRoleAuthorizationHandler>();
 
-				services.AddScoped<ClaimsProvider>();
-
         //talk - SOLID principle interface segragation, injecting multiple interfaces using the same class
 				services.AddScoped<IClaimsProvider, HttpContextProvider>(); 
         services.AddScoped<IRouteProvider, HttpContextProvider>();

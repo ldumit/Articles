@@ -1,20 +1,34 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Articles.EntityFrameworkCore;
 using Submission.Domain.Entities;
 using Submission.Persistence.Repositories;
+using Submission.Domain.Enums;
+using Submission.Application.Features.Shared;
 
 namespace Submission.Application.Features.CreateArticle;
 
-public class CreateArticleCommandHandler(Repository<Journal> _journalRepository) 
-		: IRequestHandler<CreateArticleCommand, CreateArticleResponse>
+public class CreateArticleCommandHandler(Repository<Journal> _journalRepository)
+		: IRequestHandler<CreateArticleCommand, IdResponse>
 {
-		public async Task<CreateArticleResponse> Handle(CreateArticleCommand command, CancellationToken cancellationToken)
+		public async Task<IdResponse> Handle(CreateArticleCommand command, CancellationToken ct)
 		{
-				var journal = await _journalRepository.FindByIdAsync(command.JournalId, throwNotFound: true);
+				var journal = await _journalRepository.FindByIdOrThrowAsync(command.JournalId);
 
-				var article = journal.CreateArticle(command.Title, command.Type, command.ScopeStatement, command.JournalId, command);
+				var article = journal.CreateArticle(command.Title, command.Type, command.Scope, command.JournalId, command);
 
-				await _journalRepository.SaveChangesAsync();
+				await AssignCurrentUserAsAuthor(article, command);
 
-				return new CreateArticleResponse(article.Id);
+				await _journalRepository.SaveChangesAsync(ct);
+
+				return new IdResponse(article.Id);
+		}
+
+		private async Task AssignCurrentUserAsAuthor(Article article, CreateArticleCommand command)
+		{
+				var author = await _journalRepository.Context.Authors.SingleOrDefaultAsync(t => t.UserId == command.CreatedById);
+				//todo create author if not exists
+				if (author is not null)
+						article.AssignAuthor(author, [ContributionArea.OriginalDraft], isCorrespondingAuthor: true, command);
 		}
 }

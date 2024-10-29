@@ -1,5 +1,4 @@
-﻿using Articles.Entitities;
-using Articles.EntityFrameworkCore;
+﻿using Articles.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Submission.Domain.Entities;
@@ -49,14 +48,13 @@ internal class AssetEntityConfiguration : AuditedEntityConfiguration<Asset>
             .HasPrincipalKey(e => e.Name)
             .IsRequired();
 
-        builder.HasMany(e => e.Files).WithOne(e => e.Asset)
-            .HasForeignKey(e => e.AssetId)
-            .IsRequired()
-            .OnDelete(DeleteBehavior.Cascade);
+				//builder.OwnsOne(e => e.File);
 
-        builder.HasOne(e => e.CurrentFileLink).WithOne(e => e.Asset)
-            .HasForeignKey<AssetCurrentFileLink>(e => e.AssetId)
-            .IsRequired(true)
-            .OnDelete(DeleteBehavior.Cascade);
-    }
+				//builder.ComplexProperty(e => e.File);
+
+				builder.ComplexProperty(e => e.File, fileBuilder =>
+				{
+						new FileEntityConfiguration().Configure(fileBuilder);
+				});
+		}
 }

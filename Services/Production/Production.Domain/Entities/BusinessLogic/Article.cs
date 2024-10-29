@@ -1,4 +1,5 @@
 ﻿using Articles.Abstractions;
+using Articles.Exceptions.Domain;
 using Articles.Security;
 using Production.Domain.Enums;
 using Production.Domain.Events;
@@ -33,9 +34,12 @@ public partial class Article
         AddDomainEvent(new TypesetterAssignedDomainEvent(action, typesetter.Id, typesetter.UserId!.Value));
     }
 
-		public Asset CreateAsset(AssetType type, byte assetNumber = 0)
+		public Asset CreateAsset(AssetTypeDefinition type, byte assetNumber = 0)
     {
-        var asset = Asset.Create(this, type, assetNumber);
+        if (_assets.Exists(a => a.Type == type.Id && a.Number == assetNumber))
+            throw new DomainException("Asset already exists");
+
+				var asset = Asset.Create(this, type, assetNumber);
         _assets.Add(asset);        
         return asset;
     }

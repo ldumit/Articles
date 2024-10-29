@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Submission.Domain.Entities;
-using AssetType = Submission.Domain.Entities.AssetType;
+using AssetTypeDefinition = Submission.Domain.Entities.AssetTypeDefinition;
 
 namespace Submission.Persistence.Repositories;
 
@@ -11,10 +11,9 @@ public class AssetRepository(SubmissionDbContext _dbContext, IMemoryCache _cache
 {
     protected override IQueryable<Asset> Query()
     {
-        return base.Entity
-						.Include(x => x.Article)
-						.Include(e => e.CurrentFileLink)
-                .ThenInclude(e => e.File);
+				return base.Entity
+						.Include(x => x.Article);
+						//.Include(x => x.TypeRef);
     }
 
 		public async Task<Asset?> GetByTypeAndNumberAsync(int articleId, Domain.Enums.AssetType assetTypeId, int assetNumber = 0, bool throwNotFound = true)
@@ -31,9 +30,9 @@ public class AssetRepository(SubmissionDbContext _dbContext, IMemoryCache _cache
 				return ReturnOrThrow(entity, throwNotFound);
 		}
 
-		public IEnumerable<AssetType> GetAssetTypes()
-		=> _cache.GetOrCreate(entry => _dbContext.AssetTypes.AsNoTracking().ToList());
+		public IEnumerable<AssetTypeDefinition> GetAssetTypes()
+				=> _cache.GetOrCreate(entry => _dbContext.AssetTypes.AsNoTracking().ToList());
 
-		public AssetType GetAssetType(Domain.Enums.AssetType type)
+		public AssetTypeDefinition GetAssetType(Domain.Enums.AssetType type)
 				=> GetAssetTypes().Single(e => e.Id == type);
 }

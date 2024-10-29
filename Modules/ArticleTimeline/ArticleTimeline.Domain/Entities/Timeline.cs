@@ -13,5 +13,7 @@ public class Timeline : AggregateEntity
     public string SourceId { get; init; } = null!;
     public string Title { get; init; } = null!;
     public string Description { get; init; } = null!;
+
+		//public int TemplateId { get; set; }
 		public TimelineTemplate Template { get; private set; } = null!;
 }

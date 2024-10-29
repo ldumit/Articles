@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Auth.Domain.Models;
 
-public class User : IdentityUser<int>, IAggregateEntity<int>
+public partial class User : IdentityUser<int>, IAggregateEntity<int>
 {
 		public required string FirstName { get; set; }
     public required string LastName { get; set; }

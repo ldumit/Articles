@@ -15,9 +15,8 @@ public class ArticleEntityConfiguration : AuditedEntityConfiguration<Article>
         //talk - using constants instead of direct numbers
         entity.Property(e => e.Title).HasMaxLength(Constraints.C256).IsRequired();
         entity.Property(e => e.Stage).HasEnumConversion().IsRequired();
-
-        entity.Property(e => e.SubmitedOn).IsRequired();
-
+				entity.Property(e => e.Type).HasEnumConversion().IsRequired();
+				entity.Property(e => e.Scope).HasMaxLength(Constraints.C2048).IsRequired();
 
 				entity.HasOne<Stage>().WithMany()
 					 .HasForeignKey(e => e.Stage)
@@ -25,12 +24,11 @@ public class ArticleEntityConfiguration : AuditedEntityConfiguration<Article>
 					 .IsRequired()
 					 .OnDelete(DeleteBehavior.Restrict);
 
-				entity.HasOne(e => e.SubmitedBy).WithMany()
-            .HasForeignKey(e => e.SubmitedById)
-            //.HasPrincipalKey( e=> e.UserId)
-            .IsRequired()
+        entity.HasOne(e => e.SubmittedBy).WithMany()
+            .HasForeignKey(e => e.SubmittedById)
+            .HasPrincipalKey(e => e.Id)
+            .IsRequired(false)
             .OnDelete(DeleteBehavior.Restrict);
-
 
         entity.HasOne(e => e.Journal).WithMany(e => e.Articles)
             .HasForeignKey(e => e.JournalId)
@@ -46,17 +44,5 @@ public class ArticleEntityConfiguration : AuditedEntityConfiguration<Article>
             .HasForeignKey(e => e.ArticleId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
-
-
-        //entity.ComplexProperty(
-        //   e => e.ReadOnlyData, ro =>
-        //   {
-        //       ro.Property(a => a.Title).HasMaxLength(500).IsRequired();
-        //       ro.Property(a => a.Type).HasMaxLength(50).IsRequired();
-        //       ro.Property(a => a.Doi).HasMaxLength(50).IsRequired();
-        //       ro.Property(a => a.SubmissionDate).IsRequired();
-        //       //ro.Property(a => a.SubmissionUser).HasMaxLength(50).IsRequired();
-        //       ro.Property(a => a.AcceptedOn).IsRequired();
-        //   });
     }
 }

@@ -35,7 +35,7 @@ public class TimelineRepository(ArticleTimelineDbContext dbContext)
 
     public async Task<TimelineTemplate> GetTimelineTemplate(SourceType sourceType, string sourceId)
     {
-        return _dbContext.GetCached<TimelineTemplate>()
+        return _dbContext.GetAllCached<TimelineTemplate>()
             .FirstOrDefault(x => x.SourceType == sourceType && x.SourceId == sourceId);
     }
 

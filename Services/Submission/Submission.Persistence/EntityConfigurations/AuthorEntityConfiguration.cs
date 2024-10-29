@@ -8,10 +8,8 @@ namespace Submission.Persistence.EntityConfigurations;
 public class AuthorEntityConfiguration : IEntityTypeConfiguration<Author>
 {
     public void Configure(EntityTypeBuilder<Author> entity)
-    {
-        //base.Configure(entity);
-        
-				//talk - storing enums as int vs string, leasibility
-				//entity.Property(e => e.Role).HasConversion<int>().IsRequired();
+    {        				
+				entity.Property(e => e.Affiliation).IsRequired().HasMaxLength(Constraints.C512)
+						.HasComment("Institution or organization they are associated with when they conduct their research.");
     }
 }

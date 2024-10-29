@@ -1,7 +1,7 @@
 ﻿using Articles.System;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Query;
-using System.IO;
 using System.Linq.Expressions;
 
 namespace Articles.EntityFrameworkCore;
@@ -65,5 +65,5 @@ public static class EntityTypeBuilderExtensions
             return propetyName;
 
         return char.ToLowerInvariant(propetyName[0]) + propetyName.Substring(1);
-    }
+		}
 }

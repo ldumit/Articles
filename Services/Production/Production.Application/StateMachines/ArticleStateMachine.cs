@@ -15,7 +15,7 @@ public class ArticleStateMachine
 		public ArticleStateMachine(ArticleStage articleStage, ProductionDbContext _dbContext)
     {
 				 _stateMachine = new(articleStage);
-				var transitions = _dbContext.GetCached<ArticleStageTransition>();
+				var transitions = _dbContext.GetAllCached<ArticleStageTransition>();
 
 				foreach (var transition in transitions)
 				{

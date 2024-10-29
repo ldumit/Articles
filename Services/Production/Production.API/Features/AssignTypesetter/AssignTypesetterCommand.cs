@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Articles.EntityFrameworkCore;
+using FluentValidation;
 using Production.API.Features.Shared;
 using Production.Application.StateMachines;
 using Production.Domain.Enums;
@@ -26,7 +27,7 @@ public class AssignTypesetterCommandValidator : ArticleCommandValidator<AssignTy
 		protected virtual async Task<bool> IsActionValid(ArticleCommand action)
 		{
 				var articleRepository = Resolve<ArticleRepository>();
-				var article = await articleRepository.GetByIdAsync(action.ArticleId, throwNotFound: true);
+				var article = await articleRepository.GetByIdOrThrowAsync(action.ArticleId);
 				
 				var stateMachineFactory = Resolve<ArticleStateMachineFactory>();
 				var stateMachine = stateMachineFactory(article.Stage);

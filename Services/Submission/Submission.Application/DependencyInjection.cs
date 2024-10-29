@@ -1,22 +1,18 @@
 ﻿using Articles.AspNetCore;
 using Articles.EntityFrameworkCore;
-using Articles.Security;
+using Articles.MediatR.Behaviours;
 using Articles.System;
-using ArticleTimeline.Application.EventHandlers;
-using ArticleTimeline.Application.VariableResolvers;
-using ArticleTimeline.Persistence;
-using FastEndpoints;
 using FileStorage.AzureBlob;
 using FileStorage.Contracts;
-using Microsoft.AspNetCore.Authorization;
+using FluentValidation;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
+using Submission.Application.Features.CreateArticle;
 using Submission.Application.StateMachines;
-using Submission.Domain.Events;
+using Submission.Domain.StateMachines;
 using Submission.Persistence;
 using Submission.Persistence.Repositories;
 using System.Data.Common;
@@ -29,10 +25,12 @@ public static class DependencyInjection
     {
         var connectionString = configuration.GetConnectionString("Database");
 
+				services.AddValidatorsFromAssemblyContaining<CreateArticleCommandValidator>(); // Register all validators
 				services.AddMediatR(config =>
 				{
 						config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
-						//config.AddOpenBehavior(typeof(ValidationBehavior<,>));
+						config.AddOpenBehavior(typeof(SetUserIdBehavior<,>));
+						config.AddOpenBehavior(typeof(ValidationBehavior<,>));
 						//config.AddOpenBehavior(typeof(LoggingBehavior<,>));
 				});
 
@@ -55,35 +53,27 @@ public static class DependencyInjection
 				});
 				
 				services.AddScoped<TransactionProvider>();
-				//services.AddDbContext<ArticleTimelineDbContext>((provider, options) =>
-				//{
-				//		var dbConnection = provider.GetRequiredService<DbConnection>();
-				//		//options.UseSqlServer(dbConnection);
-				//		options.AddInterceptors(provider.GetServices<ISaveChangesInterceptor>());
-				//		options.UseSqlServer(dbConnection, options =>
-				//		{
-				//				options.MigrationsHistoryTable("__EFMigrationsHistory", "ArticleTimeline");
-				//		});
-				//});
 
-				services.AddScoped<IAuthorizationHandler, ArticleRoleAuthorizationHandler>();
+				#region Authorization
+				//services.AddScoped<IAuthorizationHandler, ArticleRoleAuthorizationHandler>();
 
-				services.AddScoped<ClaimsProvider>();
 
-        //talk - SOLID principle interface segragation, injecting multiple interfaces using the same class
-				services.AddScoped<IClaimsProvider, HttpContextProvider>(); 
-        services.AddScoped<IRouteProvider, HttpContextProvider>();
-        services.AddScoped<HttpContextProvider>();
+				//talk - SOLID principle interface segragation, injecting multiple interfaces using the same class
+				services.AddScoped<IClaimsProvider, HttpContextProvider>();
+				services.AddScoped<IRouteProvider, HttpContextProvider>();
+				services.AddScoped<HttpContextProvider>();
 
-        services.AddScoped<IArticleRoleChecker, ActorRepository>();
+				//    services.AddScoped<IArticleRoleChecker, ActorRepository>();
+				#endregion
+				services.AddScoped(typeof(CachedRepository<,>));
+				services.AddScoped(typeof(Repository<>));
 				services.AddScoped<ArticleRepository>();
 				services.AddScoped<AssetRepository>();
-				services.AddScoped<FileRepository>();
 				services.AddScoped<PersonRepository>();
 
 				services.AddScoped<IThreadSafeMemoryCache, MemoryCache>();
 				services.AddScoped<IFileService, FileService>();
-				services.AddArticleTimelineVariableResolvers();
+				//services.AddArticleTimelineVariableResolvers();
 
 				//services.AddScoped<IEventHandler<ArticleStageChangedDomainEvent>, AddTimelineWhenArticleStageChangedEventHandler>();
 				//services.AddEventHandlersFromAssembly(typeof(AddTimelineWhenArticleStageChangedEventHandler).Assembly);			
@@ -93,13 +83,6 @@ public static class DependencyInjection
 				{
 						var dbConntext = provider.GetRequiredService<SubmissionDbContext>();
 						return new ArticleStateMachine(articleStage, dbConntext);
-				});
-				
-				//services.AddScoped<AssetStateMachine>();
-				services.AddScoped<AssetStateMachineFactory>(provider => assetState =>
-				{
-						var dbConntext = provider.GetRequiredService<SubmissionDbContext>();
-						return new AssetStateMachine(assetState, dbConntext);
 				});
 
 				return services;

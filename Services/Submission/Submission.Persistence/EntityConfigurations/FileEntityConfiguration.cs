@@ -4,50 +4,28 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Submission.Persistence.EntityConfigurations;
 
-public class FileEntityConfiguration : AuditedEntityConfiguration<Domain.Entities.File>
+public class FileEntityConfiguration
 {
-    public override void Configure(EntityTypeBuilder<Domain.Entities.File> builder)
-    {
-        base.Configure(builder);
-
-        builder.HasIndex(e => e.AssetId);
-
-        builder.Property(e => e.FileServerId).HasMaxLength(Constraints.C64);
-        builder.Property(e => e.OriginalName).HasMaxLength(Constraints.C256).HasComment("Original full file name, with extension");
-        builder.Property(e => e.Size).HasComment("Size of the file in kilobytes");
+		public void Configure(ComplexPropertyBuilder<Domain.Entities.File> builder)
+		{
+				builder.Property(e => e.FileServerId).HasMaxLength(Constraints.C64);
+				builder.Property(e => e.OriginalName).HasMaxLength(Constraints.C256).HasComment("Original full file name, with extension");
+				builder.Property(e => e.Size).HasComment("Size of the file in kilobytes");
 
 				builder.ComplexProperty(
-					 o => o.Extension, builder =>
+					 o => o.Extension, complexBuilder =>
 					 {
-							 builder.Property(n => n.Value)
-									 .HasColumnName(builder.Metadata.PropertyInfo!.Name)
-									 .HasMaxLength(Constraints.C8);
+								complexBuilder.Property(n => n.Value)
+										.HasColumnName($"{builder.Metadata.ClrType.Name}_{complexBuilder.Metadata.PropertyInfo!.Name}")
+										.HasMaxLength(Constraints.C8);
 					 });
+
 				builder.ComplexProperty(
-	         o => o.Name, builder =>
-	         {
-               builder.Property(n => n.Value)
-                   .HasColumnName(builder.Metadata.PropertyInfo!.Name)
-									 .HasMaxLength(Constraints.C64).HasComment("Final name of the file after renaming");
+					 o => o.Name, complexBuilder =>
+					 {
+								complexBuilder.Property(n => n.Value)
+										.HasColumnName($"{builder.Metadata.ClrType.Name}_{complexBuilder.Metadata.PropertyInfo!.Name}")
+										.HasMaxLength(Constraints.C64).HasComment("Final name of the file after renaming");
 					 });
-				builder.ComplexProperty(
-	         o => o.Version, builder =>
-	         {
-			         builder.Property(n => n.Value)
-					         .HasColumnName(builder.Metadata.PropertyInfo!.Name)
-					         .HasDefaultValue(1);
-	         });
-
-				//builder.Property(e => e.StatusId).HasConversion<int>();
-
-        //builder.HasMany(e => e.FileActions).WithOne(e => e.File)
-        //    .HasForeignKey(e => e.FileId).IsRequired()
-        //    .OnDelete(DeleteBehavior.Cascade);
-        
-        //builder.HasOne(e => e.LatestAction).WithOne(e => e.File)
-        //    .HasForeignKey<FileLatestAction>(e => e.FileId)
-        //    .IsRequired()
-        //    .OnDelete(DeleteBehavior.Cascade);
-
-    }
+		}
 }

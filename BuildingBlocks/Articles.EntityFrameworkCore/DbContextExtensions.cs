@@ -53,7 +53,7 @@ public static class DbContextExtensions
 				}
 		}
 
-		public static void Migrate<TDbContext>(this WebApplication app)
+		public static WebApplication Migrate<TDbContext>(this WebApplication app)
 				where TDbContext : DbContext
 		{
 				using var scope = app.Services.CreateScope();
@@ -61,5 +61,6 @@ public static class DbContextExtensions
 				var context = scope.ServiceProvider.GetRequiredService<TDbContext>();
 
 				context.Database.Migrate();
+				return app;
 		}
 }

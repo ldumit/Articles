@@ -29,7 +29,7 @@ public partial class Asset
 
 		public bool IsFileRequested => this.State == AssetState.Requested;
 
-		public static Asset Create(Article article, AssetType type, byte assetNumber = 0)
+		public static Asset Create(Article article, AssetTypeDefinition type, byte assetNumber = 0)
 		{
 				//talk - value objects for AssetName & AssetNumber, encapsulate validation						
 				return new Asset()

@@ -14,16 +14,16 @@ public class FileService : IFileService
 		public FileService(BlobServiceClient blobServiceClient, IOptions<FileServerOptions> fileServerOptions)
 				=> (_blobServiceClient, _fileServerOptions) = (blobServiceClient, fileServerOptions.Value);						
 
-    public async Task CreateContainer(string name)
+    public async Task CreateContainerAsync(string name)
 		{
 				//todo create container at startup
 				BlobContainerClient containerClient = await _blobServiceClient.CreateBlobContainerAsync(name);
 		}
 
-		public async Task<UploadResponse> UploadFileAsync(string filePath, IFormFile file, Dictionary<string, string>? tags = null)
+		public async Task<UploadResponse> UploadFileAsync(string filePath, IFormFile file, bool overwrite = false, Dictionary<string, string>? tags = null)
 		{
-				var blob = GetBlob(filePath);
-				var result = await blob.UploadAsync(file.OpenReadStream(), overwrite: false);
+				var blob = await GetBlob(filePath);
+				var result = await blob.UploadAsync(file.OpenReadStream(), overwrite: overwrite);
 
 				//talk - use tags/metadata to search the files based on the original entity name/id
 				if (!tags.IsNullOrEmpty())
@@ -34,16 +34,19 @@ public class FileService : IFileService
 
 		public async Task<bool> TryDeleteFileAsync(string filePath)
 		{
+				if(filePath.IsNullOrEmpty())
+						return false;		
+
 				try
 				{
-						var blob = GetBlob(filePath);
+						var blob = await GetBlob(filePath);
 						return await blob.DeleteIfExistsAsync();
 				}
 				catch (Exception) { return false; }
 		}
 		public async Task<(Stream FileStream, string ContentType)> DownloadFileAsync(string filePath)
 		{
-				var blob = GetBlob(filePath);
+				var blob = await GetBlob(filePath);
 
 				if (!await blob.ExistsAsync())
 						throw new FileNotFoundException($"File '{filePath}' not found in container '{_fileServerOptions.Container}'.");
@@ -52,9 +55,11 @@ public class FileService : IFileService
 				return (download.Content, download.ContentType);				
 		}
 
-		private BlobClient GetBlob(string filePath)
+		private async Task<BlobClient> GetBlob(string filePath)
 		{
 				var container = _blobServiceClient.GetBlobContainerClient(_fileServerOptions.Container);
+				if(!await container.ExistsAsync())
+						await CreateContainerAsync(_fileServerOptions.Container);
 				return container.GetBlobClient(filePath);
 		}
 

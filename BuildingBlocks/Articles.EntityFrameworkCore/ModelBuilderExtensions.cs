@@ -1,6 +1,7 @@
 ﻿using Articles.Entitities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Articles.EntityFrameworkCore
 {
@@ -32,5 +33,16 @@ namespace Articles.EntityFrameworkCore
 								}
 						}
 				}
+
+				//todo the following methods don't work because the propertyBuilder is for property Value not for the complex type
+				//public static ComplexTypePropertyBuilder<TProperty> HasColumnNameUsingPropertyName<TProperty>(this ComplexTypePropertyBuilder<TProperty> propertyBuilder)
+				//{
+				//		return propertyBuilder.HasColumnName(propertyBuilder.Metadata.PropertyInfo!.Name);
+				//}
+
+				//public static ComplexTypePropertyBuilder<TProperty> HasColumnNameUsingTypeAndPropertyName<TProperty>(this ComplexTypePropertyBuilder<TProperty> propertyBuilder)
+				//		=> propertyBuilder.HasColumnName($"" +
+				//				$"{propertyBuilder.Metadata.DeclaringType!.Name}_" +
+				//				$"{propertyBuilder.Metadata.PropertyInfo!.Name}");
 		}
 }

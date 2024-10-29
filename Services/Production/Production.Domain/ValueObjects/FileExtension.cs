@@ -9,12 +9,12 @@ public class FileExtension: StringValueObject
 		[JsonConstructor]
 		private FileExtension(string value) => Value = value;
 
-    public static FileExtension FromAssetType(AssetType assetType)
+    public static FileExtension FromAssetType(AssetTypeDefinition assetType)
     {
         return new FileExtension(assetType.DefaultFileExtension);
     }
 
-    public static FileExtension FromFileName(string fileName, AssetType assetType)
+    public static FileExtension FromFileName(string fileName, AssetTypeDefinition assetType)
     {
         var extension = Path.GetExtension(fileName).Remove(0, 1); //removing the '.'
 				ArgumentException.ThrowIfNullOrWhiteSpace(extension);

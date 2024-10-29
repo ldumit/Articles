@@ -18,7 +18,7 @@ namespace Production.Persistence.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.8")
+                .HasAnnotation("ProductVersion", "8.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -422,7 +422,7 @@ namespace Production.Persistence.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Production.Domain.Entities.AssetType", b =>
+            modelBuilder.Entity("Production.Domain.Entities.AssetTypeDefinition", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int");
@@ -457,7 +457,7 @@ namespace Production.Persistence.Migrations
                         .HasColumnType("nvarchar(64)")
                         .HasColumnOrder(1);
 
-                    b.ComplexProperty<Dictionary<string, object>>("AllowedFileExtensions", "Production.Domain.Entities.AssetType.AllowedFileExtensions#AllowedFileExtensions", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("AllowedFileExtensions", "Production.Domain.Entities.AssetTypeDefinition.AllowedFileExtensions#AllowedFileExtensions", b1 =>
                         {
                             b1.IsRequired();
 
@@ -472,7 +472,7 @@ namespace Production.Persistence.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("AssetType", (string)null);
+                    b.ToTable("AssetTypeDefinition", (string)null);
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.File", b =>
@@ -801,9 +801,6 @@ namespace Production.Persistence.Migrations
                 {
                     b.HasBaseType("Production.Domain.Entities.Person");
 
-                    b.Property<int?>("ArticleId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Biography")
                         .HasMaxLength(2048)
                         .HasColumnType("nvarchar(2048)");
@@ -811,8 +808,6 @@ namespace Production.Persistence.Migrations
                     b.Property<string>("Country")
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
-
-                    b.HasIndex("ArticleId");
 
                     b.ToTable("Person", (string)null);
 
@@ -915,7 +910,7 @@ namespace Production.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Production.Domain.Entities.AssetType", "TypeRef")
+                    b.HasOne("Production.Domain.Entities.AssetTypeDefinition", "TypeRef")
                         .WithMany()
                         .HasForeignKey("Type")
                         .HasPrincipalKey("Name")
@@ -1028,20 +1023,11 @@ namespace Production.Persistence.Migrations
                     b.Navigation("Stage");
                 });
 
-            modelBuilder.Entity("Production.Domain.Entities.Author", b =>
-                {
-                    b.HasOne("Production.Domain.Entities.Article", null)
-                        .WithMany("Authors")
-                        .HasForeignKey("ArticleId");
-                });
-
             modelBuilder.Entity("Production.Domain.Entities.Article", b =>
                 {
                     b.Navigation("Actors");
 
                     b.Navigation("Assets");
-
-                    b.Navigation("Authors");
 
                     b.Navigation("StageHistories");
                 });

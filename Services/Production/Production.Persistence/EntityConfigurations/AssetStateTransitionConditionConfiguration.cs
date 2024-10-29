@@ -12,7 +12,7 @@ internal class AssetStateTransitionConditionConfiguration : EntityConfiguration<
 				base.Configure(builder);
 
 				builder.Property(e => e.ArticleStage).HasEnumConversion().IsRequired();
-				builder.Property(e => e.ActionTypes).HasJsonListConversion().IsRequired(); //todo provide a version for enums
-				builder.Property(e => e.AssetTypes).HasJsonListConversion().IsRequired();
+				builder.Property(e => e.ActionTypes).HasJsonReadOnlyListConversion().IsRequired(); //todo provide a version for enums
+				builder.Property(e => e.AssetTypes).HasJsonReadOnlyListConversion().IsRequired();
 		}
 }

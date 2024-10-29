@@ -15,7 +15,7 @@ public partial class ProductionDbContext(DbContextOptions<ProductionDbContext> o
 
 		public virtual DbSet<ArticleActor> ArticleActors { get; set; }
 		public virtual DbSet<Asset> Assets { get; set; }
-    public virtual DbSet<AssetType> AssetTypes { get; set; }
+    public virtual DbSet<AssetTypeDefinition> AssetTypes { get; set; }
 
     //public virtual DbSet<FileAction> FileActions { get; set; }
 
@@ -42,7 +42,7 @@ public partial class ProductionDbContext(DbContextOptions<ProductionDbContext> o
 				modelBuilder.ApplyConfiguration(new AssetStateTransitionConditionConfiguration());
 				modelBuilder.ApplyConfiguration(new AssetCurrentFileLinkEntityConfiguration());
         modelBuilder.ApplyConfiguration(new AssetActionEntityConfiguration());
-				modelBuilder.ApplyConfiguration(new AssetTypeEntityConfiguration());
+				modelBuilder.ApplyConfiguration(new AssetTypeDefinitionEntityConfiguration());
 				modelBuilder.ApplyConfiguration(new ArticleActorEntityConfiguration());
 				modelBuilder.ApplyConfiguration(new AuthorEntityConfiguration());
         modelBuilder.ApplyConfiguration(new FileActionEntityConfiguration());

@@ -7,6 +7,8 @@ using Production.API.Features.Shared;
 using Production.Application.StateMachines;
 using Production.Domain.Enums;
 using Articles.Security;
+using Articles.EntityFrameworkCore;
+using Articles.Exceptions;
 
 namespace Production.API.Features.AssignTypesetter
 {
@@ -18,7 +20,7 @@ namespace Production.API.Features.AssignTypesetter
     {
 				public override async Task HandleAsync(AssignTypesetterCommand command, CancellationToken ct)
         {
-            _article = await _articleRepository.GetByIdAsync(command.ArticleId, throwNotFound:true);
+            _article = await _articleRepository.GetByIdOrThrowAsync(command.ArticleId);
 						CheckAndThrowStageTransition(command.ActionType);
 
 						//todo - maybe is more suitable to create a Person repository and take the Typesetter using that repo istead of using the DbContext
@@ -35,7 +37,7 @@ namespace Production.API.Features.AssignTypesetter
 				protected virtual void CheckAndThrowStageTransition(ArticleActionType actionType)
 				{
 						if (!_stateMachineFactory(_article.Stage).CanFire(actionType))
-								throw new BadHttpRequestException("Action not allowed");
+								throw new BadRequestException("Action not allowed");
 				}
 		}
 }

@@ -13,5 +13,13 @@ public class PersonRepository(SubmissionDbContext dbContext)
 
 				return ReturnOrThrow(person, throwIfNotFound);
 		}
+
+		public async Task<Person> GetByEmail(string email, bool throwIfNotFound = true)
+		{
+				var person = await Query()
+						.SingleAsync(e => e.Email.Value.ToLower() == email.ToLower()); //not all databases are case-insensitive
+
+				return ReturnOrThrow(person, throwIfNotFound);
+		}
 }
 

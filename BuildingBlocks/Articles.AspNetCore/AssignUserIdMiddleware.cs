@@ -14,18 +14,20 @@ public class AssignUserIdMiddleware(RequestDelegate _next)
 				// Only process if the request is a POST and contains JSON
 				if (context.Request.HasJsonContentType())
 				{
-						context.Request.EnableBuffering();
-						var body = await new StreamReader(context.Request.Body).ReadToEndAsync();
-						context.Request.Body.Position = 0;
+						context.Items["CreatedById"] = claimsProvider.GetUserId();
 
-						var requestModel = JsonSerializer.Deserialize<dynamic>(body);
+						//context.Request.EnableBuffering();
+						//var body = await new StreamReader(context.Request.Body).ReadToEndAsync();
+						//context.Request.Body.Position = 0;
 
-						if (requestModel is IArticleAction articleCommand)
-						{
-								var userId = claimsProvider.GetUserId();
-								var userIdProperty = articleCommand.GetType().GetProperty("UserId", BindingFlags.NonPublic | BindingFlags.Instance);
-								userIdProperty?.SetValue(articleCommand, userId);
-						}
+						//var requestModel = JsonSerializer.Deserialize<dynamic>(body);
+
+						//if (requestModel is IArticleAction articleCommand)
+						//{
+						//		var userId = claimsProvider.GetUserId();
+						//		var userIdProperty = articleCommand.GetType().GetProperty("UserId", BindingFlags.NonPublic | BindingFlags.Instance);
+						//		userIdProperty?.SetValue(articleCommand, userId);
+						//}
 				}
 
 				// Call the next middleware in the pipeline

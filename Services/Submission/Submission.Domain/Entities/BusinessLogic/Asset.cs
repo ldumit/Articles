@@ -13,11 +13,8 @@ public partial class Asset
 		private Asset() {/* use factory method*/}
 
 		public string GenerateStorageFilePath(string fileName) 
-				=> $"Articles/{ArticleId}/{Name}/{Number}/{CalculateNextVersion()}/{fileName}";
+				=> $"Articles/{ArticleId}/{Name}/{Number}/{fileName}";
 		
-		public byte CalculateNextVersion() => (byte)(CurrentVersion + 1);
-		public byte CurrentVersion => CurrentFile?.Version.Value ?? 0;
-
 		public string GenerateFileName(string fileExtension)
 		{
 				var assetName = Name.Value.Replace("'", "").Replace(" ", "-");
@@ -25,11 +22,9 @@ public partial class Asset
 				return $"{assetName}{assetNumber}.{fileExtension}";
 		}
 
-		public bool IsNewVersion => this.CurrentFileLink != null;
-
 		public bool IsFileRequested => this.State == AssetState.Requested;
 
-		public static Asset Create(Article article, AssetType type, byte assetNumber = 0)
+		public static Asset Create(Article article, AssetTypeDefinition type, byte assetNumber = 0)
 		{
 				//talk - value objects for AssetName & AssetNumber, encapsulate validation						
 				return new Asset()
@@ -64,19 +59,16 @@ public partial class Asset
 				AddAction(action);
 		}
 
-		public File CreateAndAddFile(UploadResponse uploadResponse)
+		public File CreateFile(UploadResponse uploadResponse, AssetTypeDefinition assetType)
 		{
-				var file = File.CreateFile(uploadResponse, this);
-
-				_files.Add(file);
-				CurrentFileLink = new AssetCurrentFileLink() { File = file };
+				File = File.CreateFile(uploadResponse, this, assetType);
 				State = AssetState.Uploaded;
-				return file;
+				return File;
 		}
 
 		private void AddAction(IArticleAction<AssetActionType> action)
 		{
 				_actions.Add(action.Adapt<AssetAction>());
-				AddDomainEvent(new AssetActionExecutedDomainEvent(action, this.Article.Stage, this.Type, this.Number, this.CurrentFile));
+				AddDomainEvent(new AssetActionExecutedDomainEvent(action, this.Article.Stage, this.Type, this.Number, this.File));
 		}
 }

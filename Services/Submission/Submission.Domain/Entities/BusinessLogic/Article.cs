@@ -1,34 +1,22 @@
 ﻿using Articles.Abstractions;
-using Mapster;
+using Articles.Exceptions.Domain;
+using Articles.Security;
 using Submission.Domain.Enums;
 using Submission.Domain.Events;
+using Submission.Domain.StateMachines;
 
 namespace Submission.Domain.Entities;
 
 public partial class Article 
 {
-		public static Article CreateArticle(string title, ArticleType Type, string ScopeStatement, int journalId, IArticleAction action)
-    {
-        var article = new Article
-				{
-						Title = title,
-						Type = Type,
-						Scope = ScopeStatement,
-						JournalId = journalId,
-				};
-				article.Stage = ArticleStage.ArticleCreated;
-
-				var domainEvent = article.Adapt<ArticleCreatedDomainEvent>() with { Action = action };
-				article.AddDomainEvent(domainEvent);
-				return article;
-		}
-
-		public void SetStage(ArticleStage newStage, IArticleAction action)
+		public void SetStage(ArticleStage newStage, IArticleAction<ArticleActionType> action, ArticleStateMachineFactory stateMachineFactory)
     {
         if (newStage == Stage)
             return;
 
-        var currentStage = Stage;
+				stateMachineFactory.ValidateStageTransition(Stage, action.ActionType);
+
+				var currentStage = Stage;
 				Stage = newStage;
         LasModifiedOn = action.CreatedOn;
 				LastModifiedById = action.CreatedById;
@@ -39,9 +27,37 @@ public partial class Article
             );
     }
 
-		public Asset CreateAsset(AssetType type, byte assetNumber = 0)
+		public void AssignAuthor(Author author, List<ContributionArea> contributionAreas, bool isCorrespondingAuthor,  IArticleAction action)
+		{
+				var role = isCorrespondingAuthor ? UserRoleType.CORAUT : UserRoleType.AUT;				
+				
+				if (Actors.Exists(a => a.PersonId == author.Id && a.Role == role))
+						throw new DomainException($"Author {author.Email} is already assigned to the article");
+
+				Actors.Add(new AuthorActor() {
+						ContributionAreas = contributionAreas,
+						PersonId = author.Id, 
+						Role = role
+				});
+
+				//AddDomainEvent(new TypesetterAssignedDomainEvent(action, typesetter.Id, typesetter.UserId!.Value));
+				//AuthorId = authorId;
+				//ContributionAreas = contributionAreas;
+				//SetStage(ArticleStage.AuthorAssigned, action);
+		}
+
+		public Asset CreateAsset(AssetTypeDefinition type)
     {
-        var asset = Asset.Create(this, type, assetNumber);
+				byte? assetNumber = _assets
+						.Where(a => a.Type == type.Id)
+						.Select(a => (byte?)a.Number) // Cast to byte? to allow nulls
+						.Max(); 
+				if(assetNumber is not null)
+						assetNumber += 1;
+				else
+						assetNumber = type.AllowsMultipleAssets ? (byte)1 : (byte)0;
+
+				var asset = Asset.Create(this, type, assetNumber.Value);
         _assets.Add(asset);        
         return asset;
     }

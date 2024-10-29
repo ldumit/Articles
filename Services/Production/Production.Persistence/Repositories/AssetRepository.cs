@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Production.Domain.Entities;
-using AssetType = Production.Domain.Entities.AssetType;
+using AssetTypeDefinition = Production.Domain.Entities.AssetTypeDefinition;
 
 namespace Production.Persistence.Repositories;
 
@@ -31,9 +31,9 @@ public class AssetRepository(ProductionDbContext _dbContext, IMemoryCache _cache
 				return ReturnOrThrow(entity, throwNotFound);
 		}
 
-		public IEnumerable<AssetType> GetAssetTypes()
+		public IEnumerable<AssetTypeDefinition> GetAssetTypes()
 		=> _cache.GetOrCreate(entry => _dbContext.AssetTypes.AsNoTracking().ToList());
 
-		public AssetType GetAssetType(Domain.Enums.AssetType type)
+		public AssetTypeDefinition GetAssetType(Domain.Enums.AssetType type)
 				=> GetAssetTypes().Single(e => e.Id == type);
 }

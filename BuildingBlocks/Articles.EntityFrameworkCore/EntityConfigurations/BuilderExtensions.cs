@@ -28,7 +28,7 @@ namespace Articles.EntityFrameworkCore
 						return builder.HasConversion(csvListConverter);
 				}
 
-				public static ValueConverter<IReadOnlyList<T>, string> BuildJsonListConvertor<T>()
+				public static ValueConverter<IReadOnlyList<T>, string> BuildJsonReadOnlyListConvertor<T>()
 				{
 						Func<IReadOnlyList<T>, string> serializeFunc = v => JsonSerializer.Serialize(v);
 						Func<string, IReadOnlyList<T>> deserializeFunc = v => JsonSerializer.Deserialize<IReadOnlyList<T>>(v ?? "[]");
@@ -38,20 +38,31 @@ namespace Articles.EntityFrameworkCore
 								v => deserializeFunc(v));
 				}
 
-				public static PropertyBuilder<IReadOnlyList<T>> HasJsonListConversion<T>(this PropertyBuilder<IReadOnlyList<T>> builder)
+				public static ValueConverter<TCollection, string> BuildJsonListConvertor<TCollection, T>()
+						where TCollection : IList<T>
 				{
-						return builder.HasConversion(BuildJsonListConvertor<T>());
+						Func<TCollection, string> serializeFunc = v => JsonSerializer.Serialize(v);
+						Func<string, TCollection> deserializeFunc = v => JsonSerializer.Deserialize<TCollection>(v ?? "[]");
+
+						return new ValueConverter<TCollection, string>(
+								v => serializeFunc(v),
+								v => deserializeFunc(v));
+				}
+
+				public static PropertyBuilder<IReadOnlyList<T>> HasJsonReadOnlyListConversion<T>(this PropertyBuilder<IReadOnlyList<T>> builder)
+				{
+						return builder.HasConversion(BuildJsonReadOnlyListConvertor<T>());
 				}
 
 				public static ComplexTypePropertyBuilder<T> HasJsonListConversion<T>(this ComplexTypePropertyBuilder<T> builder)
 				{
-						return builder.HasConversion(BuildJsonListConvertor<T>());
+						return builder.HasConversion(BuildJsonReadOnlyListConvertor<T>());
 				}
 
 				public static PropertyBuilder<TCollection> HasJsonListConversion<TCollection, T>(this PropertyBuilder<TCollection> builder)
-						where TCollection : IReadOnlyList<T>
+						where TCollection : IList<T>
 				{
-						return builder.HasConversion(BuildJsonListConvertor<T>());
+						return builder.HasConversion(BuildJsonListConvertor<TCollection, T>());
 				}
 		}
 }

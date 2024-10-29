@@ -4,36 +4,25 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>eda1f851-9b7a-4579-bdc9-13e5c4758fd1</UserSecretsId>
+    <UserSecretsId>d1b1cb96-409e-408a-9713-a27b417ea5ef</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..\..</DockerfileContext>
-    <DockerComposeProjectPath>..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Storage.Blobs" Version="12.22.1" />
-    <PackageReference Include="Mapster" Version="7.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
-    <PackageReference Include="Scrutor" Version="5.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.8.0" />
   </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.Abstractions\Articles.Abstractions.csproj" />
-    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.AspNetCore\Articles.AspNetCore.csproj" />
-    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.EntityFrameworkCore\Articles.EntityFrameworkCore.csproj" />
-    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.System\Articles.System.csproj" />
-    <ProjectReference Include="..\..\..\Modules\FileService\FileService.Contracts\FileStorage.Contracts.csproj" />
-    <ProjectReference Include="..\Submission.Application\Submission.Application.csproj" />
-  </ItemGroup>
+		
+    <ItemGroup>
+		    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.AspNetCore\Articles.AspNetCore.csproj" />
+		    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.EntityFrameworkCore\Articles.EntityFrameworkCore.csproj" />
+		    <ProjectReference Include="..\Submission.Application\Submission.Application.csproj" />
+    </ItemGroup>
 
 </Project>

@@ -2,14 +2,10 @@
 using Submission.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace Submission.Application.Features.UploadFiles.UploadAuthorFile;
+namespace Submission.Application.Features.UploadFiles;
 
 public record UploadSupplementaryFileCommand : UploadFileCommand
 {
-		[Required]
-		public byte AssetNumber { get; set; }
-
-		internal override byte GetAssetNumber() => AssetNumber;
 }
 
 public abstract class UploadSupplementaryFileValidator : UploadFileValidator<UploadSupplementaryFileCommand>

@@ -10,7 +10,7 @@ public class AssetNumber : SingleValueObject<byte>
 		[JsonConstructor]
 		private AssetNumber(byte value) => Value = value;
 
-		public static AssetNumber FromNumber(byte number,  AssetType assetType)
+		public static AssetNumber FromNumber(byte number,  AssetTypeDefinition assetType)
 		{
 				ArgumentOutOfRangeException.ThrowIfGreaterThan(number, assetType.MaxNumber);
 				return new AssetNumber(number);

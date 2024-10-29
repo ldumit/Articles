@@ -13,7 +13,7 @@ public class FileRepository(ProductionDbContext _dbContext)
 						.Include(x => x.Asset);
     }
 
-		public async Task<File?> GetByIdAsync(int articleId, int fileId, bool throwNotFound = true)
+		public async Task<File> GetByIdAsync(int articleId, int fileId, bool throwNotFound = true)
 		{
 				var entity = await Query()
 						.SingleOrDefaultAsync(e => e.Id == fileId && e.Asset!.ArticleId == articleId);

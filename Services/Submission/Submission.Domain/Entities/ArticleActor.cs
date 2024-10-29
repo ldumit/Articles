@@ -1,8 +1,15 @@
 ﻿using Articles.Entitities;
 using Articles.Security;
+using Submission.Domain.Enums;
 
 namespace Submission.Domain.Entities
 {
+		public class AuthorActor: ArticleActor
+		{
+				public List<ContributionArea> ContributionAreas { get; init; } = null!;
+		}
+
+
 		//todo define agregators, entities, child entities and value objects
 		public class ArticleActor : IChildEntity
 		{
@@ -11,5 +18,7 @@ namespace Submission.Domain.Entities
 				public required int PersonId { get; set; }
 				public Person Person { get; set; } = null!;
 				public UserRoleType Role { get; set; }
-    }
+
+				public string ActorType { get; set; } = null!; // EF discriminator
+		}
 }

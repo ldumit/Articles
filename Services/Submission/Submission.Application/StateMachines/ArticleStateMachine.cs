@@ -1,21 +1,20 @@
-﻿using Articles.Abstractions;
+﻿using Stateless;
+using Articles.Abstractions;
 using Submission.Domain.Entities;
 using Submission.Domain.Enums;
 using Submission.Persistence;
-using Stateless;
+using Submission.Domain.StateMachines;
 
 namespace Submission.Application.StateMachines;
 
-public delegate ArticleStateMachine ArticleStateMachineFactory(ArticleStage articleStage);
-
-public class ArticleStateMachine
+public class ArticleStateMachine : IArticleStateMachine
 {
 		private StateMachine<ArticleStage, ArticleActionType> _stateMachine;
 
 		public ArticleStateMachine(ArticleStage articleStage, SubmissionDbContext _dbContext)
     {
 				 _stateMachine = new(articleStage);
-				var transitions = _dbContext.GetCached<ArticleStageTransition>();
+				var transitions = _dbContext.GetAllCached<ArticleStageTransition>();
 
 				foreach (var transition in transitions)
 				{

@@ -34,7 +34,6 @@ public partial class Article : AggregateEntity
 		private readonly List<Asset> _assets = new();
     public IReadOnlyList<Asset> Assets => _assets.AsReadOnly();
 
-    public IEnumerable<Author> Authors => Actors.Where(aa => aa.Person is Author).Select(aa => aa.Person as Author);
 		public Typesetter? Typesetter => Actors.Where(aa => aa.Person is Typesetter).Select(aa => aa.Person as Typesetter).FirstOrDefault();
 
     //talk about private field and json deserielizer

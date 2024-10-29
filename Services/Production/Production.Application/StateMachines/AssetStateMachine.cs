@@ -21,8 +21,8 @@ public class AssetStateMachine
 		{
 				_stateMachine = new StateMachine<AssetState, AssetActionType>(assetState);
 
-				var transitions = dbContext.GetCached<AssetStateTransition>();
-				_conditions = dbContext.GetCached<AssetStateTransitionCondition>();
+				var transitions = dbContext.GetAllCached<AssetStateTransition>();
+				_conditions = dbContext.GetAllCached<AssetStateTransitionCondition>();
 
 				foreach (var transition in transitions)
 				{

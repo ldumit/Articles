@@ -9,4 +9,4 @@ public record AssetDto(
 		AssetState State,
 		AssetType Type,
 		AssetCategory CategoryId,
-		IReadOnlyList<FileDto> Files);
+		FileDto File);
