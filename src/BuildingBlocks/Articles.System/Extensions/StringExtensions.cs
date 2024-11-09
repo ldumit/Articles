@@ -4,20 +4,12 @@ public static class StringExtensions
 {
 		public static bool LacksValue(this string text) => string.IsNullOrEmpty(text);
 
-		public static string FormatWith(this string @this, object arg, params object[] additionalArgs)
-		{
-				try
-				{
-						if (additionalArgs == null || additionalArgs.Length == 0)
-								return string.Format(@this, arg);
-						else
-								return string.Format(@this, new object[] { arg }.Concat(additionalArgs).ToArray());
-				}
-				catch (Exception ex)
-				{
-						throw new FormatException("Cannot format the string '{0}' with the specified arguments.".FormatWith(@this), ex);
-				}
-		}
+		public static string FormatWith(this string @this, params object[] additionalArgs)
+				=> string.Format(@this, additionalArgs);
+
+		public static string FormatWith(this string @this, object arg)
+				=> string.Format(@this, arg);
+
 
 		public static bool HasValue(this string str) => !HasNoValue(str);
 
@@ -106,8 +98,6 @@ public static class StringExtensions
 						default: return input.First().ToString().ToUpper() + input.Substring(1);
 				}
 		}
-
-		public static string FormatWith(this string value, params object[] args) => String.Format(value, args);
 
 		public static T ToEnum<T>(this string value) where T : struct, Enum
 					=> (T)Enum.Parse(typeof(T), value, true);

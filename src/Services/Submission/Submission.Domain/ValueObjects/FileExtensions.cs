@@ -4,7 +4,7 @@ using System.Collections.Immutable;
 
 namespace Submission.Domain.ValueObjects;
 
-public class AllowedFileExtensions : IValueObject
+public class FileExtensions : IValueObject
 {
 		public IReadOnlyList<string> Extensions { get; init; } = null!;
 

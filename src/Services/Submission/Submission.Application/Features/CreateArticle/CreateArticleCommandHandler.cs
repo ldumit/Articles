@@ -1,10 +1,10 @@
 ﻿using MediatR;
+using Articles.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using Articles.EntityFrameworkCore;
 using Submission.Domain.Entities;
 using Submission.Persistence.Repositories;
 using Submission.Domain.Enums;
-using Submission.Application.Features.Shared;
 
 namespace Submission.Application.Features.CreateArticle;
 
@@ -27,7 +27,6 @@ public class CreateArticleCommandHandler(Repository<Journal> _journalRepository)
 		private async Task AssignCurrentUserAsAuthor(Article article, CreateArticleCommand command)
 		{
 				var author = await _journalRepository.Context.Authors.SingleOrDefaultAsync(t => t.UserId == command.CreatedById);
-				//todo create author if not exists
 				if (author is not null)
 						article.AssignAuthor(author, [ContributionArea.OriginalDraft], isCorrespondingAuthor: true, command);
 		}

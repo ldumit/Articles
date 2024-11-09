@@ -27,7 +27,7 @@ public partial class Article
             );
     }
 
-		public void AssignAuthor(Author author, List<ContributionArea> contributionAreas, bool isCorrespondingAuthor,  IArticleAction action)
+		public void AssignAuthor(Author author, HashSet<ContributionArea> contributionAreas, bool isCorrespondingAuthor,  IAction action)
 		{
 				var role = isCorrespondingAuthor ? UserRoleType.CORAUT : UserRoleType.AUT;				
 				

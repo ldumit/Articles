@@ -5,6 +5,7 @@ using Articles.System;
 using FileStorage.AzureBlob;
 using FileStorage.Contracts;
 using FluentValidation;
+using Mapster;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -25,7 +26,7 @@ public static class DependencyInjection
     {
         var connectionString = configuration.GetConnectionString("Database");
 
-				services.AddValidatorsFromAssemblyContaining<CreateArticleCommandValidator>(); // Register all validators
+				services.AddValidatorsFromAssemblyContaining<CreateArticleCommandValidator>(); // Register all validators as transient
 				services.AddMediatR(config =>
 				{
 						config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
@@ -87,4 +88,10 @@ public static class DependencyInjection
 
 				return services;
     }
+		public static IServiceCollection AddMapster(this IServiceCollection services)
+		{
+				TypeAdapterConfig.GlobalSettings.Scan(Assembly.GetExecutingAssembly()!);
+
+				return services;
+		}
 }

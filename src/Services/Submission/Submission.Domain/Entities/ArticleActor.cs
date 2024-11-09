@@ -4,9 +4,10 @@ using Submission.Domain.Enums;
 
 namespace Submission.Domain.Entities
 {
+		//todo rename Actor to Contributor?!?
 		public class AuthorActor: ArticleActor
 		{
-				public List<ContributionArea> ContributionAreas { get; init; } = null!;
+				public HashSet<ContributionArea> ContributionAreas { get; init; } = null!;
 		}
 
 

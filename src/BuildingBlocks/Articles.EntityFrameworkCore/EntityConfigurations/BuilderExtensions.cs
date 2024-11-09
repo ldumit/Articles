@@ -38,8 +38,8 @@ namespace Articles.EntityFrameworkCore
 								v => deserializeFunc(v));
 				}
 
-				public static ValueConverter<TCollection, string> BuildJsonListConvertor<TCollection, T>()
-						where TCollection : IList<T>
+				public static ValueConverter<TCollection, string> BuildJsonListConvertor<TCollection>()
+						//where TCollection : ICollection
 				{
 						Func<TCollection, string> serializeFunc = v => JsonSerializer.Serialize(v);
 						Func<string, TCollection> deserializeFunc = v => JsonSerializer.Deserialize<TCollection>(v ?? "[]");
@@ -53,6 +53,10 @@ namespace Articles.EntityFrameworkCore
 				{
 						return builder.HasConversion(BuildJsonReadOnlyListConvertor<T>());
 				}
+				public static PropertyBuilder<T> HasJsonCollectionConversion<T>(this PropertyBuilder<T> builder)
+				{
+						return builder.HasConversion(BuildJsonListConvertor<T>());
+				}
 
 				public static ComplexTypePropertyBuilder<T> HasJsonListConversion<T>(this ComplexTypePropertyBuilder<T> builder)
 				{
@@ -62,7 +66,7 @@ namespace Articles.EntityFrameworkCore
 				public static PropertyBuilder<TCollection> HasJsonListConversion<TCollection, T>(this PropertyBuilder<TCollection> builder)
 						where TCollection : IList<T>
 				{
-						return builder.HasConversion(BuildJsonListConvertor<TCollection, T>());
+						return builder.HasConversion(BuildJsonListConvertor<TCollection>());
 				}
 		}
 }

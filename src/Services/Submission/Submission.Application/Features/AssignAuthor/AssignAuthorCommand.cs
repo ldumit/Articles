@@ -1,19 +1,28 @@
-﻿using FluentValidation;
+﻿using Articles.FluentValidation;
+using Articles.System;
+using FluentValidation;
 using Submission.Application.Features.Shared;
 using Submission.Domain.Enums;
 
 namespace Submission.Application.Features.AssignAuthor;
 
-public record AssignAuthorCommand(int AuthorId, bool IsCorrespondingAuthor, List<ContributionArea> ContributionAreas)
+public record AssignAuthorCommand(int AuthorId, bool IsCorrespondingAuthor, HashSet<ContributionArea> ContributionAreas)
 		: ArticleCommand
 {
 		public override ArticleActionType ActionType => ArticleActionType.AssignAuthor;
 }
 
-//todo - add validation rules for all commands and integrate it with MediatR pipeline
-public class AssignAuthorCommandValidator : AbstractValidator<AssignAuthorCommand>
+public class AssignAuthorCommandValidator : ArticleCommandValidator<AssignAuthorCommand>
 {
 		public AssignAuthorCommandValidator()
-		{				
+		{
+				RuleFor(c => c.AuthorId).GreaterThan(0).WithMessageForInvalidId(nameof(AssignAuthorCommand.AuthorId));
+
+				RuleFor(command => command.ContributionAreas)
+						.Must(HasMandatoryContribution)
+						.WithMessage("The author must contribute to at least one mandatory area.");
 		}
+
+		private bool HasMandatoryContribution(HashSet<ContributionArea> contributionAreas)
+				=> contributionAreas.Overlaps(ContributionAreaCategories.MandatoryAreas);
 }

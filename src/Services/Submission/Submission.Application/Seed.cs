@@ -9,7 +9,8 @@ public static class Seed
 {
     public static void SeedTestData(this IHost host)
     {
-        using var scope = host.Services.CreateScope();
+				//todo - make this generic using DbContext as a constraint
+				using var scope = host.Services.CreateScope();
         using var context = scope.ServiceProvider.GetRequiredService<Persistence.SubmissionDbContext>();
         context.SeedTestData();
     }
@@ -18,16 +19,8 @@ public static class Seed
     {
         using var transaction = context.Database.BeginTransaction();
 
-				context.Seed<Person>();
-
-				//context.Seed<User>();
-				//context.Seed<Typesetter>();
+				context.Seed<Author>();
 				context.Seed<Journal>();
-
-
-				//context.Seed<Article>();
-				
-        //context.Seed<AssetCurrentFileLink>();
 
 				transaction.Commit();
 		}

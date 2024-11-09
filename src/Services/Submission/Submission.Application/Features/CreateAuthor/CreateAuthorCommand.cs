@@ -1,4 +1,7 @@
-﻿using Submission.Application.Features.Shared;
+﻿using FluentValidation;
+using Articles.EntityFrameworkCore;
+using Articles.FluentValidation;
+using Submission.Application.Features.Shared;
 using Submission.Domain.Enums;
 
 namespace Submission.Application.Features.CreateAuthor;
@@ -11,4 +14,29 @@ public record CreateAuthorCommand(
 		string Affiliation) : ArticleCommand
 {
 		public override ArticleActionType ActionType =>  ArticleActionType.CreateAuthor;
+}
+
+public class CreateAuthorCommandValidator : AbstractValidator<CreateAuthorCommand>
+{
+		public CreateAuthorCommandValidator()
+		{
+				RuleFor(x => x.Email)
+						.NotEmptyWithMessage(nameof(CreateAuthorCommand.Email))
+						.MaximumLengthWithMessage(Constraints.C64, nameof(CreateAuthorCommand.Email));
+
+				RuleFor(x => x.FirstName)
+						.NotEmptyWithMessage(nameof(CreateAuthorCommand.FirstName))
+						.MaximumLengthWithMessage(Constraints.C64, nameof(CreateAuthorCommand.FirstName));
+
+				RuleFor(x => x.LastName)
+						.NotEmptyWithMessage(nameof(CreateAuthorCommand.LastName))
+						.MaximumLengthWithMessage(Constraints.C64, nameof(CreateAuthorCommand.LastName));
+
+				RuleFor(x => x.Title)
+						.MaximumLengthWithMessage(Constraints.C64, nameof(CreateAuthorCommand.Title));
+
+				RuleFor(x => x.Affiliation)
+						.NotEmptyWithMessage(nameof(CreateAuthorCommand.Affiliation))
+						.MaximumLengthWithMessage(Constraints.C512, nameof(CreateAuthorCommand.Affiliation));
+		}
 }

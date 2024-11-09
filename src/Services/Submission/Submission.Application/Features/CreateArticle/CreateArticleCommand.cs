@@ -1,11 +1,14 @@
 ﻿using FluentValidation;
+using Articles.FluentValidation;
+using Articles.Abstractions;
+using Articles.EntityFrameworkCore;
 using Submission.Application.Features.Shared;
 using Submission.Domain.Enums;
 
 namespace Submission.Application.Features.CreateArticle;
 
-public record CreateArticleCommand(int JournalId, string Title, ArticleType Type, string Scope) 
-		: ArticleCommand
+public record CreateArticleCommand(int JournalId, string Title, ArticleType Type, string Scope)
+		: ArticleCommand<ArticleActionType, IdResponse>
 {
 		public override ArticleActionType ActionType => ArticleActionType.Create;
 }
@@ -15,13 +18,13 @@ public class CreateArticleCommandValidator : AbstractValidator<CreateArticleComm
 		public CreateArticleCommandValidator()
 		{
 				RuleFor(x => x.Title)
-						.NotEmpty().WithMessage("Title is required.")
-						.MaximumLength(200).WithMessage("Title must not exceed 200 characters.");
+						.NotEmptyWithMessage(nameof(CreateArticleCommand.Title))
+						.MaximumLengthWithMessage(Constraints.C256, nameof(CreateArticleCommand.Title));
 
 				RuleFor(x => x.Scope)
-						.NotEmpty().WithMessage("Summary is required.");
+						.NotEmptyWithMessage(nameof(CreateArticleCommand.Scope))
+						.MaximumLengthWithMessage(Constraints.C2048, nameof(CreateArticleCommand.Scope));
 
-				RuleFor(x => x.JournalId)
-						.GreaterThan(0).WithMessage("JournalId is required.");
+				RuleFor(c => c.JournalId).GreaterThan(0).WithMessageForInvalidId(nameof(CreateArticleCommand.JournalId));
 		}
 }

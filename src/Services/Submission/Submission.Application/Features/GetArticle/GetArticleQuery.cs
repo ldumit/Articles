@@ -1,4 +1,5 @@
-﻿using Articles.MediatR;
+﻿using Articles.FluentValidation;
+using Articles.MediatR;
 using FluentValidation;
 using Submission.Application.Dtos;
 
@@ -11,7 +12,6 @@ public class GetArticleValidator : AbstractValidator<GetArticleQuery>
 {
 		public GetArticleValidator()
 		{
-				RuleFor(x => x.ArticleId)
-						.GreaterThan(0).WithMessage("Invalid ArticleId.");
+				RuleFor(c => c.ArticleId).GreaterThan(0).WithMessageForInvalidId(nameof(GetArticleQuery.ArticleId));
 		}
 }

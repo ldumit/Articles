@@ -5,7 +5,7 @@
 namespace Submission.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class SeeedMasterData : Migration
+    public partial class SeedMasterData : Migration
     {
 				/// <inheritdoc />
 				protected override void Up(MigrationBuilder migrationBuilder)

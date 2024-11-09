@@ -1,8 +1,13 @@
-﻿using Submission.Domain.Enums;
-using System.ComponentModel.DataAnnotations;
-using Submission.Application.Features.Shared;
-using FluentValidation;
+﻿using FluentValidation;
 using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
+using Articles.System;
+using Articles.AspNetCore;
+using Submission.Domain.Enums;
+using Submission.Application.Features.Shared;
+using Submission.Persistence.Repositories;
+using Submission.Domain.Entities;
+using ValidationResult = FluentValidation.Results.ValidationResult;
 
 namespace Submission.Application.Features.UploadFiles.Shared;
 
@@ -23,15 +28,38 @@ public abstract record UploadFileCommand : ArticleCommand
 		public override ArticleActionType ActionType => ArticleActionType.Upload;
 }
 
-//todo validate file properties:size exttensio etc
 public abstract class UploadFileValidator<TUploadFileCommand> : ArticleCommandValidator<TUploadFileCommand>
 				where TUploadFileCommand : UploadFileCommand
 {
-		public UploadFileValidator()
+    private readonly CachedRepository<AssetTypeDefinition, AssetType> _assetTypeRepository;
+		private AssetTypeDefinition _assetTypeDefinition = null!;
+
+		public UploadFileValidator(CachedRepository<AssetTypeDefinition, AssetType> assetTypeRepository)
 		{
-				RuleFor(r => r.AssetType).Must(a => AllowedAssetTypes.Contains(a)).WithMessage("AssetType not allowed");
-				//RuleFor(r => r.File.Length)
+				_assetTypeRepository = assetTypeRepository;
+
+				RuleFor(r => r.AssetType).Must(IsAssetTypeAllowed)
+						.WithMessage(command => ValidationMessages.InvalidAssetType.FormatWith(_assetTypeDefinition.Name));
+				RuleFor(command => command.File).Must(IsFileSizeValid)
+						.WithMessage(command => ValidationMessages.InvalidFileSize.FormatWith(_assetTypeDefinition.MaxFileSizeInMB));
+				RuleFor(command => command.File).Must(IsFileExtensionValid)
+						.WithMessage(command => ValidationMessages.InvalidFileExtension.FormatWith(_assetTypeDefinition.Name, command.File.GetExtension()));
 		}
+
+		public override ValidationResult Validate(ValidationContext<TUploadFileCommand> context)
+		{
+				_assetTypeDefinition = _assetTypeRepository.GetById(context.InstanceToValidate.AssetType);
+				return base.Validate(context);
+		}
+
+		private bool IsAssetTypeAllowed(AssetType assetType)
+				=> AllowedAssetTypes.Contains(assetType);
+
+		private bool IsFileSizeValid(IFormFile file)		
+				=> file.Length <= _assetTypeDefinition.MaxFileSizeInBytes;
+
+		public bool IsFileExtensionValid(IFormFile file)
+				=> _assetTypeDefinition.AllowedFileExtensions.IsValidExtension(file.GetExtension());
 
 		public abstract IReadOnlyCollection<AssetType> AllowedAssetTypes { get; }
 }

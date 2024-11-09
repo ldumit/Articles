@@ -1,0 +1,33 @@
+﻿using Articles.System;
+using FluentValidation;
+
+namespace Articles.FluentValidation;
+
+public static class Extensions
+{
+		public static IRuleBuilderOptions<T, TProperty> WithMessageForInvalidId<T, TProperty>(this IRuleBuilderOptions<T, TProperty> rule, string propertyName)
+				=> rule.WithMessage(c => ValidationMessages.InvalidId.FormatWith(propertyName));
+
+		public static IRuleBuilderOptions<T, TProperty> WithMessageForMaxLength<T, TProperty>(this IRuleBuilderOptions<T, TProperty> rule, string propertyName, int maxLength)
+				=> rule.WithMessage(c => ValidationMessages.MaxLengthExceeded.FormatWith(propertyName, maxLength));
+
+		public static IRuleBuilderOptions<T, TProperty> WithMessageForEmpty<T, TProperty>(this IRuleBuilderOptions<T, TProperty> rule, string propertyName)
+				=> rule.WithMessage(c => ValidationMessages.EmptyValue.FormatWith(propertyName));
+
+
+		public static IRuleBuilderOptions<T, TProperty> GreaterThanWithMessageForInvalidId<T, TProperty>(this IRuleBuilder<T, TProperty> ruleBuilder, TProperty valueToCompare, string propertyName)
+			where TProperty : IComparable<TProperty>, IComparable
+				=> ruleBuilder
+						.GreaterThan(valueToCompare)
+						.WithMessage(c => ValidationMessages.InvalidId.FormatWith(propertyName));
+
+		public static IRuleBuilderOptions<T, string> MaximumLengthWithMessage<T>(this IRuleBuilder<T, string> ruleBuilder, int maxLength, string propertyName)
+				=> ruleBuilder
+						.MaximumLength(maxLength)
+						.WithMessage(c => ValidationMessages.MaxLengthExceeded.FormatWith(propertyName, maxLength));
+
+		public static IRuleBuilderOptions<T, string> NotEmptyWithMessage<T>(this IRuleBuilder<T, string> ruleBuilder, string propertyName)
+				=> ruleBuilder
+						.NotEmpty()
+						.WithMessage(c => ValidationMessages.EmptyValue.FormatWith(propertyName));
+}

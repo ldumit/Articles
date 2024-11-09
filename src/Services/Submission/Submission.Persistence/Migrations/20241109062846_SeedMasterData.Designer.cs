@@ -13,8 +13,8 @@ using Submission.Persistence;
 namespace Submission.Persistence.Migrations
 {
     [DbContext(typeof(SubmissionDbContext))]
-    [Migration("20241108104428_SeeedMasterData")]
-    partial class SeeedMasterData
+    [Migration("20241109062846_SeedMasterData")]
+    partial class SeedMasterData
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

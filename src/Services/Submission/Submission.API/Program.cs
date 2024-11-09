@@ -6,7 +6,6 @@ using Articles.AspNetCore;
 using Azure.Storage.Blobs;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http.Json;
-using System.Reflection;
 using ArticleTimeline.Persistence;
 using ArticleTimeline.Application;
 using Submission.API.Endpoints;

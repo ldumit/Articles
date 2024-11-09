@@ -1,5 +1,4 @@
-﻿using FluentValidation;
-using Submission.Application.Features.Shared;
+﻿using Submission.Application.Features.Shared;
 using Submission.Domain.Enums;
 
 namespace Submission.Application.Features.RejectArticle;
@@ -10,9 +9,4 @@ public record RejectArticleCommand : ArticleCommand
 }
 
 
-public class RejectArticleCommandValidator : AbstractValidator<RejectArticleCommand>
-{
-		public RejectArticleCommandValidator()
-		{
-		}
-}
+public class RejectArticleCommandValidator : ArticleCommandValidator<RejectArticleCommand>;

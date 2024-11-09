@@ -1,7 +1,7 @@
 ﻿using MediatR;
+using Articles.Abstractions;
 using Articles.EntityFrameworkCore;
 using Submission.Application.Features.AssignAuthor;
-using Submission.Application.Features.Shared;
 using Submission.Persistence.Repositories;
 
 namespace Submission.Application.Features.CreateArticle;

@@ -5,7 +5,7 @@ using Submission.Persistence.Repositories;
 
 namespace Submission.Application.Features.GetArticle;
 
-public class GetArticleSummaryQueryHandler(ArticleRepository _articleRepository)
+public class GetArticleQueryHandler(ArticleRepository _articleRepository)
 		: IRequestHandler<GetArticleQuery, GetArticleResonse>
 {
 		public async Task<GetArticleResonse> Handle(GetArticleQuery command, CancellationToken ct)

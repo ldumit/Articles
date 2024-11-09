@@ -2,7 +2,6 @@
 using Articles.Abstractions;
 using Articles.EntityFrameworkCore;
 using Submission.Persistence.Repositories;
-using Submission.Application.StateMachines;
 using Submission.Domain.Entities;
 using Submission.Domain.StateMachines;
 

@@ -8,6 +8,7 @@ using ArticleTimeline.Persistence;
 using FastEndpoints;
 using FileStorage.AzureBlob;
 using FileStorage.Contracts;
+using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -102,4 +103,10 @@ public static class DependencyInjection
 
 				return services;
     }
+
+		public static IServiceCollection AddMapster(this IServiceCollection services)
+		{
+				TypeAdapterConfig.GlobalSettings.Scan(Assembly.GetEntryAssembly()!);
+				return services;
+		}
 }

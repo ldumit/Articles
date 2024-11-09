@@ -10,7 +10,7 @@ public static class RejectArticleEndpoint
 {
 		public static void Map(this IEndpointRouteBuilder app)
 		{
-				app.MapPut("api/articles/{articleId:int}:reject", async ([FromRoute] int articleId, [FromBody] RejectArticleCommand command, ISender sender) =>
+				app.MapPost("api/articles/{articleId:int}:reject", async ([FromRoute] int articleId, [FromBody] RejectArticleCommand command, ISender sender) =>
 				{
 						command.ArticleId = articleId;
 						var response = await sender.Send(command);
@@ -20,6 +20,7 @@ public static class RejectArticleEndpoint
 				.WithName("RejectArticle")
 				.WithTags("Articles")
 				.Produces<IdResponse>(StatusCodes.Status200OK)
+				.ProducesProblem(StatusCodes.Status404NotFound)
 				.ProducesProblem(StatusCodes.Status400BadRequest)
 				.ProducesProblem(StatusCodes.Status401Unauthorized);
 		}

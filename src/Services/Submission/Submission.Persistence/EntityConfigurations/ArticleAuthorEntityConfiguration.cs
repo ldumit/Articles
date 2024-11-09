@@ -10,6 +10,7 @@ public class ArticleAuthorEntityConfiguration : IEntityTypeConfiguration<AuthorA
 {
     public void Configure(EntityTypeBuilder<AuthorActor> entity)
     {
-        entity.Property(e => e.ContributionAreas).HasJsonListConversion<List<ContributionArea>, ContributionArea>().IsRequired();						
-    }
+        //entity.Property(e => e.ContributionAreas).HasJsonListConversion<List<ContributionArea>, ContributionArea>().IsRequired();
+				entity.Property(e => e.ContributionAreas).HasJsonCollectionConversion().IsRequired();
+		}
 }

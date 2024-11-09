@@ -1,27 +1,4 @@
-﻿using FluentValidation;
-using FluentValidation.Results;
-
-namespace Articles.Abstractions;
-
-public abstract class BaseValidator<T> : AbstractValidator<T>
-{
-    public override ValidationResult? Validate(ValidationContext<T> context)
-    {
-        var validationResult = base.Validate(context);
-
-        if (!validationResult.IsValid)
-        {
-            //Log.Error(validationResult.Errors.ToString());
-        }
-        return validationResult;
-    }
-
-    public BaseValidator()
-    {
-        RuleFor(command => command).NotEmpty()
-            .WithMessage(ValidatorsMessagesConstants.NotNull);
-    }
-}
+﻿namespace Articles.Abstractions;
 
 public static class ValidatorsMessagesConstants
 {

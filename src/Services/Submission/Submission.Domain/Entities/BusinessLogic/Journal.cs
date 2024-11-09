@@ -7,7 +7,7 @@ namespace Submission.Domain.Entities;
 
 public partial class Journal
 {
-		public Article CreateArticle(string title, ArticleType Type, string scope, int journalId, IArticleAction action)
+		public Article CreateArticle(string title, ArticleType Type, string scope, int journalId, IAction action)
 		{
 				var article = new Article
 				{
@@ -27,8 +27,8 @@ public partial class Journal
 				//todo - do we need to add the article to the journal? is it setting the journalId enough?
 				_articles.Add(article);
 
-				var domainEvent = article.Adapt<ArticleCreatedDomainEvent>() with { Action = action };
-				article.AddDomainEvent(domainEvent);
+				//var domainEvent = article.Adapt<ArticleCreatedDomainEvent>() with { Action = action };
+				//article.AddDomainEvent(domainEvent);
 				return article;
 		}
 }
