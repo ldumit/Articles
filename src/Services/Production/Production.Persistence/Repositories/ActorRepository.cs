@@ -1,23 +1,24 @@
 ﻿using Articles.Security;
 using Articles.System;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
 using Production.Domain.Entities;
 
 namespace Production.Persistence.Repositories;
 
-public class ActorRepository(ProductionDbContext _dbContext, IMemoryCache _cache) 
+public class ActorRepository(ProductionDbContext _dbContext) 
 		: Repository<Article>(_dbContext), IArticleRoleChecker
 {
 		public async Task<bool> CheckRolesForUser(int? articleId, int? userId, IEnumerable<UserRoleType> roles)
 		{
-				if (articleId is null || userId is null || roles.IsNullOrEmpty())
+				if (articleId is null)
+						return true; // the endpoint is not article specific
+
+				if (userId is null || roles.IsNullOrEmpty())
 						return false;
 
-				//talk about code commetns, why are they usefull?
-				// admin users have access to all articles
+				//talk about code commetns, why are they usefull?				
 				if(roles.Contains(UserRoleType.POF)) 
-						return true;
+						return true; // admin users have access to all articles
 
 				//todo - cache the actors?!
 				return await _dbContext.ArticleActors

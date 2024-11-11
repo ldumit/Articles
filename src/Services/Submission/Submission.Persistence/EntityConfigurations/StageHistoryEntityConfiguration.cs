@@ -15,6 +15,6 @@ public class StageHistoryEntityConfiguration : EntityConfiguration<StageHistory>
 
         entity.Property(e => e.StartDate).IsRequired();
 
-        entity.HasOne(e => e.Stage).WithMany().HasForeignKey(e => e.StageId).OnDelete(DeleteBehavior.Restrict);        
+        entity.HasOne<Stage>().WithMany().HasForeignKey(e => e.StageId).OnDelete(DeleteBehavior.Restrict);        
     }
 }

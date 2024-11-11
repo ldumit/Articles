@@ -1,6 +1,8 @@
 ﻿using Articles.Abstractions;
+using Articles.Abstractions.Enums;
 using Articles.Exceptions.Domain;
 using Articles.Security;
+using Mapster;
 using Submission.Domain.Enums;
 using Submission.Domain.Events;
 using Submission.Domain.StateMachines;
@@ -11,23 +13,24 @@ public partial class Article
 {
 		public void SetStage(ArticleStage newStage, IArticleAction<ArticleActionType> action, ArticleStateMachineFactory stateMachineFactory)
     {
-        if (newStage == Stage)
-            return;
-
 				stateMachineFactory.ValidateStageTransition(Stage, action.ActionType);
+
+				if (newStage == Stage)
+            return;
 
 				var currentStage = Stage;
 				Stage = newStage;
         LasModifiedOn = action.CreatedOn;
 				LastModifiedById = action.CreatedById;
 
-				_stageHistories.Add(new StageHistory { ArticleId = Id, StageId = newStage, StartDate = DateTime.UtcNow });
+				_stageHistories.Add(
+						new StageHistory { ArticleId = Id, StageId = newStage, StartDate = DateTime.UtcNow });
+				
 				AddDomainEvent(
-            new ArticleStageChangedDomainEvent(action, currentStage, newStage)
-            );
+						new ArticleStageChangedDomainEvent(action, currentStage, newStage));
     }
 
-		public void AssignAuthor(Author author, HashSet<ContributionArea> contributionAreas, bool isCorrespondingAuthor,  IAction action)
+		public void AssignAuthor(Author author, HashSet<ContributionArea> contributionAreas, bool isCorrespondingAuthor, IArticleAction<ArticleActionType> action)
 		{
 				var role = isCorrespondingAuthor ? UserRoleType.CORAUT : UserRoleType.AUT;				
 				
@@ -39,26 +42,34 @@ public partial class Article
 						PersonId = author.Id, 
 						Role = role
 				});
-
-				//AddDomainEvent(new TypesetterAssignedDomainEvent(action, typesetter.Id, typesetter.UserId!.Value));
-				//AuthorId = authorId;
-				//ContributionAreas = contributionAreas;
-				//SetStage(ArticleStage.AuthorAssigned, action);
+				AddDomainEvent(
+						new AuthorAssigned(action, author.Id, author.UserId!.Value));
+				AddAction(action);
 		}
 
-		public Asset CreateAsset(AssetTypeDefinition type)
+		public Asset CreateAsset(AssetTypeDefinition type, IArticleAction<ArticleActionType> action)
     {
-				byte? assetNumber = _assets
+				byte? maxAssetNumber = _assets
 						.Where(a => a.Type == type.Id)
 						.Select(a => (byte?)a.Number) // Cast to byte? to allow nulls
-						.Max(); 
-				if(assetNumber is not null)
-						assetNumber += 1;
-				else
-						assetNumber = type.AllowsMultipleAssets ? (byte)1 : (byte)0;
+						.Max();
 
-				var asset = Asset.Create(this, type, assetNumber.Value);
-        _assets.Add(asset);        
-        return asset;
+				byte nextAssetNumber;
+				if (maxAssetNumber is not null)
+						nextAssetNumber = (byte)(maxAssetNumber + 1);
+				else
+						nextAssetNumber = type.AllowsMultipleAssets ? (byte)1 : (byte)0; // for asset types that allow multiple assets of the same type, start from 1, otherwise 0
+
+				var asset = Asset.Create(this, type, nextAssetNumber);
+        _assets.Add(asset);
+				
+				AddAction(action);
+				return asset;
     }
+
+		private void AddAction(IArticleAction<ArticleActionType> action)
+		{
+				_actions.Add(action.Adapt<ArticleAction>());
+				AddDomainEvent(new ArticleActionExecuted(action, this));
+		}
 }

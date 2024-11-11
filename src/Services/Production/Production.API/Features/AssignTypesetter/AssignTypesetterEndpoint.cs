@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Production.Persistence.Repositories;
 using Production.Persistence;
-using Articles.Abstractions;
+using Articles.Abstractions.Enums;
 using Production.API.Features.Shared;
 using Production.Application.StateMachines;
 using Production.Domain.Enums;

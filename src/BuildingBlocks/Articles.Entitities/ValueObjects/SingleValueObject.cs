@@ -3,7 +3,7 @@
 public interface IValueObject;
 
 public abstract class SingleValueObject<T> : IValueObject, IEquatable<SingleValueObject<T>>, IEquatable<T>
-		where T : struct
+		//where T : struct
 {
     public T Value { get; protected set; } = default!;
 

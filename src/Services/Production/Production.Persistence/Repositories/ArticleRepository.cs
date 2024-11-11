@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Articles.Abstractions.Enums;
+using Microsoft.EntityFrameworkCore;
 using Production.Domain.Entities;
 
 namespace Production.Persistence.Repositories;
@@ -58,7 +59,7 @@ public class ArticleRepository(ProductionDbContext dbContext)
 				return ReturnOrThrow(article, throwIfNotFound);
 		}
 
-		public async Task<Article> GetByIdWithSingleAssetAsync(int id, Domain.Enums.AssetType assetType, byte assetNumber, bool throwIfNotFound = true)
+		public async Task<Article> GetByIdWithSingleAssetAsync(int id, AssetType assetType, byte assetNumber, bool throwIfNotFound = true)
 		{
 				var article = await Query()
 						 .Include(e => e.Assets.Where(e => e.Type == assetType && e.Number.Value == assetNumber))

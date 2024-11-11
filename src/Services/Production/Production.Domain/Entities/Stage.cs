@@ -1,4 +1,4 @@
-﻿using Articles.Abstractions;
+﻿using Articles.Abstractions.Enums;
 using Articles.Entitities;
 
 namespace Production.Domain.Entities;

@@ -1,7 +1,8 @@
-﻿using Production.Domain.Enums;
+﻿using FluentValidation;
 using System.ComponentModel.DataAnnotations;
+using Articles.Abstractions.Enums;
+using Production.Domain.Enums;
 using Production.API.Features.Shared;
-using FluentValidation;
 
 namespace Production.API.Features.UploadFiles.Shared;
 

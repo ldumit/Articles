@@ -1,11 +1,11 @@
 ﻿using FastEndpoints;
+using FileStorage.Contracts;
+using Articles.Security;
+using Articles.Abstractions.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Production.Persistence.Repositories;
-using FileStorage.Contracts;
 using Production.Application.StateMachines;
-using Articles.Security;
 using Production.API.Features.UploadFiles.Shared;
-using Articles.Abstractions;
 
 namespace Production.API.Features.UploadFiles.UploadDraftFile;
 

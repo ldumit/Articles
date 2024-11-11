@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Query;
+using Newtonsoft.Json;
 using System.Linq.Expressions;
 
 namespace Articles.EntityFrameworkCore;
@@ -33,7 +34,17 @@ public static class EntityTypeBuilderExtensions
 				var filePath = $"{AppContext.BaseDirectory}MasterData/{typeof(T).Name}.json";
 				if (!File.Exists(filePath))
 						return false;
-				var data = JsonExtensions.DeserializeCaseInsensitive<List<T>>(File.ReadAllText(filePath));
+				var data = JsonExtensions.DeserializeCaseInsensitive<List<T>>(File.ReadAllText(filePath));				
+				Console.WriteLine($"Seeding {data.Count} records for {typeof(T).Name}");
+				//Console.WriteLine(string.Join(Environment.NewLine, data));
+
+				string jsonData = JsonConvert.SerializeObject(data, Formatting.Indented);
+				Console.WriteLine(jsonData);
+
+				//foreach (var item in data)
+				//{
+				//		Console.WriteLine(item);
+				//}
 				if (data != null)
 				{
 						builder.HasData(data);

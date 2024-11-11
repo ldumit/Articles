@@ -1,11 +1,12 @@
-﻿using Articles.EntityFrameworkCore;
+﻿using Articles.Abstractions.Enums;
+using Articles.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Production.Domain.Entities;
 
 namespace Production.Persistence.EntityConfigurations;
 
-public class AssetTypeDefinitionEntityConfiguration : EnumEntityConfiguration<AssetTypeDefinition, Domain.Enums.AssetType>
+public class AssetTypeDefinitionEntityConfiguration : EnumEntityConfiguration<AssetTypeDefinition, AssetType>
 {
     public override void Configure(EntityTypeBuilder<AssetTypeDefinition> builder)
     {

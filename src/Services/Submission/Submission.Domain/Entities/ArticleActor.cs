@@ -1,17 +1,9 @@
 ﻿using Articles.Entitities;
 using Articles.Security;
-using Submission.Domain.Enums;
 
 namespace Submission.Domain.Entities
 {
 		//todo rename Actor to Contributor?!?
-		public class AuthorActor: ArticleActor
-		{
-				public HashSet<ContributionArea> ContributionAreas { get; init; } = null!;
-		}
-
-
-		//todo define agregators, entities, child entities and value objects
 		public class ArticleActor : IChildEntity
 		{
         public int ArticleId { get; set; }

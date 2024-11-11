@@ -1,4 +1,4 @@
-﻿namespace Articles.Abstractions;
+﻿namespace Articles.Abstractions.Enums;
 
 public interface IArticle
 {

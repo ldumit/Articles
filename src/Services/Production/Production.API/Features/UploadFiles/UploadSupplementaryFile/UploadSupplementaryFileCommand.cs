@@ -1,4 +1,5 @@
-﻿using Production.API.Features.UploadFiles.Shared;
+﻿using Articles.Abstractions.Enums;
+using Production.API.Features.UploadFiles.Shared;
 using Production.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 

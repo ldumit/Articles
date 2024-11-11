@@ -5,17 +5,17 @@ namespace Submission.Domain.Entities
 {
 		public class Person : AggregateEntity
 		{
-				public required string FirstName { get; set; }
-				public required string LastName { get; set; }
+				public required string FirstName { get; init; }
+				public required string LastName { get; init; }
 				public string FullName => FirstName + " " + LastName;
 
-				public string? Title { get; set; }
-				public required EmailAddress Email { get; set; }
+				public string? Title { get; init; }
+				public required EmailAddress Email { get; init; }
 
-				public int? UserId { get; set; }
+				public int? UserId { get; init; }
 
-				public string PersonType { get; set; } = null!;
+				public IReadOnlyList<ArticleActor> ArticleActors { get; private set; } = new List<ArticleActor>();
 
-				public List<ArticleActor> ArticleActors { get; set; } = new();
+				public string PersonType { get; init; } = null!; // EF discriminator
 		}
 }

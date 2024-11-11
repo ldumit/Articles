@@ -1,5 +1,5 @@
 ﻿using Stateless;
-using Articles.Abstractions;
+using Articles.Abstractions.Enums;
 using Submission.Domain.Entities;
 using Submission.Domain.Enums;
 using Submission.Persistence;

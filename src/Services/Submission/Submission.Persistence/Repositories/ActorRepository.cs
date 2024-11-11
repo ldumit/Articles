@@ -11,12 +11,15 @@ public class ActorRepository(SubmissionDbContext _dbContext, IMemoryCache _cache
 {
 		public async Task<bool> CheckRolesForUser(int? articleId, int? userId, IEnumerable<UserRoleType> roles)
 		{
-				if (articleId is null || userId is null || roles.IsNullOrEmpty())
+				if(articleId is null)
+						return true; // the endpoint is not article specific
+
+				if (userId is null || roles.IsNullOrEmpty())
 						return false;
 
 				//talk about code commetns, why are they usefull?
 				// admin users have access to all articles
-				if(roles.Contains(UserRoleType.POF)) 
+				if(roles.Contains(UserRoleType.EOF)) 
 						return true;
 
 				//todo - cache the actors?!

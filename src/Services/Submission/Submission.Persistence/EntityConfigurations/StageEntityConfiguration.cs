@@ -1,5 +1,4 @@
-﻿using Articles.Abstractions;
-using Articles.Entitities;
+﻿using Articles.Abstractions.Enums;
 using Articles.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Submission.Domain.Entities;

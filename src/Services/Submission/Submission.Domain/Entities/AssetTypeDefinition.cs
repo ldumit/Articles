@@ -1,19 +1,19 @@
-﻿using Articles.Entitities;
+﻿using Articles.Abstractions.Enums;
+using Articles.Entitities;
 using Articles.System.Cache;
-using Submission.Domain.Enums;
 using Submission.Domain.ValueObjects;
 
 
 namespace Submission.Domain.Entities;
 
 //talk - mix enums & tables togheter
-public partial class AssetTypeDefinition : EnumEntity<Enums.AssetType>, ICacheable
+public partial class AssetTypeDefinition : EnumEntity<AssetType>, ICacheable
 {
-		public AssetCategory DefaultCategoryId { get; init; }
-    public FileExtensions AllowedFileExtensions { get; init; } = null!;
-		public string DefaultFileExtension { get; init; } = default!;
-    public byte MaxNumber { get; init; }
-		public byte MaxFileSizeInMB{ get; init; }
+		public required AssetCategory DefaultCategoryId { get; init; }
+    public required FileExtensions AllowedFileExtensions { get; init; }
+		public required string DefaultFileExtension { get; init; } = default!;
+    public required byte MaxNumber { get; init; }
+		public required byte MaxFileSizeInMB{ get; init; }
 
 		public int MaxFileSizeInBytes => (MaxFileSizeInMB * 1024 * 1024);
 		public bool AllowsMultipleAssets => MaxNumber > 0;

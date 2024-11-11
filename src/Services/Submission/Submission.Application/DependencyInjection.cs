@@ -1,11 +1,13 @@
 ﻿using Articles.AspNetCore;
 using Articles.EntityFrameworkCore;
 using Articles.MediatR.Behaviours;
+using Articles.Security;
 using Articles.System;
 using FileStorage.AzureBlob;
 using FileStorage.Contracts;
 using FluentValidation;
 using Mapster;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -30,6 +32,7 @@ public static class DependencyInjection
 				services.AddMediatR(config =>
 				{
 						config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+
 						config.AddOpenBehavior(typeof(SetUserIdBehavior<,>));
 						config.AddOpenBehavior(typeof(ValidationBehavior<,>));
 						//config.AddOpenBehavior(typeof(LoggingBehavior<,>));
@@ -56,15 +59,13 @@ public static class DependencyInjection
 				services.AddScoped<TransactionProvider>();
 
 				#region Authorization
-				//services.AddScoped<IAuthorizationHandler, ArticleRoleAuthorizationHandler>();
+				services.AddScoped<IAuthorizationHandler, ArticleRoleAuthorizationHandler>();
+				services.AddScoped<IArticleRoleChecker, ActorRepository>();
 
-
-				//talk - SOLID principle interface segragation, injecting multiple interfaces using the same class
 				services.AddScoped<IClaimsProvider, HttpContextProvider>();
 				services.AddScoped<IRouteProvider, HttpContextProvider>();
 				services.AddScoped<HttpContextProvider>();
 
-				//    services.AddScoped<IArticleRoleChecker, ActorRepository>();
 				#endregion
 				services.AddScoped(typeof(CachedRepository<,>));
 				services.AddScoped(typeof(Repository<>));
@@ -79,7 +80,6 @@ public static class DependencyInjection
 				//services.AddScoped<IEventHandler<ArticleStageChangedDomainEvent>, AddTimelineWhenArticleStageChangedEventHandler>();
 				//services.AddEventHandlersFromAssembly(typeof(AddTimelineWhenArticleStageChangedEventHandler).Assembly);			
 
-				//services.AddScoped<ArticleStateMachine>(); 
 				services.AddScoped<ArticleStateMachineFactory>(provider => articleStage =>
 				{
 						var dbConntext = provider.GetRequiredService<SubmissionDbContext>();

@@ -1,5 +1,5 @@
 ﻿using Production.Persistence.Repositories;
-using Production.Domain.Enums;
+using Articles.Abstractions.Enums;
 
 namespace Production.Application;
 

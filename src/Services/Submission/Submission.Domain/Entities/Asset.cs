@@ -1,4 +1,5 @@
-﻿using Articles.Entitities;
+﻿using Articles.Abstractions.Enums;
+using Articles.Entitities;
 using Submission.Domain.Enums;
 using Submission.Domain.ValueObjects;
 
@@ -12,14 +13,11 @@ public partial class Asset : AggregateEntity
     public AssetState State { get; private set; }
     public AssetCategory CategoryId { get; private set; }
 
-    public Enums.AssetType Type { get; private set; }
+    public AssetType Type { get; private set; }
     public virtual AssetTypeDefinition TypeRef { get; private set; } = null!;
 		
     public int ArticleId { get; private set; }
 		public virtual Article Article { get; private set; } = null!;
 
-		public File File { get; set; } = null!;
-		
-    private readonly List<AssetAction> _actions = new ();
-		public virtual IReadOnlyList<AssetAction> Actions => _actions.AsReadOnly();    
+		public File File { get; set; } = null!; 
 }

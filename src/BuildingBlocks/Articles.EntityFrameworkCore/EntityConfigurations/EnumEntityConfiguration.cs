@@ -1,12 +1,11 @@
 ﻿using Articles.Entitities;
-using Articles.System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Articles.EntityFrameworkCore;
 
 public abstract class EnumEntityConfiguration<T, TEnum> : EntityConfiguration<T, TEnum>
-    where T : EnumEntity<TEnum>, new()
+    where T : EnumEntity<TEnum>
     where TEnum : struct, Enum
 {
     public override void Configure(EntityTypeBuilder<T> builder)
@@ -18,19 +17,4 @@ public abstract class EnumEntityConfiguration<T, TEnum> : EntityConfiguration<T,
         builder.Property(e => e.Name).HasEnumConversion().HasMaxLength(Constraints.C64).IsRequired().HasColumnOrder(1);
         builder.Property(e => e.Description).HasMaxLength(Constraints.C64).IsRequired().HasColumnOrder(2);
     }
-
-		protected void SeedFromEnum(EntityTypeBuilder<T> entity)
-		{
-				var entityValues = EnumExtensions.GetValues<TEnum>()
-						.Select(v => new T() { Id = v, Name = v, Description = v.ToDescription() });						
-				try
-				{
-						entity.HasData(entityValues);
-
-				}
-				catch (Exception ex)
-				{
-						Console.WriteLine("EX:---->" + ex.ToString());
-				}
-		}
 }

@@ -1,10 +1,11 @@
 ﻿using FastEndpoints;
-using Production.Domain.Entities;
+using Articles.Exceptions;
 using Articles.Abstractions;
+using Articles.Abstractions.Enums;
+using Production.Domain.Entities;
 using Production.Application.StateMachines;
 using Production.Domain.Enums;
 using Production.Persistence.Repositories;
-using Articles.Exceptions;
 
 namespace Production.API.Features.Shared;
 
@@ -24,7 +25,7 @@ public abstract class AssetBaseEndpoint<TCommand, TResponse>(AssetRepository ass
 						throw new BadRequestException("Action not allowed");
 		}
 
-		protected Asset CreateAsset(Domain.Enums.AssetType assetType, byte assetNumber)
+		protected Asset CreateAsset(AssetType assetType, byte assetNumber)
 		{
 				var assetTypeEntity = _assetRepository.GetAssetType(assetType);
 				return _article.CreateAsset(assetTypeEntity, assetNumber);

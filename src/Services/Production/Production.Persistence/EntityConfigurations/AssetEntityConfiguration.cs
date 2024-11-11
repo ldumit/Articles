@@ -1,9 +1,8 @@
-﻿using Articles.Entitities;
+﻿using Articles.Abstractions.Enums;
 using Articles.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Production.Domain.Entities;
-using Production.Domain.Enums;
 
 namespace Production.Persistence.EntityConfigurations;
 

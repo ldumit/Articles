@@ -1,11 +1,7 @@
 ﻿using Articles.Abstractions;
-using Articles.Domain;
+using Articles.Abstractions.Enums;
 
 namespace Submission.Domain.Events;
 
-public record TestDomainEvent(string Value): IDomainEvent;
-
 public record ArticleStageChangedDomainEvent(IArticleAction action, ArticleStage CurrentStage, ArticleStage NewStage)
-		: DomainEvent(action)
-{
-}
+		: DomainEvent(action);

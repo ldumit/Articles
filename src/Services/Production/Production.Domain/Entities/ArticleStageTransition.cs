@@ -1,7 +1,6 @@
-﻿using Articles.Abstractions;
+﻿using Articles.Abstractions.Enums;
 using Articles.Entitities;
 using Articles.System.Cache;
-using Microsoft.Extensions.Caching.Memory;
 using Production.Domain.Enums;
 
 namespace Production.Domain.Entities;

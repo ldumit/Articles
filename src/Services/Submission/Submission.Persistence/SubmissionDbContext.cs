@@ -24,29 +24,23 @@ public partial class SubmissionDbContext(DbContextOptions<SubmissionDbContext> o
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-
 				//todo use the following line:
 				//modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
 
 				modelBuilder.ApplyConfiguration(new ArticleEntityConfiguration());
 				modelBuilder.ApplyConfiguration(new ArticleStageTransitionConfiguration());
 				modelBuilder.ApplyConfiguration(new AssetEntityConfiguration());
-        modelBuilder.ApplyConfiguration(new AssetActionEntityConfiguration());
+        modelBuilder.ApplyConfiguration(new ArticleActionEntityConfiguration());
 				modelBuilder.ApplyConfiguration(new AssetTypeDefinitionEntityConfiguration());
 				modelBuilder.ApplyConfiguration(new ArticleActorEntityConfiguration());
 				modelBuilder.ApplyConfiguration(new ArticleAuthorEntityConfiguration());
 				modelBuilder.ApplyConfiguration(new AuthorEntityConfiguration());
-        //modelBuilder.ApplyConfiguration(new FileEntityConfiguration());
         modelBuilder.ApplyConfiguration(new JournalEntityConfiguration());
         modelBuilder.ApplyConfiguration(new StageEntityConfiguration());
         modelBuilder.ApplyConfiguration(new StageHistoryEntityConfiguration());
 				modelBuilder.ApplyConfiguration(new PersonEntityConfiguration());
 
-        //modelBuilder.ApplyConfiguration(new CustomerEntityConfiguration());
-
-
         modelBuilder.UseClrTypeNamesForTables();
-
 
 				base.OnModelCreating(modelBuilder);
     }

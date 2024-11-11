@@ -1,8 +1,8 @@
-﻿using Submission.Persistence.Repositories;
+﻿using Articles.Abstractions.Enums;
 using FileStorage.Contracts;
+using Submission.Persistence.Repositories;
 using Submission.Application.Features.UploadFiles.Shared;
 using Submission.Domain.Entities;
-using Submission.Domain.Enums;
 using Submission.Domain.StateMachines;
 
 namespace Submission.Application.Features.UploadFiles.UploadAuthorFile;

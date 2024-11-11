@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Articles.Abstractions;
+namespace Articles.Abstractions.Enums;
 
 public enum ArticleStage : int
 {

@@ -139,6 +139,31 @@ namespace Submission.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ArticleAction",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EntityId = table.Column<int>(type: "int", nullable: false),
+                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TypeId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedById = table.Column<int>(type: "int", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastModifiedById = table.Column<int>(type: "int", nullable: true),
+                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ArticleAction", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ArticleAction_Article_EntityId",
+                        column: x => x.EntityId,
+                        principalTable: "Article",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ArticleActor",
                 columns: table => new
                 {
@@ -231,31 +256,6 @@ namespace Submission.Persistence.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "AssetAction",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    AssetId = table.Column<int>(type: "int", nullable: false),
-                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TypeId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedById = table.Column<int>(type: "int", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LastModifiedById = table.Column<int>(type: "int", nullable: true),
-                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AssetAction", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AssetAction_Asset_AssetId",
-                        column: x => x.AssetId,
-                        principalTable: "Asset",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.InsertData(
                 table: "ArticleStageTransition",
                 columns: new[] { "ActionType", "CurrentStage", "DestinationStage" },
@@ -274,8 +274,8 @@ namespace Submission.Persistence.Migrations
                 values: new object[,]
                 {
                     { 101, "The Author created the article", "The article was created. Please upload the Manuscript and the Supplimentarry materials. Associate the authors with the article.", "Created" },
-                    { 102, "The Manuscript was submitted by the author", "Our editorial specialist is checking your article. We will contact you if we need any further files or information.", "Submitted" },
-                    { 103, "Author uploaded the Manuscript", "The manuscript was uploaded, you can now submit the article.", "ManuscriptUploaded" },
+                    { 102, "The Manuscript was submitted by the author", "Our editorial specialist is checking your article. We will contact you if we need any further files or information.", "ManuscriptUploaded" },
+                    { 103, "Author uploaded the Manuscript", "The manuscript was uploaded, you can now submit the article.", "Submitted" },
                     { 104, "Article was rejected by the editorial specialist", "The manuscript does not reach the required quality standard of this journal.", "InitialRejected" },
                     { 105, "Article approved", "Your article has been checked. Our editorial specialists will start soon revieing it.", "InitialApproved" },
                     { 201, "Article approved", "Our editorial specialist is reviewing your article.", "InReview" },
@@ -308,6 +308,11 @@ namespace Submission.Persistence.Migrations
                 column: "Title");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ArticleAction_EntityId",
+                table: "ArticleAction",
+                column: "EntityId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ArticleActor_PersonId",
                 table: "ArticleActor",
                 column: "PersonId");
@@ -321,11 +326,6 @@ namespace Submission.Persistence.Migrations
                 name: "IX_Asset_Type",
                 table: "Asset",
                 column: "Type");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AssetAction_AssetId",
-                table: "AssetAction",
-                column: "AssetId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AssetTypeDefinition_Name",
@@ -361,25 +361,25 @@ namespace Submission.Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "ArticleAction");
+
+            migrationBuilder.DropTable(
                 name: "ArticleActor");
 
             migrationBuilder.DropTable(
                 name: "ArticleStageTransition");
 
             migrationBuilder.DropTable(
-                name: "AssetAction");
+                name: "Asset");
 
             migrationBuilder.DropTable(
                 name: "StageHistory");
 
             migrationBuilder.DropTable(
-                name: "Asset");
+                name: "AssetTypeDefinition");
 
             migrationBuilder.DropTable(
                 name: "Article");
-
-            migrationBuilder.DropTable(
-                name: "AssetTypeDefinition");
 
             migrationBuilder.DropTable(
                 name: "Journal");

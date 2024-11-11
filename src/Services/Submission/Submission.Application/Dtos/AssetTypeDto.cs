@@ -1,4 +1,5 @@
-﻿using Submission.Domain.Enums;
+﻿using Articles.Abstractions.Enums;
+using Submission.Domain.Enums;
 using Submission.Domain.ValueObjects;
 
 namespace Submission.Application.Dtos;

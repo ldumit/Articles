@@ -1,16 +1,15 @@
-﻿using Articles.Abstractions;
+﻿using Articles.Abstractions.Enums;
 using Articles.Entitities;
-using Submission.Domain.Enums;
 
 namespace Submission.Domain.Entities;
 
 public partial class StageHistory : Entity
 {
-    public DateTime StartDate { get; set; }
+    public required DateTime StartDate { get; init; }
 
-    public ArticleStage StageId { get; set; }
-    public Stage Stage { get; set; } = null!;
+    public required ArticleStage StageId { get; init; }
+    //public Stage Stage { get; init; } = null!;
 
-    public int ArticleId { get; set; }
-    public virtual Article Article { get; set; } = null!;
+    public required int ArticleId { get; init; }
+    //public virtual Article Article { get; set; } = null!;
 }

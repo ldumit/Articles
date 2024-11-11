@@ -1,4 +1,5 @@
-﻿using Production.API.Features.RequestFiles.Shared;
+﻿using Articles.Abstractions.Enums;
+using Production.API.Features.RequestFiles.Shared;
 using Production.Domain.Enums;
 
 namespace Production.API.Features.RequestFiles.FinalFiles;

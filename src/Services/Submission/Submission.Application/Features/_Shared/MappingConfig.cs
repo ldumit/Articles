@@ -16,7 +16,7 @@ public class MappingConfig : IRegister
 				config.NewConfig<Person, PersonDto>()
 						.Include<Author, PersonDto>();
 
-				config.NewConfig<IArticleAction<AssetActionType>, AssetAction>()
+				config.NewConfig<IArticleAction<AssetActionType>, ArticleAction>()
 						.Map(dest => dest.TypeId, src => src.ActionType);
 		}
 }

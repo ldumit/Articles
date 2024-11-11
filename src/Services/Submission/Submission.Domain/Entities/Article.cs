@@ -1,6 +1,5 @@
-﻿using Articles.Abstractions;
+﻿using Articles.Abstractions.Enums;
 using Articles.Entitities;
-using Submission.Domain.Enums;
 
 namespace Submission.Domain.Entities;
 
@@ -10,10 +9,9 @@ public partial class Article : AggregateEntity
 		public ArticleType Type { get; init; }
 		public string Scope { get; init; } = default!;
 
-		//todo: create a complex object for the submission, the following 3 properties ??!?!?!?!
 		public DateTime? SubmittedOn { get; set; }
-    public virtual int? SubmittedById { get; set; }
-    public virtual Person? SubmittedBy { get; set; }
+    public int? SubmittedById { get; set; }
+    public Person? SubmittedBy { get; set; }
 
     public ArticleStage Stage { get; set; }
 
@@ -25,11 +23,13 @@ public partial class Article : AggregateEntity
 		private readonly List<Asset> _assets = new();
     public IReadOnlyList<Asset> Assets => _assets.AsReadOnly();
 
-    //public IEnumerable<Author> Authors => Actors.Where(aa => aa.Person is Author).Select(aa => aa.Person as Author);
-
 		// todo: rename to Contributors?!
 		public List<ArticleActor> Actors { get; set; } = new() ;
-    
-    private readonly List<StageHistory> _stageHistories = new();
+		//public IEnumerable<Author> Authors => Actors.Where(aa => aa.Person is Author).Select(aa => aa.Person as Author);
+
+		private readonly List<StageHistory> _stageHistories = new();
     public IReadOnlyList<StageHistory> StageHistories => _stageHistories.AsReadOnly();
+
+		private readonly List<ArticleAction> _actions = new();
+		public IReadOnlyList<ArticleAction> Actions => _actions.AsReadOnly();
 }

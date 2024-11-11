@@ -2,13 +2,6 @@
 
 namespace Production.Domain.Enums;
 
-public enum AssetCategory
-{
-    Core = 1,
-    Supplementary = 2,
-    Others = 3
-}
-
 public enum DiscussionType
 {
     Default = 0,
@@ -34,13 +27,6 @@ public enum AssetActionType
     Download
 }
 
-public enum FileStatus2
-{
-		Requested = 1,
-		Uploaded = 2,
-		Approved = 3
-}
-
 public enum AssetState
 {
     None = 0,
@@ -49,27 +35,6 @@ public enum AssetState
     Approved = 3
 }
 
-//public enum ArticleStage
-//{
-//    [Description("Article submitted by the author")]
-//    Submitted = 100,
-//    [Description("Article approved")] 
-//    InReview = 200,
-//    [Description("Article accepted")]
-//    Accepted = 201,
-//    [Description("Typesetter assigned")]
-//    InProduction = 300,
-//    [Description("Author's proof uploaded")]
-//    AuthorsProof = 301,
-//    [Description("Author's proof approved")]
-//    FinalProduction= 302,
-//    [Description("Publisher's proof uploaded")]
-//    PublisherProof = 303,
-//    [Description("Article scheduled for publication")]
-//    PublicationScheduled = 304,
-//    [Description("Article published")]
-//    Published = 305    
-//}
 
 //todo unify it with AssetStatus and keep only one
 public enum FileStatus

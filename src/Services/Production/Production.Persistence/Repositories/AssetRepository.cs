@@ -1,4 +1,5 @@
-﻿using Articles.System;
+﻿using Articles.Abstractions.Enums;
+using Articles.System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Production.Domain.Entities;
@@ -17,7 +18,7 @@ public class AssetRepository(ProductionDbContext _dbContext, IMemoryCache _cache
                 .ThenInclude(e => e.File);
     }
 
-		public async Task<Asset?> GetByTypeAndNumberAsync(int articleId, Domain.Enums.AssetType assetTypeId, int assetNumber = 0, bool throwNotFound = true)
+		public async Task<Asset?> GetByTypeAndNumberAsync(int articleId, AssetType assetTypeId, int assetNumber = 0, bool throwNotFound = true)
     {
         var entity = await Query()
             .SingleOrDefaultAsync(e => e.ArticleId == articleId && e.Type == assetTypeId && e.Number == assetNumber);
@@ -34,6 +35,6 @@ public class AssetRepository(ProductionDbContext _dbContext, IMemoryCache _cache
 		public IEnumerable<AssetTypeDefinition> GetAssetTypes()
 		=> _cache.GetOrCreate(entry => _dbContext.AssetTypes.AsNoTracking().ToList());
 
-		public AssetTypeDefinition GetAssetType(Domain.Enums.AssetType type)
+		public AssetTypeDefinition GetAssetType(AssetType type)
 				=> GetAssetTypes().Single(e => e.Id == type);
 }

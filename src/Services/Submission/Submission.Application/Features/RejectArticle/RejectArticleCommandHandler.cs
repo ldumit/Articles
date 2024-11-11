@@ -1,4 +1,4 @@
-﻿using Articles.Abstractions;
+﻿using Articles.Abstractions.Enums;
 using Submission.Persistence.Repositories;
 using Submission.Application.Features.Shared;
 using Submission.Domain.StateMachines;

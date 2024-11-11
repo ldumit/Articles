@@ -85,6 +85,45 @@ namespace Submission.Persistence.Migrations
                     b.ToTable("Article", (string)null);
                 });
 
+            modelBuilder.Entity("Submission.Domain.Entities.ArticleAction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnOrder(0);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CreatedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EntityId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("LasModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("LastModifiedById")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TypeId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EntityId");
+
+                    b.ToTable("ArticleAction", (string)null);
+                });
+
             modelBuilder.Entity("Submission.Domain.Entities.ArticleActor", b =>
                 {
                     b.Property<int>("ArticleId")
@@ -274,45 +313,6 @@ namespace Submission.Persistence.Migrations
                     b.ToTable("Asset", (string)null);
                 });
 
-            modelBuilder.Entity("Submission.Domain.Entities.AssetAction", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnOrder(0);
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AssetId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Comment")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CreatedById")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("LasModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("LastModifiedById")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TypeId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AssetId");
-
-                    b.ToTable("AssetAction", (string)null);
-                });
-
             modelBuilder.Entity("Submission.Domain.Entities.AssetTypeDefinition", b =>
                 {
                     b.Property<int>("Id")
@@ -348,7 +348,7 @@ namespace Submission.Persistence.Migrations
                         .HasColumnType("nvarchar(64)")
                         .HasColumnOrder(1);
 
-                    b.ComplexProperty<Dictionary<string, object>>("AllowedFileExtensions", "Submission.Domain.Entities.AssetTypeDefinition.AllowedFileExtensions#AllowedFileExtensions", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("AllowedFileExtensions", "Submission.Domain.Entities.AssetTypeDefinition.AllowedFileExtensions#FileExtensions", b1 =>
                         {
                             b1.IsRequired();
 
@@ -500,14 +500,14 @@ namespace Submission.Persistence.Migrations
                             Id = 102,
                             Description = "The Manuscript was submitted by the author",
                             Info = "Our editorial specialist is checking your article. We will contact you if we need any further files or information.",
-                            Name = "Submitted"
+                            Name = "ManuscriptUploaded"
                         },
                         new
                         {
                             Id = 103,
                             Description = "Author uploaded the Manuscript",
                             Info = "The manuscript was uploaded, you can now submit the article.",
-                            Name = "ManuscriptUploaded"
+                            Name = "Submitted"
                         },
                         new
                         {
@@ -654,6 +654,15 @@ namespace Submission.Persistence.Migrations
                     b.Navigation("SubmittedBy");
                 });
 
+            modelBuilder.Entity("Submission.Domain.Entities.ArticleAction", b =>
+                {
+                    b.HasOne("Submission.Domain.Entities.Article", null)
+                        .WithMany("Actions")
+                        .HasForeignKey("EntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Submission.Domain.Entities.ArticleActor", b =>
                 {
                     b.HasOne("Submission.Domain.Entities.Article", "Article")
@@ -693,48 +702,30 @@ namespace Submission.Persistence.Migrations
                     b.Navigation("TypeRef");
                 });
 
-            modelBuilder.Entity("Submission.Domain.Entities.AssetAction", b =>
-                {
-                    b.HasOne("Submission.Domain.Entities.Asset", "Asset")
-                        .WithMany("Actions")
-                        .HasForeignKey("AssetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Asset");
-                });
-
             modelBuilder.Entity("Submission.Domain.Entities.StageHistory", b =>
                 {
-                    b.HasOne("Submission.Domain.Entities.Article", "Article")
+                    b.HasOne("Submission.Domain.Entities.Article", null)
                         .WithMany("StageHistories")
                         .HasForeignKey("ArticleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Submission.Domain.Entities.Stage", "Stage")
+                    b.HasOne("Submission.Domain.Entities.Stage", null)
                         .WithMany()
                         .HasForeignKey("StageId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("Article");
-
-                    b.Navigation("Stage");
                 });
 
             modelBuilder.Entity("Submission.Domain.Entities.Article", b =>
                 {
+                    b.Navigation("Actions");
+
                     b.Navigation("Actors");
 
                     b.Navigation("Assets");
 
                     b.Navigation("StageHistories");
-                });
-
-            modelBuilder.Entity("Submission.Domain.Entities.Asset", b =>
-                {
-                    b.Navigation("Actions");
                 });
 
             modelBuilder.Entity("Submission.Domain.Entities.Journal", b =>

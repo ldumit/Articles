@@ -6,13 +6,13 @@
 		"info": "The article was created. Please upload the Manuscript and the Supplimentarry materials. Associate the authors with the article."
 	},
 	{
-		"name": "Submitted",
+		"name": "ManuscriptUploaded",
 		"id": 102,
 		"description": "The Manuscript was submitted by the author",
 		"info": "Our editorial specialist is checking your article. We will contact you if we need any further files or information."
 	},
 	{
-		"name": "ManuscriptUploaded",
+		"name": "Submitted",
 		"id": 103,
 		"description": "Author uploaded the Manuscript",
 		"info": "The manuscript was uploaded, you can now submit the article."
@@ -59,12 +59,6 @@
 		"description": "Publisher's proof uploaded",
 		"info": "The typesetter is preparing the final version of your article for publication. We will contact you if we need to check anything further before publication."
 	},
-	//{
-	//  "name": "PublisherProof",
-	//  "id": 303,
-	//  "description": "Article scheduled for publication",
-	//  "info": "Your Production Specialist is applying quality checks to ensure your article is ready for publication."
-	//},
 	{
 		"name": "PublicationScheduled",
 		"id": 304,

@@ -1,8 +1,6 @@
-﻿using Submission.Domain.Enums;
-
-namespace Submission.Domain.Entities;
+﻿namespace Submission.Domain.Entities;
 
 public partial class Author : Person
 {
-		public string? Affiliation { get; set; }
+		public required string Affiliation { get; init; }
 }

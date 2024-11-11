@@ -1,4 +1,4 @@
-﻿using Articles.Abstractions;
+﻿using Articles.Abstractions.Enums;
 
 namespace Production.Application.Dtos;
 

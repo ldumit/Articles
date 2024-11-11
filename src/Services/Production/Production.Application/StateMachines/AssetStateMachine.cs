@@ -1,4 +1,4 @@
-﻿using Articles.Abstractions;
+﻿using Articles.Abstractions.Enums;
 using Microsoft.EntityFrameworkCore;
 using Production.Domain.Entities;
 using Production.Domain.Enums;
@@ -14,7 +14,7 @@ public class AssetStateMachine
 		private readonly StateMachine<AssetState, AssetActionType> _stateMachine;
 		private readonly IEnumerable<AssetStateTransitionCondition> _conditions;
 		private readonly Dictionary<AssetActionType, 
-				StateMachine<AssetState, AssetActionType>.TriggerWithParameters<ArticleStage, Domain.Enums.AssetType>> _triggers = new(); 
+				StateMachine<AssetState, AssetActionType>.TriggerWithParameters<ArticleStage, AssetType>> _triggers = new(); 
 
 
 		public AssetStateMachine(AssetState assetState, ProductionDbContext dbContext)
@@ -28,7 +28,7 @@ public class AssetStateMachine
 				{
 						var trigger = _triggers.GetValueOrDefault(transition.ActionType);
 						if (trigger == null)
-								trigger = _stateMachine.SetTriggerParameters<ArticleStage, Domain.Enums.AssetType>(transition.ActionType);
+								trigger = _stateMachine.SetTriggerParameters<ArticleStage, AssetType>(transition.ActionType);
 
 						_triggers[transition.ActionType] = trigger;
 
@@ -44,13 +44,13 @@ public class AssetStateMachine
 				}
 		}
 
-		private bool CanPerform(ArticleStage articleStage, Domain.Enums.AssetType assetType, AssetActionType actionType)
+		private bool CanPerform(ArticleStage articleStage, AssetType assetType, AssetActionType actionType)
 		{
 				return _conditions
 						.Any(c=> c.ArticleStage == articleStage && c.AssetTypes.Contains(assetType) && c.ActionTypes.Contains(actionType));
 		}
 
-		public bool CanFire(ArticleStage articleStage, Domain.Enums.AssetType assetType, AssetActionType actionType)
+		public bool CanFire(ArticleStage articleStage, AssetType assetType, AssetActionType actionType)
 		{
 				var trigger = _triggers[actionType];
 				return _stateMachine.CanFire(trigger, articleStage, assetType);

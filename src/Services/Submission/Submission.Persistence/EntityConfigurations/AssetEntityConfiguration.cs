@@ -1,8 +1,8 @@
-﻿using Articles.EntityFrameworkCore;
+﻿using Articles.Abstractions.Enums;
+using Articles.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Submission.Domain.Entities;
-using Submission.Domain.Enums;
 
 namespace Submission.Persistence.EntityConfigurations;
 

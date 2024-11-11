@@ -1,5 +1,5 @@
 ﻿using Articles.Abstractions;
-using Production.Domain.Enums;
+using Articles.Abstractions.Enums;
 
 namespace ArticleTimeline.Application.VariableResolvers;
 

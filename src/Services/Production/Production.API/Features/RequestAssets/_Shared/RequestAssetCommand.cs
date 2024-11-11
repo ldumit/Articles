@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Articles.Abstractions.Enums;
+using FluentValidation;
 using Production.API.Features.Shared;
 using Production.Application.Dtos;
 using Production.Application.StateMachines;

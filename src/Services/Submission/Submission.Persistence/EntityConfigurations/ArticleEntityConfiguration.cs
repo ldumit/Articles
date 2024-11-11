@@ -40,9 +40,14 @@ public class ArticleEntityConfiguration : AuditedEntityConfiguration<Article>
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
 
-        entity.HasMany(e => e.StageHistories).WithOne(e => e.Article)
+        entity.HasMany(e => e.StageHistories).WithOne()
             .HasForeignKey(e => e.ArticleId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
-    }
+
+				entity.HasMany(e => e.Actions).WithOne()
+		        .HasForeignKey(e => e.EntityId)
+		        .IsRequired()
+		        .OnDelete(DeleteBehavior.Cascade);
+		}
 }

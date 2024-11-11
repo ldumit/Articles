@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 using Articles.System;
 using Articles.AspNetCore;
+using Articles.Abstractions.Enums;
 using Submission.Domain.Enums;
 using Submission.Application.Features.Shared;
 using Submission.Persistence.Repositories;
@@ -48,9 +49,18 @@ public abstract class UploadFileValidator<TUploadFileCommand> : ArticleCommandVa
 
 		public override ValidationResult Validate(ValidationContext<TUploadFileCommand> context)
 		{
+				// we are overriding it to get the asset type definition before the validation
 				_assetTypeDefinition = _assetTypeRepository.GetById(context.InstanceToValidate.AssetType);
 				return base.Validate(context);
 		}
+
+		public override Task<ValidationResult> ValidateAsync(ValidationContext<TUploadFileCommand> context, CancellationToken cancellation = default)
+		{
+				// we are overriding it to get the asset type definition before the validation
+				_assetTypeDefinition = _assetTypeRepository.GetById(context.InstanceToValidate.AssetType);
+				return base.ValidateAsync(context, cancellation);
+		}
+
 
 		private bool IsAssetTypeAllowed(AssetType assetType)
 				=> AllowedAssetTypes.Contains(assetType);

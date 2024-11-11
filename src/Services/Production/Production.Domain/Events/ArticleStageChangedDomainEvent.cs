@@ -1,4 +1,5 @@
 ﻿using Articles.Abstractions;
+using Articles.Abstractions.Enums;
 using Articles.Domain;
 
 namespace Production.Domain.Events;

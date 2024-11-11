@@ -1,11 +1,10 @@
 ﻿using MediatR;
+using Articles.Abstractions;
+using Articles.Abstractions.Enums;
 using Articles.EntityFrameworkCore;
 using FileStorage.Contracts;
 using Submission.Persistence.Repositories;
 using Submission.Domain.Entities;
-using Submission.Application.Features.Shared;
-using Submission.Domain.Enums;
-using Articles.Abstractions;
 using Submission.Domain.StateMachines;
 
 namespace Submission.Application.Features.UploadFiles.Shared;
@@ -22,13 +21,13 @@ public class UploadFileCommandHandler<TUploadCommand>
         _article = await _articleRepository.GetByIdOrThrowAsync(command.ArticleId);
 
 				var assetType = _assetTypeRepository.GetById(command.AssetType);
-				var asset = GetOrCreateAsset(assetType);
+				var asset = GetOrCreateAsset(assetType, command);
 
 				var uploadResponse = await UploadFile(command, asset, assetType);
 
 				try
 				{
-						asset.CreateFile(uploadResponse, assetType);
+						asset.CreateFile(uploadResponse, assetType, command);
 						_article.SetStage(NextStage, command, _stateMachineFactory);
 
 						await _articleRepository.SaveChangesAsync();
@@ -59,7 +58,7 @@ public class UploadFileCommandHandler<TUploadCommand>
                 });
     }
 
-		protected Asset GetOrCreateAsset(AssetTypeDefinition assetType)
+		protected Asset GetOrCreateAsset(AssetTypeDefinition assetType, TUploadCommand command)
 		{
 				Asset? asset = null;
 				
@@ -67,7 +66,7 @@ public class UploadFileCommandHandler<TUploadCommand>
 						asset = _article.Assets.SingleOrDefault(a => a.Type == assetType.Id);
 
 				if(asset is null)
-						asset = _article.CreateAsset(assetType);
+						asset = _article.CreateAsset(assetType, command);
 
 				return asset;
 		}

@@ -1,7 +1,7 @@
 ﻿using Production.Persistence.Repositories;
 using Production.Domain.Enums;
 using Articles.System;
-using Articles.Abstractions;
+using Articles.Abstractions.Enums;
 
 namespace Production.Application;
 

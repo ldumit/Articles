@@ -1,11 +1,13 @@
 ﻿using FluentValidation;
-using Production.Application;
-using Production.Persistence.Repositories;
 using Articles.System;
 using Articles.AspNetCore;
+using Articles.Abstractions.Enums;
+using Production.Application;
+using Production.Persistence.Repositories;
 using Production.Domain.Enums;
 using Production.API.Features.Shared;
 using Production.API.Features.UploadFiles.Shared;
+
 
 namespace Production.API.Features.UploadFiles.UploadDraftFile;
 

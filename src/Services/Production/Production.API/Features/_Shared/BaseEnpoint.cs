@@ -1,7 +1,8 @@
 ﻿using FastEndpoints;
+using Articles.Abstractions;
+using Articles.Abstractions.Enums;
 using Production.Persistence.Repositories;
 using Production.Domain.Entities;
-using Articles.Abstractions;
 
 namespace Production.API.Features.Shared;
 
