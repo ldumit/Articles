@@ -6,7 +6,7 @@ using Submission.Domain.Entities;
 
 namespace Submission.Persistence.Repositories;
 
-public class ActorRepository(SubmissionDbContext _dbContext, IMemoryCache _cache) 
+public class ContributorRepository(SubmissionDbContext _dbContext, IMemoryCache _cache) 
 		: Repository<Article>(_dbContext), IArticleRoleChecker
 {
 		public async Task<bool> CheckRolesForUser(int? articleId, int? userId, IEnumerable<UserRoleType> roles)
@@ -23,7 +23,7 @@ public class ActorRepository(SubmissionDbContext _dbContext, IMemoryCache _cache
 						return true;
 
 				//todo - cache the actors?!
-				return await _dbContext.ArticleActors
+				return await _dbContext.ArticleContributors
 						.AnyAsync(e => e.ArticleId == articleId && e.Person.UserId == userId && roles.Contains(e.Role));
 		}
 }

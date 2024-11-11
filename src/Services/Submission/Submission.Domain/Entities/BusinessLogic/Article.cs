@@ -34,10 +34,10 @@ public partial class Article
 		{
 				var role = isCorrespondingAuthor ? UserRoleType.CORAUT : UserRoleType.AUT;				
 				
-				if (Actors.Exists(a => a.PersonId == author.Id && a.Role == role))
+				if (Contributors.Exists(a => a.PersonId == author.Id && a.Role == role))
 						throw new DomainException($"Author {author.Email} is already assigned to the article");
 
-				Actors.Add(new AuthorActor() {
+				Contributors.Add(new ArticleAuthor() {
 						ContributionAreas = contributionAreas,
 						PersonId = author.Id, 
 						Role = role

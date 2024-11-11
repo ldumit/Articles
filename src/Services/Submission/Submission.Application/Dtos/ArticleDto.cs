@@ -10,6 +10,6 @@ public record ArticleDto(
 		JournalDto Journal,
 		DateTime? SubmitedOn,
 		PersonDto? SubmitedBy,
-		List<ActorDto> Actors,
+		List<ContributorDto> Contributors,
 		List<AssetDto> Assets
 );

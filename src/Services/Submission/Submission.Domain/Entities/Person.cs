@@ -14,7 +14,7 @@ namespace Submission.Domain.Entities
 
 				public int? UserId { get; init; }
 
-				public IReadOnlyList<ArticleActor> ArticleActors { get; private set; } = new List<ArticleActor>();
+				public IReadOnlyList<ArticleContributor> ArticleContributors { get; private set; } = new List<ArticleContributor>();
 
 				public string PersonType { get; init; } = null!; // EF discriminator
 		}

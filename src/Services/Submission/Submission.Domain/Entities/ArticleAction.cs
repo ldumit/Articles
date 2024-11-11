@@ -5,8 +5,7 @@ namespace Submission.Domain.Entities;
 
 //talk - modification never happens for an action
 
-//todo - ArticleAction is not an aggregate root but it contains CreatedBy & CreatedOn
-public partial class ArticleAction : AggregateEntity
+public partial class ArticleAction : Entity
 {
     public int EntityId { get; set; }
 
@@ -14,7 +13,8 @@ public partial class ArticleAction : AggregateEntity
 
     public ArticleActionType TypeId { get; set; }
 
-    //public virtual Asset Asset { get; set; } = null!;
+		public int CreatedById { get; set; }
+		public DateTime CreatedOn { get; set; }
 }
 
 //public class ArticleAction : Action<ArticleActionType>;

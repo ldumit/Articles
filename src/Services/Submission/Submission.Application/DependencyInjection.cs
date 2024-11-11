@@ -60,7 +60,7 @@ public static class DependencyInjection
 
 				#region Authorization
 				services.AddScoped<IAuthorizationHandler, ArticleRoleAuthorizationHandler>();
-				services.AddScoped<IArticleRoleChecker, ActorRepository>();
+				services.AddScoped<IArticleRoleChecker, ContributorRepository>();
 
 				services.AddScoped<IClaimsProvider, HttpContextProvider>();
 				services.AddScoped<IRouteProvider, HttpContextProvider>();

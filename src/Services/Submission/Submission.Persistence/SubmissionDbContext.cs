@@ -11,7 +11,7 @@ public partial class SubmissionDbContext(DbContextOptions<SubmissionDbContext> o
 {
     #region Entities
     public virtual DbSet<Article> Articles { get; set; }
-		public virtual DbSet<ArticleActor> ArticleActors { get; set; }
+		public virtual DbSet<ArticleContributor> ArticleContributors { get; set; }
 		public virtual DbSet<Asset> Assets { get; set; }
     public virtual DbSet<AssetTypeDefinition> AssetTypes { get; set; }
     public virtual DbSet<Journal> Journals { get; set; }
@@ -20,7 +20,6 @@ public partial class SubmissionDbContext(DbContextOptions<SubmissionDbContext> o
 		public virtual DbSet<Person> Persons { get; set; }
 		public virtual DbSet<Author> Authors { get; set; }
 		#endregion
-
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -32,7 +31,7 @@ public partial class SubmissionDbContext(DbContextOptions<SubmissionDbContext> o
 				modelBuilder.ApplyConfiguration(new AssetEntityConfiguration());
         modelBuilder.ApplyConfiguration(new ArticleActionEntityConfiguration());
 				modelBuilder.ApplyConfiguration(new AssetTypeDefinitionEntityConfiguration());
-				modelBuilder.ApplyConfiguration(new ArticleActorEntityConfiguration());
+				modelBuilder.ApplyConfiguration(new ArticleContributorEntityConfiguration());
 				modelBuilder.ApplyConfiguration(new ArticleAuthorEntityConfiguration());
 				modelBuilder.ApplyConfiguration(new AuthorEntityConfiguration());
         modelBuilder.ApplyConfiguration(new JournalEntityConfiguration());

@@ -24,8 +24,8 @@ public partial class Article : AggregateEntity
     public IReadOnlyList<Asset> Assets => _assets.AsReadOnly();
 
 		// todo: rename to Contributors?!
-		public List<ArticleActor> Actors { get; set; } = new() ;
-		//public IEnumerable<Author> Authors => Actors.Where(aa => aa.Person is Author).Select(aa => aa.Person as Author);
+		public List<ArticleContributor> Contributors { get; set; } = new() ;
+		//public IEnumerable<Author> Authors => Contributors.Where(aa => aa.Person is Author).Select(aa => aa.Person as Author);
 
 		private readonly List<StageHistory> _stageHistories = new();
     public IReadOnlyList<StageHistory> StageHistories => _stageHistories.AsReadOnly();

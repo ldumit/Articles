@@ -9,7 +9,7 @@ public class ArticleRepository(SubmissionDbContext dbContext)
 		protected override IQueryable<Article> Query()
 		{
 				return base.Entity
-						.Include(e => e.Actors)
+						.Include(e => e.Contributors)
 						.Include(e => e.Assets);
 								//.ThenInclude(e => e.TypeRef);
 		}
@@ -19,7 +19,7 @@ public class ArticleRepository(SubmissionDbContext dbContext)
 				var article = await Entity
 						.Include(e => e.Journal)
 						.Include(e => e.SubmittedBy)
-						.Include(e => e.Actors)
+						.Include(e => e.Contributors)
 								.ThenInclude(e => e.Person)
 						.Include(e => e.Assets)
 						.SingleOrDefaultAsync(e => e.Id == id);
@@ -31,7 +31,7 @@ public class ArticleRepository(SubmissionDbContext dbContext)
 		{
 				var article = await Entity
 						.Include(e => e.Journal)
-						.Include(e => e.Actors)
+						.Include(e => e.Contributors)
 								.ThenInclude(e => e.Person)
 						.SingleAsync(e => e.Id == id);
 

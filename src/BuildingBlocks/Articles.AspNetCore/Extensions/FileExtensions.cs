@@ -19,7 +19,7 @@ public static class FileExtensions
     public static string GetExtension(this IFormFile file)
     {
         if (string.IsNullOrEmpty(file.FileName))
-            return string.Empty; //todo defaul extension
+            return string.Empty; //todo default extension
 
         return Path.GetExtension(file.FileName).Replace(".", "").ToLower();
     }

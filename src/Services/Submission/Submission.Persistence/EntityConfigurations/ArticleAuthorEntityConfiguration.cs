@@ -2,15 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Submission.Domain.Entities;
-using Submission.Domain.Enums;
 
 namespace Submission.Persistence.EntityConfigurations;
 
-public class ArticleAuthorEntityConfiguration : IEntityTypeConfiguration<AuthorActor>
+public class ArticleAuthorEntityConfiguration : IEntityTypeConfiguration<ArticleAuthor>
 {
-    public void Configure(EntityTypeBuilder<AuthorActor> entity)
+    public void Configure(EntityTypeBuilder<ArticleAuthor> builder)
     {
-        //entity.Property(e => e.ContributionAreas).HasJsonListConversion<List<ContributionArea>, ContributionArea>().IsRequired();
-				entity.Property(e => e.ContributionAreas).HasJsonCollectionConversion().IsRequired();
+				builder.Property(e => e.ContributionAreas).HasJsonCollectionConversion().IsRequired();
 		}
 }

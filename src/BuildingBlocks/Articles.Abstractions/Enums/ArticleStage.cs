@@ -9,7 +9,6 @@ public enum ArticleStage : int
 		//Submission
 		[Description("The Author created the article")]
 		Created = 101,
-		//todo - intruduce DraftSubmission when the author is upload the Manuscript
 		[Description("Author uploaded the Manuscript")]
 		ManuscriptUploaded = 102,
 		[Description("The Manuscript was submitted by the author")]
