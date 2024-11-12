@@ -9,7 +9,7 @@ public class AuthorEntityConfiguration : IEntityTypeConfiguration<Author>
 {
     public void Configure(EntityTypeBuilder<Author> builder)
     {
-        builder.Property(e => e.Country).HasMaxLength(Constraints.C64);
-				builder.Property(e => e.Biography).HasMaxLength(Constraints.C2048);
+				builder.Property(e => e.Affiliation).IsRequired().HasMaxLength(Constraints.C512)
+						.HasComment("Institution or organization they are associated with when they conduct their research.");
     }
 }

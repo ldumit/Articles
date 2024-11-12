@@ -30,7 +30,7 @@ public partial class Article
         if(this.Typesetter is not null)
 				    throw new TypesetterAlreadyAssignedException("Typesetter aldready assigned");
         
-        Actors.Add(new ArticleActor() { PersonId = typesetter.Id, Role = UserRoleType.TSOF});
+        Contributors.Add(new ArticleContributor() { PersonId = typesetter.Id, Role = UserRoleType.TSOF});
 
         AddDomainEvent(new TypesetterAssignedDomainEvent(action, typesetter.Id, typesetter.UserId!.Value));
     }

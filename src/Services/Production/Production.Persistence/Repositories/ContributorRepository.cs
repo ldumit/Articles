@@ -5,7 +5,7 @@ using Production.Domain.Entities;
 
 namespace Production.Persistence.Repositories;
 
-public class ActorRepository(ProductionDbContext _dbContext) 
+public class ContributorRepository(ProductionDbContext _dbContext) 
 		: Repository<Article>(_dbContext), IArticleRoleChecker
 {
 		public async Task<bool> CheckRolesForUser(int? articleId, int? userId, IEnumerable<UserRoleType> roles)
@@ -21,7 +21,7 @@ public class ActorRepository(ProductionDbContext _dbContext)
 						return true; // admin users have access to all articles
 
 				//todo - cache the actors?!
-				return await _dbContext.ArticleActors
+				return await _dbContext.ArticleContributors
 						.AnyAsync(e => e.ArticleId == articleId && e.Person.UserId == userId && roles.Contains(e.Role));
 		}
 }

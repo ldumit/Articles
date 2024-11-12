@@ -2,6 +2,6 @@
 
 public partial class Author : Person
 {
-		public string? Country { get; set; }
-		public string? Biography { get; set; }
+		//todo - this should be part of Contributor because it might change for different articles?!?
+		public required string Affiliation { get; init; }
 }

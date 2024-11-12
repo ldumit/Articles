@@ -34,13 +34,13 @@ public partial class Article : AggregateEntity
 		private readonly List<Asset> _assets = new();
     public IReadOnlyList<Asset> Assets => _assets.AsReadOnly();
 
-		public Typesetter? Typesetter => Actors.Where(aa => aa.Person is Typesetter).Select(aa => aa.Person as Typesetter).FirstOrDefault();
+		public Typesetter? Typesetter => Contributors.Where(aa => aa.Person is Typesetter).Select(aa => aa.Person as Typesetter).FirstOrDefault();
 
-    //talk about private field and json deserielizer
-		//[JsonProperty("Actors")]
-		//private readonly List<ArticleActor> _actors = new();
-    //public IReadOnlyCollection<ArticleActor> Actors => _actors.AsReadOnly();
-		public List<ArticleActor> Actors { get; set; } = new() ;
+		//talk about private field and json deserielizer
+		//[JsonProperty("Contributors")]
+		//private readonly List<ArticleContributor> _contributors = new();
+		//public IReadOnlyCollection<ArticleContributor> Contributors => _contributors.AsReadOnly();
+		public List<ArticleContributor> Contributors { get; set; } = new() ;
     
     private readonly List<StageHistory> _stageHistories = new();
     public IReadOnlyList<StageHistory> StageHistories => _stageHistories.AsReadOnly();

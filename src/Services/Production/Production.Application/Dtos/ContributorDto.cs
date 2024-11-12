@@ -2,4 +2,4 @@
 
 namespace Production.Application.Dtos;
 
-public record ActorDto(UserRoleType Role, PersonDto Person);
+public record ContributorDto(UserRoleType Role, PersonDto Person);

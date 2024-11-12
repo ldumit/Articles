@@ -20,14 +20,11 @@ public static class Seed
 
 				context.Seed<Person>();
 
-				//context.Seed<User>();
-				//context.Seed<Typesetter>();
 				context.Seed<Journal>();
-
 
 				context.Seed<Article>();
 				
-        context.Seed<AssetCurrentFileLink>();
+        context.Seed<AssetCurrentFileLink>(); // this is a link between an asset and a file, which couldn't be included in Article seeding
 
 				transaction.Commit();
 		}

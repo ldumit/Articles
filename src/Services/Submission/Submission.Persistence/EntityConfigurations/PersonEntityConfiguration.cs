@@ -14,7 +14,7 @@ public class PersonEntityConfiguration : EntityConfiguration<Person>
 				builder.HasIndex(x => x.UserId).IsUnique();
 
 				//talk about EF Core inheritance
-				builder.HasDiscriminator(e => e.PersonType)
+				builder.HasDiscriminator(e => e.TypeDiscriminator)
 						.HasValue<Person>(nameof(Person))
 						.HasValue<Author>(nameof(Author));
 

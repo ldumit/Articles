@@ -68,7 +68,7 @@ public static class DependencyInjection
 				//});
 
 				services.AddScoped<IAuthorizationHandler, ArticleRoleAuthorizationHandler>();
-				services.AddScoped<IArticleRoleChecker, ActorRepository>();
+				services.AddScoped<IArticleRoleChecker, ContributorRepository>();
 
 				//talk - SOLID principle interface segragation, injecting multiple interfaces using the same class
 				services.AddScoped<IClaimsProvider, HttpContextProvider>(); 
@@ -78,7 +78,6 @@ public static class DependencyInjection
 				services.AddScoped<ArticleRepository>();
 				services.AddScoped<AssetRepository>();
 				services.AddScoped<FileRepository>();
-				services.AddScoped<PersonRepository>();
 
 				services.AddScoped<IThreadSafeMemoryCache, MemoryCache>();
 				services.AddScoped<IFileService, FileService>();

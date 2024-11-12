@@ -13,7 +13,7 @@ public partial class ProductionDbContext(DbContextOptions<ProductionDbContext> o
     #region Entities
     public virtual DbSet<Article> Articles { get; set; }
 
-		public virtual DbSet<ArticleActor> ArticleActors { get; set; }
+		public virtual DbSet<ArticleContributor> ArticleContributors { get; set; }
 		public virtual DbSet<Asset> Assets { get; set; }
     public virtual DbSet<AssetTypeDefinition> AssetTypes { get; set; }
 
@@ -35,7 +35,6 @@ public partial class ProductionDbContext(DbContextOptions<ProductionDbContext> o
 				//modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
 
 				modelBuilder.ApplyConfiguration(new ArticleEntityConfiguration());
-        modelBuilder.ApplyConfiguration(new ArticleCurrentStageEntityConfiguration());
 				modelBuilder.ApplyConfiguration(new ArticleStageTransitionConfiguration());
 				modelBuilder.ApplyConfiguration(new AssetEntityConfiguration());
 				modelBuilder.ApplyConfiguration(new AssetStateTransitionConfiguration());
@@ -43,11 +42,9 @@ public partial class ProductionDbContext(DbContextOptions<ProductionDbContext> o
 				modelBuilder.ApplyConfiguration(new AssetCurrentFileLinkEntityConfiguration());
         modelBuilder.ApplyConfiguration(new AssetActionEntityConfiguration());
 				modelBuilder.ApplyConfiguration(new AssetTypeDefinitionEntityConfiguration());
-				modelBuilder.ApplyConfiguration(new ArticleActorEntityConfiguration());
+				modelBuilder.ApplyConfiguration(new ArticleContributorEntityConfiguration());
 				modelBuilder.ApplyConfiguration(new AuthorEntityConfiguration());
-        modelBuilder.ApplyConfiguration(new FileActionEntityConfiguration());
         modelBuilder.ApplyConfiguration(new FileEntityConfiguration());
-        modelBuilder.ApplyConfiguration(new FileLatestActionEntityConfiguration());
         modelBuilder.ApplyConfiguration(new JournalEntityConfiguration());
         modelBuilder.ApplyConfiguration(new StageEntityConfiguration());
         modelBuilder.ApplyConfiguration(new StageHistoryEntityConfiguration());

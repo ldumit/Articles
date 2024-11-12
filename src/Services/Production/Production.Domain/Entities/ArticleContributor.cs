@@ -1,7 +1,7 @@
 ﻿using Articles.Entitities;
 using Articles.Security;
 
-namespace Submission.Domain.Entities
+namespace Production.Domain.Entities
 {
 		public class ArticleContributor : IChildEntity
 		{
@@ -10,7 +10,5 @@ namespace Submission.Domain.Entities
 				public required int PersonId { get; init; }
 				public Person Person { get; init; } = null!;
 				public UserRoleType Role { get; init; }
-
-				public string TypeDiscriminator { get; init; } = null!; // EF discriminator to manage inheritance
-		}
+    }
 }

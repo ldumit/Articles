@@ -22,9 +22,4 @@ public partial class File : AggregateEntity
 		public int AssetId { get; private set; }
 
     public virtual Asset? Asset { get; private set; }
-
-		//public FileStatus StatusId { get; init; }
-		//public int LatestActionId { get; set; }
-		//public FileLatestAction LatestAction { get; set; } = null!;
-		//public virtual ICollection<FileAction> FileActions { get; } = new List<FileAction>();
 }

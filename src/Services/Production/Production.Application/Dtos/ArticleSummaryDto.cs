@@ -13,5 +13,5 @@ public record ArticleSummaryDto(
 		PersonDto SubmitedBy,
 		DateTime PublishedOn,
 		PersonDto PublishedBy,
-		List<ActorDto> Actors
+		List<ContributorDto> Contributors
 );

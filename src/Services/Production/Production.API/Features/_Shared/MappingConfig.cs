@@ -27,7 +27,7 @@ public class MappingConfig : IRegister
 						.Map(dest => dest.Version, src => src.Version.Value);
 
 				config.NewConfig<Article, ArticleSummaryDto>();
-				config.NewConfig<ArticleActor, ActorDto>();
+				config.NewConfig<ArticleContributor, ContributorDto>();
 				config.NewConfig<Person, PersonDto>();
 
 
