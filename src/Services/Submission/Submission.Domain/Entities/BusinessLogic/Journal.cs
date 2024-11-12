@@ -19,10 +19,8 @@ public partial class Journal
 						CreatedById = action.CreatedById,
 						CreatedOn = action.CreatedOn
 				};
-
 				action.Adapt(article);
 
-				//todo - do we need to add the article to the journal? is it setting the journalId enough?
 				_articles.Add(article);
 
 				var domainEvent = article.Adapt<ArticleCreatedDomainEvent>() with { Action = action };

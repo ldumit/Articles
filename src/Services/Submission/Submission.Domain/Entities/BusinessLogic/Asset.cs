@@ -1,8 +1,6 @@
-﻿using Mapster;
-using Articles.Abstractions;
+﻿using Articles.Abstractions;
 using FileStorage.Contracts;
 using Submission.Domain.Enums;
-using Submission.Domain.Events;
 using Submission.Domain.ValueObjects;
 
 namespace Submission.Domain.Entities;
@@ -35,8 +33,6 @@ public partial class Asset
 		{
 				File = File.CreateFile(uploadResponse, this, assetType);
 				State = AssetState.Uploaded;
-				//todo - add action
-				//AddAction(action);
 				return File;
 		}
 }

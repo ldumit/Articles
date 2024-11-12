@@ -13,10 +13,10 @@ public partial class Article
 {
 		public void SetStage(ArticleStage newStage, IArticleAction<ArticleActionType> action, ArticleStateMachineFactory stateMachineFactory)
     {
-				stateMachineFactory.ValidateStageTransition(Stage, action.ActionType);
-
 				if (newStage == Stage)
             return;
+
+				stateMachineFactory.ValidateStageTransition(Stage, action.ActionType);
 
 				var currentStage = Stage;
 				Stage = newStage;

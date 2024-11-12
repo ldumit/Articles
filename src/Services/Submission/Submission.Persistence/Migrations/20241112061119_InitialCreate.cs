@@ -148,9 +148,7 @@ namespace Submission.Persistence.Migrations
                     Comment = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TypeId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedById = table.Column<int>(type: "int", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LastModifiedById = table.Column<int>(type: "int", nullable: true),
-                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -164,26 +162,26 @@ namespace Submission.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ArticleActor",
+                name: "ArticleContributor",
                 columns: table => new
                 {
                     ArticleId = table.Column<int>(type: "int", nullable: false),
                     PersonId = table.Column<int>(type: "int", nullable: false),
                     Role = table.Column<string>(type: "nvarchar(450)", nullable: false, defaultValue: "AUT"),
-                    ActorType = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
+                    TypeDiscriminator = table.Column<string>(type: "nvarchar(21)", maxLength: 21, nullable: false),
                     ContributionAreas = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ArticleActor", x => new { x.ArticleId, x.PersonId, x.Role });
+                    table.PrimaryKey("PK_ArticleContributor", x => new { x.ArticleId, x.PersonId, x.Role });
                     table.ForeignKey(
-                        name: "FK_ArticleActor_Article_ArticleId",
+                        name: "FK_ArticleContributor_Article_ArticleId",
                         column: x => x.ArticleId,
                         principalTable: "Article",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ArticleActor_Person_PersonId",
+                        name: "FK_ArticleContributor_Person_PersonId",
                         column: x => x.PersonId,
                         principalTable: "Person",
                         principalColumn: "Id",
@@ -313,8 +311,8 @@ namespace Submission.Persistence.Migrations
                 column: "EntityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ArticleActor_PersonId",
-                table: "ArticleActor",
+                name: "IX_ArticleContributor_PersonId",
+                table: "ArticleContributor",
                 column: "PersonId");
 
             migrationBuilder.CreateIndex(
@@ -364,7 +362,7 @@ namespace Submission.Persistence.Migrations
                 name: "ArticleAction");
 
             migrationBuilder.DropTable(
-                name: "ArticleActor");
+                name: "ArticleContributor");
 
             migrationBuilder.DropTable(
                 name: "ArticleStageTransition");

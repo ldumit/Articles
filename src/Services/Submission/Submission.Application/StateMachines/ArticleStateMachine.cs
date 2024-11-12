@@ -7,6 +7,7 @@ using Submission.Domain.StateMachines;
 
 namespace Submission.Application.StateMachines;
 
+//todo - reimplement it directly with the database (cached), remove stateless library
 public class ArticleStateMachine : IArticleStateMachine
 {
 		private StateMachine<ArticleStage, ArticleActionType> _stateMachine;

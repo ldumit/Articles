@@ -3,7 +3,6 @@ using Articles.Security;
 
 namespace Submission.Domain.Entities
 {
-		//todo rename Actor to Contributor?!?
 		public class ArticleContributor : IChildEntity
 		{
         public int ArticleId { get; set; }

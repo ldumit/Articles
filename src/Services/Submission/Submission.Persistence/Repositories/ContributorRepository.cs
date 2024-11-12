@@ -22,7 +22,6 @@ public class ContributorRepository(SubmissionDbContext _dbContext, IMemoryCache 
 				if(roles.Contains(UserRoleType.EOF)) 
 						return true;
 
-				//todo - cache the actors?!
 				return await _dbContext.ArticleContributors
 						.AnyAsync(e => e.ArticleId == articleId && e.Person.UserId == userId && roles.Contains(e.Role));
 		}

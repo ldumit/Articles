@@ -36,15 +36,8 @@ public static class EntityTypeBuilderExtensions
 						return false;
 				var data = JsonExtensions.DeserializeCaseInsensitive<List<T>>(File.ReadAllText(filePath));				
 				Console.WriteLine($"Seeding {data.Count} records for {typeof(T).Name}");
-				//Console.WriteLine(string.Join(Environment.NewLine, data));
+				//Console.WriteLine(JsonConvert.SerializeObject(data, Formatting.Indented));
 
-				string jsonData = JsonConvert.SerializeObject(data, Formatting.Indented);
-				Console.WriteLine(jsonData);
-
-				//foreach (var item in data)
-				//{
-				//		Console.WriteLine(item);
-				//}
 				if (data != null)
 				{
 						builder.HasData(data);

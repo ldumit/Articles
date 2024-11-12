@@ -13,8 +13,8 @@ using Submission.Persistence;
 namespace Submission.Persistence.Migrations
 {
     [DbContext(typeof(SubmissionDbContext))]
-    [Migration("20241111113840_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20241112061141_SeedMasterData")]
+    partial class SeedMasterData
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -110,12 +110,6 @@ namespace Submission.Persistence.Migrations
                     b.Property<int>("EntityId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("LasModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("LastModifiedById")
-                        .HasColumnType("int");
-
                     b.Property<string>("TypeId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -127,7 +121,7 @@ namespace Submission.Persistence.Migrations
                     b.ToTable("ArticleAction", (string)null);
                 });
 
-            modelBuilder.Entity("Submission.Domain.Entities.ArticleActor", b =>
+            modelBuilder.Entity("Submission.Domain.Entities.ArticleContributor", b =>
                 {
                     b.Property<int>("ArticleId")
                         .HasColumnType("int");
@@ -140,18 +134,18 @@ namespace Submission.Persistence.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasDefaultValue("AUT");
 
-                    b.Property<string>("ActorType")
+                    b.Property<string>("TypeDiscriminator")
                         .IsRequired()
-                        .HasMaxLength(13)
-                        .HasColumnType("nvarchar(13)");
+                        .HasMaxLength(21)
+                        .HasColumnType("nvarchar(21)");
 
                     b.HasKey("ArticleId", "PersonId", "Role");
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("ArticleActor", (string)null);
+                    b.ToTable("ArticleContributor", (string)null);
 
-                    b.HasDiscriminator<string>("ActorType").HasValue("ArticleActor");
+                    b.HasDiscriminator<string>("TypeDiscriminator").HasValue("ArticleContributor");
 
                     b.UseTphMappingStrategy();
                 });
@@ -604,17 +598,17 @@ namespace Submission.Persistence.Migrations
                     b.ToTable("StageHistory", (string)null);
                 });
 
-            modelBuilder.Entity("Submission.Domain.Entities.AuthorActor", b =>
+            modelBuilder.Entity("Submission.Domain.Entities.ArticleAuthor", b =>
                 {
-                    b.HasBaseType("Submission.Domain.Entities.ArticleActor");
+                    b.HasBaseType("Submission.Domain.Entities.ArticleContributor");
 
                     b.Property<string>("ContributionAreas")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("ArticleActor", (string)null);
+                    b.ToTable("ArticleContributor", (string)null);
 
-                    b.HasDiscriminator().HasValue("AuthorActor");
+                    b.HasDiscriminator().HasValue("ArticleAuthor");
                 });
 
             modelBuilder.Entity("Submission.Domain.Entities.Author", b =>
@@ -666,16 +660,16 @@ namespace Submission.Persistence.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Submission.Domain.Entities.ArticleActor", b =>
+            modelBuilder.Entity("Submission.Domain.Entities.ArticleContributor", b =>
                 {
                     b.HasOne("Submission.Domain.Entities.Article", "Article")
-                        .WithMany("Actors")
+                        .WithMany("Contributors")
                         .HasForeignKey("ArticleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Submission.Domain.Entities.Person", "Person")
-                        .WithMany("ArticleActors")
+                        .WithMany("ArticleContributors")
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -724,9 +718,9 @@ namespace Submission.Persistence.Migrations
                 {
                     b.Navigation("Actions");
 
-                    b.Navigation("Actors");
-
                     b.Navigation("Assets");
+
+                    b.Navigation("Contributors");
 
                     b.Navigation("StageHistories");
                 });
@@ -738,7 +732,7 @@ namespace Submission.Persistence.Migrations
 
             modelBuilder.Entity("Submission.Domain.Entities.Person", b =>
                 {
-                    b.Navigation("ArticleActors");
+                    b.Navigation("ArticleContributors");
                 });
 #pragma warning restore 612, 618
         }
