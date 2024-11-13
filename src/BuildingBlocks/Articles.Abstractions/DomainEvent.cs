@@ -1,4 +1,4 @@
-﻿using Articles.Domain;
+﻿using Blocks.Domain;
 
 namespace Articles.Abstractions;
 

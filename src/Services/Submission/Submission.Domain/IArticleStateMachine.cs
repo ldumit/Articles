@@ -1,5 +1,5 @@
 ﻿using Articles.Abstractions.Enums;
-using Articles.Exceptions.Domain;
+using Blocks.Domain;
 using Submission.Domain.Enums;
 
 namespace Submission.Domain.StateMachines;

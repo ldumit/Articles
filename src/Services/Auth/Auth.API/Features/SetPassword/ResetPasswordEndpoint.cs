@@ -2,7 +2,7 @@
 using FastEndpoints;
 using Microsoft.AspNetCore.Identity;
 using Auth.Domain.Models;
-using Articles.Exceptions;
+using Blocks.Exceptions;
 
 namespace Auth.API.Features;
 

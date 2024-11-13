@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FastEndpoints" Version="5.30.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.10" />
@@ -15,8 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Articles.Abstractions\Articles.Abstractions.csproj" />
-    <ProjectReference Include="..\Articles.System\Articles.System.csproj" />
+    <ProjectReference Include="..\Articles.Entitities\Blocks.Domain.csproj" />
+    <ProjectReference Include="..\Articles.Exceptions\Blocks.Exceptions.csproj" />
+    <ProjectReference Include="..\Articles.System\Blocks.Core.csproj" />
   </ItemGroup>
 
 </Project>

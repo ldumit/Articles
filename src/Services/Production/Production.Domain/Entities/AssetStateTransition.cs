@@ -1,5 +1,5 @@
-﻿using Articles.Entitities;
-using Articles.System.Cache;
+﻿using Blocks.Entitities;
+using Blocks.Core.Cache;
 using Production.Domain.Enums;
 
 namespace Production.Domain.Entities;

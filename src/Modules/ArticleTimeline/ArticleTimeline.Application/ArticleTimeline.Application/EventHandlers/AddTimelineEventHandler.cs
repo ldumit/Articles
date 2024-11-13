@@ -3,11 +3,11 @@ using ArticleTimeline.Domain;
 using ArticleTimeline.Domain.Enums;
 using ArticleTimeline.Persistence.Repositories;
 using System.Text.RegularExpressions;
-using Articles.System.Extensions;
-using Articles.System;
+using Blocks.Core.Extensions;
+using Blocks.Core;
 using Mapster;
 using MediatR;
-using Articles.EntityFrameworkCore;
+using Blocks.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Articles.Abstractions;
 

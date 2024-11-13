@@ -1,6 +1,6 @@
 ﻿using FastEndpoints;
 using FileStorage.Contracts;
-using Articles.Security;
+using Blocks.Security;
 using Articles.Abstractions.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Production.Persistence.Repositories;

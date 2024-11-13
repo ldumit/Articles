@@ -7,17 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FastEndpoints" Version="5.30.0" />
-    <PackageReference Include="FluentValidation" Version="11.10.0" />
-    <PackageReference Include="MediatR" Version="12.4.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.10" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.8.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Articles.Entitities\Articles.Entitities.csproj" />
-    <ProjectReference Include="..\Articles.System\Articles.System.csproj" />
+    <ProjectReference Include="..\Articles.Entitities\Blocks.Domain.csproj" />
+    <ProjectReference Include="..\Articles.System\Blocks.Core.csproj" />
   </ItemGroup>
 
 </Project>

@@ -2,9 +2,10 @@ using FastEndpoints;
 using FastEndpoints.Swagger;
 using Journals.API;
 using System.Text.Json.Serialization;
-using Articles.Security;
-using Articles.Mapster;
+using Blocks.Security;
+using Blocks.Mapster;
 using Journals.Persistence.TestData;
+using Blocks.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,19 +27,21 @@ builder.Services
 var app = builder.Build();
 
 #region Use
-app.UseSwagger();
-app.UseSwaggerUI();
-app.UseRedis();
-app.UseHttpsRedirection();
-app.UseAuthentication();
-app.UseRouting();
-app.UseAuthorization();
-app.UseEndpoints(endpoints =>
-{
-		endpoints.MapControllers();
-		endpoints.MapDefaultControllerRoute();
+app.UseSwagger()
+		.UseSwaggerUI()
+		.UseRedis()
+		.UseHttpsRedirection()
+		.UseAuthentication()
+		.UseRouting()
+		.UseAuthorization()
+		.UseEndpoints(endpoints =>
+		{
+				endpoints.MapControllers();
+				endpoints.MapDefaultControllerRoute();
 
-});
+		})
+		.UseMiddleware<GlobalExceptionMiddleware>();
+
 app
 .UseFastEndpoints(config =>
 {

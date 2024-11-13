@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Articles.Security;
+using Blocks.Security;
 using Submission.Application.Features.GetArticle;
 
 namespace Submission.API.Endpoints;

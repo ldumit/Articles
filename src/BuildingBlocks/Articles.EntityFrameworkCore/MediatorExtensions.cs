@@ -1,9 +1,9 @@
-﻿using Articles.Entitities;
+﻿using Blocks.Entitities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using FastEndpoints;
 
-namespace Articles.EntityFrameworkCore;
+namespace Blocks.EntityFrameworkCore;
 
 public static class MediatorExtension
 {

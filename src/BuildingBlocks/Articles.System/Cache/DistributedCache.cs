@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
-using Articles.System;
+using Blocks.Core;
 
-namespace Articles.System.Cache
+namespace Blocks.Core.Cache
 {
 		//public class DistributedCache(IDistributedCache _cache) : ICache
 		//{

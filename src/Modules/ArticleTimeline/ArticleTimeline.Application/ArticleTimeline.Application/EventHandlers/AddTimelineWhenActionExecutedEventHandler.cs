@@ -2,7 +2,7 @@
 using ArticleTimeline.Domain.Enums;
 using ArticleTimeline.Persistence.Repositories;
 using Production.Domain.Events;
-using Articles.EntityFrameworkCore;
+using Blocks.EntityFrameworkCore;
 
 namespace ArticleTimeline.Application.EventHandlers;
 

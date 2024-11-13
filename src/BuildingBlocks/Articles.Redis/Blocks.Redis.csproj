@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Articles.Exceptions\Articles.Exceptions.csproj" />
+    <ProjectReference Include="..\Articles.Exceptions\Blocks.Exceptions.csproj" />
   </ItemGroup>
 
 </Project>

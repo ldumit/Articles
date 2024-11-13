@@ -1,7 +1,7 @@
-﻿using Articles.AspNetCore;
-using Articles.EntityFrameworkCore;
-using Articles.Security;
-using Articles.System;
+﻿using Blocks.AspNetCore;
+using Blocks.EntityFrameworkCore;
+using Blocks.Security;
+using Blocks.Core;
 using ArticleTimeline.Application.EventHandlers;
 using ArticleTimeline.Application.VariableResolvers;
 using ArticleTimeline.Persistence;
@@ -77,6 +77,7 @@ public static class DependencyInjection
 
 				services.AddScoped<ArticleRepository>();
 				services.AddScoped<AssetRepository>();
+				services.AddScoped<AssetTypeRepository>();
 				services.AddScoped<FileRepository>();
 
 				services.AddScoped<IThreadSafeMemoryCache, MemoryCache>();

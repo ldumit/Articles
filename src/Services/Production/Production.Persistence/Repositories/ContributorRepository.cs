@@ -1,5 +1,5 @@
-﻿using Articles.Security;
-using Articles.System;
+﻿using Blocks.Security;
+using Blocks.Core;
 using Microsoft.EntityFrameworkCore;
 using Production.Domain.Entities;
 

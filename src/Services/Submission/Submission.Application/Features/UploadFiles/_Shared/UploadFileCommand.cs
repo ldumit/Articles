@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
-using Articles.System;
-using Articles.AspNetCore;
+using Blocks.Core;
+using Blocks.AspNetCore;
 using Articles.Abstractions.Enums;
 using Submission.Domain.Enums;
 using Submission.Application.Features.Shared;
@@ -32,10 +32,10 @@ public abstract record UploadFileCommand : ArticleCommand
 public abstract class UploadFileValidator<TUploadFileCommand> : ArticleCommandValidator<TUploadFileCommand>
 				where TUploadFileCommand : UploadFileCommand
 {
-    private readonly CachedRepository<AssetTypeDefinition, AssetType> _assetTypeRepository;
+    private readonly AssetTypeRepository _assetTypeRepository;
 		private AssetTypeDefinition _assetTypeDefinition = null!;
 
-		public UploadFileValidator(CachedRepository<AssetTypeDefinition, AssetType> assetTypeRepository)
+		public UploadFileValidator(AssetTypeRepository assetTypeRepository)
 		{
 				_assetTypeRepository = assetTypeRepository;
 

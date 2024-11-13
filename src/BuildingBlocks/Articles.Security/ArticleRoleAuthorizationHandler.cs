@@ -1,9 +1,9 @@
-﻿using Articles.AspNetCore;
-using Articles.System;
+﻿using Blocks.AspNetCore;
+using Blocks.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
 
-namespace Articles.Security
+namespace Blocks.Security
 {
 		public class ArticleRoleAuthorizationHandler(HttpContextProvider _httpProvider, IArticleRoleChecker _articleRoleChecker) 
 				: AuthorizationHandler<RolesAuthorizationRequirement>

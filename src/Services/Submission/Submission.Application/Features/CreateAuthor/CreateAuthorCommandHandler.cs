@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Articles.Abstractions;
 using Microsoft.EntityFrameworkCore;
-using Articles.Exceptions;
+using Blocks.Exceptions;
 using Submission.Domain.Entities;
 using Submission.Persistence.Repositories;
 

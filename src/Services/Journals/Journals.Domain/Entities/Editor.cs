@@ -1,4 +1,4 @@
-﻿using Articles.Redis;
+﻿using Blocks.Redis;
 using Redis.OM.Modeling;
 
 namespace Journals.Domain.Entities;

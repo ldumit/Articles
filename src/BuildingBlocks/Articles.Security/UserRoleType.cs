@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Articles.Security;
+namespace Blocks.Security;
 
 public enum UserRoleType : int
 {

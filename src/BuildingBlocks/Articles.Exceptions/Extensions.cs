@@ -1,6 +1,6 @@
-﻿using Articles.Exceptions;
+﻿using Blocks.Exceptions;
 
-namespace System.Linq;
+namespace Blocks.Linq;
 
 public static class Extensions
 {

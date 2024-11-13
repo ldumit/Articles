@@ -1,4 +1,4 @@
-﻿namespace Articles.FluentValidation;
+﻿namespace Blocks.FluentValidation;
 
 public static class ValidationMessages
 {

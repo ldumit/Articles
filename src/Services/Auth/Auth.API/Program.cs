@@ -1,13 +1,13 @@
 using Auth.API;
-using Articles.Security;
+using Blocks.Security;
 using FastEndpoints;
 using Auth.Application;
-using Articles.EntityFrameworkCore;
+using Blocks.EntityFrameworkCore;
 using Auth.Persistence;
 using System.Reflection;
 //using EmailService.SendGrid;
 using EmailService.Contracts;
-using Articles.AspNetCore;
+using Blocks.AspNetCore;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http.Json;
 
@@ -47,14 +47,19 @@ if (app.Environment.IsDevelopment())
 }
 
 //use
-app.UseHttpsRedirection();
-app.UseAuthentication();
-app.UseAuthorization();
+app
+		.UseHttpsRedirection()
+		.UseAuthentication()
+		.UseAuthorization()
+		.UseMiddleware<GlobalExceptionMiddleware>();
+
 app.UseFastEndpoints(config =>
 {
 		config.Serializer.Options.Converters.Add(new JsonStringEnumConverter());
 		//config..Add(new AssignUserIdPreProcessor(app.Services.GetRequiredService<IHttpContextAccessor>()));
 });
+
+
 
 //app.MapControllers();
 

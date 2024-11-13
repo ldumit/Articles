@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace Articles.AspNetCore;
+namespace Blocks.AspNetCore;
 
 public static class Extensions
 {

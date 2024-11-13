@@ -1,12 +1,12 @@
-﻿using Articles.Entitities;
-using Articles.System;
-using Articles.System.Cache;
+﻿using Blocks.Entitities;
+using Blocks.Core;
+using Blocks.Core.Cache;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace Articles.EntityFrameworkCore;
+namespace Blocks.EntityFrameworkCore;
 
-public abstract class CachedRepositoryBase<TDbContext, TEntity, TId>(TDbContext _dbContext, IMemoryCache _cache)
+public abstract class CachedRepository<TDbContext, TEntity, TId>(TDbContext _dbContext, IMemoryCache _cache)
 		where TDbContext : DbContext
 		where TEntity : class, IEntity<TId>, ICacheable 
 		where TId : struct

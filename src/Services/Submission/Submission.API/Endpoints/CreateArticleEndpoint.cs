@@ -1,4 +1,4 @@
-﻿using Articles.Security;
+﻿using Blocks.Security;
 using MediatR;
 using Submission.Application.Features.CreateArticle;
 using Submission.Application.Features.Shared;

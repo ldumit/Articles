@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
-using Articles.FluentValidation;
+using Blocks.FluentValidation;
 using Articles.Abstractions;
 using Articles.Abstractions.Enums;
-using Articles.EntityFrameworkCore;
+using Blocks.EntityFrameworkCore;
 using Submission.Application.Features.Shared;
 using Submission.Domain.Enums;
 

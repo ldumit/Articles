@@ -1,4 +1,4 @@
-﻿using Articles.Entitities;
+﻿using Blocks.Entitities;
 
 namespace Submission.Domain.Entities;
 

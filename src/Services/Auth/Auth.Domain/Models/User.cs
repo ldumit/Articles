@@ -1,5 +1,5 @@
-﻿using Articles.Domain;
-using Articles.Entitities;
+﻿using Blocks.Domain;
+using Blocks.Entitities;
 using Microsoft.AspNetCore.Identity;
 
 namespace Auth.Domain.Models;

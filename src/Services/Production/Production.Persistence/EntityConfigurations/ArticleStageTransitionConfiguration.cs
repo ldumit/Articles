@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Production.Domain.Entities;
-using Articles.EntityFrameworkCore;
-using Articles.EntityFrameworkCore.EntityConfigurations;
+using Blocks.EntityFrameworkCore;
+using Blocks.EntityFrameworkCore.EntityConfigurations;
 
 namespace Production.Persistence.EntityConfigurations;
 

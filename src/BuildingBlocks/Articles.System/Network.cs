@@ -1,7 +1,7 @@
 ﻿using System.Net.Sockets;
 using System.Net;
 
-namespace Articles.System;
+namespace Blocks.Core;
 
 public static class Network
 {

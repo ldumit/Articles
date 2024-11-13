@@ -1,6 +1,6 @@
 ﻿using Redis.OM.Modeling;
 
-namespace Articles.Redis;
+namespace Blocks.Redis;
 public class Entity
 {
 		//talk about int vs Ulid

@@ -12,10 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.Entitities\Articles.Entitities.csproj" />
-    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.Exceptions\Articles.Exceptions.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.Entitities\Blocks.Domain.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.Exceptions\Blocks.Exceptions.csproj" />
     <ProjectReference Include="..\..\..\BuildingBlocks\Articles.Security\Articles.Security.csproj" />
-    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.System\Articles.System.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.System\Blocks.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

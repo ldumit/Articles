@@ -1,3 +1,3 @@
-﻿namespace Articles.Entitities;
+﻿namespace Blocks.Entitities;
 
 public interface IMetadataEntity : IDomainObject;

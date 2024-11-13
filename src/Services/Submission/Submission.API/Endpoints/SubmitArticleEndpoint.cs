@@ -1,4 +1,4 @@
-﻿using Articles.Security;
+﻿using Blocks.Security;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Submission.Application.Features.SubmitArticle;

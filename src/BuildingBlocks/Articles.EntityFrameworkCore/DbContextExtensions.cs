@@ -1,11 +1,11 @@
-﻿using Articles.System.Cache;
-using Articles.System.Json;
+﻿using Blocks.Core.Cache;
+using Blocks.Core.Json;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 
-namespace Articles.EntityFrameworkCore;
+namespace Blocks.EntityFrameworkCore;
 
 public static class DbContextExtensions
 {

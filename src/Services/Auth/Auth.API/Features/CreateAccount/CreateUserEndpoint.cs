@@ -1,11 +1,11 @@
-﻿using Articles.Exceptions;
+﻿using Blocks.Exceptions;
 using Auth.Domain.Models;
 using EmailService.Contracts;
 using FastEndpoints;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Net;
-using Articles.AspNetCore;
+using Blocks.AspNetCore;
 using Flurl;
 using Microsoft.Extensions.Options;
 using Auth.Domain.Events;
@@ -13,7 +13,7 @@ using Mapster;
 
 namespace Auth.API.Features;
 
-[Authorize(Roles = Articles.Security.Role.ADMIN)]
+[Authorize(Roles = Blocks.Security.Role.ADMIN)]
 [HttpPost("users")]
 public class CreateUserEndpoint(UserManager<User> userManager, AutoMapper.IMapper mapper, IEmailService emailService, IHttpContextAccessor httpContextAccessor, IOptions<EmailOptions> emailOptions) 
 		: Endpoint<CreateUserCommand, CreateUserResponse>

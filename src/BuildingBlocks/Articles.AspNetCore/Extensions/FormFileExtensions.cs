@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.StaticFiles;
 
-namespace Articles.AspNetCore;
+namespace Blocks.AspNetCore;
 
-public static class FileExtensions
+public static class FormFileExtensions
 {
     public const string DefaultFileContentType = "application/octet-stream";
 

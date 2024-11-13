@@ -3,9 +3,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Articles.AspNetCore;
+using Blocks.AspNetCore;
 
-namespace Articles.Security;
+namespace Blocks.Security;
 
 public static class ConfigureAuthentication
 {

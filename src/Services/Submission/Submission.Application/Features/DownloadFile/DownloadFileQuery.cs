@@ -1,6 +1,6 @@
-﻿using Articles.MediatR;
+﻿using Blocks.MediatR;
 using FluentValidation;
-using Articles.FluentValidation;
+using Blocks.FluentValidation;
 
 namespace Submission.Application.Features.DownloadFile;
 

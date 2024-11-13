@@ -5,9 +5,9 @@ using Articles.Abstractions.Enums;
 using Production.API.Features.Shared;
 using Production.Application.StateMachines;
 using Production.Domain.Enums;
-using Articles.Security;
-using Articles.EntityFrameworkCore;
-using Articles.Exceptions;
+using Blocks.Security;
+using Blocks.EntityFrameworkCore;
+using Blocks.Exceptions;
 using Articles.Abstractions;
 
 namespace Production.API.Features.AssignTypesetter

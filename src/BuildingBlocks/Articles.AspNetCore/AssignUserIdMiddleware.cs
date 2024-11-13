@@ -1,9 +1,6 @@
-﻿using Articles.Abstractions;
-using Microsoft.AspNetCore.Http;
-using System.Reflection;
-using System.Text.Json;
+﻿using Microsoft.AspNetCore.Http;
 
-namespace Articles.AspNetCore;
+namespace Blocks.AspNetCore;
 
 //talk - Middleware, filter, preprocesors
 //In middleware we can only ionject singleton in the ctor. if we want to use another life time we have to send it as parameter to the Invoke method

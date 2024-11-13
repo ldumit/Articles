@@ -1,4 +1,4 @@
-﻿using Articles.Security;
+﻿using Blocks.Security;
 
 namespace Production.Application.Dtos;
 

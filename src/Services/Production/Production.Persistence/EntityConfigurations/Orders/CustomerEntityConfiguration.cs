@@ -1,4 +1,4 @@
-﻿using Articles.EntityFrameworkCore;
+﻿using Blocks.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Ordering.Domain.Models;
 using System.Text.Json;

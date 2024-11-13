@@ -2,7 +2,7 @@
 using Mapster;
 using Journals.Persistence;
 using Journals.API.Features.Shared;
-using Articles.Redis;
+using Blocks.Redis;
 
 namespace Journals.API.Features.Journals.Get;
 

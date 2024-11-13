@@ -1,6 +1,6 @@
 ﻿using Mapster;
 
-namespace Articles.Mapster;
+namespace Blocks.Mapster;
 
 public static class Extensions
 {

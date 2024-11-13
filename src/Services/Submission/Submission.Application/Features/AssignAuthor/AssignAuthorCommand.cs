@@ -1,5 +1,5 @@
-﻿using Articles.FluentValidation;
-using Articles.System;
+﻿using Blocks.FluentValidation;
+using Blocks.Core;
 using FluentValidation;
 using Submission.Application.Features.Shared;
 using Submission.Domain.Enums;

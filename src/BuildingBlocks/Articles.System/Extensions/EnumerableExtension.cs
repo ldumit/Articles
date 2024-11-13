@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace Articles.System;
+namespace Blocks.Core;
 
 public static class EnumerableExtensions
 {

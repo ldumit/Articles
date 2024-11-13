@@ -1,5 +1,5 @@
-﻿using Articles.AspNetCore;
-using Articles.System;
+﻿using Blocks.AspNetCore;
+using Blocks.Core;
 
 namespace ArticleTimeline.Application.VariableResolvers;
 

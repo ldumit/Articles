@@ -1,8 +1,8 @@
-using Articles.Security;
+using Blocks.Security;
 using Submission.Application;
-using Articles.EntityFrameworkCore;
+using Blocks.EntityFrameworkCore;
 using Submission.Persistence;
-using Articles.AspNetCore;
+using Blocks.AspNetCore;
 using Azure.Storage.Blobs;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http.Json;
@@ -53,7 +53,8 @@ app
 		.UseSwaggerUI()
 		.UseRouting()
 		.UseAuthentication()
-		.UseAuthorization();
+		.UseAuthorization()
+		.UseMiddleware<GlobalExceptionMiddleware>();
 
 app.MapAllEndpoints();
 

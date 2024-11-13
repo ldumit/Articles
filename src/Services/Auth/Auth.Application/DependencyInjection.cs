@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Auth.Domain.Models;
 using EmailService.Contracts;
 using EmailService.Smtp;
-using Articles.Security;
+using Blocks.Security;
 
 namespace Auth.Application;
 public static class DependencyInjection

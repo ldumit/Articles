@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 
-namespace Articles.MediatR.Behaviours;
+namespace Blocks.MediatR.Behaviours;
 public class LoggingBehavior<TRequest, TResponse>
     (ILogger<LoggingBehavior<TRequest, TResponse>> logger)
     : IPipelineBehavior<TRequest, TResponse>

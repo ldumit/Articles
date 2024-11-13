@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using Articles.System;
+using Blocks.Core;
 using Articles.Abstractions;
 
 using Production.Domain.Enums;

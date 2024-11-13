@@ -1,4 +1,4 @@
-﻿using Articles.Security;
+﻿using Blocks.Security;
 using Submission.Domain.Enums;
 
 namespace Submission.Application.Dtos;

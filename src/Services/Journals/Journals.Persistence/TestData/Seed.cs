@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Redis.OM;
-using Articles.Redis;
+using Blocks.Redis;
 using StackExchange.Redis;
 
 namespace Journals.Persistence.TestData;

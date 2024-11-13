@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Articles.Abstractions;
 using Microsoft.EntityFrameworkCore;
-using Articles.EntityFrameworkCore;
+using Blocks.EntityFrameworkCore;
 using Submission.Domain.Entities;
 using Submission.Persistence.Repositories;
 using Submission.Domain.Enums;

@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Articles.Entitities;
+namespace Blocks.Entitities;
 
 //todo: rename Building Blocks Article projects which are generic into BuildingBlocks or Core or BBlocks
 

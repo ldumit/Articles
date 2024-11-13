@@ -1,9 +1,10 @@
 ﻿using FastEndpoints;
 using Mapster;
+using Blocks.Redis;
+using Blocks.Linq;
 using Journals.Persistence;
 using Journals.API.Features.Shared;
 using Journals.API.Features.Editors.Get;
-using Articles.Redis;
 
 namespace Journals.API.Features.Editors.GetById;
 

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.Text.Json;
 
-namespace Articles.EntityFrameworkCore
+namespace Blocks.EntityFrameworkCore
 {
 		public static class BuilderExtensions
     {

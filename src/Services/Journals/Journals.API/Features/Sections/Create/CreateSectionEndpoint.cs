@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Authorization;
 using Mapster;
 using Journals.Domain.Entities;
 using Journals.API.Features.Shared;
-using Articles.Exceptions;
-using Articles.System;
-using Articles.Security;
-using Articles.Redis;
+using Blocks.Exceptions;
+using Blocks.Core;
+using Blocks.Security;
+using Blocks.Redis;
 
 namespace Journals.API.Features.Sections.Create;
 

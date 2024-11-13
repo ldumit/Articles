@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Articles.Abstractions;
 using Articles.Abstractions.Enums;
-using Articles.EntityFrameworkCore;
+using Blocks.EntityFrameworkCore;
 using Submission.Persistence.Repositories;
 using Submission.Domain.StateMachines;
 

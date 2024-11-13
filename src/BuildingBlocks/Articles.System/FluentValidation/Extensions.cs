@@ -1,7 +1,7 @@
-﻿using Articles.System;
+﻿using Blocks.Core;
 using FluentValidation;
 
-namespace Articles.FluentValidation;
+namespace Blocks.FluentValidation;
 
 public static class Extensions
 {

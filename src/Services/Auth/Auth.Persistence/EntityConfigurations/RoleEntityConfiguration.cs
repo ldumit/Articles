@@ -1,4 +1,4 @@
-﻿using Articles.EntityFrameworkCore;
+﻿using Blocks.EntityFrameworkCore;
 using Auth.Domain.Models;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

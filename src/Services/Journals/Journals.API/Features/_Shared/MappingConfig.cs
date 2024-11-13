@@ -1,6 +1,6 @@
 ﻿using Journals.Domain.Entities;
 using Mapster;
-using Articles.Mapster;
+using Blocks.Mapster;
 
 namespace Journals.API.Features.Shared;
 

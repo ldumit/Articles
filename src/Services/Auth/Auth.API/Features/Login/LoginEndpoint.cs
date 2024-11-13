@@ -6,7 +6,7 @@ using Auth.Application;
 using System.Security.Claims;
 using Microsoft.Extensions.Options;
 using Auth.Domain.Models;
-using Articles.Security;
+using Blocks.Security;
 
 namespace Auth.API.Features;
 

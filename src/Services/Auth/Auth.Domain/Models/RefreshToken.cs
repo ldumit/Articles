@@ -1,4 +1,4 @@
-﻿using Articles.Entitities;
+﻿using Blocks.Entitities;
 namespace Auth.Domain.Models;
 
 public class RefreshToken : Entity

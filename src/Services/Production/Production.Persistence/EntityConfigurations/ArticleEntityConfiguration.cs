@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using Production.Domain.Entities;
-using Articles.EntityFrameworkCore;
+using Blocks.EntityFrameworkCore;
 
 namespace Production.Persistence.EntityConfigurations;
 public class ArticleEntityConfiguration : AuditedEntityConfiguration<Article>

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Articles.EntityFrameworkCore;
+using Blocks.EntityFrameworkCore;
 using ArticleTimeline.Domain;
-using Articles.Security;
+using Blocks.Security;
 using ArticleTimeline.Domain.Enums;
 using Articles.Abstractions;
 

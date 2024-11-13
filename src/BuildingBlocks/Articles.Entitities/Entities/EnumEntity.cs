@@ -1,4 +1,4 @@
-﻿namespace Articles.Entitities;
+﻿namespace Blocks.Entitities;
 
 public abstract class EnumEntity<TEnum> : Entity<TEnum>
 		where TEnum : struct, Enum

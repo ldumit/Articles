@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using ArticleTimeline.Domain;
-using Articles.EntityFrameworkCore;
+using Blocks.EntityFrameworkCore;
 using ArticleTimeline.Persistence.EntityConfigurations;
 
 namespace ArticleTimeline.Persistence;

@@ -1,12 +1,6 @@
-﻿namespace Articles.Abstractions;
+﻿using Blocks.Domain;
 
-public interface IAction
-{
-		int CreatedById { get; set; }
-		DateTime CreatedOn { get; }
-		public string Action { get; }
-		string? Comment { get; }
-}
+namespace Articles.Abstractions;
 
 public interface IArticleAction : IAction
 {

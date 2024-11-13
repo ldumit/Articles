@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Submission.Domain.Entities;
-using Articles.EntityFrameworkCore;
+using Blocks.EntityFrameworkCore;
 
 namespace Submission.Application;
 

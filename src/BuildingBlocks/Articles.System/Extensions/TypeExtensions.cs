@@ -1,5 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
-namespace Articles.System.Extensions;
+namespace Blocks.Core.Extensions;
 
 public static class TypeExtensions
 {

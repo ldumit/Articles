@@ -1,7 +1,6 @@
 ﻿using System.Net;
 
-namespace Articles.Exceptions;
-
+namespace Blocks.Exceptions;
 
 public class HttpException : Exception
 {
@@ -19,8 +18,5 @@ public class HttpException : Exception
 
     public HttpStatusCode HttpStatusCode { get; }
 
-    public int StatusCode
-    {
-        get { return (int)this.HttpStatusCode; }
-    }
+    public int StatusCode => (int) HttpStatusCode;
 }

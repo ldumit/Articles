@@ -1,5 +1,5 @@
-﻿using Articles.FluentValidation;
-using Articles.MediatR;
+﻿using Blocks.FluentValidation;
+using Blocks.MediatR;
 using FluentValidation;
 using Submission.Application.Dtos;
 

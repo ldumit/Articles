@@ -1,9 +1,9 @@
-﻿using Articles.System;
+﻿using Blocks.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using System.Security.Claims;
 
-namespace Articles.AspNetCore;
+namespace Blocks.AspNetCore;
 
 public interface IClaimsProvider
 {

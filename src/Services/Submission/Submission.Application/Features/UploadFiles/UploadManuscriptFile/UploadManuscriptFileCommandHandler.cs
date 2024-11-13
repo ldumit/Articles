@@ -8,8 +8,8 @@ using Submission.Domain.StateMachines;
 namespace Submission.Application.Features.UploadFiles.UploadDraftFile;
 
 public class UploadManuscriptFileCommandHandler(
-		ArticleRepository articleRepository, 
-		CachedRepository<AssetTypeDefinition, AssetType> assetTypeRepository, 
+		ArticleRepository articleRepository,
+		AssetTypeRepository assetTypeRepository, 
 		IFileService fileService,
 		ArticleStateMachineFactory stateMachineFactory)
 		: UploadFileCommandHandler<UploadManuscriptFileCommand>(articleRepository, assetTypeRepository, fileService, stateMachineFactory)

@@ -1,9 +1,9 @@
-﻿using Articles.Entitities;
-using Articles.Exceptions;
+﻿using Blocks.Entitities;
+using Blocks.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
 
-namespace Articles.EntityFrameworkCore;
+namespace Blocks.EntityFrameworkCore;
 
 
 public abstract class TenantRepositoryBase<TContext, TEntity, TKey> : RepositoryBase<TContext, TEntity, TKey>

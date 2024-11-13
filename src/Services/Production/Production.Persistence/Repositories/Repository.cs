@@ -1,5 +1,5 @@
-﻿using Articles.Entitities;
-using Articles.EntityFrameworkCore;
+﻿using Blocks.Entitities;
+using Blocks.EntityFrameworkCore;
 
 namespace Production.Persistence.Repositories;
 

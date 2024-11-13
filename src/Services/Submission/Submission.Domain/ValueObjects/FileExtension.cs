@@ -1,4 +1,4 @@
-﻿using Articles.Entitities;
+﻿using Blocks.Entitities;
 using Newtonsoft.Json;
 using Submission.Domain.Entities;
 

@@ -1,4 +1,4 @@
-﻿namespace Articles.EntityFrameworkCore;
+﻿namespace Blocks.EntityFrameworkCore;
 
 public static class Constraints
 {

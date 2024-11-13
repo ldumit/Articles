@@ -1,5 +1,5 @@
 ﻿using Articles.Abstractions.Enums;
-using Articles.Entitities;
+using Blocks.Entitities;
 using Submission.Domain.Enums;
 using Submission.Domain.ValueObjects;
 

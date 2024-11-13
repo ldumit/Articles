@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.System\Articles.System.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.System\Blocks.Core.csproj" />
     <ProjectReference Include="..\FileService.Contracts\FileStorage.Contracts.csproj" />
   </ItemGroup>
 

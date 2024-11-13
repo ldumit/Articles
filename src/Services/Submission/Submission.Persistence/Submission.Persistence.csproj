@@ -24,8 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.Settings\Articles.Settings.csproj" />
-    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.EntityFrameworkCore\Articles.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.EntityFrameworkCore\Blocks.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Submission.Domain\Submission.Domain.csproj" />
   </ItemGroup>
 

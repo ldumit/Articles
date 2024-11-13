@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Articles.Abstractions;
 using Articles.Abstractions.Enums;
-using Articles.EntityFrameworkCore;
+using Blocks.EntityFrameworkCore;
 using FileStorage.Contracts;
 using Submission.Persistence.Repositories;
 using Submission.Domain.Entities;
@@ -10,7 +10,7 @@ using Submission.Domain.StateMachines;
 namespace Submission.Application.Features.UploadFiles.Shared;
 
 public class UploadFileCommandHandler<TUploadCommand>
-    (ArticleRepository _articleRepository, CachedRepository<AssetTypeDefinition, AssetType> _assetTypeRepository, IFileService _fileService, ArticleStateMachineFactory _stateMachineFactory)
+    (ArticleRepository _articleRepository, AssetTypeRepository _assetTypeRepository, IFileService _fileService, ArticleStateMachineFactory _stateMachineFactory)
     : IRequestHandler<TUploadCommand, IdResponse>
 		where TUploadCommand : UploadFileCommand
 {

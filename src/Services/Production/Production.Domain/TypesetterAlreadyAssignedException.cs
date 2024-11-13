@@ -1,4 +1,4 @@
-﻿using Articles.Exceptions.Domain;
+﻿using Blocks.Domain;
 
 namespace Production.Domain
 {

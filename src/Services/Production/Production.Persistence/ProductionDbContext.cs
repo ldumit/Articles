@@ -2,7 +2,7 @@
 using Production.Domain.Entities;
 using Production.Persistence.EntityConfigurations;
 using Microsoft.Extensions.Caching.Memory;
-using Articles.EntityFrameworkCore;
+using Blocks.EntityFrameworkCore;
 
 namespace Production.Persistence;
 

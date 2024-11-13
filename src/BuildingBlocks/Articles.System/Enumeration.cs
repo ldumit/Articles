@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
 
-namespace Articles.System;
+namespace Blocks.Core;
 
 public abstract class Enumeration : IComparable
 {

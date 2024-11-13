@@ -1,6 +1,6 @@
 ﻿using FastEndpoints;
 using MediatR;
 
-namespace Articles.Domain;
+namespace Blocks.Domain;
 
 public interface IDomainEvent : INotification, IEvent;

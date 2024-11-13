@@ -1,8 +1,8 @@
-﻿namespace Articles.System;
+﻿namespace Blocks.Core;
 
 public static class Guard
 {
-		//todo use Guard instead of ArgumentException, add more Guards, use name parameter 
+		//todo - use Guard instead of ArgumentException, add more Guards, use name parameter 
 		public static void ThrowIfNull<T>(T? value, string name)
 		{
 				if (value is null)

@@ -2,7 +2,7 @@
 using Submission.Domain.Entities;
 using Submission.Persistence.EntityConfigurations;
 using Microsoft.Extensions.Caching.Memory;
-using Articles.EntityFrameworkCore;
+using Blocks.EntityFrameworkCore;
 
 namespace Submission.Persistence;
 

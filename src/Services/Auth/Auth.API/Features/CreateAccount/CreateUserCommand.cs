@@ -1,4 +1,4 @@
-﻿using Articles.Security;
+﻿using Blocks.Security;
 using Auth.Domain;
 
 namespace Auth.API.Features;

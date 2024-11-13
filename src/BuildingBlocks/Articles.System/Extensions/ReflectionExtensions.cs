@@ -1,7 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Reflection;
 
-namespace Articles.System;
+namespace Blocks.Core;
 
 public static class ReflectionExtensions
 {

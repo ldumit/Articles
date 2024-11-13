@@ -1,4 +1,4 @@
-﻿namespace Articles.System;
+﻿namespace Blocks.Core;
 
 public static class StringExtensions
 {

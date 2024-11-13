@@ -1,8 +1,8 @@
-﻿using Articles.Abstractions;
-using Articles.AspNetCore;
+﻿using Blocks.Domain;
+using Blocks.AspNetCore;
 using MediatR;
 
-namespace Articles.MediatR.Behaviours;
+namespace Blocks.MediatR.Behaviours;
 
 public class SetUserIdBehavior<TRequest, TResponse>
 		(IClaimsProvider _claimsProvider) 

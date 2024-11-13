@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Articles.MediatR;
+namespace Blocks.MediatR;
 
 public interface ICommand : ICommand<Unit>
 {

@@ -3,9 +3,9 @@ using FastEndpoints;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Auth.Domain.Models;
-using Articles.Exceptions;
+using Blocks.Exceptions;
 using EmailService.Contracts;
-using Articles.AspNetCore;
+using Blocks.AspNetCore;
 using Flurl;
 
 

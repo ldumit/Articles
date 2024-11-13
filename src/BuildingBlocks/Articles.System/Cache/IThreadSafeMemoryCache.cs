@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 
-namespace Articles.System;
+namespace Blocks.Core;
 
 public interface IThreadSafeMemoryCache
 {

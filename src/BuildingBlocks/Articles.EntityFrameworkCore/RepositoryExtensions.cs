@@ -1,8 +1,8 @@
-using Articles.Entitities;
-using Articles.Exceptions;
+using Blocks.Entitities;
+using Blocks.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
-namespace Articles.EntityFrameworkCore
+namespace Blocks.EntityFrameworkCore
 {
 		public static class RepositoryExtensions
 		{

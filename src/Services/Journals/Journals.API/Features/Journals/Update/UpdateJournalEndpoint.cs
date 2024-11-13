@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Mapster;
 using Journals.Domain.Entities;
 using Journals.API.Features.Shared;
-using Articles.Security;
-using Articles.Redis;
+using Blocks.Security;
+using Blocks.Redis;
 using Journals.Domain.Events;
 
 namespace Journals.API.Features.Journals.Update;

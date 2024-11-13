@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Options;
 using System.Data.Common;
 
-namespace Articles.EntityFrameworkCore;
+namespace Blocks.EntityFrameworkCore;
 
 public class DispatchDomainEventsInterceptor : SaveChangesInterceptor
 {

@@ -1,8 +1,8 @@
-﻿using Articles.AspNetCore;
-using Articles.EntityFrameworkCore;
-using Articles.MediatR.Behaviours;
-using Articles.Security;
-using Articles.System;
+﻿using Blocks.AspNetCore;
+using Blocks.EntityFrameworkCore;
+using Blocks.MediatR.Behaviours;
+using Blocks.Security;
+using Blocks.Core;
 using FileStorage.AzureBlob;
 using FileStorage.Contracts;
 using FluentValidation;
@@ -67,10 +67,10 @@ public static class DependencyInjection
 				services.AddScoped<HttpContextProvider>();
 
 				#endregion
-				services.AddScoped(typeof(CachedRepository<,>));
 				services.AddScoped(typeof(Repository<>));
 				services.AddScoped<ArticleRepository>();
 				services.AddScoped<AssetRepository>();
+				services.AddScoped<AssetTypeRepository>();
 				services.AddScoped<PersonRepository>();
 
 				services.AddScoped<IThreadSafeMemoryCache, MemoryCache>();

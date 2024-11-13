@@ -1,7 +1,7 @@
-﻿using Articles.System;
+﻿using Blocks.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
-using Articles.System.Cache;
+using Blocks.Core.Cache;
 
 namespace Service.Persistence;
 

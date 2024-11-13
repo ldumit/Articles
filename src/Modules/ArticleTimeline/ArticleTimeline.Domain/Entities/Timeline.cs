@@ -1,5 +1,5 @@
-﻿using Articles.Abstractions.Enums;
-using Articles.Entitities;
+﻿using Blocks.Entitities;
+using Articles.Abstractions.Enums;
 using ArticleTimeline.Domain.Enums;
 
 namespace ArticleTimeline.Domain;

@@ -1,4 +1,4 @@
-﻿namespace Articles.System.Cache;
+﻿namespace Blocks.Core.Cache;
 
 public interface ICacheable
 {

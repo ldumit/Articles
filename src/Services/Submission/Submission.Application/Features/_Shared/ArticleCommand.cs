@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 using FluentValidation;
 using Articles.Abstractions;
-using Articles.MediatR;
-using Articles.FluentValidation;
+using Blocks.MediatR;
+using Blocks.FluentValidation;
 using Submission.Domain.Enums;
 
 namespace Submission.Application.Features.Shared;

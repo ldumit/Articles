@@ -1,8 +1,8 @@
-﻿using Articles.Entitities;
+﻿using Blocks.Entitities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Articles.EntityFrameworkCore;
+namespace Blocks.EntityFrameworkCore;
 
 public abstract class EnumEntityConfiguration<T, TEnum> : EntityConfiguration<T, TEnum>
     where T : EnumEntity<TEnum>

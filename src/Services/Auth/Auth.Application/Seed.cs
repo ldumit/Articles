@@ -1,11 +1,11 @@
-﻿using Articles.Entitities;
+﻿using Blocks.Entitities;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Auth.Domain.Models;
 using Auth.Persistence;
 using Microsoft.AspNetCore.Identity;
 using System.Text.Json;
-using Articles.System;
+using Blocks.Core;
 
 namespace Auth.Application;
 

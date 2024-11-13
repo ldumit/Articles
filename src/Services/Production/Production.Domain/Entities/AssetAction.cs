@@ -1,4 +1,4 @@
-﻿using Articles.Entitities;
+﻿using Blocks.Entitities;
 using Production.Domain.Enums;
 
 namespace Production.Domain.Entities;

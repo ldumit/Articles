@@ -1,11 +1,11 @@
-﻿using Articles.System;
+﻿using Blocks.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Query;
 using Newtonsoft.Json;
 using System.Linq.Expressions;
 
-namespace Articles.EntityFrameworkCore;
+namespace Blocks.EntityFrameworkCore;
 public static class EntityTypeBuilderExtensions
 {
 		public static void Seed<T>(this EntityTypeBuilder<T> entity, string folder)

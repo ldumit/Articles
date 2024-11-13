@@ -1,4 +1,4 @@
-﻿namespace Articles.System;
+﻿namespace Blocks.Core;
 
 public class AsyncLock : IDisposable
 {

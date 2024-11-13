@@ -1,4 +1,4 @@
-﻿using Articles.EntityFrameworkCore;
+﻿using Blocks.EntityFrameworkCore;
 using ArticleTimeline.Domain;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

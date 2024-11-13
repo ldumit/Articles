@@ -1,10 +1,10 @@
-﻿using Articles.Exceptions;
+﻿using Blocks.Exceptions;
 using Newtonsoft.Json;
 using Redis.OM;
 using Redis.OM.Searching;
 using StackExchange.Redis;
 
-namespace Articles.Redis;
+namespace Blocks.Redis;
 
 public static class Extensions
 {

@@ -1,6 +1,6 @@
 ﻿using Articles.Abstractions.Enums;
-using Articles.Entitities;
-using Articles.System.Cache;
+using Blocks.Entitities;
+using Blocks.Core.Cache;
 using Submission.Domain.ValueObjects;
 
 

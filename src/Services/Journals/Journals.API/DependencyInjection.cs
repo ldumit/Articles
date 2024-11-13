@@ -1,4 +1,4 @@
-﻿using Articles.Redis;
+﻿using Blocks.Redis;
 using Journals.Persistence;
 using Redis.OM;
 using StackExchange.Redis;

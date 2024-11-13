@@ -15,8 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.AspNetCore\Articles.AspNetCore.csproj" />
-    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.MediatR\Articles.MediatR.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.AspNetCore\Blocks.AspNetCore.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.MediatR\Blocks.MediatR.csproj" />
     <ProjectReference Include="..\..\..\Modules\ArticleTimeline\ArticleTimeline.Application\ArticleTimeline.Application\ArticleTimeline.Application.csproj" />
     <ProjectReference Include="..\..\..\Modules\FileService\FileService.AzureBlob\FileStorage.AzureBlob.csproj" />
     <ProjectReference Include="..\..\..\Modules\FileService\FileService.Contracts\FileStorage.Contracts.csproj" />

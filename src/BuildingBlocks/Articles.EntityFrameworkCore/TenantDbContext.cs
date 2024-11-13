@@ -1,8 +1,8 @@
-﻿using Articles.Entitities;
+﻿using Blocks.Entitities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
-namespace Articles.EntityFrameworkCore;
+namespace Blocks.EntityFrameworkCore;
 
 internal class TenantDbContext : DbContext, IMultitenancy
 {

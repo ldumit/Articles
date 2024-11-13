@@ -1,7 +1,7 @@
-﻿using Articles.Entitities;
+﻿using Blocks.Entitities;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Articles.EntityFrameworkCore;
+namespace Blocks.EntityFrameworkCore;
 
 public abstract class TenantEntityConfigurationBase<T> : EntityConfiguration<T> where T : TenantEntity
 {

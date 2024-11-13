@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Articles.Entitities;
+using Blocks.Entitities;
 
-namespace Articles.EntityFrameworkCore;
+namespace Blocks.EntityFrameworkCore;
 
 public abstract class EntityConfiguration<T> : EntityConfiguration<T, int> 
     where T : class, IEntity

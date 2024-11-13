@@ -11,8 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.Entitities\Articles.Entitities.csproj" />
-    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.Redis\Articles.Redis.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.Entitities\Blocks.Domain.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.Redis\Blocks.Redis.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,10 +1,10 @@
-﻿using Articles.Entitities;
+﻿using Blocks.Entitities;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using Articles.Exceptions;
+using Blocks.Exceptions;
 
-namespace Articles.EntityFrameworkCore;
+namespace Blocks.EntityFrameworkCore;
 
 public interface IRepository<Entity> : IRepository<Entity, int>;
 

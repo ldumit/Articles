@@ -1,9 +1,9 @@
-﻿using Articles.Entitities;
+﻿using Blocks.Entitities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Articles.EntityFrameworkCore
+namespace Blocks.EntityFrameworkCore
 {
 		public static class ModelBuilderExtensions
 		{

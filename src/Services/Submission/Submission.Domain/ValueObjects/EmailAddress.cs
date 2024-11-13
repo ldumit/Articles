@@ -1,5 +1,5 @@
-﻿using Articles.Entitities;
-using Articles.System;
+﻿using Blocks.Entitities;
+using Blocks.Core;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 

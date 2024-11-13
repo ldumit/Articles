@@ -1,7 +1,7 @@
 ﻿using System.Data.Common;
 using System.Data;
 
-namespace Articles.EntityFrameworkCore;
+namespace Blocks.EntityFrameworkCore;
 
 public class TransactionProvider(DbConnection _dbConnection): IDisposable
 {

@@ -1,5 +1,5 @@
-﻿using Articles.EntityFrameworkCore;
-using Articles.System;
+﻿using Blocks.EntityFrameworkCore;
+using Blocks.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Production.Domain.Entities;

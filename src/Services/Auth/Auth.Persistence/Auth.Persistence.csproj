@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.EntityFrameworkCore\Articles.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.EntityFrameworkCore\Blocks.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Auth.Domain\Auth.Domain.csproj" />
   </ItemGroup>
 

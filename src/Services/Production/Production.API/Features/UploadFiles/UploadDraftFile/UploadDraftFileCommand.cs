@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
-using Articles.System;
-using Articles.AspNetCore;
+using Blocks.Core;
+using Blocks.AspNetCore;
 using Articles.Abstractions.Enums;
 using Production.Application;
 using Production.Persistence.Repositories;

@@ -1,4 +1,4 @@
-﻿using Articles.EntityFrameworkCore;
+﻿using Blocks.EntityFrameworkCore;
 using FluentValidation;
 using Production.API.Features.Shared;
 using Production.Application.StateMachines;

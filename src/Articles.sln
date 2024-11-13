@@ -11,27 +11,25 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Production.API", "Services\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildingBlocks", "BuildingBlocks", "{119E4BB2-4239-487F-B5F7-3BCED9AFF33C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Articles.EntityFrameworkCore", "BuildingBlocks\Articles.EntityFrameworkCore\Articles.EntityFrameworkCore.csproj", "{0F7B01A0-F6DC-4895-B7F6-6CF7902709D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blocks.EntityFrameworkCore", "BuildingBlocks\Articles.EntityFrameworkCore\Blocks.EntityFrameworkCore.csproj", "{0F7B01A0-F6DC-4895-B7F6-6CF7902709D5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Articles.Exceptions", "BuildingBlocks\Articles.Exceptions\Articles.Exceptions.csproj", "{A08C513E-AAD1-4145-AED7-7B9258540A11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blocks.Exceptions", "BuildingBlocks\Articles.Exceptions\Blocks.Exceptions.csproj", "{A08C513E-AAD1-4145-AED7-7B9258540A11}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Articles.Exceptions.Hanlder", "BuildingBlocks\Articles.Exceptions.Hanlder\Articles.Exceptions.Hanlder.csproj", "{950425E2-3761-463C-9A98-10B99DD30159}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Articles.System", "BuildingBlocks\Articles.System\Articles.System.csproj", "{A8925387-2F7F-4A5A-B5D8-4FF3A964A6AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blocks.Core", "BuildingBlocks\Articles.System\Blocks.Core.csproj", "{A8925387-2F7F-4A5A-B5D8-4FF3A964A6AE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Production.Domain", "Services\Production\Production.Domain\Production.Domain.csproj", "{AB92A3BE-5EB3-4F6E-B382-AEAF00B9ADE7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Articles.Entitities", "BuildingBlocks\Articles.Entitities\Articles.Entitities.csproj", "{C0C96231-8A2E-44CF-AA58-AFFB4A986E85}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blocks.Domain", "BuildingBlocks\Articles.Entitities\Blocks.Domain.csproj", "{C0C96231-8A2E-44CF-AA58-AFFB4A986E85}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Production.Persistence", "Services\Production\Production.Persistence\Production.Persistence.csproj", "{91B5D80C-2BDF-4CD1-87DE-57513C01526A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Production.Application", "Services\Production\Production.Application\Production.Application.csproj", "{63B808B0-FB44-4DCB-9BB1-E0C20C1C2869}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Articles.Settings", "BuildingBlocks\Articles.Settings\Articles.Settings.csproj", "{B35ADB4C-790C-44B4-A257-593328C839B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blocks.MediatR", "BuildingBlocks\Articles.MediatR\Blocks.MediatR.csproj", "{C715B632-DEB3-493E-9ACC-91A6CA799944}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Articles.MediatR", "BuildingBlocks\Articles.MediatR\Articles.MediatR.csproj", "{C715B632-DEB3-493E-9ACC-91A6CA799944}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Articles.AspNetCore", "BuildingBlocks\Articles.AspNetCore\Articles.AspNetCore.csproj", "{F7161139-4B9D-4212-93D6-616A5E896FFB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blocks.AspNetCore", "BuildingBlocks\Articles.AspNetCore\Blocks.AspNetCore.csproj", "{F7161139-4B9D-4212-93D6-616A5E896FFB}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{CED3B268-6093-4DCE-8CF9-65409BCFC71C}"
 EndProject
@@ -93,7 +91,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Journals.Domain", "Services
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Journals.Persistence", "Services\Journals\Journals.Persistence\Journals.Persistence.csproj", "{2B1673D3-F2F4-4B0F-9803-AB1732C86C5A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Articles.Redis", "BuildingBlocks\Articles.Redis\Articles.Redis.csproj", "{FDA3174B-D497-4BDA-B273-24C3C88C2C78}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blocks.Redis", "BuildingBlocks\Articles.Redis\Blocks.Redis.csproj", "{FDA3174B-D497-4BDA-B273-24C3C88C2C78}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Submission", "Submission", "{9C191986-D0AE-4646-87B0-5C581278CAA6}"
 EndProject
@@ -147,10 +145,6 @@ Global
 		{63B808B0-FB44-4DCB-9BB1-E0C20C1C2869}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63B808B0-FB44-4DCB-9BB1-E0C20C1C2869}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{63B808B0-FB44-4DCB-9BB1-E0C20C1C2869}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B35ADB4C-790C-44B4-A257-593328C839B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B35ADB4C-790C-44B4-A257-593328C839B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B35ADB4C-790C-44B4-A257-593328C839B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B35ADB4C-790C-44B4-A257-593328C839B6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C715B632-DEB3-493E-9ACC-91A6CA799944}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C715B632-DEB3-493E-9ACC-91A6CA799944}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C715B632-DEB3-493E-9ACC-91A6CA799944}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -278,7 +272,6 @@ Global
 		{C0C96231-8A2E-44CF-AA58-AFFB4A986E85} = {119E4BB2-4239-487F-B5F7-3BCED9AFF33C}
 		{91B5D80C-2BDF-4CD1-87DE-57513C01526A} = {68179B8F-37FF-46E9-BB88-5C4E3B2BF9E0}
 		{63B808B0-FB44-4DCB-9BB1-E0C20C1C2869} = {68179B8F-37FF-46E9-BB88-5C4E3B2BF9E0}
-		{B35ADB4C-790C-44B4-A257-593328C839B6} = {119E4BB2-4239-487F-B5F7-3BCED9AFF33C}
 		{C715B632-DEB3-493E-9ACC-91A6CA799944} = {119E4BB2-4239-487F-B5F7-3BCED9AFF33C}
 		{F7161139-4B9D-4212-93D6-616A5E896FFB} = {119E4BB2-4239-487F-B5F7-3BCED9AFF33C}
 		{CC955DE0-748B-4533-BC09-D2D6F49260FF} = {119E4BB2-4239-487F-B5F7-3BCED9AFF33C}

@@ -1,4 +1,4 @@
-﻿namespace Articles.AspNetCore;
+﻿namespace Blocks.AspNetCore;
 
 public interface IUserClaimsProvider
 {

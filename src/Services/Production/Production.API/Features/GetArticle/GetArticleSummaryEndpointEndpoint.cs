@@ -1,4 +1,4 @@
-﻿using Articles.Security;
+﻿using Blocks.Security;
 using FastEndpoints;
 using Mapster;
 using Microsoft.AspNetCore.Authorization;

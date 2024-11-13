@@ -1,6 +1,6 @@
-﻿using Articles.Domain;
+﻿using Blocks.Domain;
 
-namespace Articles.Entitities;
+namespace Blocks.Entitities;
 
 public interface IAggregateEntity : IAggregateEntity<int>
 {

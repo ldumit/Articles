@@ -1,4 +1,4 @@
-﻿namespace Articles.Security;
+﻿namespace Blocks.Security;
 
 public record JwtOptions
 {

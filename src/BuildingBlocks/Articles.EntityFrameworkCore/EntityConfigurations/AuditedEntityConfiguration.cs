@@ -1,8 +1,8 @@
-﻿using Articles.Entitities;
+﻿using Blocks.Entitities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Articles.EntityFrameworkCore;
+namespace Blocks.EntityFrameworkCore;
 
 public abstract class AuditedEntityConfiguration<T> : AuditedEntityConfiguration<T, int>
 	  where T : class, IEntity<int>, IAggregateEntity<int>

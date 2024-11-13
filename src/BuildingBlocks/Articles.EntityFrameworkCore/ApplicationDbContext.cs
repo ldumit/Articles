@@ -1,11 +1,11 @@
-﻿using Articles.Entitities;
-using Articles.System;
-using Articles.System.Cache;
+﻿using Blocks.Entitities;
+using Blocks.Core;
+using Blocks.Core.Cache;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace Articles.EntityFrameworkCore;
+namespace Blocks.EntityFrameworkCore;
 
 public class ApplicationDbContext<TDbContext>(DbContextOptions<TDbContext> _options, IMemoryCache _cache) : DbContext(_options)
 		where TDbContext : DbContext

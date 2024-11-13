@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Articles.System;
+namespace Blocks.Core;
 
 public static class JsonExtensions
 {

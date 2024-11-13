@@ -1,20 +1,19 @@
-﻿using Articles.Abstractions;
-using Microsoft.AspNetCore.Mvc.Filters;
+﻿using Microsoft.AspNetCore.Mvc.Filters;
 using System.Reflection;
+using Blocks.Domain;
 
-namespace Articles.AspNetCore;
-
+namespace Blocks.AspNetCore;
 
 //talk - cannot use filters with Minimal API or FastEnppoints
 public class AssignUserIdFilter(IClaimsProvider _claimsProvider) : IActionFilter
 {
 		public void OnActionExecuting(ActionExecutingContext context)
 		{
-				if (context.ActionArguments.TryGetValue("command", out var commandObj) && commandObj is IArticleAction command)
+				if (context.ActionArguments.TryGetValue("command", out var commandObj) && commandObj is IAction command)
 				{
 						var userId = _claimsProvider.GetUserId();
 
-						var userIdProperty = typeof(IArticleAction).GetProperty("UserId", BindingFlags.NonPublic | BindingFlags.Instance);
+						var userIdProperty = typeof(IAction).GetProperty("UserId", BindingFlags.NonPublic | BindingFlags.Instance);
 						userIdProperty?.SetValue(command, userId);
 				}
 		}

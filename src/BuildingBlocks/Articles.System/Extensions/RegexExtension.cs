@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Articles.System.Extensions;
+namespace Blocks.Core.Extensions;
 
 public static class RegexExtension
 {

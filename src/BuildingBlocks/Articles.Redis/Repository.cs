@@ -2,7 +2,7 @@
 using Redis.OM;
 using StackExchange.Redis;
 
-namespace Articles.Redis;
+namespace Blocks.Redis;
 
 public class Repository<T>
 		where T : Entity

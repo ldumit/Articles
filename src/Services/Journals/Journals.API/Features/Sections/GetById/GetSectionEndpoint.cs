@@ -2,7 +2,8 @@
 using Mapster;
 using Journals.Persistence;
 using Journals.API.Features.Shared;
-using Articles.Redis;
+using Blocks.Redis;
+using Blocks.Linq;
 
 namespace Journals.API.Features.Sections.GetById;
 

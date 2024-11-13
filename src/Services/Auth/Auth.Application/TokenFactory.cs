@@ -1,4 +1,4 @@
-﻿using Articles.System;
+﻿using Blocks.Core;
 using Auth.Application;
 using Auth.Domain.Models;
 using Microsoft.Extensions.Options;
@@ -9,7 +9,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Articles.Security;
+namespace Blocks.Security;
 
 public class TokenFactory
 {

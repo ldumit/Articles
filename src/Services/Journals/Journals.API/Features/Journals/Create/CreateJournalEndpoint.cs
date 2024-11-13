@@ -2,10 +2,10 @@
 using Mapster;
 using Journals.Domain.Entities;
 using Journals.API.Features.Shared;
-using Articles.Exceptions;
+using Blocks.Exceptions;
 using Microsoft.AspNetCore.Authorization;
-using Articles.Security;
-using Articles.Redis;
+using Blocks.Security;
+using Blocks.Redis;
 using Journals.Persistence;
 
 namespace Journals.API.Features.Journals.Create;

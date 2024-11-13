@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Articles.Abstractions;
-using Articles.EntityFrameworkCore;
+using Blocks.EntityFrameworkCore;
 using Submission.Application.Features.AssignAuthor;
 using Submission.Persistence.Repositories;
 
