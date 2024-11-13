@@ -25,12 +25,12 @@ public partial class Article
             );
     }
 
-    public void SetTypesetter(Typesetter typesetter, IArticleAction<ArticleActionType> action)
+    public void AssignTypesetter(Typesetter typesetter, IArticleAction<ArticleActionType> action)
     {
         if(this.Typesetter is not null)
 				    throw new TypesetterAlreadyAssignedException("Typesetter aldready assigned");
-        
-        Contributors.Add(new ArticleContributor() { PersonId = typesetter.Id, Role = UserRoleType.TSOF});
+
+				_contributors.Add(new ArticleContributor() { PersonId = typesetter.Id, Role = UserRoleType.TSOF});
 
         AddDomainEvent(new TypesetterAssignedDomainEvent(action, typesetter.Id, typesetter.UserId!.Value));
     }

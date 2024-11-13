@@ -1,7 +1,4 @@
-﻿using Articles.Security;
-using FastEndpoints;
-using Mapster;
-using Microsoft.AspNetCore.Authorization;
+﻿using Mapster;
 using Production.Application.Dtos;
 using Production.Persistence.Repositories;
 
@@ -11,12 +8,10 @@ namespace Production.API.Features.GetArticle;
 [HttpGet("articles/{articleId:int}/assets")]
 public class GetArticleAssetsEndpointEndpoint(ArticleRepository _articleRepository) : Endpoint<GetArticleAssetsQuery>
 {
-
 		public override async Task HandleAsync(GetArticleAssetsQuery command, CancellationToken ct)
 		{
-				var article = await _articleRepository.GetArticleWithAssetsById(command.ArticleId);
+				var article = await _articleRepository.GetArticleAssetsById(command.ArticleId);
 
 				await SendAsync(new GetArticleAssetsResponse(article.Assets.Adapt<IReadOnlyList<AssetDto>>()));
 		}
 }
-

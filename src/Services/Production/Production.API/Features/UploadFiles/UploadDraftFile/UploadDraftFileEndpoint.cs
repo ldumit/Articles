@@ -13,8 +13,8 @@ namespace Production.API.Features.UploadFiles.UploadDraftFile;
 [HttpPost("articles/{articleId:int}/assets/draft/files:upload")]
 [AllowFileUploads]
 [Tags("Files")]
-public class UploadDraftFileEndpoint(ArticleRepository articleRepository, AssetRepository assetRepository, IFileService fileService, AssetStateMachineFactory factory)
-		: UploadFileEndpoint<UploadDraftFileCommand>(articleRepository, assetRepository, fileService, factory)
+public class UploadDraftFileEndpoint(ArticleRepository articleRepository, AssetTypeRepository assetTypeRepository, IFileService fileService, AssetStateMachineFactory factory)
+		: UploadFileEndpoint<UploadDraftFileCommand>(articleRepository, assetTypeRepository, fileService, factory)
 {
 
 		protected override ArticleStage NextStage => ArticleStage.DraftProduction;

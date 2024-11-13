@@ -1,5 +1,4 @@
-﻿using Articles.Abstractions.Enums;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Production.Domain.Entities;
 
 namespace Production.Persistence.Repositories;
@@ -13,7 +12,7 @@ public class ArticleRepository(ProductionDbContext dbContext)
 						.Include(e => e.Contributors);
 		}
 
-		public async Task<Article> GetArticleWithAssetsById(int id, bool throwIfNotFound = true)
+		public async Task<Article> GetArticleAssetsById(int id, bool throwIfNotFound = true)
 		{
 				var article = await Entity
 						.Include(e => e.Assets)
@@ -38,37 +37,13 @@ public class ArticleRepository(ProductionDbContext dbContext)
 		{
 				var article = await Query()
 						 .Include(e => e.Assets)
-								 .ThenInclude(e => e.TypeRef)
+								 //.ThenInclude(e => e.TypeDefinition)
 						 .Include(e => e.Assets)
 								 .ThenInclude(e => e.CurrentFileLink)
 										.ThenInclude(e => e.File)
 
 						.SingleAsync(e => e.Id == id);
 				
-				return ReturnOrThrow(article, throwIfNotFound);
-		}
-
-		public async Task<Article> GetByIdWithSingleAssetAsync(int id, int assetId, bool throwIfNotFound = true)
-		{
-				var article = await Query()
-						 .Include(e => e.Assets.Where(e => e.Id == assetId))
-								 .ThenInclude(e => e.CurrentFileLink)
-										.ThenInclude(e => e.File)
-						.SingleAsync(e => e.Id == id);
-
-				return ReturnOrThrow(article, throwIfNotFound);
-		}
-
-		public async Task<Article> GetByIdWithSingleAssetAsync(int id, AssetType assetType, byte assetNumber, bool throwIfNotFound = true)
-		{
-				var article = await Query()
-						 .Include(e => e.Assets.Where(e => e.Type == assetType && e.Number.Value == assetNumber))
-								 .ThenInclude(e => e.CurrentFileLink)
-										.ThenInclude(e => e.File)
-						.Include(e => e.Assets)
-								.ThenInclude(e => e.TypeRef)
-						.SingleAsync(e => e.Id == id);
-
 				return ReturnOrThrow(article, throwIfNotFound);
 		}
 }

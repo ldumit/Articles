@@ -6,10 +6,10 @@ using Production.Persistence.Repositories;
 
 namespace Production.API.Features.RequestFiles.AuthorFiles;
 
-[Authorize(Roles = "TSOF")]
+[Authorize(Roles = Role.TSOF)]
 [HttpPut("articles/{articleId:int}/assets/supplementary:request")]
 [Tags("Assets")]
-public class RequestSupplementaryAssetsEndpoint(ArticleRepository articleRepository, AssetRepository assetRepository, AssetStateMachineFactory factory)
-    : RequestAssetsEndpointBase<RequestSupplementaryAssetsCommand>(articleRepository, assetRepository, factory)
+public class RequestSupplementaryAssetsEndpoint(ArticleRepository articleRepository, AssetTypeRepository assetTypeRepository, AssetStateMachineFactory factory)
+    : RequestAssetsEndpointBase<RequestSupplementaryAssetsCommand>(articleRepository, assetTypeRepository, factory)
 {
 }

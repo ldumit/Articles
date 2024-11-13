@@ -15,7 +15,7 @@ public interface IAssetActionResponse
 }
 
 
-public abstract record AssetActionCommand<TResponse> : AssetCommand<TResponse>, IAssetActionCommand, IRequest<TResponse>
+public abstract record AssetActionCommand<TResponse> : AssetCommand<TResponse>, IAssetActionCommand
         where TResponse : IAssetActionResponse
 {
     internal int FileId { get; set; }

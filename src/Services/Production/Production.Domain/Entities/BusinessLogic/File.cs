@@ -7,10 +7,10 @@ public partial class File
 {
     private File(){/* use factory method*/}
 
-    public static File CreateFile(UploadResponse uploadResponse, Asset asset)
+    public static File CreateFile(UploadResponse uploadResponse, Asset asset, AssetTypeDefinition assetTypeDefinition)
 		{
 				var fileName = Path.GetFileName(uploadResponse.FilePath);
-				var extension = FileExtension.FromFileName(fileName, asset.TypeRef);
+				var extension = FileExtension.FromFileName(fileName, assetTypeDefinition);
 
 				var file = new File()
 				{

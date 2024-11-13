@@ -43,7 +43,7 @@ internal class AssetEntityConfiguration : AuditedEntityConfiguration<Asset>
             .HasForeignKey(d => d.ArticleId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasOne(e => e.TypeRef).WithMany()
+        builder.HasOne(e => e.TypeDefinition).WithMany()
             .HasForeignKey(e => e.Type)
             .HasPrincipalKey(e => e.Name)
             .IsRequired();

@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 
 namespace Production.API.Features.Shared;
 
-public abstract record ArticleCommand<TActionType, TResponse> : IArticleAction<TActionType>, IRequest<TResponse>
+public abstract record ArticleCommand<TActionType, TResponse> : IArticleAction<TActionType>
     where TActionType : Enum
 {
     public int ArticleId { get; set; }
@@ -31,11 +31,9 @@ public abstract record ArticleCommand<TActionType, TResponse> : IArticleAction<T
     //ActionType Domain.IArticleAction.ActionType => ActionType.AssignTypesetter;
 }
 
-public abstract record ArticleCommand : ArticleCommand<ArticleActionType, ArticleCommandResponse>;
+public abstract record ArticleCommand : ArticleCommand<ArticleActionType, IdResponse>;
 public abstract record ArticleCommand<TResponse> : ArticleCommand<ArticleActionType, TResponse>;
 public abstract record AssetCommand<TResponse> : ArticleCommand<AssetActionType, TResponse>;
-
-public record ArticleCommandResponse(int ArticleId);
 
 public abstract class ArticleCommandValidator<TFileActionCommand> : BaseValidator<TFileActionCommand>
     where TFileActionCommand : IArticleAction

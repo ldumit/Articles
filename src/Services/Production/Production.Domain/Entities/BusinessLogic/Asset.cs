@@ -39,7 +39,7 @@ public partial class Asset
 						Number = AssetNumber.FromNumber(assetNumber, type),
 						Name = AssetName.FromAssetType(type),
 						Type = type.Name,
-						TypeRef = type,
+						//TypeDefinition = type,
 						CategoryId = type.DefaultCategoryId,
 						State = AssetState.None
 				};
@@ -64,9 +64,9 @@ public partial class Asset
 				AddAction(action);
 		}
 
-		public File CreateAndAddFile(UploadResponse uploadResponse)
+		public File CreateAndAddFile(UploadResponse uploadResponse, AssetTypeDefinition assetTypeDefinition)
 		{
-				var file = File.CreateFile(uploadResponse, this);
+				var file = File.CreateFile(uploadResponse, this, assetTypeDefinition);
 
 				_files.Add(file);
 				CurrentFileLink = new AssetCurrentFileLink() { File = file };

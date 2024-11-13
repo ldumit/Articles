@@ -1,4 +1,5 @@
-﻿using Mapster;
+﻿using Articles.Abstractions.Enums;
+using Mapster;
 using Production.API.Features.Shared;
 using Production.Application.Dtos;
 using Production.Application.StateMachines;
@@ -8,8 +9,8 @@ using Production.Persistence.Repositories;
 
 namespace Production.API.Features.RequestFiles.Shared;
 
-public class RequestAssetsEndpointBase<TCommand>(ArticleRepository _articleRepository, AssetRepository assetRepository, AssetStateMachineFactory factory)
-    : AssetBaseEndpoint<TCommand, RequestAssetsResponse>(assetRepository, factory)
+public class RequestAssetsEndpointBase<TCommand>(ArticleRepository _articleRepository, AssetTypeRepository assetTypeRepository, AssetStateMachineFactory factory)
+    : AssetBaseEndpoint<TCommand, RequestAssetsResponse>(assetTypeRepository, factory)
     where TCommand : RequestMultipleAssetsCommand
 {
     public async override Task HandleAsync(TCommand command, CancellationToken cancellationToken)

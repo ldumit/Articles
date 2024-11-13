@@ -13,6 +13,8 @@ public record AssignTypesetterCommand : ArticleCommand
 		public override ArticleActionType ActionType => ArticleActionType.AssignTypesetter;
 }
 
+//todo - add validation for all commands following the Submission approach
+//todo - remove Action validation from all commands, it will be executed in the handlers or aggregates
 public class AssignTypesetterCommandValidator : ArticleCommandValidator<AssignTypesetterCommand>
 {
 		public AssignTypesetterCommandValidator()

@@ -10,19 +10,23 @@ using Production.Domain.Enums;
 namespace Production.API.Features.UploadFiles.Shared;
 
 public class UploadFileEndpoint<TUploadCommand>
-    (ArticleRepository _articleRepository, AssetRepository assetRepository, IFileService _fileService, AssetStateMachineFactory factory)
-    : AssetBaseEndpoint<TUploadCommand, AssetActionResponse>(assetRepository, factory)
+    (ArticleRepository articleRepository, AssetTypeRepository assetTypeRepository, IFileService fileService, AssetStateMachineFactory factory)
+    : AssetBaseEndpoint<TUploadCommand, AssetActionResponse>(assetTypeRepository, factory)
     where TUploadCommand : UploadFileCommand
 {
 		//talk - readonly fields in primary constructors are not supported yet but they will be
+		protected readonly ArticleRepository _articleRepository = articleRepository;
+		protected readonly IFileService _fileService = fileService;
+
 		public async override Task HandleAsync(TUploadCommand command, CancellationToken ct)
     {
         //_article = await _articleRepository.GetByIdWithSingleAssetAsync(command.ArticleId, command.AssetType, command.GetAssetNumber());
 				_article = await _articleRepository.GetByIdWithAssetsAsync(command.ArticleId);
+				var assetType = _assetTypeRepository.GetById(command.AssetType);
 
 				var asset = _article.Assets.SingleOrDefault(a => a.Type == command.AssetType && a.Number == command.GetAssetNumber());
 				if (asset is null)
-						asset = CreateAsset(command.AssetType, command.GetAssetNumber());
+						asset = _article.CreateAsset(assetType, command.GetAssetNumber());
 
 				CheckAndThrowStateTransition(asset, command.ActionType);
 				asset.SetState(AssetState.Uploaded, command);
@@ -30,7 +34,7 @@ public class UploadFileEndpoint<TUploadCommand>
 				var uploadResponse = await UploadFile(command, asset);
 				try
 				{
-						asset.CreateAndAddFile(uploadResponse);
+						asset.CreateAndAddFile(uploadResponse, assetType);
 
             _article.SetStage(NextStage, command);
 

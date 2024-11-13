@@ -1,6 +1,4 @@
-﻿using FastEndpoints;
-using Articles.Exceptions;
-using Articles.Abstractions;
+﻿using Articles.Exceptions;
 using Articles.Abstractions.Enums;
 using Production.Domain.Entities;
 using Production.Application.StateMachines;
@@ -9,11 +7,11 @@ using Production.Persistence.Repositories;
 
 namespace Production.API.Features.Shared;
 
-public abstract class AssetBaseEndpoint<TCommand, TResponse>(AssetRepository assetRepository, AssetStateMachineFactory stateMachineFactory)
+public abstract class AssetBaseEndpoint<TCommand, TResponse>(AssetTypeRepository assetTypeRepository, AssetStateMachineFactory stateMachineFactory)
 		: Endpoint<TCommand, TResponse>
 		where TCommand : IArticleAction
 {
-		protected readonly AssetRepository _assetRepository = assetRepository;
+		protected readonly AssetTypeRepository _assetTypeRepository = assetTypeRepository;
 		protected readonly AssetStateMachineFactory _stateMachineFactory = stateMachineFactory;
 		protected Article _article = null!;
 
@@ -27,7 +25,7 @@ public abstract class AssetBaseEndpoint<TCommand, TResponse>(AssetRepository ass
 
 		protected Asset CreateAsset(AssetType assetType, byte assetNumber)
 		{
-				var assetTypeEntity = _assetRepository.GetAssetType(assetType);
+				var assetTypeEntity = _assetTypeRepository.GetById(assetType);
 				return _article.CreateAsset(assetTypeEntity, assetNumber);
 		}
 }
