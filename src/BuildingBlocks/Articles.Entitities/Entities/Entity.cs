@@ -11,8 +11,7 @@ public interface IEntity : IEntity<int>
 public interface IEntity<TPrimaryKey> : IDomainObject
     where TPrimaryKey : struct
 {
-    TPrimaryKey Id { get; set; }
-    //bool IsTransient();
+    TPrimaryKey Id { get; }
 }
 
 public abstract class Entity : Entity<int>, IEntity
@@ -22,7 +21,7 @@ public abstract class Entity : Entity<int>, IEntity
 public abstract class Entity<TPrimaryKey> : IEntity<TPrimaryKey>, IEquatable<Entity<TPrimaryKey>>
 		where TPrimaryKey : struct
 {
-    public virtual TPrimaryKey Id { get; set; }
+    public virtual TPrimaryKey Id { get; init; }
 
     public virtual bool IsNew => EqualityComparer<TPrimaryKey>.Default.Equals(Id, default);
 

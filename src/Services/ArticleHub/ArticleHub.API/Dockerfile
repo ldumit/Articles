@@ -1,0 +1,36 @@
+#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+USER app
+WORKDIR /app
+EXPOSE 8080
+EXPOSE 8081
+
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+ARG BUILD_CONFIGURATION=Release
+WORKDIR /src
+COPY ["Services/ArticleHub/ArticleHub.API/ArticleHub.API.csproj", "Services/ArticleHub/ArticleHub.API/"]
+COPY ["Services/ArticleHub/ArticleHub.Application/ArticleHub.Application.csproj", "Services/ArticleHub/ArticleHub.Application/"]
+COPY ["Services/ArticleHub/ArticleHub.Persistence/ArticleHub.Persistence.csproj", "Services/ArticleHub/ArticleHub.Persistence/"]
+COPY ["Services/ArticleHub/ArticleHub.Domain/ArticleHub.Domain.csproj", "Services/ArticleHub/ArticleHub.Domain/"]
+COPY ["BuildingBlocks/Articles.AspNetCore/Articles.AspNetCore.csproj", "BuildingBlocks/Articles.AspNetCore/"]
+COPY ["BuildingBlocks/Articles.AspNetCore/Articles.Entitities.csproj", "BuildingBlocks/Articles.Entitities/"]
+COPY ["BuildingBlocks/Articles.AspNetCore/Articles.EntityFrameworkCore.csproj", "BuildingBlocks/Articles.EntityFrameworkCore/"]
+COPY ["BuildingBlocks/Articles.AspNetCore/Articles.Exceptions.csproj", "BuildingBlocks/Articles.Exceptions/"]
+COPY ["BuildingBlocks/Articles.AspNetCore/Articles.Exceptions.Hanlder.csproj", "BuildingBlocks/Articles.Exceptions.Hanlder/"]
+COPY ["BuildingBlocks/Articles.AspNetCore/Articles.MediatR.csproj", "BuildingBlocks/Articles.MediatR/"]
+COPY ["BuildingBlocks/Articles.AspNetCore/Articles.Settings.csproj", "BuildingBlocks/Articles.Settings/"]
+COPY ["BuildingBlocks/Articles.AspNetCore/Articles.System.csproj", "BuildingBlocks/Articles.System/"]
+RUN dotnet restore "./Services/ArticleHub/ArticleHub.API/ArticleHub.API.csproj"
+COPY . .
+WORKDIR "/src/Services/ArticleHub/ArticleHub.API"
+RUN dotnet build "./ArticleHub.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
+
+FROM build AS publish
+ARG BUILD_CONFIGURATION=Release
+RUN dotnet publish "./ArticleHub.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "ArticleHub.API.dll"]

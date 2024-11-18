@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>0910c021-06de-42e2-84eb-38313ff33764</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..\..</DockerfileContext>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GraphQL.Client" Version="6.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.10" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.6" />
+    <PackageReference Include="StrawberryShake" Version="14.1.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.8.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ArticleHub.Persistence\ArticleHub.Persistence.csproj" />
+  </ItemGroup>
+
+</Project>

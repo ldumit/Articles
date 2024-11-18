@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Blocks.Core;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Blocks.AspNetCore;
@@ -14,8 +15,11 @@ public static class ConfigurationExtensions
 				return services.Configure<TOptions>(section);
 		}
 
-		public static T? GetByTypeName<T>(this IConfiguration configuration)
+		public static T GetByTypeName<T>(this IConfiguration configuration)
 		{
-				return configuration.GetSection(typeof(T).Name).Get<T>();
+				var sectionName = typeof(T).Name;
+				var section = configuration.GetSection(sectionName).Get<T>()!;
+
+				return Guard.AgainstNull(section, sectionName);
 		}
 }
