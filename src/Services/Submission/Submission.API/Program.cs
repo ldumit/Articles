@@ -1,53 +1,26 @@
-using Blocks.Security;
 using Submission.Application;
 using Blocks.EntityFrameworkCore;
 using Submission.Persistence;
 using Blocks.AspNetCore;
-using Azure.Storage.Blobs;
-using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Http.Json;
-using ArticleTimeline.Persistence;
-using ArticleTimeline.Application;
 using Submission.API.Endpoints;
+using Submission.API;
+using Submission.Persistence.Data.Test;
 
 var builder = WebApplication.CreateBuilder(args);
 
 #region Add
 builder.Services
-		.ConfigureOptions<FileStorage.Contracts.FileServerOptions>(builder.Configuration)
-		.ConfigureOptions<TransactionOptions>(builder.Configuration)
-		.Configure<JsonOptions>(opt =>
-		{
-				opt.SerializerOptions.PropertyNameCaseInsensitive = true;
-				opt.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
-		});
+		.ConfigureApiOptions(builder.Configuration);				// Configure Options
 
-
-//talk - fluid vs normal
 builder.Services
-		.AddMemoryCache()
-		.AddMapster()
-		.AddHttpContextAccessor()
-		.AddApplicationServices(builder.Configuration)  // Register application-specific services first
-		.AddJwtAuthentication(builder.Configuration)
-		.AddAuthorization()                            // Authorization immediately after authentication
-		.AddEndpointsApiExplorer()                     // Minimal api for Swagger
-		.AddSwaggerGen()
-		//todo - decide how to split the required services between the projects
-		//.AddMediatR(config =>
-		//{
-		//		config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
-		//		config.AddOpenBehavior(typeof(SetUserIdBehavior<,>));
-		//		//config.AddOpenBehavior(typeof(ValidationBehavior<,>));
-		//		//config.AddOpenBehavior(typeof(LoggingBehavior<,>));
-		//})
-		.AddSingleton(x => new BlobServiceClient(builder.Configuration.GetConnectionString("FileServer")));
+		.AddApiServices(builder.Configuration)							// Register API-specific services
+		.AddApplicationServices(builder.Configuration)			// Register application-specific services (e.g., services for business logic)
+		.AddPersistenceServices(builder.Configuration);
 #endregion
 
 var app = builder.Build();
 
 #region Use
-
 app
 		.UseSwagger()
 		.UseSwaggerUI()

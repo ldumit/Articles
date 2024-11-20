@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 
-namespace Blocks.Security;
+namespace Articles.Security;
 
 public static class Extensions
 {

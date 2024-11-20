@@ -415,14 +415,14 @@ namespace Submission.Persistence.Migrations
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
-                    b.Property<string>("PersonType")
-                        .IsRequired()
-                        .HasMaxLength(8)
-                        .HasColumnType("nvarchar(8)");
-
                     b.Property<string>("Title")
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("TypeDiscriminator")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
 
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
@@ -447,7 +447,7 @@ namespace Submission.Persistence.Migrations
 
                     b.ToTable("Person", (string)null);
 
-                    b.HasDiscriminator<string>("PersonType").HasValue("Person");
+                    b.HasDiscriminator<string>("TypeDiscriminator").HasValue("Person");
 
                     b.UseTphMappingStrategy();
                 });

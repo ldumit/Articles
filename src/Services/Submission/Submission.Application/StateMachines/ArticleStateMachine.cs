@@ -1,9 +1,11 @@
 ﻿using Stateless;
+using Blocks.Core.Cache;
 using Articles.Abstractions.Enums;
 using Submission.Domain.Entities;
 using Submission.Domain.Enums;
 using Submission.Persistence;
 using Submission.Domain.StateMachines;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Submission.Application.StateMachines;
 
@@ -11,11 +13,10 @@ namespace Submission.Application.StateMachines;
 public class ArticleStateMachine : IArticleStateMachine
 {
 		private StateMachine<ArticleStage, ArticleActionType> _stateMachine;
-
-		public ArticleStateMachine(ArticleStage articleStage, SubmissionDbContext _dbContext)
-    {
-				 _stateMachine = new(articleStage);
-				var transitions = _dbContext.GetAllCached<ArticleStageTransition>();
+		public ArticleStateMachine(ArticleStage articleStage, IMemoryCache cache)
+		{
+				_stateMachine = new(articleStage);
+				var transitions = cache.Get<List<ArticleStageTransition>>();
 
 				foreach (var transition in transitions)
 				{
@@ -23,6 +24,19 @@ public class ArticleStateMachine : IArticleStateMachine
 								.Permit(transition.ActionType, transition.DestinationStage);
 				}
 		}
+
+
+		//public ArticleStateMachine(ArticleStage articleStage, SubmissionDbContext dbContext)
+  //  {
+		//		 _stateMachine = new(articleStage);
+		//		var transitions = dbContext.GetAllCached<ArticleStageTransition>();
+
+		//		foreach (var transition in transitions)
+		//		{
+		//				_stateMachine.Configure(transition.CurrentStage)
+		//						.Permit(transition.ActionType, transition.DestinationStage);
+		//		}
+		//}
 
 		public bool CanFire(ArticleActionType actionType)
 		{

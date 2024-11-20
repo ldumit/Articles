@@ -11,8 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.Exceptions\Blocks.Exceptions.csproj" />
-    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.Redis\Blocks.Redis.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Blocks.Exceptions\Blocks.Exceptions.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Blocks.Redis\Blocks.Redis.csproj" />
     <ProjectReference Include="..\Journals.Domain\Journals.Domain.csproj" />
   </ItemGroup>
 

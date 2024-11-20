@@ -1,13 +1,13 @@
 using Auth.API;
-using Blocks.Security;
+using Articles.Security;
 using FastEndpoints;
 using Auth.Application;
 using Blocks.EntityFrameworkCore;
 using Auth.Persistence;
 using System.Reflection;
-//using EmailService.SendGrid;
 using EmailService.Contracts;
 using Blocks.AspNetCore;
+using Blocks.Core;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http.Json;
 

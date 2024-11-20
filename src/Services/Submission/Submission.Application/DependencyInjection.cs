@@ -1,97 +1,50 @@
-﻿using Blocks.AspNetCore;
-using Blocks.EntityFrameworkCore;
-using Blocks.MediatR.Behaviours;
-using Blocks.Security;
-using Blocks.Core;
+﻿using Blocks.MediatR.Behaviours;
 using FileStorage.AzureBlob;
 using FileStorage.Contracts;
 using FluentValidation;
-using Mapster;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
+using Blocks.Mapster;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Submission.Application.Features.CreateArticle;
 using Submission.Application.StateMachines;
 using Submission.Domain.StateMachines;
-using Submission.Persistence;
-using Submission.Persistence.Repositories;
-using System.Data.Common;
 using System.Reflection;
+using Microsoft.Extensions.Caching.Memory;
+using Submission.Application.Dtos;
+using Azure.Storage.Blobs;
 
 namespace Submission.Application;
 public static class DependencyInjection
 {
     public static IServiceCollection AddApplicationServices (this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("Database");
+				//talk - fluid vs normal
+				services
+						.AddMemoryCache()                       // Basic Caching 
+						.AddMapster()                           // Scanning for mapping registration
+						.AddMapsterFromAssemblyContaining<MappingConfig>()                      // Register Mapster mappings
+						.AddValidatorsFromAssemblyContaining<CreateArticleCommandValidator>()		// Register Fluent validators as transient
+						.AddMediatR(config =>
+						{
+								config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
 
-				services.AddValidatorsFromAssemblyContaining<CreateArticleCommandValidator>(); // Register all validators as transient
-				services.AddMediatR(config =>
-				{
-						config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
-
-						config.AddOpenBehavior(typeof(SetUserIdBehavior<,>));
-						config.AddOpenBehavior(typeof(ValidationBehavior<,>));
-						//config.AddOpenBehavior(typeof(LoggingBehavior<,>));
-				});
-
-				//services.AddFeatureManagement();
-				//services.AddMessageBroker(configuration, Assembly.GetExecutingAssembly());
-
-
-				services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
-
-				// decide if we need the same DBConnection/Transaction when we are saving the Timeline
-				services.AddScoped<DbConnection>(provider =>
-				{
-						return new SqlConnection(connectionString);
-				});
-				services.AddDbContext<SubmissionDbContext>((provider, options) =>
-				{
-						var dbConnection = provider.GetRequiredService<DbConnection>();
-						options.AddInterceptors(provider.GetServices<ISaveChangesInterceptor>());
-						options.UseSqlServer(dbConnection);
-				});
+								config.AddOpenBehavior(typeof(SetUserIdBehavior<,>));
+								config.AddOpenBehavior(typeof(ValidationBehavior<,>));
+								//config.AddOpenBehavior(typeof(LoggingBehavior<,>));
+						});
 				
-				services.AddScoped<TransactionProvider>();
+				services.AddSingleton(x => new BlobServiceClient(configuration.GetConnectionString("FileServer")));
 
-				#region Authorization
-				services.AddScoped<IAuthorizationHandler, ArticleRoleAuthorizationHandler>();
-				services.AddScoped<IArticleRoleChecker, ContributorRepository>();
-
-				services.AddScoped<IClaimsProvider, HttpContextProvider>();
-				services.AddScoped<IRouteProvider, HttpContextProvider>();
-				services.AddScoped<HttpContextProvider>();
-
-				#endregion
-				services.AddScoped(typeof(Repository<>));
-				services.AddScoped<ArticleRepository>();
-				services.AddScoped<AssetRepository>();
-				services.AddScoped<AssetTypeRepository>();
-				services.AddScoped<PersonRepository>();
-
-				services.AddScoped<IThreadSafeMemoryCache, MemoryCache>();
+				//services.AddScoped<IThreadSafeMemoryCache, MemoryCache>();
 				services.AddScoped<IFileService, FileService>();
-				//services.AddArticleTimelineVariableResolvers();
-
-				//services.AddScoped<IEventHandler<ArticleStageChangedDomainEvent>, AddTimelineWhenArticleStageChangedEventHandler>();
-				//services.AddEventHandlersFromAssembly(typeof(AddTimelineWhenArticleStageChangedEventHandler).Assembly);			
 
 				services.AddScoped<ArticleStateMachineFactory>(provider => articleStage =>
 				{
-						var dbConntext = provider.GetRequiredService<SubmissionDbContext>();
-						return new ArticleStateMachine(articleStage, dbConntext);
+						//var dbConntext = provider.GetRequiredService<SubmissionDbContext>();
+						var cache = provider.GetRequiredService<IMemoryCache>();
+						return new ArticleStateMachine(articleStage, cache);
 				});
 
 				return services;
     }
-		public static IServiceCollection AddMapster(this IServiceCollection services)
-		{
-				TypeAdapterConfig.GlobalSettings.Scan(Assembly.GetExecutingAssembly()!);
-
-				return services;
-		}
 }

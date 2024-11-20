@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using FastEndpoints;
 using Mapster;
-using Blocks.Security;
+using Articles.Security;
 using Blocks.Redis;
 using Blocks.Linq;
 using Journals.Domain.Entities;

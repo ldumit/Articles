@@ -10,18 +10,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Services/ArticleHub/ArticleHub.API/ArticleHub.API.csproj", "Services/ArticleHub/ArticleHub.API/"]
-COPY ["Services/ArticleHub/ArticleHub.Application/ArticleHub.Application.csproj", "Services/ArticleHub/ArticleHub.Application/"]
-COPY ["Services/ArticleHub/ArticleHub.Persistence/ArticleHub.Persistence.csproj", "Services/ArticleHub/ArticleHub.Persistence/"]
-COPY ["Services/ArticleHub/ArticleHub.Domain/ArticleHub.Domain.csproj", "Services/ArticleHub/ArticleHub.Domain/"]
-COPY ["BuildingBlocks/Articles.AspNetCore/Articles.AspNetCore.csproj", "BuildingBlocks/Articles.AspNetCore/"]
-COPY ["BuildingBlocks/Articles.AspNetCore/Articles.Entitities.csproj", "BuildingBlocks/Articles.Entitities/"]
-COPY ["BuildingBlocks/Articles.AspNetCore/Articles.EntityFrameworkCore.csproj", "BuildingBlocks/Articles.EntityFrameworkCore/"]
-COPY ["BuildingBlocks/Articles.AspNetCore/Articles.Exceptions.csproj", "BuildingBlocks/Articles.Exceptions/"]
-COPY ["BuildingBlocks/Articles.AspNetCore/Articles.Exceptions.Hanlder.csproj", "BuildingBlocks/Articles.Exceptions.Hanlder/"]
-COPY ["BuildingBlocks/Articles.AspNetCore/Articles.MediatR.csproj", "BuildingBlocks/Articles.MediatR/"]
-COPY ["BuildingBlocks/Articles.AspNetCore/Articles.Settings.csproj", "BuildingBlocks/Articles.Settings/"]
-COPY ["BuildingBlocks/Articles.AspNetCore/Articles.System.csproj", "BuildingBlocks/Articles.System/"]
-RUN dotnet restore "./Services/ArticleHub/ArticleHub.API/ArticleHub.API.csproj"
+RUN dotnet restore 
 COPY . .
 WORKDIR "/src/Services/ArticleHub/ArticleHub.API"
 RUN dotnet build "./ArticleHub.API.csproj" -c $BUILD_CONFIGURATION -o /app/build

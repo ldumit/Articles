@@ -9,6 +9,8 @@ using Blocks.Core;
 
 namespace Auth.Application;
 
+// todo : move to Persistence project
+// todo : create Data > Master/Test folder structure and move json files there
 public static class Seed
 {
     public static void SeedTestData(this IHost host)

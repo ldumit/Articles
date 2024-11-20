@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Submission.Domain.Entities;
 using Blocks.EntityFrameworkCore;
-using Blocks.Security;
+using Articles.Security;
 
 namespace Submission.Persistence.EntityConfigurations;
 

@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using GraphQL.Client.Http;
 using GraphQL.Client.Serializer.SystemTextJson;
-using Blocks.AspNetCore;
+using Blocks.Core;
 
 namespace ArticleHub.Persistence;
 
@@ -17,7 +17,7 @@ public static class DependencyInjection
 				var hasuraOptions = configuration.GetByTypeName<HasuraOptions>();
 
 				services.AddDbContext<ArticleHubDbContext>(options 
-						=> options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+						=> options.UseNpgsql(configuration.GetConnectionString("Database")));
 
 				services.AddSingleton(_ =>
 				{
@@ -40,6 +40,9 @@ public static class DependencyInjection
 
 						return graphQLHttpClient;
 				});
+
+				services.AddScoped<ArticleGraphQLQuery>();
+				services.AddScoped<ArticleRepository>();
 
 				return services;
 		}

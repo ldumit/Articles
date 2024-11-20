@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MediatR;
-using Blocks.Security;
+using Articles.Security;
 using Submission.Application.Features.ApproveArticle;
 
 namespace Submission.API.Endpoints;

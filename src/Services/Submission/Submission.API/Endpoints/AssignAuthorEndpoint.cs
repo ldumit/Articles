@@ -1,7 +1,6 @@
-﻿using Blocks.Security;
-using MediatR;
+﻿using MediatR;
+using Articles.Security;
 using Submission.Application.Features.AssignAuthor;
-using Submission.Application.Features.Shared;
 
 namespace Submission.API.Endpoints;
 

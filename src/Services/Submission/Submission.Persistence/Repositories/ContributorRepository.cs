@@ -1,4 +1,4 @@
-﻿using Blocks.Security;
+﻿using Articles.Security;
 using Blocks.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;

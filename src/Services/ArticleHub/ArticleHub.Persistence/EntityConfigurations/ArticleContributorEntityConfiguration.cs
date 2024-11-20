@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using Blocks.EntityFrameworkCore;
-using Blocks.Security;
+using Articles.Security;
 using ArticleHub.Domain;
 
 namespace ArticleHub.Persistence.EntityConfigurations;

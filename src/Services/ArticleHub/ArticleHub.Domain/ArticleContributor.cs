@@ -1,4 +1,4 @@
-﻿using Blocks.Security;
+﻿using Articles.Security;
 
 namespace ArticleHub.Domain;
 

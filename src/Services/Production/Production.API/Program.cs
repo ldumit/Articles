@@ -1,14 +1,12 @@
-using Blocks.Security;
-using FastEndpoints;
 using Production.Application;
 using Blocks.EntityFrameworkCore;
 using Production.Persistence;
-using Blocks.AspNetCore;
 using Azure.Storage.Blobs;
 using System.Text.Json.Serialization;
 using FastEndpoints.Swagger;
 using Microsoft.AspNetCore.Http.Json;
 using Blocks.FastEnpoints;
+using Blocks.Core;
 using System.Reflection;
 using ArticleTimeline.Persistence;
 using ArticleTimeline.Application;

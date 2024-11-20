@@ -24,21 +24,21 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.EntityFrameworkCore\Blocks.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Blocks.EntityFrameworkCore\Blocks.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Submission.Domain\Submission.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="MasterData\ArticleStageTransition.json">
+    <None Update="Data\Master\ArticleStageTransition.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="MasterData\Stage.json">
+    <None Update="Data\Master\Stage.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="TestData\Journal.json">
+    <None Update="Data\Test\Journal.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="TestData\Author.json">
+    <None Update="Data\Test\Author.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

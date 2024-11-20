@@ -1,7 +1,7 @@
 ﻿using Articles.Abstractions;
 using Articles.Abstractions.Enums;
 using Blocks.Domain;
-using Blocks.Security;
+using Articles.Security;
 using Production.Domain.Enums;
 using Production.Domain.Events;
 

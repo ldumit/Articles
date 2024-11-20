@@ -1,6 +1,6 @@
 ﻿using Blocks.AspNetCore;
 using Blocks.EntityFrameworkCore;
-using Blocks.Security;
+using Articles.Security;
 using Blocks.Core;
 using ArticleTimeline.Application.EventHandlers;
 using ArticleTimeline.Application.VariableResolvers;
@@ -80,7 +80,7 @@ public static class DependencyInjection
 				services.AddScoped<AssetTypeRepository>();
 				services.AddScoped<FileRepository>();
 
-				services.AddScoped<IThreadSafeMemoryCache, MemoryCache>();
+				services.AddScoped<IThreadSafeMemoryCache, ThreadSafeMemoryCache>();
 				services.AddScoped<IFileService, FileService>();
 				services.AddArticleTimelineVariableResolvers();
 

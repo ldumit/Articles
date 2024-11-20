@@ -1,4 +1,4 @@
-﻿using Blocks.Security;
+﻿using Articles.Security;
 using Microsoft.Extensions.Options;
 
 namespace Auth.API;

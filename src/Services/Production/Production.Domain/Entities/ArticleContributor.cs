@@ -1,5 +1,5 @@
 ﻿using Blocks.Entitities;
-using Blocks.Security;
+using Articles.Security;
 
 namespace Production.Domain.Entities
 {

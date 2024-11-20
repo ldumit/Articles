@@ -1,7 +1,7 @@
 [
   {
     "UserId": 1,
-    "PersonType": "Person",
+    "TypeDiscriminator": "Person",
     "FirstName": "Laurentiu",
     "LastName": "Dumitrescu",
     "Title": "Mr",
@@ -9,7 +9,7 @@
   },
   {
     "UserId": 2,
-    "PersonType": "Author",
+    "TypeDiscriminator": "Author",
     "FirstName": "Author",
     "LastName": "1",
     "Title": "Mr",
@@ -17,7 +17,7 @@
     "Affiliation": "Japan Aerospace Exploration Agency (JAXA)"  },
   {
     "UserId": 3,
-    "PersonType": "Author",
+    "TypeDiscriminator": "Author",
     "FirstName": "Author",
     "LastName": "2",
     "Title": "Ms",
@@ -26,7 +26,7 @@
   },
   {
     "UserId": 4,
-    "PersonType": "Author",
+    "TypeDiscriminator": "Author",
     "FirstName": "Author",
     "LastName": "3",
     "Title": "Dr",
@@ -35,7 +35,7 @@
   },
   {
     "UserId":5,
-    "PersonType": "Author",
+    "TypeDiscriminator": "Author",
     "FirstName": "Co-Author",
     "LastName": "1",
     "Title": "Ms",
@@ -44,7 +44,7 @@
   },
   {
     "UserId": 6,
-    "PersonType": "Author",
+    "TypeDiscriminator": "Author",
     "FirstName": "Co-Author",
     "LastName": "2",
     "Title": "Mr",
@@ -53,7 +53,7 @@
   },
   {
     "UserId": 7,
-    "PersonType": "Typesetter",
+    "TypeDiscriminator": "Typesetter",
     "FirstName": "Typesetter",
     "LastName": "1",
     "Title": "Mr",
@@ -63,7 +63,7 @@
   },
   {
     "UserId": 8,
-    "PersonType": "Typesetter",
+    "TypeDiscriminator": "Typesetter",
     "FirstName": "Typesetter",
     "LastName": "2",
     "Title": "Ms",
@@ -73,7 +73,7 @@
   },
   {
     "UserId": 9,
-    "PersonType": "Person",
+    "TypeDiscriminator": "Person",
     "FirstName": "Reviewer",
     "LastName": "1",
     "Title": "Mr",
@@ -81,7 +81,7 @@
   },
   {
     "UserId": 10,
-    "PersonType": "Person",
+    "TypeDiscriminator": "Person",
     "FirstName": "Reviewer",
     "LastName": "2",
     "Title": "Ms",
@@ -89,7 +89,7 @@
   },
   {
     "UserId": 11,
-    "PersonType": "Person",
+    "TypeDiscriminator": "Person",
     "FirstName": "POF",
     "LastName": "1",
     "Title": "Ms",
@@ -97,7 +97,7 @@
   },
   {
     "UserId": null,
-    "PersonType": "Author",
+    "TypeDiscriminator": "Author",
     "FirstName": "Author",
     "LastName": "4-NoUser",
     "Title": "Mr",

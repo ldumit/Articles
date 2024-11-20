@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Production.Domain.Entities;
 using Blocks.EntityFrameworkCore;
-using Blocks.Security;
+using Articles.Security;
 
 namespace Production.Persistence.EntityConfigurations;
 

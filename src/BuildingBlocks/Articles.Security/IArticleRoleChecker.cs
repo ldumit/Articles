@@ -1,4 +1,4 @@
-﻿namespace Blocks.Security;
+﻿namespace Articles.Security;
 
 public interface IArticleRoleChecker
 {

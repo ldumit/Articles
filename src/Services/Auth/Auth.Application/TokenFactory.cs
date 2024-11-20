@@ -1,5 +1,5 @@
 ﻿using Blocks.Core;
-using Auth.Application;
+using Articles.Security;
 using Auth.Domain.Models;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;

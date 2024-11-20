@@ -5,7 +5,7 @@ using Journals.Domain.Entities;
 using Journals.API.Features.Shared;
 using Blocks.Exceptions;
 using Blocks.Core;
-using Blocks.Security;
+using Articles.Security;
 using Blocks.Redis;
 
 namespace Journals.API.Features.Sections.Create;

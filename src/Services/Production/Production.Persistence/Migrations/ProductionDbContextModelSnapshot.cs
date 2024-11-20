@@ -95,7 +95,7 @@ namespace Production.Persistence.Migrations
                     b.ToTable("Article", (string)null);
                 });
 
-            modelBuilder.Entity("Production.Domain.Entities.ArticleActor", b =>
+            modelBuilder.Entity("Production.Domain.Entities.ArticleContributor", b =>
                 {
                     b.Property<int>("ArticleId")
                         .HasColumnType("int");
@@ -112,31 +112,7 @@ namespace Production.Persistence.Migrations
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("ArticleActor", (string)null);
-                });
-
-            modelBuilder.Entity("Production.Domain.Entities.ArticleCurrentStage", b =>
-                {
-                    b.Property<int>("ArticleId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ArticleId"));
-
-                    b.Property<int>("ArticleId1")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Stage")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(64)");
-
-                    b.HasKey("ArticleId");
-
-                    b.HasIndex("ArticleId1");
-
-                    b.HasIndex("Stage");
-
-                    b.ToTable("ArticleCurrentStage", (string)null);
+                    b.ToTable("ArticleContributor", (string)null);
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.ArticleStageTransition", b =>
@@ -153,26 +129,6 @@ namespace Production.Persistence.Migrations
                     b.HasKey("CurrentStage", "ActionType", "DestinationStage");
 
                     b.ToTable("ArticleStageTransition", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            CurrentStage = "Accepted",
-                            ActionType = "AssignTypesetter",
-                            DestinationStage = "InProduction"
-                        },
-                        new
-                        {
-                            CurrentStage = "FinalProduction",
-                            ActionType = "SchedulePublication",
-                            DestinationStage = "PublicationScheduled"
-                        },
-                        new
-                        {
-                            CurrentStage = "PublicationScheduled",
-                            ActionType = "Publish",
-                            DestinationStage = "Published"
-                        });
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.Asset", b =>
@@ -556,68 +512,6 @@ namespace Production.Persistence.Migrations
                     b.ToTable("File", (string)null);
                 });
 
-            modelBuilder.Entity("Production.Domain.Entities.FileAction", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnOrder(0);
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Comment")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CreatedById")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("FileId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("LasModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("LastModifiedById")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TypeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FileId");
-
-                    b.ToTable("FileAction", (string)null);
-                });
-
-            modelBuilder.Entity("Production.Domain.Entities.FileLatestAction", b =>
-                {
-                    b.Property<int>("FileId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FileId"));
-
-                    b.Property<int>("ActionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FileId1")
-                        .HasColumnType("int");
-
-                    b.HasKey("FileId");
-
-                    b.HasIndex("ActionId")
-                        .IsUnique();
-
-                    b.HasIndex("FileId1");
-
-                    b.ToTable("FileLatestAction", (string)null);
-                });
-
             modelBuilder.Entity("Production.Domain.Entities.Journal", b =>
                 {
                     b.Property<int>("Id")
@@ -671,14 +565,14 @@ namespace Production.Persistence.Migrations
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
-                    b.Property<string>("PersonType")
-                        .IsRequired()
-                        .HasMaxLength(13)
-                        .HasColumnType("nvarchar(13)");
-
                     b.Property<string>("Title")
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("TypeDiscriminator")
+                        .IsRequired()
+                        .HasMaxLength(13)
+                        .HasColumnType("nvarchar(13)");
 
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
@@ -691,7 +585,7 @@ namespace Production.Persistence.Migrations
 
                     b.ToTable("Person", (string)null);
 
-                    b.HasDiscriminator<string>("PersonType").HasValue("Person");
+                    b.HasDiscriminator<string>("TypeDiscriminator").HasValue("Person");
 
                     b.UseTphMappingStrategy();
                 });
@@ -801,13 +695,11 @@ namespace Production.Persistence.Migrations
                 {
                     b.HasBaseType("Production.Domain.Entities.Person");
 
-                    b.Property<string>("Biography")
-                        .HasMaxLength(2048)
-                        .HasColumnType("nvarchar(2048)");
-
-                    b.Property<string>("Country")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
+                    b.Property<string>("Affiliation")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)")
+                        .HasComment("Institution or organization they are associated with when they conduct their research.");
 
                     b.ToTable("Person", (string)null);
 
@@ -865,16 +757,16 @@ namespace Production.Persistence.Migrations
                     b.Navigation("SubmitedBy");
                 });
 
-            modelBuilder.Entity("Production.Domain.Entities.ArticleActor", b =>
+            modelBuilder.Entity("Production.Domain.Entities.ArticleContributor", b =>
                 {
                     b.HasOne("Production.Domain.Entities.Article", "Article")
-                        .WithMany("Actors")
+                        .WithMany("Contributors")
                         .HasForeignKey("ArticleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Production.Domain.Entities.Person", "Person")
-                        .WithMany("ArticleActors")
+                        .WithMany("ArticleContributors")
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -882,24 +774,6 @@ namespace Production.Persistence.Migrations
                     b.Navigation("Article");
 
                     b.Navigation("Person");
-                });
-
-            modelBuilder.Entity("Production.Domain.Entities.ArticleCurrentStage", b =>
-                {
-                    b.HasOne("Production.Domain.Entities.Article", "Article")
-                        .WithMany()
-                        .HasForeignKey("ArticleId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Production.Domain.Entities.Stage", null)
-                        .WithMany()
-                        .HasForeignKey("Stage")
-                        .HasPrincipalKey("Name")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Article");
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.Asset", b =>
@@ -910,7 +784,7 @@ namespace Production.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Production.Domain.Entities.AssetTypeDefinition", "TypeRef")
+                    b.HasOne("Production.Domain.Entities.AssetTypeDefinition", "TypeDefinition")
                         .WithMany()
                         .HasForeignKey("Type")
                         .HasPrincipalKey("Name")
@@ -919,7 +793,7 @@ namespace Production.Persistence.Migrations
 
                     b.Navigation("Article");
 
-                    b.Navigation("TypeRef");
+                    b.Navigation("TypeDefinition");
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.AssetAction", b =>
@@ -963,36 +837,6 @@ namespace Production.Persistence.Migrations
                     b.Navigation("Asset");
                 });
 
-            modelBuilder.Entity("Production.Domain.Entities.FileAction", b =>
-                {
-                    b.HasOne("Production.Domain.Entities.File", "File")
-                        .WithMany()
-                        .HasForeignKey("FileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("File");
-                });
-
-            modelBuilder.Entity("Production.Domain.Entities.FileLatestAction", b =>
-                {
-                    b.HasOne("Production.Domain.Entities.FileAction", "Action")
-                        .WithOne()
-                        .HasForeignKey("Production.Domain.Entities.FileLatestAction", "ActionId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Production.Domain.Entities.File", "File")
-                        .WithMany()
-                        .HasForeignKey("FileId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Action");
-
-                    b.Navigation("File");
-                });
-
             modelBuilder.Entity("Production.Domain.Entities.Journal", b =>
                 {
                     b.HasOne("Production.Domain.Entities.Typesetter", "DefaultTypesetter")
@@ -1025,9 +869,9 @@ namespace Production.Persistence.Migrations
 
             modelBuilder.Entity("Production.Domain.Entities.Article", b =>
                 {
-                    b.Navigation("Actors");
-
                     b.Navigation("Assets");
+
+                    b.Navigation("Contributors");
 
                     b.Navigation("StageHistories");
                 });
@@ -1048,7 +892,7 @@ namespace Production.Persistence.Migrations
 
             modelBuilder.Entity("Production.Domain.Entities.Person", b =>
                 {
-                    b.Navigation("ArticleActors");
+                    b.Navigation("ArticleContributors");
                 });
 #pragma warning restore 612, 618
         }

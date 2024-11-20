@@ -36,9 +36,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\BuildingBlocks\Articles.Abstractions\Articles.Abstractions.csproj" />
-    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.AspNetCore\Blocks.AspNetCore.csproj" />
-    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.EntityFrameworkCore\Blocks.EntityFrameworkCore.csproj" />
-    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.System\Blocks.Core.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Blocks.AspNetCore\Blocks.AspNetCore.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Blocks.EntityFrameworkCore\Blocks.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Blocks.Core\Blocks.Core.csproj" />
     <ProjectReference Include="..\..\..\Modules\FileService\FileService.Contracts\FileStorage.Contracts.csproj" />
     <ProjectReference Include="..\Production.Persistence\Production.Persistence.csproj" />
     <ProjectReference Include="..\Production.Domain\Production.Domain.csproj" />

@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Articles.AspNetCore\Blocks.AspNetCore.csproj" />
+    <ProjectReference Include="..\Blocks.AspNetCore\Blocks.AspNetCore.csproj" />
   </ItemGroup>
 
 </Project>

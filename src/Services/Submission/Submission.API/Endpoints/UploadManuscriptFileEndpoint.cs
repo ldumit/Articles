@@ -1,6 +1,6 @@
-﻿using Blocks.Security;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Articles.Security;
 using Submission.Application.Features.UploadFiles;
 
 namespace Submission.API.Endpoints

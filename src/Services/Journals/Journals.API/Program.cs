@@ -2,7 +2,7 @@ using FastEndpoints;
 using FastEndpoints.Swagger;
 using Journals.API;
 using System.Text.Json.Serialization;
-using Blocks.Security;
+using Articles.Security;
 using Blocks.Mapster;
 using Journals.Persistence.TestData;
 using Blocks.AspNetCore;

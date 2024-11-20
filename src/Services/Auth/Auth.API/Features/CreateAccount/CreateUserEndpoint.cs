@@ -13,7 +13,7 @@ using Mapster;
 
 namespace Auth.API.Features;
 
-[Authorize(Roles = Blocks.Security.Role.ADMIN)]
+[Authorize(Roles = Articles.Security.Role.ADMIN)]
 [HttpPost("users")]
 public class CreateUserEndpoint(UserManager<User> userManager, AutoMapper.IMapper mapper, IEmailService emailService, IHttpContextAccessor httpContextAccessor, IOptions<EmailOptions> emailOptions) 
 		: Endpoint<CreateUserCommand, CreateUserResponse>

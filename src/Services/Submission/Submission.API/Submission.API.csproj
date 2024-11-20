@@ -20,8 +20,9 @@
   </ItemGroup>
 		
     <ItemGroup>
-		    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.AspNetCore\Blocks.AspNetCore.csproj" />
-		    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.EntityFrameworkCore\Blocks.EntityFrameworkCore.csproj" />
+		    <ProjectReference Include="..\..\..\BuildingBlocks\Blocks.AspNetCore\Blocks.AspNetCore.csproj" />
+		    <ProjectReference Include="..\..\..\BuildingBlocks\Blocks.EntityFrameworkCore\Blocks.EntityFrameworkCore.csproj" />
+		    <ProjectReference Include="..\..\..\BuildingBlocks\Blocks.Messaging\Blocks.Messaging.csproj" />
 		    <ProjectReference Include="..\Submission.Application\Submission.Application.csproj" />
     </ItemGroup>
 

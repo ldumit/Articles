@@ -11,23 +11,23 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Production.API", "Services\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildingBlocks", "BuildingBlocks", "{119E4BB2-4239-487F-B5F7-3BCED9AFF33C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blocks.EntityFrameworkCore", "BuildingBlocks\Articles.EntityFrameworkCore\Blocks.EntityFrameworkCore.csproj", "{0F7B01A0-F6DC-4895-B7F6-6CF7902709D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blocks.EntityFrameworkCore", "BuildingBlocks\Blocks.EntityFrameworkCore\Blocks.EntityFrameworkCore.csproj", "{0F7B01A0-F6DC-4895-B7F6-6CF7902709D5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blocks.Exceptions", "BuildingBlocks\Articles.Exceptions\Blocks.Exceptions.csproj", "{A08C513E-AAD1-4145-AED7-7B9258540A11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blocks.Exceptions", "BuildingBlocks\Blocks.Exceptions\Blocks.Exceptions.csproj", "{A08C513E-AAD1-4145-AED7-7B9258540A11}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blocks.Core", "BuildingBlocks\Articles.System\Blocks.Core.csproj", "{A8925387-2F7F-4A5A-B5D8-4FF3A964A6AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blocks.Core", "BuildingBlocks\Blocks.Core\Blocks.Core.csproj", "{A8925387-2F7F-4A5A-B5D8-4FF3A964A6AE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Production.Domain", "Services\Production\Production.Domain\Production.Domain.csproj", "{AB92A3BE-5EB3-4F6E-B382-AEAF00B9ADE7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blocks.Domain", "BuildingBlocks\Articles.Entitities\Blocks.Domain.csproj", "{C0C96231-8A2E-44CF-AA58-AFFB4A986E85}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blocks.Domain", "BuildingBlocks\Blocks.Domain\Blocks.Domain.csproj", "{C0C96231-8A2E-44CF-AA58-AFFB4A986E85}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Production.Persistence", "Services\Production\Production.Persistence\Production.Persistence.csproj", "{91B5D80C-2BDF-4CD1-87DE-57513C01526A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Production.Application", "Services\Production\Production.Application\Production.Application.csproj", "{63B808B0-FB44-4DCB-9BB1-E0C20C1C2869}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blocks.MediatR", "BuildingBlocks\Articles.MediatR\Blocks.MediatR.csproj", "{C715B632-DEB3-493E-9ACC-91A6CA799944}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blocks.MediatR", "BuildingBlocks\Blocks.MediatR\Blocks.MediatR.csproj", "{C715B632-DEB3-493E-9ACC-91A6CA799944}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blocks.AspNetCore", "BuildingBlocks\Articles.AspNetCore\Blocks.AspNetCore.csproj", "{F7161139-4B9D-4212-93D6-616A5E896FFB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blocks.AspNetCore", "BuildingBlocks\Blocks.AspNetCore\Blocks.AspNetCore.csproj", "{F7161139-4B9D-4212-93D6-616A5E896FFB}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{CED3B268-6093-4DCE-8CF9-65409BCFC71C}"
 EndProject
@@ -89,7 +89,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Journals.Domain", "Services
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Journals.Persistence", "Services\Journals\Journals.Persistence\Journals.Persistence.csproj", "{2B1673D3-F2F4-4B0F-9803-AB1732C86C5A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blocks.Redis", "BuildingBlocks\Articles.Redis\Blocks.Redis.csproj", "{FDA3174B-D497-4BDA-B273-24C3C88C2C78}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blocks.Redis", "BuildingBlocks\Blocks.Redis\Blocks.Redis.csproj", "{FDA3174B-D497-4BDA-B273-24C3C88C2C78}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Submission", "Submission", "{9C191986-D0AE-4646-87B0-5C581278CAA6}"
 EndProject
@@ -109,7 +109,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArticleHub.Domain", "Servic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArticleHub.Application", "Services\ArticleHub\ArticleHub.Application\ArticleHub.Application.csproj", "{4FB073BE-68CC-405E-8308-FD67C72CA8A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArticleHub.Persistence", "Services\ArticleHub\ArticleHub.Persistence\ArticleHub.Persistence.csproj", "{E4A84D9C-D8A6-414D-A70C-20BEF80F94BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArticleHub.Persistence", "Services\ArticleHub\ArticleHub.Persistence\ArticleHub.Persistence.csproj", "{E4A84D9C-D8A6-414D-A70C-20BEF80F94BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blocks.Messaging", "BuildingBlocks\Blocks.Messaging\Blocks.Messaging.csproj", "{783EDC9B-3137-4644-99B5-819600DBBB9F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -277,6 +279,10 @@ Global
 		{E4A84D9C-D8A6-414D-A70C-20BEF80F94BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E4A84D9C-D8A6-414D-A70C-20BEF80F94BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E4A84D9C-D8A6-414D-A70C-20BEF80F94BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{783EDC9B-3137-4644-99B5-819600DBBB9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{783EDC9B-3137-4644-99B5-819600DBBB9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{783EDC9B-3137-4644-99B5-819600DBBB9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{783EDC9B-3137-4644-99B5-819600DBBB9F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -331,6 +337,7 @@ Global
 		{42D26A8B-7C64-4FDA-9792-E6107434E80D} = {ED8E55B9-D718-46E2-9893-4C0AFC9180D6}
 		{4FB073BE-68CC-405E-8308-FD67C72CA8A5} = {ED8E55B9-D718-46E2-9893-4C0AFC9180D6}
 		{E4A84D9C-D8A6-414D-A70C-20BEF80F94BB} = {ED8E55B9-D718-46E2-9893-4C0AFC9180D6}
+		{783EDC9B-3137-4644-99B5-819600DBBB9F} = {119E4BB2-4239-487F-B5F7-3BCED9AFF33C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DB8333BC-C32E-4759-8E3B-CC033665D9E0}
