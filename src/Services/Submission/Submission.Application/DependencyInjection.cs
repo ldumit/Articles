@@ -12,6 +12,7 @@ using System.Reflection;
 using Microsoft.Extensions.Caching.Memory;
 using Submission.Application.Dtos;
 using Azure.Storage.Blobs;
+using Blocks.Messaging.MassTransit;
 
 namespace Submission.Application;
 public static class DependencyInjection
@@ -31,7 +32,8 @@ public static class DependencyInjection
 								config.AddOpenBehavior(typeof(SetUserIdBehavior<,>));
 								config.AddOpenBehavior(typeof(ValidationBehavior<,>));
 								//config.AddOpenBehavior(typeof(LoggingBehavior<,>));
-						});
+						})
+						.AddMassTransit(configuration, Assembly.GetExecutingAssembly()); ;
 				
 				services.AddSingleton(x => new BlobServiceClient(configuration.GetConnectionString("FileServer")));
 

@@ -6,6 +6,9 @@ services:
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
       - ConnectionStrings__Database=Server=sqlserver;Database=SubmissionDb;User Id=sa;Password=Password123!;Encrypt=False;TrustServerCertificate=True
+      # - RabbitMqOptions__Host=amqp://articles-mq:5672
+      # - RabbitMqOptions__UserName=guest
+      # - RabbitMqOptions__Password=guest 
     ports:
       - "9004:8080"
       - "9054:8081"
@@ -100,9 +103,11 @@ services:
 
   rabbitmq:
     container_name: "rabbitmq"
+    hostname: articles-mq
+    restart: always
     ports:
       - "5672:5672"    # RabbitMQ default port
       - "15672:15672"  # RabbitMQ management UI (accessible at http://localhost:15672)
     environment:
       RABBITMQ_DEFAULT_USER: guest
-      RABBITMQ_DEFAULT_PASS: quest
+      RABBITMQ_DEFAULT_PASS: guest

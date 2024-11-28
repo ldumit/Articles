@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ArticleHub.Persistence.Migrations
 {
     [DbContext(typeof(ArticleHubDbContext))]
-    [Migration("20241122063507_InitialCreate")]
+    [Migration("20241127142902_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

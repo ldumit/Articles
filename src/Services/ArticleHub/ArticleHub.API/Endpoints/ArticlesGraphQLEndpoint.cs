@@ -15,7 +15,7 @@ public static class ArticlesGraphQLEndpoint
 
 						return Results.Json(response.Items);
 				})
-				.WithName("ApproveArticle")
+				.WithName("GetArticles")
 				.WithTags("Articles")
 				//.Produces<IdResponse>(StatusCodes.Status200OK)
 				.ProducesProblem(StatusCodes.Status400BadRequest)

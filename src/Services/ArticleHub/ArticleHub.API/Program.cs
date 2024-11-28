@@ -1,35 +1,20 @@
 using Blocks.AspNetCore;
 using ArticleHub.Persistence;
-using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Http.Json;
-using Articles.Security;
-using Blocks.Core;
 using Blocks.EntityFrameworkCore;
-using Blocks.Messaging;
 using ArticleHub.Application;
+using ArticleHub.API;
 
 var builder = WebApplication.CreateBuilder(args);
 
+#region Add
 builder.Services
-		.ConfigureOptions<HasuraOptions>(builder.Configuration)
-		.ConfigureOptions<RabbitMqOptions>(builder.Configuration)
-		.Configure<JsonOptions>(opt =>
-		{
-				opt.SerializerOptions.PropertyNameCaseInsensitive = true;
-				opt.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
-		});
+		.ConfigureOptions(builder.Configuration);        // Configure Options
 
 builder.Services
-		.AddMemoryCache()
-		.AddHttpContextAccessor()
-		.AddEndpointsApiExplorer()
-		.AddSwaggerGen()
-		.AddApplicationServices(builder.Configuration)
-		.AddPersistenceServices(builder.Configuration)
-		.AddJwtAuthentication(builder.Configuration)
-		.AddAuthorization()                            // Authorization immediately after authentication
-		.AddEndpointsApiExplorer()                     // Minimal api for Swagger
-		.AddSwaggerGen();
+		.AddApiServices(builder.Configuration)              // Register API-specific services
+		.AddApplicationServices(builder.Configuration)      // Register Application/Infrastructure-specific services
+		.AddPersistenceServices(builder.Configuration);     // Register Persistence-specific services
+#endregion
 
 
 var app = builder.Build();

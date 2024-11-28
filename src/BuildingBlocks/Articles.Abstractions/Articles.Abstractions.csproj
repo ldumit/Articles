@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Articles.Security\Articles.Security.csproj" />
     <ProjectReference Include="..\Blocks.Domain\Blocks.Domain.csproj" />
     <ProjectReference Include="..\Blocks.Core\Blocks.Core.csproj" />
   </ItemGroup>

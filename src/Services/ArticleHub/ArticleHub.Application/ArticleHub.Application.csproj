@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\BuildingBlocks\Blocks.Messaging\Blocks.Messaging.csproj" />
     <ProjectReference Include="..\ArticleHub.Domain\ArticleHub.Domain.csproj" />
+    <ProjectReference Include="..\ArticleHub.Persistence\ArticleHub.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

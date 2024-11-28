@@ -13,21 +13,21 @@ public static class DependencyInjection
 		{
 				var rabbitMqOptions = configuration.GetByTypeName<RabbitMqOptions>();
 
-				services.AddMassTransit(configurator =>
+				services.AddMassTransit(config =>
 				{
 						if (assembly != null)
-								configurator.AddConsumers(assembly);
+								config.AddConsumers(assembly);
 
-						configurator.UsingRabbitMq((context, cfg) =>
+						config.UsingRabbitMq((context, rabbitConfig) =>
 						{
 								// Configure RabbitMQ connection
-								cfg.Host(rabbitMqOptions.Host, rabbitMqOptions.VirtualHost, h =>
+								rabbitConfig.Host(new Uri(rabbitMqOptions.Host), rabbitMqOptions.VirtualHost, h =>
 								{
 										h.Username(rabbitMqOptions.UserName);
 										h.Password(rabbitMqOptions.Password);
 								});
 
-								cfg.ConfigureEndpoints(context);
+								rabbitConfig.ConfigureEndpoints(context);
 						});
 				});
 

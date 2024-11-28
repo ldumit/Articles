@@ -9,7 +9,10 @@ public static class DependencyInjection
 {
 		public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration, Assembly? assembly = null)
 		{
-				services.AddMassTransit(configuration, Assembly.GetExecutingAssembly());
+				services
+						.AddMemoryCache()
+						.AddMassTransit(configuration, Assembly.GetExecutingAssembly());
+				
 				return services;
 		}
 }

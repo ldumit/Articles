@@ -4,6 +4,7 @@ services:
     image: ${DOCKER_REGISTRY-}submission-api
     depends_on:
       - sqlserver
+      - rabbitmq
     build:
       context: .
       dockerfile: Services/Submission/Submission.API/Dockerfile
@@ -21,6 +22,7 @@ services:
     depends_on:
       - postgres
       - articleshub-hasura
+      - rabbitmq
     build:
       context: .
       dockerfile: Services/ArticleHub/ArticleHub.API/Dockerfile
@@ -55,13 +57,13 @@ services:
 #talk: separation beetwen main and override files
   postgres:
     image: postgres
-    volumes:
-      - articlehub_data:/var/lib/postgresql/data/ 
+    # volumes:
+    #   - articlehub_data:/var/lib/postgresql/data/ 
 
   rabbitmq:
     image: "rabbitmq:management"
-    volumes:
-      - rabbitmq_data:/var/lib/rabbitmq
+    # volumes:
+    #   - rabbitmq_data:/var/lib/rabbitmq
 
 volumes:
   articlehub_data:
