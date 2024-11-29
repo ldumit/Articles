@@ -1,7 +1,4 @@
-﻿using Articles.Abstractions.Enums;
-using Blocks.Entitities;
-using Blocks.Core.Cache;
-using Submission.Domain.Enums;
+﻿using Blocks.Core.Cache;
 
 namespace Submission.Domain.Entities;
 

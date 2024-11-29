@@ -1,1 +1,3 @@
-﻿global using Articles.Abstractions;
+﻿global using MediatR;
+global using Articles.Security;
+global using Articles.Abstractions;

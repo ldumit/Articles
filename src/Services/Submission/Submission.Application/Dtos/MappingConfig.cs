@@ -1,9 +1,4 @@
-﻿using Articles.Abstractions;
-using Mapster;
-using Submission.Domain.Entities;
-using Submission.Domain.Enums;
-
-namespace Submission.Application.Dtos;
+﻿namespace Submission.Application.Dtos;
 
 public class MappingConfig : IRegister
 {

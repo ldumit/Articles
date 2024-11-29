@@ -1,7 +1,5 @@
 ﻿using FileStorage.Contracts;
-using Submission.Persistence.Repositories;
 using Submission.Application.Features.UploadFiles.Shared;
-using Submission.Domain.StateMachines;
 
 namespace Submission.Application.Features.UploadFiles.UploadAuthorFile;
 

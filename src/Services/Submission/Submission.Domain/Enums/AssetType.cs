@@ -1,6 +1,4 @@
-﻿using Articles.Abstractions.Enums;
-
-namespace Submission.Domain.Enums;
+﻿namespace Submission.Domain.Enums;
 
 public static class AssetTypeCategories
 {

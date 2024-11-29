@@ -1,6 +1,4 @@
-﻿using Articles.Abstractions.Enums;
-
-namespace Submission.Application.Dtos;
+﻿namespace Submission.Application.Dtos;
 
 public record ArticleDto(
 		int id,

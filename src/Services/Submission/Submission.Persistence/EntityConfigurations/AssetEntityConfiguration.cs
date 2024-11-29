@@ -1,10 +1,4 @@
-﻿using Articles.Abstractions.Enums;
-using Blocks.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Submission.Domain.Entities;
-
-namespace Submission.Persistence.EntityConfigurations;
+﻿namespace Submission.Persistence.EntityConfigurations;
 
 internal class AssetEntityConfiguration : AuditedEntityConfiguration<Asset>
 {

@@ -1,7 +1,4 @@
-﻿using Articles.Abstractions;
-using Articles.Abstractions.Enums;
-
-namespace Submission.Domain.Events;
+﻿namespace Submission.Domain.Events;
 
 //todo - create a handler which will send an integration event for the Articles service
 //todo - remove DomainEvent suffix from all domain events ?!?

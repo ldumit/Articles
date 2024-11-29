@@ -1,10 +1,4 @@
-﻿using Blocks.FluentValidation;
-using Blocks.Core;
-using FluentValidation;
-using Submission.Application.Features.Shared;
-using Submission.Domain.Enums;
-
-namespace Submission.Application.Features.AssignAuthor;
+﻿namespace Submission.Application.Features.AssignAuthor;
 
 public record AssignAuthorCommand(int AuthorId, bool IsCorrespondingAuthor, HashSet<ContributionArea> ContributionAreas)
 		: ArticleCommand

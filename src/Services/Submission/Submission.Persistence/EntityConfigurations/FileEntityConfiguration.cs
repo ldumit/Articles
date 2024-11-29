@@ -1,8 +1,4 @@
-﻿using Blocks.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-namespace Submission.Persistence.EntityConfigurations;
+﻿namespace Submission.Persistence.EntityConfigurations;
 
 public class FileEntityConfiguration
 {

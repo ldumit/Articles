@@ -1,7 +1,4 @@
-﻿using Articles.Abstractions.Enums;
-using Submission.Domain.Enums;
-
-namespace Submission.Application.Dtos;
+﻿namespace Submission.Application.Dtos;
 
 public record AssetDto(
 		int Id, 

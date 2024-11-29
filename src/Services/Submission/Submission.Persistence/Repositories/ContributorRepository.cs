@@ -1,8 +1,6 @@
 ﻿using Articles.Security;
 using Blocks.Core;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
-using Submission.Domain.Entities;
 
 namespace Submission.Persistence.Repositories;
 

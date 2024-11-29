@@ -1,12 +1,4 @@
-﻿using FluentValidation;
-using Blocks.FluentValidation;
-using Articles.Abstractions;
-using Articles.Abstractions.Enums;
-using Blocks.EntityFrameworkCore;
-using Submission.Application.Features.Shared;
-using Submission.Domain.Enums;
-
-namespace Submission.Application.Features.CreateArticle;
+﻿namespace Submission.Application.Features.CreateArticle;
 
 public record CreateArticleCommand(int JournalId, string Title, ArticleType Type, string Scope)
 		: ArticleCommand<ArticleActionType, IdResponse>

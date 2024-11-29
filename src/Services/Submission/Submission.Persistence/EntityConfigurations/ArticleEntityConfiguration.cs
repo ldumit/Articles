@@ -1,9 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore;
-using Submission.Domain.Entities;
-using Blocks.EntityFrameworkCore;
-
-namespace Submission.Persistence.EntityConfigurations;
+﻿namespace Submission.Persistence.EntityConfigurations;
 public class ArticleEntityConfiguration : AuditedEntityConfiguration<Article>
 {
     public override void Configure(EntityTypeBuilder<Article> entity)

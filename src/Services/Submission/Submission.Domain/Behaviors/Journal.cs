@@ -1,7 +1,4 @@
-﻿using Articles.Abstractions;
-using Articles.Abstractions.Enums;
-using Mapster;
-using Submission.Domain.Events;
+﻿using Mapster;
 
 namespace Submission.Domain.Entities;
 

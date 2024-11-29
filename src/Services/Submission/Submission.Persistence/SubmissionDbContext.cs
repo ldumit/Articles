@@ -1,8 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Submission.Domain.Entities;
-using Submission.Persistence.EntityConfigurations;
+﻿using Submission.Persistence.EntityConfigurations;
 using Microsoft.Extensions.Caching.Memory;
-using Blocks.EntityFrameworkCore;
 
 namespace Submission.Persistence;
 

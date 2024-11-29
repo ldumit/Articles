@@ -2,7 +2,7 @@
 
 namespace Blocks.Entitities;
 
-//todo: rename Building Blocks Article projects which are generic into BuildingBlocks or Core or BBlocks
+//todo: rename Blocks.Entitities to Blocks.Domain.Entities
 
 public interface IEntity : IEntity<int>
 {

@@ -1,8 +1,4 @@
-﻿using Articles.Abstractions.Enums;
-using Submission.Domain.Enums;
-using Submission.Domain.ValueObjects;
-
-namespace Submission.Application.Dtos;
+﻿namespace Submission.Application.Dtos;
 
 // todo - do I need this DTO?
 public record AssetTypeDto

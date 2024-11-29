@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Submission.Domain.Entities;
-
-namespace Submission.Persistence.Repositories;
+﻿namespace Submission.Persistence.Repositories;
 
 public class ArticleRepository(SubmissionDbContext dbContext) 
 		: Repository<Article>(dbContext)

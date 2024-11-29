@@ -1,13 +1,11 @@
 ﻿using Blocks.MediatR.Behaviours;
 using FileStorage.AzureBlob;
 using FileStorage.Contracts;
-using FluentValidation;
 using Blocks.Mapster;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Submission.Application.Features.CreateArticle;
 using Submission.Application.StateMachines;
-using Submission.Domain.StateMachines;
 using System.Reflection;
 using Microsoft.Extensions.Caching.Memory;
 using Submission.Application.Dtos;

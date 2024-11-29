@@ -1,6 +1,4 @@
-﻿using MediatR;
-using Articles.Security;
-using Submission.Application.Features.CreateArticle;
+﻿using Submission.Application.Features.CreateArticle;
 
 namespace Submission.API.Endpoints;
 

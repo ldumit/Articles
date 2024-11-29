@@ -1,12 +1,5 @@
-﻿using MediatR;
-using Articles.Abstractions;
-using Articles.Abstractions.Enums;
-using Blocks.EntityFrameworkCore;
-using Submission.Persistence.Repositories;
-using Submission.Domain.StateMachines;
-using MassTransit;
+﻿using MassTransit;
 using Articles.Abstractions.Events;
-using Mapster;
 using Articles.Abstractions.Events.Dtos;
 
 namespace Submission.Application.Features.ApproveArticle;
@@ -18,7 +11,7 @@ public class ApproveArticleCommandHandler(ArticleRepository _articleRepository, 
 		{
 				var article = await _articleRepository.FindByIdOrThrowAsync(command.ArticleId);
 				
-				article.SetStage(ArticleStage.InitialApproved, command, _stateMachineFactory);
+				article.Approve(command, _stateMachineFactory);
 				
 				await _articleRepository.SaveChangesAsync();
 

@@ -1,14 +1,9 @@
-﻿using FluentValidation;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 using Blocks.Core;
 using Blocks.AspNetCore;
-using Articles.Abstractions.Enums;
-using Submission.Domain.Enums;
-using Submission.Application.Features.Shared;
-using Submission.Persistence.Repositories;
-using Submission.Domain.Entities;
 using ValidationResult = FluentValidation.Results.ValidationResult;
+using ValidationMessages = Submission.Application.Features.Shared.ValidationMessages;
 
 namespace Submission.Application.Features.UploadFiles.Shared;
 

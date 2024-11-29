@@ -1,13 +1,11 @@
-﻿using Blocks.EntityFrameworkCore;
+﻿using System.Data.Common;
 using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Submission.Persistence.Repositories;
-using System.Data.Common;
 
 namespace Submission.Persistence;
+
 public static class DependencyInjection
 {
     public static IServiceCollection AddPersistenceServices (this IServiceCollection services, IConfiguration configuration)

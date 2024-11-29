@@ -1,6 +1,4 @@
-﻿using Submission.Domain.Enums;
-
-namespace Submission.Domain.Entities;
+﻿namespace Submission.Domain.Entities;
 
 public class ArticleAuthor : ArticleContributor
 {

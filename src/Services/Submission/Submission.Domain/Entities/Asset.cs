@@ -1,9 +1,4 @@
-﻿using Articles.Abstractions.Enums;
-using Blocks.Entitities;
-using Submission.Domain.Enums;
-using Submission.Domain.ValueObjects;
-
-namespace Submission.Domain.Entities;
+﻿namespace Submission.Domain.Entities;
 
 public partial class Asset : AggregateEntity
 {

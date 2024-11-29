@@ -5,7 +5,6 @@ using Blocks.Core;
 using Blocks.AspNetCore;
 using Blocks.EntityFrameworkCore;
 using Blocks.Messaging;
-using Articles.Security;
 using Submission.Persistence.Repositories;
 
 namespace Submission.API;

@@ -1,6 +1,4 @@
-﻿using MediatR;
-using Articles.Security;
-using Submission.Application.Features.DownloadFile;
+﻿using Submission.Application.Features.DownloadFile;
 
 namespace Submission.API.Endpoints;
 

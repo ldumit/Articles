@@ -1,9 +1,5 @@
-﻿using MediatR;
-using Articles.Abstractions;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Blocks.Exceptions;
-using Submission.Domain.Entities;
-using Submission.Persistence.Repositories;
 
 namespace Submission.Application.Features.CreateAuthor;
 

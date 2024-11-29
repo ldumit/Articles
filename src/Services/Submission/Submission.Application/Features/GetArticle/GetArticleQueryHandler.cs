@@ -1,7 +1,4 @@
-﻿using Mapster;
-using MediatR;
-using Submission.Application.Dtos;
-using Submission.Persistence.Repositories;
+﻿using Submission.Application.Dtos;
 
 namespace Submission.Application.Features.GetArticle;
 

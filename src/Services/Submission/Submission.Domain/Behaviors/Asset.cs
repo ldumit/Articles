@@ -1,7 +1,4 @@
-﻿using Articles.Abstractions;
-using FileStorage.Contracts;
-using Submission.Domain.Enums;
-using Submission.Domain.ValueObjects;
+﻿using FileStorage.Contracts;
 
 namespace Submission.Domain.Entities;
 

@@ -1,11 +1,4 @@
-﻿using MediatR;
-using Articles.Abstractions;
-using Articles.Abstractions.Enums;
-using Blocks.EntityFrameworkCore;
-using FileStorage.Contracts;
-using Submission.Persistence.Repositories;
-using Submission.Domain.Entities;
-using Submission.Domain.StateMachines;
+﻿using FileStorage.Contracts;
 
 namespace Submission.Application.Features.UploadFiles.Shared;
 

@@ -1,6 +1,4 @@
-﻿using Blocks.Entitities;
-
-namespace Submission.Domain.Entities;
+﻿namespace Submission.Domain.Entities;
 
 public partial class Journal : Entity
 {

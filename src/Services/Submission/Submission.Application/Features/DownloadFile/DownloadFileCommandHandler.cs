@@ -1,6 +1,4 @@
 ﻿using FileStorage.Contracts;
-using MediatR;
-using Submission.Persistence.Repositories;
 
 namespace Submission.Application.Features.DownloadFile;
 

@@ -1,11 +1,4 @@
-﻿using MediatR;
-using Articles.Abstractions;
-using Articles.Abstractions.Enums;
-using Blocks.EntityFrameworkCore;
-using Submission.Persistence.Repositories;
-using Submission.Domain.StateMachines;
-
-namespace Submission.Application.Features.SubmitArticle;
+﻿namespace Submission.Application.Features.SubmitArticle;
 
 public class SubmitArticleCommandHandler(ArticleRepository _articleRepository, ArticleStateMachineFactory _stateMachineFactory)
 		: IRequestHandler<SubmitArticleCommand, IdResponse>
@@ -14,7 +7,7 @@ public class SubmitArticleCommandHandler(ArticleRepository _articleRepository, A
 		{
 				var article = await _articleRepository.FindByIdOrThrowAsync(command.ArticleId);
 
-				article.SetStage(ArticleStage.Submitted, command, _stateMachineFactory);
+				article.Submit(command, _stateMachineFactory);
 
 				await _articleRepository.SaveChangesAsync();
 

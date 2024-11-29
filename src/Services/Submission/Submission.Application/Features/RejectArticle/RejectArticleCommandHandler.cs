@@ -1,7 +1,4 @@
-﻿using Articles.Abstractions.Enums;
-using Submission.Persistence.Repositories;
-using Submission.Application.Features.Shared;
-using Submission.Domain.StateMachines;
+﻿using Submission.Domain.StateMachines;
 
 namespace Submission.Application.Features.RejectArticle;
 

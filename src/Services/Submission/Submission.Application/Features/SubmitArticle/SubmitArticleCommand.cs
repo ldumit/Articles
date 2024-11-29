@@ -1,7 +1,4 @@
-﻿using Submission.Application.Features.Shared;
-using Submission.Domain.Enums;
-
-namespace Submission.Application.Features.SubmitArticle;
+﻿namespace Submission.Application.Features.SubmitArticle;
 
 public record SubmitArticleCommand : ArticleCommand
 {

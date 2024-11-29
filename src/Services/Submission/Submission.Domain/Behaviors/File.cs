@@ -1,5 +1,4 @@
 ﻿using FileStorage.Contracts;
-using Submission.Domain.ValueObjects;
 
 namespace Submission.Domain.Entities;
 

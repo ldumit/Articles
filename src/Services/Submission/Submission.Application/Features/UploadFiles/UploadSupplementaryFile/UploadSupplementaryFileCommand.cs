@@ -1,7 +1,4 @@
-﻿using Articles.Abstractions.Enums;
-using Submission.Application.Features.UploadFiles.Shared;
-using Submission.Domain.Enums;
-using Submission.Persistence.Repositories;
+﻿using Submission.Application.Features.UploadFiles.Shared;
 
 namespace Submission.Application.Features.UploadFiles;
 

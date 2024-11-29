@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using MediatR;
-using Articles.Security;
-using Submission.Application.Features.ApproveArticle;
+﻿using Submission.Application.Features.ApproveArticle;
 
 namespace Submission.API.Endpoints;
 
@@ -11,7 +8,7 @@ public static class ApproveArticleEndpoint
 		{
 				//todo - create a custom model binder which will map the route parameter to the command
 				//public class GenericModelBinder<T> : IModelBinder where T : class, new()
-				app.MapPost("api/articles/{articleId:int}:approve", async ([FromRoute] int articleId, [FromBody] ApproveArticleCommand command, ISender sender) =>
+				app.MapPost("api/articles/{articleId:int}:approve", async (int articleId, ApproveArticleCommand command, ISender sender) =>
 				{
 						command.ArticleId = articleId;
 						var response = await sender.Send(command);

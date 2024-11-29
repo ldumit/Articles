@@ -1,9 +1,6 @@
-﻿using Articles.Abstractions.Enums;
-using Blocks.Core;
+﻿using Blocks.Core;
 using Blocks.Core.Cache;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
-using Submission.Domain.Entities;
 using AssetTypeDefinition = Submission.Domain.Entities.AssetTypeDefinition;
 
 namespace Submission.Persistence.Repositories;

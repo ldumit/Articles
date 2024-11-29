@@ -1,7 +1,4 @@
-﻿using Blocks.FluentValidation;
-using Blocks.MediatR;
-using FluentValidation;
-using Submission.Application.Dtos;
+﻿using Submission.Application.Dtos;
 
 namespace Submission.Application.Features.GetArticle;
 

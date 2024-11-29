@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Submission.Domain.Entities;
-using Blocks.EntityFrameworkCore;
-using Blocks.EntityFrameworkCore.EntityConfigurations;
+﻿using Blocks.EntityFrameworkCore.EntityConfigurations;
 
 namespace Submission.Persistence.EntityConfigurations;
 

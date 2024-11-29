@@ -1,8 +1,4 @@
-﻿using Blocks.MediatR;
-using FluentValidation;
-using Blocks.FluentValidation;
-
-namespace Submission.Application.Features.DownloadFile;
+﻿namespace Submission.Application.Features.DownloadFile;
 
 public record DownloadFileQuery(int ArticleId, int AssetId) : ICommand<DownloadFileResponse>;
 

@@ -1,10 +1,4 @@
-﻿using MediatR;
-using Articles.Abstractions;
-using Blocks.EntityFrameworkCore;
-using Submission.Application.Features.AssignAuthor;
-using Submission.Persistence.Repositories;
-
-namespace Submission.Application.Features.CreateArticle;
+﻿namespace Submission.Application.Features.AssignAuthor;
 
 public class AssignAuthorCommandHandler(ArticleRepository _articleRepository)
 		: IRequestHandler<AssignAuthorCommand, IdResponse>

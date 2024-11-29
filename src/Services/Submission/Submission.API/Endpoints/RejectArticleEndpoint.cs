@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using MediatR;
-using Articles.Security;
-using Submission.Application.Features.RejectArticle;
+﻿using Submission.Application.Features.RejectArticle;
 
 namespace Submission.API.Endpoints;
 
@@ -9,7 +6,7 @@ public static class RejectArticleEndpoint
 {
 		public static void Map(this IEndpointRouteBuilder app)
 		{
-				app.MapPost("api/articles/{articleId:int}:reject", async ([FromRoute] int articleId, [FromBody] RejectArticleCommand command, ISender sender) =>
+				app.MapPost("api/articles/{articleId:int}:reject", async (int articleId, RejectArticleCommand command, ISender sender) =>
 				{
 						command.ArticleId = articleId;
 						var response = await sender.Send(command);

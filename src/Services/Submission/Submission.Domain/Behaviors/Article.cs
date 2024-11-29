@@ -1,15 +1,12 @@
-﻿using Articles.Abstractions;
-using Articles.Abstractions.Enums;
+﻿using Mapster;
 using Blocks.Domain;
 using Articles.Security;
-using Mapster;
-using Submission.Domain.Enums;
 using Submission.Domain.Events;
 using Submission.Domain.StateMachines;
 
 namespace Submission.Domain.Entities;
 
-public partial class Article 
+public partial class Article
 {
 		public void SetStage(ArticleStage newStage, IArticleAction<ArticleActionType> action, ArticleStateMachineFactory stateMachineFactory)
     {
@@ -45,6 +42,21 @@ public partial class Article
 				AddDomainEvent(
 						new AuthorAssigned(action, author.Id, author.UserId!.Value));
 				AddAction(action);
+		}
+
+		public void Approve(IArticleAction<ArticleActionType> action, ArticleStateMachineFactory _stateMachineFactory)
+		{
+				SetStage(ArticleStage.InitialApproved, action, _stateMachineFactory);
+				
+				AddDomainEvent(new ArticleSubmittedDomainEvent(action));
+		}
+
+		public void Submit(IArticleAction<ArticleActionType> action, ArticleStateMachineFactory _stateMachineFactory)
+		{
+				SubmittedById = action.CreatedById;
+				SubmittedOn = action.CreatedOn;
+
+				SetStage(ArticleStage.Submitted, action, _stateMachineFactory);
 		}
 
 		public Asset CreateAsset(AssetTypeDefinition type, IArticleAction<ArticleActionType> action)

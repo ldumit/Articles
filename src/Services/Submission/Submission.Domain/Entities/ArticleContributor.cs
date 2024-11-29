@@ -1,5 +1,4 @@
-﻿using Blocks.Entitities;
-using Articles.Security;
+﻿using Articles.Security;
 
 namespace Submission.Domain.Entities
 {

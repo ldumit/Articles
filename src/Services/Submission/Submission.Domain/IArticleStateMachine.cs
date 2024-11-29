@@ -1,6 +1,4 @@
-﻿using Articles.Abstractions.Enums;
-using Blocks.Domain;
-using Submission.Domain.Enums;
+﻿using Blocks.Domain;
 
 namespace Submission.Domain.StateMachines;
 
