@@ -34,7 +34,8 @@ public static class DependencyInjection
 
 						var graphQLHttpClient = new GraphQLHttpClient(graphQLClientOptions, new SystemTextJsonSerializer(jsonSerializerOptions));
 
-						graphQLHttpClient.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", hasuraOptions.AdminSecret);
+						//graphQLHttpClient.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", hasuraOptions.AdminSecret);
+						graphQLHttpClient.HttpClient.DefaultRequestHeaders.Add("x-hasura-admin-secret", hasuraOptions.AdminSecret);
 
 						// add other headers if needed, like tenant id, etc.
 

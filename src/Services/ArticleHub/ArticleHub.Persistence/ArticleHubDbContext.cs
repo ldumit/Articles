@@ -1,4 +1,4 @@
-﻿using ArticleHub.Domain;
+﻿using ArticleHub.Domain.Entities;
 using ArticleHub.Persistence.EntityConfigurations;
 using Blocks.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +27,7 @@ public partial class ArticleHubDbContext(DbContextOptions<ArticleHubDbContext> o
 				modelBuilder.ApplyConfiguration(new PersonEntityConfiguration());
 
 				modelBuilder.UseClrTypeNamesForTables();
+				modelBuilder.UseLowerCaseNamingConvention();
 
 				base.OnModelCreating(modelBuilder);
 		}

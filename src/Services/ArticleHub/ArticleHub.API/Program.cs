@@ -3,6 +3,7 @@ using ArticleHub.Persistence;
 using Blocks.EntityFrameworkCore;
 using ArticleHub.Application;
 using ArticleHub.API;
+using Carter;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,8 @@ builder.Services
 
 
 var app = builder.Build();
+
+app.MapCarter();
 
 app
 		.UseSwagger()

@@ -21,7 +21,7 @@ services:
     image: ${DOCKER_REGISTRY-}articlehub-api
     depends_on:
       - postgres
-      - articleshub-hasura
+      - articlehub-hasura
       - rabbitmq
     build:
       context: .
@@ -49,7 +49,7 @@ services:
   journal-redisdb:
     image: redis/redis-stack
 
-  articleshub-hasura:
+  articlehub-hasura:
     image: hasura/graphql-engine
     depends_on:
       - postgres

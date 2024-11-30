@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Blocks.EntityFrameworkCore;
 using Articles.Security;
-using ArticleHub.Domain;
+using ArticleHub.Domain.Entities;
 
 namespace ArticleHub.Persistence.EntityConfigurations;
 

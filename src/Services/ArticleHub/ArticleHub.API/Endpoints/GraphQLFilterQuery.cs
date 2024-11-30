@@ -2,5 +2,5 @@
 
 public class GraphQLFilterQuery
 {
-		public required string Filter { get; init; }
+		public required object Filter { get; init; }
 }

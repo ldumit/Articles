@@ -2,9 +2,9 @@
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Blocks.Mapster;
-using ArticleHub.Domain;
 using ArticleHub.Persistence;
 using Articles.Abstractions.Events;
+using ArticleHub.Domain.Entities;
 
 namespace ArticleHub.Application.Features.Articles.EventHandlers;
 

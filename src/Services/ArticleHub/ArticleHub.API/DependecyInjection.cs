@@ -4,6 +4,7 @@ using Blocks.Core;
 using Blocks.Messaging;
 using Articles.Security;
 using ArticleHub.Persistence;
+using Carter;
 
 namespace ArticleHub.API;
 
@@ -24,6 +25,7 @@ public static class DependecyInjection
 		public static IServiceCollection AddApiServices(this IServiceCollection services, IConfiguration configuration)
 		{
 				services
+						.AddCarter()
 						.AddHttpContextAccessor()                // For accessing HTTP context
 						.AddEndpointsApiExplorer()               // Minimal API docs (Swagger)
 						.AddSwaggerGen()                         // Swagger setup

@@ -1,4 +1,4 @@
-﻿using ArticleHub.Domain;
+﻿using ArticleHub.Domain.Entities;
 using Blocks.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -6,7 +6,8 @@ namespace ArticleHub.Persistence.EntityConfigurations;
 
 public class JournalEntityConfiguration : EntityConfiguration<Journal>
 {
-    public override void Configure(EntityTypeBuilder<Journal> entity)
+		protected override bool HasGeneratedId => false;
+		public override void Configure(EntityTypeBuilder<Journal> entity)
     {
         base.Configure(entity);
 

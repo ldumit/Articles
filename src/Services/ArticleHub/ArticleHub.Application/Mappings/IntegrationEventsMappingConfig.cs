@@ -1,4 +1,4 @@
-﻿using ArticleHub.Domain;
+﻿using ArticleHub.Domain.Entities;
 using Articles.Abstractions;
 using Articles.Abstractions.Events.Dtos;
 using Mapster;

@@ -1,4 +1,4 @@
-﻿using ArticleHub.Domain;
+﻿using ArticleHub.Domain.Entities;
 using Blocks.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -6,7 +6,9 @@ namespace ArticleHub.Persistence.EntityConfigurations;
 
 public class PersonEntityConfiguration : EntityConfiguration<Person>
 {
-    public override void Configure(EntityTypeBuilder<Person> entity)
+		protected override bool HasGeneratedId => false;
+
+		public override void Configure(EntityTypeBuilder<Person> entity)
     {
         base.Configure(entity);
 

@@ -1,16 +1,16 @@
-﻿using ArticleHub.Domain;
+﻿using ArticleHub.Domain.Entities;
 using ArticleHub.Persistence;
-//using Carter;
+using Carter;
 
 namespace ArticleHub.API.Endpoints;
 
-public static class ArticlesGraphQLEndpoint //: ICarterModule
+public class ArticlesGraphQLEndpoint : ICarterModule
 {
-		public static void Map(this IEndpointRouteBuilder app)
+		public void AddRoutes(IEndpointRouteBuilder app)
 		{
-				app.MapPost("/graphql", async (string graphQLFilter, ArticleGraphQLQuery graphQLQuery) =>
+				app.MapPost("/graphql", async (GraphQLFilterQuery graphQLFilter, ArticleGraphQLQuery graphQLQuery) =>
 				{
-						var response = await graphQLQuery.GetArticlesAsync(graphQLFilter);
+						var response = await graphQLQuery.GetArticlesAsync(graphQLFilter.Filter);
 
 						return Results.Json(response.Items);
 				})

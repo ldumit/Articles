@@ -84,12 +84,13 @@ services:
       - "6379:6379"
       - "8001:8001"
 
-  articleshub-hasura:
+  articlehub-hasura:
     environment:
       - HASURA_GRAPHQL_DATABASE_URL=postgres://postgres:Password123!@postgres:5432/ArticleHubDb
       - HASURA_GRAPHQL_ADMIN_SECRET=secret
+      - HASURA_GRAPHQL_ENABLE_CONSOLE=true
     ports:
-      - "8080:8080"
+      - "9080:8080"
 
   postgres:
     # talk: use container_name attribute if you want to give a custom name to the container

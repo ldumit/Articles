@@ -1,9 +1,9 @@
-﻿using ArticleHub.Domain;
+﻿using ArticleHub.Domain.Entities;
 using Blocks.EntityFrameworkCore;
 
 namespace ArticleHub.Persistence
 {
-		public class ArticleRepository : Repository<ArticleHubDbContext, Article>
+    public class ArticleRepository : Repository<ArticleHubDbContext, Article>
 		{
 				public ArticleRepository(ArticleHubDbContext dbContext) : base(dbContext)
 				{ }

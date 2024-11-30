@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ArticleHub.Persistence.Migrations
 {
     [DbContext(typeof(ArticleHubDbContext))]
-    [Migration("20241130091252_InitialCreate")]
+    [Migration("20241202073713_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -28,41 +28,48 @@ namespace ArticleHub.Persistence.Migrations
             modelBuilder.Entity("ArticleHub.Domain.Article", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
+                        .HasColumnName("id")
                         .HasColumnOrder(0);
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
                     b.Property<DateTime?>("AcceptedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("acceptedon");
 
                     b.Property<string>("Doi")
                         .HasMaxLength(64)
-                        .HasColumnType("character varying(64)");
+                        .HasColumnType("character varying(64)")
+                        .HasColumnName("doi");
 
                     b.Property<int>("JournalId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("journalid");
 
                     b.Property<DateTime?>("PublishedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("publishedon");
 
                     b.Property<string>("Stage")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("stage");
 
                     b.Property<int>("SubmittedById")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("submittedbyid");
 
                     b.Property<DateTime>("SubmittedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("submittedon");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("title");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_article");
 
                     b.HasIndex("JournalId");
 
@@ -70,90 +77,99 @@ namespace ArticleHub.Persistence.Migrations
 
                     b.HasIndex("Title");
 
-                    b.ToTable("Article", (string)null);
+                    b.ToTable("article", (string)null);
                 });
 
             modelBuilder.Entity("ArticleHub.Domain.ArticleContributor", b =>
                 {
                     b.Property<int>("ArticleId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("articleid");
 
                     b.Property<int>("PersonId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("personid");
 
                     b.Property<string>("Role")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("text")
-                        .HasDefaultValue("AUT");
+                        .HasDefaultValue("AUT")
+                        .HasColumnName("role");
 
-                    b.HasKey("ArticleId", "PersonId", "Role");
+                    b.HasKey("ArticleId", "PersonId", "Role")
+                        .HasName("pk_articlecontributor");
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("ArticleContributor", (string)null);
+                    b.ToTable("articlecontributor", (string)null);
                 });
 
             modelBuilder.Entity("ArticleHub.Domain.Journal", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
+                        .HasColumnName("id")
                         .HasColumnOrder(0);
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Abbreviation")
                         .IsRequired()
                         .HasMaxLength(8)
-                        .HasColumnType("character varying(8)");
+                        .HasColumnType("character varying(8)")
+                        .HasColumnName("abbreviation");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(64)
-                        .HasColumnType("character varying(64)");
+                        .HasColumnType("character varying(64)")
+                        .HasColumnName("name");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_journal");
 
-                    b.ToTable("Journal", (string)null);
+                    b.ToTable("journal", (string)null);
                 });
 
             modelBuilder.Entity("ArticleHub.Domain.Person", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
+                        .HasColumnName("id")
                         .HasColumnOrder(0);
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("email");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(64)
-                        .HasColumnType("character varying(64)");
+                        .HasColumnType("character varying(64)")
+                        .HasColumnName("firstname");
 
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(64)
-                        .HasColumnType("character varying(64)");
+                        .HasColumnType("character varying(64)")
+                        .HasColumnName("lastname");
 
                     b.Property<string>("Title")
                         .HasMaxLength(64)
-                        .HasColumnType("character varying(64)");
+                        .HasColumnType("character varying(64)")
+                        .HasColumnName("title");
 
                     b.Property<int?>("UserId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("userid");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_person");
 
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Person", (string)null);
+                    b.ToTable("person", (string)null);
                 });
 
             modelBuilder.Entity("ArticleHub.Domain.Article", b =>
@@ -162,13 +178,15 @@ namespace ArticleHub.Persistence.Migrations
                         .WithMany("Articles")
                         .HasForeignKey("JournalId")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_article_journal_journalid");
 
                     b.HasOne("ArticleHub.Domain.Person", "SubmittedBy")
                         .WithMany()
                         .HasForeignKey("SubmittedById")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_article_person_submittedbyid");
 
                     b.Navigation("Journal");
 
@@ -181,13 +199,15 @@ namespace ArticleHub.Persistence.Migrations
                         .WithMany("Contributors")
                         .HasForeignKey("ArticleId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_articlecontributor_article_articleid");
 
                     b.HasOne("ArticleHub.Domain.Person", "Person")
                         .WithMany()
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_articlecontributor_person_personid");
 
                     b.Navigation("Person");
                 });

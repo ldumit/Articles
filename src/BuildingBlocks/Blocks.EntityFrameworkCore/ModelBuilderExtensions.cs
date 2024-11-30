@@ -34,6 +34,35 @@ namespace Blocks.EntityFrameworkCore
 						}
 				}
 
+				public static void UseLowerCaseNamingConvention(this ModelBuilder modelBuilder)
+				{
+						foreach (var entity in modelBuilder.Model.GetEntityTypes())
+						{
+								entity.SetTableName(entity.GetTableName()?.ToLower());
+
+								foreach (var property in entity.GetProperties())
+								{
+										property.SetColumnName(property.Name.ToLower());
+								}
+
+								foreach (var key in entity.GetKeys())
+								{
+										key.SetName(key.GetName()?.ToLower());
+								}
+
+								foreach (var foreignKey in entity.GetForeignKeys())
+								{
+										foreignKey.SetConstraintName(foreignKey.GetConstraintName()?.ToLower());
+								}
+
+								//foreach (var index in entity.GetIndexes())
+								//{
+								//		index.SetName(index.Name?.ToLower());
+								//}
+						}
+				}
+
+
 				//todo the following methods don't work because the propertyBuilder is for property Value not for the complex type
 				//public static ComplexTypePropertyBuilder<TProperty> HasColumnNameUsingPropertyName<TProperty>(this ComplexTypePropertyBuilder<TProperty> propertyBuilder)
 				//{

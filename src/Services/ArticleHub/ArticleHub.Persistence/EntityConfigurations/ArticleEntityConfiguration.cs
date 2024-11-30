@@ -1,12 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using Blocks.EntityFrameworkCore;
-using ArticleHub.Domain;
+using ArticleHub.Domain.Entities;
 
 namespace ArticleHub.Persistence.EntityConfigurations;
 public class ArticleEntityConfiguration : EntityConfiguration<Article>
 {
-    public override void Configure(EntityTypeBuilder<Article> entity)
+		protected override bool HasGeneratedId => false;
+
+		public override void Configure(EntityTypeBuilder<Article> entity)
     {
         base.Configure(entity);
 
