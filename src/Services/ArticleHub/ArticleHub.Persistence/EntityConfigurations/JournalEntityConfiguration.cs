@@ -1,6 +1,5 @@
 ﻿using ArticleHub.Domain;
 using Blocks.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ArticleHub.Persistence.EntityConfigurations;

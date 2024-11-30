@@ -8,7 +8,7 @@ public static class MapsterConfiguration
 		public static IServiceCollection AddMapster(this IServiceCollection services, Assembly? assembly = null)
 		{
 				if (assembly is null)
-						assembly = Assembly.GetExecutingAssembly()!;
+						assembly = Assembly.GetCallingAssembly()!;
 				
 				TypeAdapterConfig.GlobalSettings.Scan(assembly);
 				return services;

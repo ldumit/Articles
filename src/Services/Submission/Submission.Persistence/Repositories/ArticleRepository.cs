@@ -11,7 +11,7 @@ public class ArticleRepository(SubmissionDbContext dbContext)
 								//.ThenInclude(e => e.TypeRef);
 		}
 
-		public async Task<Article> GetFullArticleById(int id, bool throwIfNotFound = true)
+		public async Task<Article> GetFullArticleByIdOrThrow(int id)
 		{
 				var article = await Entity
 						.Include(e => e.Journal)
@@ -21,18 +21,7 @@ public class ArticleRepository(SubmissionDbContext dbContext)
 						.Include(e => e.Assets)
 						.SingleOrDefaultAsync(e => e.Id == id);
 
-				return ReturnOrThrow(article, throwIfNotFound);
-		}
-
-		public async Task<Article> GetArticleSummaryById(int id, bool throwIfNotFound = true)
-		{
-				var article = await Entity
-						.Include(e => e.Journal)
-						.Include(e => e.Contributors)
-								.ThenInclude(e => e.Person)
-						.SingleAsync(e => e.Id == id);
-
-				return ReturnOrThrow(article, throwIfNotFound);
+				return ReturnOrThrow(article, true);
 		}
 }
 

@@ -5,6 +5,7 @@ public record PersonDto(
 		string FirstName, 
 		string LastName, 
 		string Email, 
-		string? Title, 
+		string? Title,
+		string? Affiliation,
 		int? UserId
 		);

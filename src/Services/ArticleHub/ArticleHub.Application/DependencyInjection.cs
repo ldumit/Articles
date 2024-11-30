@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using Blocks.Messaging.MassTransit;
+using Blocks.Mapster;
 
 namespace ArticleHub.Application;
 
@@ -11,6 +12,7 @@ public static class DependencyInjection
 		{
 				services
 						.AddMemoryCache()
+						.AddMapster()
 						.AddMassTransit(configuration, Assembly.GetExecutingAssembly());
 				
 				return services;

@@ -1,7 +1,6 @@
 ﻿using Mapster;
 using Blocks.Domain;
 using Articles.Security;
-using Submission.Domain.Events;
 using Submission.Domain.StateMachines;
 
 namespace Submission.Domain.Entities;
@@ -48,7 +47,7 @@ public partial class Article
 		{
 				SetStage(ArticleStage.InitialApproved, action, _stateMachineFactory);
 				
-				AddDomainEvent(new ArticleSubmittedDomainEvent(action));
+				AddDomainEvent(new ArticleApprovedDomainEvent(this, action));
 		}
 
 		public void Submit(IArticleAction<ArticleActionType> action, ArticleStateMachineFactory _stateMachineFactory)

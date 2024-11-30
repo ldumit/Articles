@@ -36,5 +36,15 @@ namespace Blocks.EntityFrameworkCore
 								throw new NotFoundException($"{typeof(TEntity).Name} not found");
 						return entity!;
 				}
+
+				public static async Task<TEntity> GetByIdOrThrowAsync<TEntity, TContext>(this Repository<TContext, TEntity> repository, Func<int, Task<TEntity>> getByIdFunc, int id)
+						where TContext : DbContext
+						where TEntity : class, IEntity<int>
+				{
+						var entity = await getByIdFunc(id);
+						if (entity is null)
+								throw new NotFoundException($"{typeof(TEntity).Name} not found");
+						return entity!;
+				}
 		}
 }

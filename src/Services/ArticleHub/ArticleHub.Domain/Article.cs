@@ -7,19 +7,18 @@ public class Article : IEntity
 {
     public int Id { get; init; }
     public required string Title { get; set; }
-		public required string Doi { get; set; }
+		public string? Doi { get; set; }
 		public ArticleStage Stage { get; set; }
 
-		public required virtual int SubmitedById { get; set; }
-		public virtual Person SubmitedBy { get; set; } = null!;
+		public required virtual int SubmittedById { get; set; }
+		public virtual Person SubmittedBy { get; set; } = null!;
 		
-		public DateTime SubmitedOn { get; set; }
+		public DateTime SubmittedOn { get; set; }
 		public DateTime? AcceptedOn { get; set; }
 		public DateTime? PublishedOn { get; set; }
 
 		public required int JournalId { get; set; }
-		public Journal Journal { get; init; } = null!;
+		public Journal Journal { get; set; } = null!;
 
-		private readonly List<ArticleContributor> _contributors = new();
-		public IReadOnlyCollection<ArticleContributor> Contributors => _contributors.AsReadOnly();
+		public List<ArticleContributor> Contributors { get; set; } = new();
 }

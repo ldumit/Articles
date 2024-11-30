@@ -1,6 +1,8 @@
-﻿namespace Submission.Application.Dtos;
+﻿using Articles.Abstractions.Events.Dtos;
 
-public class MappingConfig : IRegister
+namespace Submission.Application.Mappings;
+
+public class IntegrationEventsMappingConfig : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {

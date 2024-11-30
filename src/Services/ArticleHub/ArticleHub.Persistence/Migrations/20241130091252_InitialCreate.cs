@@ -50,12 +50,12 @@ namespace ArticleHub.Persistence.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Title = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
-                    Doi = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
+                    Doi = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: true),
                     Stage = table.Column<string>(type: "text", nullable: false),
-                    SubmitedById = table.Column<int>(type: "integer", nullable: false),
-                    SubmitedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    AcceptedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    PublishedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    SubmittedById = table.Column<int>(type: "integer", nullable: false),
+                    SubmittedOn = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    AcceptedOn = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    PublishedOn = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     JournalId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -68,8 +68,8 @@ namespace ArticleHub.Persistence.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Article_Person_SubmitedById",
-                        column: x => x.SubmitedById,
+                        name: "FK_Article_Person_SubmittedById",
+                        column: x => x.SubmittedById,
                         principalTable: "Person",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -81,9 +81,7 @@ namespace ArticleHub.Persistence.Migrations
                 {
                     Role = table.Column<string>(type: "text", nullable: false, defaultValue: "AUT"),
                     ArticleId = table.Column<int>(type: "integer", nullable: false),
-                    PersonId = table.Column<int>(type: "integer", nullable: false),
-                    Id = table.Column<int>(type: "integer", nullable: false),
-                    Affiliation = table.Column<string>(type: "text", nullable: false)
+                    PersonId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -108,9 +106,9 @@ namespace ArticleHub.Persistence.Migrations
                 column: "JournalId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Article_SubmitedById",
+                name: "IX_Article_SubmittedById",
                 table: "Article",
-                column: "SubmitedById");
+                column: "SubmittedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Article_Title",

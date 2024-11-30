@@ -4,15 +4,15 @@ namespace Articles.Abstractions.Events.Dtos;
 
 public record ArticleDto(
 		int Id, 
-		string Title, 
-		string Doi, 
+		string Title,
+		string Scope,
+		string Doi,
+		ArticleType Type,
 		ArticleStage Stage, 
-		int SubmitedById, 
-		PersonDto SubmitedBy, 
-		DateTime SubmitedOn, 
+		JournalDto Journal,
+		PersonDto SubmittedBy, 
+		DateTime SubmittedOn, 
 		DateTime? AcceptedOn, 
 		DateTime? PublishedOn, 
-		int JournalId, 
-		JournalDto Journal, 
-		IReadOnlyCollection<ArticleContributor> Contributors
+		List<ContributorDto> Contributors
 		);

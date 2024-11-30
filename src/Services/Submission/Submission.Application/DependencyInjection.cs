@@ -8,9 +8,9 @@ using Submission.Application.Features.CreateArticle;
 using Submission.Application.StateMachines;
 using System.Reflection;
 using Microsoft.Extensions.Caching.Memory;
-using Submission.Application.Dtos;
 using Azure.Storage.Blobs;
 using Blocks.Messaging.MassTransit;
+using Submission.Application.Mappings;
 
 namespace Submission.Application;
 public static class DependencyInjection
@@ -21,7 +21,7 @@ public static class DependencyInjection
 				services
 						.AddMemoryCache()                       // Basic Caching 
 						.AddMapster()                           // Scanning for mapping registration
-						.AddMapsterFromAssemblyContaining<MappingConfig>()                      // Register Mapster mappings
+						.AddMapsterFromAssemblyContaining<ApplicationMappingConfig>()                      // Register Mapster mappings
 						.AddValidatorsFromAssemblyContaining<CreateArticleCommandValidator>()		// Register Fluent validators as transient
 						.AddMediatR(config =>
 						{

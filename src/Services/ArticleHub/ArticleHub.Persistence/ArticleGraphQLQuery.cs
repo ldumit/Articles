@@ -1,13 +1,9 @@
-﻿using ArticleHub.Domain;
-using GraphQL;
+﻿using GraphQL;
 using GraphQL.Client.Http;
+using Blocks.Core.GraphQL;
+using ArticleHub.Domain;
 
 namespace ArticleHub.Persistence;
-
-public class QueryResult<T>
-{
-		public List<T> Items { get; init; } = new();
-}
 
 public class ArticleGraphQLQuery(GraphQLHttpClient client)
 {

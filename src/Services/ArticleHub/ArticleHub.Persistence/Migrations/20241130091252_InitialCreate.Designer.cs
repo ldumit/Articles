@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ArticleHub.Persistence.Migrations
 {
     [DbContext(typeof(ArticleHubDbContext))]
-    [Migration("20241127142902_InitialCreate")]
+    [Migration("20241130091252_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -35,11 +35,9 @@ namespace ArticleHub.Persistence.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime?>("AcceptedOn")
-                        .IsRequired()
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Doi")
-                        .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("character varying(64)");
 
@@ -47,17 +45,17 @@ namespace ArticleHub.Persistence.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime?>("PublishedOn")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Stage")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("SubmitedById")
+                    b.Property<int>("SubmittedById")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime>("SubmitedOn")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime>("SubmittedOn")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -68,7 +66,7 @@ namespace ArticleHub.Persistence.Migrations
 
                     b.HasIndex("JournalId");
 
-                    b.HasIndex("SubmitedById");
+                    b.HasIndex("SubmittedById");
 
                     b.HasIndex("Title");
 
@@ -87,13 +85,6 @@ namespace ArticleHub.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("text")
                         .HasDefaultValue("AUT");
-
-                    b.Property<string>("Affiliation")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("Id")
-                        .HasColumnType("integer");
 
                     b.HasKey("ArticleId", "PersonId", "Role");
 
@@ -173,15 +164,15 @@ namespace ArticleHub.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ArticleHub.Domain.Person", "SubmitedBy")
+                    b.HasOne("ArticleHub.Domain.Person", "SubmittedBy")
                         .WithMany()
-                        .HasForeignKey("SubmitedById")
+                        .HasForeignKey("SubmittedById")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Journal");
 
-                    b.Navigation("SubmitedBy");
+                    b.Navigation("SubmittedBy");
                 });
 
             modelBuilder.Entity("ArticleHub.Domain.ArticleContributor", b =>

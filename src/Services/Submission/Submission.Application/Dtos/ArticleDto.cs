@@ -4,10 +4,11 @@ public record ArticleDto(
 		int id,
 		string Title,
 		string Scope,
-		ArticleStage Stage, 
+		ArticleType Type,
+		ArticleStage Stage,
 		JournalDto Journal,
-		DateTime? SubmitedOn,
-		PersonDto? SubmitedBy,
+		DateTime? SubmittedOn,
+		PersonDto? SubmittedBy,
 		List<ContributorDto> Contributors,
 		List<AssetDto> Assets
 );

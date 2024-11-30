@@ -11,4 +11,14 @@ public static class Extensions
 		{
 				typeAdapterSetter.MapToConstructor(typeof(TDestination).GetConstructors().First());
 		}
+
+		public static TDestination AdaptWith<TDestination>(this object source, Action<TDestination> afterMapping)
+		{
+				var destination = source.Adapt<TDestination>();
+
+				// Apply additional property settings
+				afterMapping?.Invoke(destination);
+
+				return destination;
+		}
 }
