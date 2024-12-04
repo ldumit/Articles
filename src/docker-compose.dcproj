@@ -10,7 +10,6 @@
     <DockerServiceName>production.api</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="BuildingBlocks\Articles.EntityFrameworkCore\RepositoryExtensions.cs" />
     <None Include="docker-compose.override.yml">
       <DependentUpon>docker-compose.yml</DependentUpon>
     </None>

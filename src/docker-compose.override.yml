@@ -1,30 +1,30 @@
 
+# talk 
+# - ports the 4000-4999 is one of the safe port range for development, but try to avoid the begining of the range if possible(4000) and starting with 44 it is easier to remember because you are using the same digit.
+# - separation between main and override. Keep the parts that doesn't change in the main file and the parts that change in the override file.'
 services:
-  submission-api:
+  auth-api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
-      - ConnectionStrings__Database=Server=sqlserver;Database=SubmissionDb;User Id=sa;Password=Password123!;Encrypt=False;TrustServerCertificate=True
-      # - RabbitMqOptions__Host=amqp://articles-mq:5672
-      # - RabbitMqOptions__UserName=guest
-      # - RabbitMqOptions__Password=guest 
+      - ConnectionStrings__Database=Server=sqlserver;Database=AuthDb;User Id=sa;Password=Password123!;Encrypt=False;TrustServerCertificate=True
     ports:
-      - "9004:8080"
-      - "9054:8081"
+      - "4401:8080"
+      - "4441:8081"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro  
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
 
-  production-api:
+  journals-api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
-      - ConnectionStrings__Database=Server=sqlserver;Database=ProductionDb;User Id=sa;Password=Password123!;Encrypt=False;TrustServerCertificate=True
+      - ConnectionStrings__Database=redis://journals-redisdb
     ports:
-      - "9002:8080"
-      - "9052:8081"
+      - "4402:8080"
+      - "4442:8081"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
@@ -36,36 +36,54 @@ services:
       - ASPNETCORE_HTTPS_PORTS=8081
 #      - ConnectionStrings__Database=Host=localhost;Port=5432;Database=ArticleHubDb;Username=postgres;Password=Password123!
       - ConnectionStrings__Database=Server=postgres;Port=5432;Database=ArticleHubDb;User Id=postgres;Password=Password123!;Include Error Detail=true
- 
     ports:
-      - "9005:8080"
-      - "9055:8081"
+      - "4403:8080"
+      - "4453:8081"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
 
-  journal-api:
+  submission-api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
-      - ConnectionStrings__Database=redis://journal-redisdb
+      - ConnectionStrings__Database=Server=sqlserver;Database=SubmissionDb;User Id=sa;Password=Password123!;Encrypt=False;TrustServerCertificate=True
+      # - RabbitMqOptions__Host=amqp://articles-mq:5672
+      # - RabbitMqOptions__UserName=guest
+      # - RabbitMqOptions__Password=guest 
     ports:
-      - "9003:8080"
-      - "9053:8081"
+      - "4404:8080"
+      - "4454:8081"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
-  
-  auth-api:
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro  
+
+  review-api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
-      - ConnectionStrings__Database=Server=sqlserver;Database=AuthDb;User Id=sa;Password=Password123!;Encrypt=False;TrustServerCertificate=True
+      - ConnectionStrings__Database=Server=sqlserver;Database=ReviewDb;User Id=sa;Password=Password123!;Encrypt=False;TrustServerCertificate=True
+      # - RabbitMqOptions__Host=amqp://articles-mq:5672
+      # - RabbitMqOptions__UserName=guest
+      # - RabbitMqOptions__Password=guest 
     ports:
-      - "9001:8080"
-      - "9051:8081"
+      - "4405:8080"
+      - "4455:8081"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro  
+
+  production-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+      - ConnectionStrings__Database=Server=sqlserver;Database=ProductionDb;User Id=sa;Password=Password123!;Encrypt=False;TrustServerCertificate=True
+    ports:
+      - "4406:8080"
+      - "4456:8081"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
@@ -78,7 +96,7 @@ services:
     ports:
       - "1433:1433" 
 
-  journal-redisdb:
+  journals-redisdb:
     restart: always
     ports:
       - "6379:6379"
@@ -90,7 +108,7 @@ services:
       - HASURA_GRAPHQL_ADMIN_SECRET=secret
       - HASURA_GRAPHQL_ENABLE_CONSOLE=true
     ports:
-      - "9080:8080"
+      - "4493:8080"
 
   postgres:
     # talk: use container_name attribute if you want to give a custom name to the container

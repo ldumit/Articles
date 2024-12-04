@@ -1,21 +1,26 @@
 
 services:
-  submission-api:
-    image: ${DOCKER_REGISTRY-}submission-api
-    depends_on:
-      - sqlserver
-      - rabbitmq
-    build:
-      context: .
-      dockerfile: Services/Submission/Submission.API/Dockerfile
-
-  production-api:
-    image: ${DOCKER_REGISTRY-}production-api
+  auth-api:
+    image: ${DOCKER_REGISTRY-}auth-api
     depends_on:
       - sqlserver
     build:
       context: .
-      dockerfile: Services/Production/Production.API/Dockerfile
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: Auth.API
+        PROJECT_PATH: Services/Auth/Auth.API
+  
+  journals-api:
+    image: ${DOCKER_REGISTRY-}journals-api
+    depends_on:
+      - journals-redisdb
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: Journals.API
+        PROJECT_PATH: Services/Journals/Journals.API
 
   articleHub-api:
     image: ${DOCKER_REGISTRY-}articlehub-api
@@ -25,28 +30,50 @@ services:
       - rabbitmq
     build:
       context: .
-      dockerfile: Services/ArticleHub/ArticleHub.API/Dockerfile
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: ArticleHub.API
+        PROJECT_PATH: Services/ArticleHub/ArticleHub.API
 
-  journal-api:
-    image: ${DOCKER_REGISTRY-}journal-api
+  submission-api:
+    image: ${DOCKER_REGISTRY-}submission-api
     depends_on:
-      - journal-redisdb
+      - sqlserver
+      - rabbitmq
     build:
       context: .
-      dockerfile: Services/Journals/Journals.API/Dockerfile
-  
-  auth-api:
-    image: ${DOCKER_REGISTRY-}auth-api
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: Submission.API
+        PROJECT_PATH: Services/Submission/Submission.API
+
+  review-api:
+    image: ${DOCKER_REGISTRY-}review-api
+    depends_on:
+      - sqlserver
+      - rabbitmq
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: Review.API
+        PROJECT_PATH: Services/Review/Review.API
+
+  production-api:
+    image: ${DOCKER_REGISTRY-}production-api
     depends_on:
       - sqlserver
     build:
       context: .
-      dockerfile: Services/Auth/Auth.API/Dockerfile
-  
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: Production.API
+        PROJECT_PATH: Services/Production/Production.API
+
   sqlserver:
     image: mcr.microsoft.com/mssql/server
 
-  journal-redisdb:
+  journals-redisdb:
     image: redis/redis-stack
 
   articlehub-hasura:

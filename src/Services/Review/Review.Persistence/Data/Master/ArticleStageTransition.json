@@ -1,0 +1,8 @@
+[
+		{"CurrentStage": "None", "ActionType": "Create", "DestinationStage": "Created"},
+		{"CurrentStage": "Created", "ActionType": "Upload", "DestinationStage": "ManuscriptUploaded"},
+		//{"CurrentStage": "Created", "ActionType": "AssignAuthor", "DestinationStage": "Created"},
+		{"CurrentStage": "ManuscriptUploaded", "ActionType": "Submit", "DestinationStage": "Submitted"},
+		{"CurrentStage": "Submitted", "ActionType": "Approve", "DestinationStage": "InitialApproved"},
+		{"CurrentStage": "Submitted", "ActionType": "Reject", "DestinationStage": "InitialRejected"}
+]
