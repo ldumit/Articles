@@ -6,11 +6,10 @@ WORKDIR /app
 EXPOSE 8080 8081
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+
 ARG BUILD_CONFIGURATION=Release
-# IMPORTANT! This is how you run it:
-# docker build -t auth-api-image --build-arg APP_NAME=Auth.API --build-arg PROJECT_PATH=Services/Auth/Auth.API .
-ARG APP_NAME
-ARG PROJECT_PATH
+ARG APP_NAME=Auth.API
+ARG PROJECT_PATH=Services/Auth/${APP_NAME}
 
 WORKDIR /src/${PROJECT_PATH}
 COPY ${PROJECT_PATH}/${APP_NAME}.csproj ${PROJECT_PATH}/

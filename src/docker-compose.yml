@@ -6,10 +6,7 @@ services:
       - sqlserver
     build:
       context: .
-      dockerfile: Dockerfile
-      args:
-        APP_NAME: Auth.API
-        PROJECT_PATH: Services/Auth/Auth.API
+      dockerfile: Services/Auth/Auth.API/Dockerfile
   
   journals-api:
     image: ${DOCKER_REGISTRY-}journals-api
@@ -17,10 +14,7 @@ services:
       - journals-redisdb
     build:
       context: .
-      dockerfile: Dockerfile
-      args:
-        APP_NAME: Journals.API
-        PROJECT_PATH: Services/Journals/Journals.API
+      dockerfile: Services/Journals/Journals.API/Dockerfile
 
   articleHub-api:
     image: ${DOCKER_REGISTRY-}articlehub-api
@@ -30,10 +24,7 @@ services:
       - rabbitmq
     build:
       context: .
-      dockerfile: Dockerfile
-      args:
-        APP_NAME: ArticleHub.API
-        PROJECT_PATH: Services/ArticleHub/ArticleHub.API
+      dockerfile: Services/ArticleHub/ArticleHub.API/Dockerfile
 
   submission-api:
     image: ${DOCKER_REGISTRY-}submission-api
@@ -42,10 +33,7 @@ services:
       - rabbitmq
     build:
       context: .
-      dockerfile: Dockerfile
-      args:
-        APP_NAME: Submission.API
-        PROJECT_PATH: Services/Submission/Submission.API
+      dockerfile: Services/Submission/Submission.API/Dockerfile
 
   review-api:
     image: ${DOCKER_REGISTRY-}review-api
@@ -54,10 +42,7 @@ services:
       - rabbitmq
     build:
       context: .
-      dockerfile: Dockerfile
-      args:
-        APP_NAME: Review.API
-        PROJECT_PATH: Services/Review/Review.API
+      dockerfile: Services/Review/Review.API/Dockerfile
 
   production-api:
     image: ${DOCKER_REGISTRY-}production-api
@@ -65,10 +50,7 @@ services:
       - sqlserver
     build:
       context: .
-      dockerfile: Dockerfile
-      args:
-        APP_NAME: Production.API
-        PROJECT_PATH: Services/Production/Production.API
+      dockerfile: Services/Production/Production.API/Dockerfile
 
   sqlserver:
     image: mcr.microsoft.com/mssql/server
