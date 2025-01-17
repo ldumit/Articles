@@ -4,13 +4,15 @@ using FileStorage.Contracts;
 using Blocks.Mapster;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Review.Application.Features.InviteReviewer;
 using Review.Application.StateMachines;
 using System.Reflection;
 using Microsoft.Extensions.Caching.Memory;
 using Azure.Storage.Blobs;
 using Blocks.Messaging.MassTransit;
 using Review.Application.Mappings;
+using EmailService.Smtp;
+using EmailService.Contracts;
+using Review.Application.Features.Invitations.InviteReviewer;
 
 namespace Review.Application;
 public static class DependencyInjection
@@ -37,6 +39,7 @@ public static class DependencyInjection
 
 				//services.AddScoped<IThreadSafeMemoryCache, MemoryCache>();
 				services.AddScoped<IFileService, FileService>();
+				services.AddScoped<IEmailService, SmtpEmailService>();
 
 				services.AddScoped<ArticleStateMachineFactory>(provider => articleStage =>
 				{

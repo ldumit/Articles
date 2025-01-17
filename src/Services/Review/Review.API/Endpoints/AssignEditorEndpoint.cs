@@ -1,5 +1,4 @@
-﻿using Carter;
-using Review.Application.Features.AssignEditor;
+﻿using Review.Application.Features.Articles.AssignEditor;
 
 namespace Review.API.Endpoints;
 

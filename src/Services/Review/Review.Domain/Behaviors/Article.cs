@@ -26,28 +26,56 @@ public partial class Article
 						new ArticleStageChangedDomainEvent(action, currentStage, newStage));
     }
 
-		public void AssignAuthor(Author author, HashSet<ContributionArea> contributionAreas, bool isCorrespondingAuthor, IArticleAction<ArticleActionType> action)
+		public void AssignEditor(Reviewer contributor, IArticleAction<ArticleActionType> action)
 		{
-				var role = isCorrespondingAuthor ? UserRoleType.CORAUT : UserRoleType.AUT;				
-				
-				if (Contributors.Exists(a => a.PersonId == author.Id && a.Role == role))
-						throw new DomainException($"Author {author.Email} is already assigned to the article");
+				if (_contributors.Exists(a => a.Role == UserRoleType.REVED))
+						throw new DomainException($"An Editor is already assigned to the article");
 
-				Contributors.Add(new ArticleAuthor() {
-						ContributionAreas = contributionAreas,
-						PersonId = author.Id, 
-						Role = role
-				});
+				if (_contributors.Exists(a => a.PersonId == contributor.Id && a.Role == UserRoleType.REVED))
+						throw new DomainException($"Editor {contributor.Email} is already assigned to the article");
+
+				_contributors.Add(new ArticleContributor() { PersonId = contributor.Id, Role = UserRoleType.REVED });
+
 				AddDomainEvent(
-						new AuthorAssigned(action, author.Id, author.UserId!.Value));
+						new EditorAssigned(action, contributor.Id, contributor.UserId!.Value));
+				
 				AddAction(action);
 		}
+
+		public void AssignReviewer(Reviewer contributor, IArticleAction<ArticleActionType> action)
+		{
+				if (_contributors.Exists(a => a.PersonId == contributor.Id && a.Role == UserRoleType.REV))
+						throw new DomainException($"Reviewer {contributor.Email} is already assigned to the article");
+
+				_contributors.Add(new ArticleContributor() { PersonId = contributor.Id, Role = UserRoleType.REV });
+
+				AddDomainEvent(
+						new ReviewerAssigned(action, contributor.Id, contributor.UserId!.Value));
+
+				AddAction(action);
+		}
+
+		//public void InviteReviewer(string emailAddress, IArticleAction<ArticleActionType> action)
+		//{
+		//		if (_contributors.Exists(a => a.PersonId == contributor.Id && a.Role == UserRoleType.REV))
+		//				throw new DomainException($"Reviewer {contributor.Email} is already assigned to the article");
+
+		//		_contributors.Add(new ArticleContributor() { PersonId = contributor.Id, Role = UserRoleType.REV });
+
+		//		var invitation = new ReviewInvitation { ArticleId = Id, EmailAddress = Email, SentById = _claimsProvider.GetUserId(), ExpiresOn = DateTime.UtcNow.AddDays(7) };
+
+
+		//		AddDomainEvent(
+		//				new ReviewerAssigned(action, contributor.Id, contributor.UserId!.Value));
+
+		//		AddAction(action);
+		//}
 
 		public void Approve(IArticleAction<ArticleActionType> action, ArticleStateMachineFactory _stateMachineFactory)
 		{
 				SetStage(ArticleStage.InitialApproved, action, _stateMachineFactory);
 				
-				AddDomainEvent(new ArticleApprovedDomainEvent(this, action));
+				AddDomainEvent(new ArticleAcceptedDomainEvent(this, action));
 		}
 
 		public void Submit(IArticleAction<ArticleActionType> action, ArticleStateMachineFactory _stateMachineFactory)

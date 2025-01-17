@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Review.Application.Features.UploadFiles;
+using Review.Application.Features.Articles.UploadFiles.UploadReviewReport;
 
 namespace Review.API.Endpoints
 {
-		public class UploadReviewReportEndpoint : ICarterModule
+    public class UploadReviewReportEndpoint : ICarterModule
 		{
 				public void AddRoutes(IEndpointRouteBuilder app)
 				{

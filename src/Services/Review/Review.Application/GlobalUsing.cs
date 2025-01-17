@@ -25,7 +25,6 @@ global using Review.Domain.ValueObjects;
 global using Review.Domain.StateMachines;
 
 // Application
-global using Review.Application.Features.Shared;
 
 //Persistence
 global using Review.Persistence.Repositories;

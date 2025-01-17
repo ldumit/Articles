@@ -1,0 +1,11 @@
+﻿using Review.Application.Features.Articles._Shared;
+
+namespace Review.Application.Features.Articles.AcceptArticle;
+
+public record AcceptArticleCommand : ArticleCommand
+{
+    public override ArticleActionType ActionType => ArticleActionType.Approve;
+}
+
+
+public class AcceptArticleCommandValidator : ArticleCommandValidator<AcceptArticleCommand>;

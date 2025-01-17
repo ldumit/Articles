@@ -1,4 +1,4 @@
-﻿using Review.Application.Features.AcceptArticle;
+﻿using Review.Application.Features.Articles.AcceptArticle;
 
 namespace Review.API.Endpoints;
 

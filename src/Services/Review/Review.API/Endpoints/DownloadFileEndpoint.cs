@@ -1,5 +1,4 @@
-﻿using Carter;
-using Review.Application.Features.DownloadFile;
+﻿using Review.Application.Features.Articles.DownloadFile;
 
 namespace Review.API.Endpoints;
 

@@ -1,5 +1,4 @@
-﻿using Carter;
-using Review.Application.Features.GetArticle;
+﻿using Review.Application.Features.Articles.GetArticle;
 
 namespace Review.API.Endpoints;
 

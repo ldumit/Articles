@@ -43,7 +43,7 @@ public class CreateUserEndpoint(UserManager<User> userManager, AutoMapper.IMappe
 				await SendAsync(new CreateUserResponse(command.Email, user.Id, ressetPasswordToken));
     }
 
-		private EmailMessage BuildEmailMessage(User user, string  token)
+		private EmailMessage BuildEmailMessage(User user, string token)
 		{
 				const string ConfirmationEmail = 
 						@"Dear {0}, An account has been created for you. Please set your password using the following URL: {1}";

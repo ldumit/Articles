@@ -17,6 +17,7 @@ internal class UserEntityConfiguration : AuditedEntityConfiguration<User>
 
 				entity.Property(e => e.Position).HasMaxLength(Constraints.C64);
 				entity.Property(e => e.CompanyName).HasMaxLength(Constraints.C256);
+				entity.Property(e => e.Affiliation).HasMaxLength(Constraints.C512);
 				entity.Property(e => e.PictureUrl).HasMaxLength(Constraints.C2048);
 
 				entity.HasMany(p => p.UserRoles).WithOne().HasForeignKey(p => p.UserId).OnDelete(DeleteBehavior.Cascade).IsRequired();

@@ -16,9 +16,11 @@ public partial class ReviewDbContext(DbContextOptions<ReviewDbContext> options, 
     public virtual DbSet<StageHistory> StageHistories { get; set; }
 		public virtual DbSet<Person> Persons { get; set; }
 		public virtual DbSet<Author> Authors { get; set; }
+		public virtual DbSet<Reviewer> Reviewers { get; set; }
+		public virtual DbSet<ReviewInvitation> ReviewInvitations { get; set; }
 		#endregion
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
 				//todo use the following line:
 				//modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);

@@ -11,4 +11,4 @@ public record ArticleDto(
 		PersonDto? SubmittedBy,
 		List<ContributorDto> Contributors,
 		List<AssetDto> Assets
-);
+);	

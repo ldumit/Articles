@@ -1,4 +1,4 @@
-﻿using Review.Application.Features.InviteReviewer;
+﻿using Review.Application.Features.Invitations.InviteReviewer;
 
 namespace Review.API.Endpoints;
 

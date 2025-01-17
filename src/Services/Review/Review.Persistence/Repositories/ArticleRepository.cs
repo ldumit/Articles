@@ -23,5 +23,14 @@ public class ArticleRepository(ReviewDbContext dbContext)
 
 				return ReturnOrThrow(article, true);
 		}
+		public async Task<Article> GetArticleByIdWithInvitationsOrThrow(int id)
+		{
+				var article = await Entity
+						.Include(e => e.Journal)
+						.Include(e => e.Invitations)
+						.SingleOrDefaultAsync(e => e.Id == id);
+
+				return ReturnOrThrow(article, true);
+		}
 }
 

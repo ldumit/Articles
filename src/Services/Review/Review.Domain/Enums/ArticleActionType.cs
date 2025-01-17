@@ -6,6 +6,7 @@ public enum ArticleActionType
 		Create,
 		CreateAuthor,
 		AssignEditor,
+		InviteReviewer,
 		Upload,
 		Submit,
 		Approve,

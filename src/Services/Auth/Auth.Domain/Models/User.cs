@@ -15,6 +15,7 @@ public partial class User : IdentityUser<int>, IAggregateEntity<int>
 		public string? Position { get; set; } = null!;
 		public string? PictureUrl { get; set; } = null!;
 		public string? CompanyName { get; set; } = null!;
+		public string? Affiliation { get; set; } = null!;
 
 		public DateTime RegistrationDate { get; set; } = DateTime.UtcNow;
 		public DateTime? LastLogin { get; set; }

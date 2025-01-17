@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Flurl" Version="4.0.0" />
     <PackageReference Include="Mapster" Version="7.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.10" />
@@ -19,9 +20,17 @@
     <ProjectReference Include="..\..\..\BuildingBlocks\Blocks.MediatR\Blocks.MediatR.csproj" />
     <ProjectReference Include="..\..\..\BuildingBlocks\Blocks.Messaging\Blocks.Messaging.csproj" />
     <ProjectReference Include="..\..\..\Modules\ArticleTimeline\ArticleTimeline.Application\ArticleTimeline.Application\ArticleTimeline.Application.csproj" />
+    <ProjectReference Include="..\..\..\Modules\EmailService\EmailService.Smtp\EmailService.Smtp.csproj" />
     <ProjectReference Include="..\..\..\Modules\FileService\FileService.AzureBlob\FileStorage.AzureBlob.csproj" />
     <ProjectReference Include="..\..\..\Modules\FileService\FileService.Contracts\FileStorage.Contracts.csproj" />
     <ProjectReference Include="..\Review.Persistence\Review.Persistence.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\Invitations\RejectInvitation\" />
+    <Folder Include="Features\Journals\AssignChiefEditorToJournal\" />
+    <Folder Include="Features\Journals\AssignEditorToJournal\" />
+    <Folder Include="Features\Journals\" />
   </ItemGroup>
 
 </Project>

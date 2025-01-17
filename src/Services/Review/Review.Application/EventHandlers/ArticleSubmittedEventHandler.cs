@@ -4,7 +4,7 @@ using Blocks.Mapster;
 using Articles.Abstractions.Events;
 using Review.Persistence;
 
-namespace ArticleHub.Application.Features.Articles.EventHandlers;
+namespace Review.Application.Features.Articles.EventHandlers;
 
 public class ArticleSubmittedEventHandler(ReviewDbContext _dbContext) : IConsumer<ArticleSubmittedEvent>
 {
@@ -12,6 +12,7 @@ public class ArticleSubmittedEventHandler(ReviewDbContext _dbContext) : IConsume
 		{
 				var articleDto = context.Message.Article;
 
+				//find or create journal
 				var journal = await _dbContext.Journals.FirstOrDefaultAsync(j => j.Id == articleDto.Journal.Id);
 				if (journal is null)
 				{
@@ -25,6 +26,8 @@ public class ArticleSubmittedEventHandler(ReviewDbContext _dbContext) : IConsume
 						dest.SubmittedById = articleDto.SubmittedBy.Id;
 				});
 
+
+				//create contributors
 				foreach (var contributorDto in articleDto.Contributors)
 				{
 						var contributor = await _dbContext.Persons.FirstOrDefaultAsync(p => p.Id == contributorDto.Person.Id);

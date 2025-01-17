@@ -13,7 +13,7 @@ public static class DependencyInjection
 				services
 						.AddMemoryCache()
 						.AddMapster()
-						.AddMassTransit(configuration, Assembly.GetExecutingAssembly());
+						.AddMassTransit(configuration, assembly ?? Assembly.GetExecutingAssembly());
 				
 				return services;
 		}

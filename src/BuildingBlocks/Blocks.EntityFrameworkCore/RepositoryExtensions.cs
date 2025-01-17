@@ -1,6 +1,7 @@
 using Blocks.Entitities;
 using Blocks.Exceptions;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Blocks.EntityFrameworkCore
 {
@@ -45,6 +46,15 @@ namespace Blocks.EntityFrameworkCore
 						if (entity is null)
 								throw new NotFoundException($"{typeof(TEntity).Name} not found");
 						return entity!;
+				}
+
+				public static async Task<T> SingleOrThrowAsync<T>(this IQueryable<T> source, Expression<Func<T, bool>> predicate, string? notFoundMessage = null)
+				{
+						var result = await source.SingleOrDefaultAsync(predicate);
+						if (result == null)
+								throw new NotFoundException(notFoundMessage ?? $"{typeof(T).Name} not found.");
+
+						return result;
 				}
 		}
 }
