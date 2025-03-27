@@ -3,6 +3,6 @@
 public enum EditorRole
 {
 		ChiefEditor,
-		AssociateEditor,
+		//AssociateEditor,
 		ReviewEditor,
 }

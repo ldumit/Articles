@@ -6,6 +6,8 @@ namespace Journals.Domain.Entities;
 [Document(StorageType = StorageType.Hash)]
 public class Editor : Entity
 {
+		// Editor.Id = Editor.UserId. Editors are Users therefore they don't need their own IDs
+
 		[Indexed]
     public required string FullName { get; init; }
 		[Indexed]

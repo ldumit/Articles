@@ -32,6 +32,13 @@ public partial class Journal : Entity
 
 		[Indexed(JsonPath = "$.Name")]
 		public List<Section> Sections { get; init; } = new();
+
+		public IReadOnlyCollection<SectionEditor> Editors =>
+				Sections.SelectMany(s => s.EditorRoles.Where(e => e.EditorRole == EditorRole.ReviewEditor))
+								.Distinct()
+								.ToList()
+								.AsReadOnly();
+
 		public int ArticlesCount { get; set; }
 }
 

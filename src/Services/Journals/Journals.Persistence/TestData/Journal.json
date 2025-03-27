@@ -20,12 +20,12 @@
 					{
 						"SectionId": 1,
 						"EditorId": 2,
-						"EditorRole": "AssociateEditor"
+						"EditorRole": "ReviewEditor"
 					},
 					{
 						"SectionId": 1,
 						"EditorId": 3,
-						"EditorRole": "AssociateEditor"
+						"EditorRole": "ReviewEditor"
 					},
 					{
 						"SectionId": 1,
@@ -52,12 +52,12 @@
 					{
 						"SectionId": 2,
 						"EditorId": 7,
-						"EditorRole": "AssociateEditor"
+						"EditorRole": "ReviewEditor"
 					},
 					{
 						"SectionId": 2,
 						"EditorId": 8,
-						"EditorRole": "AssociateEditor"
+						"EditorRole": "ReviewEditor"
 					},
 					{
 						"SectionId": 2,
