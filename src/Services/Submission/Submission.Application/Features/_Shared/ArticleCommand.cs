@@ -6,7 +6,7 @@ public abstract record ArticleCommand<TActionType, TResponse> : IArticleAction<T
 		where TActionType : Enum
 {
 		[JsonIgnore]
-		public int ArticleId { get; set; }
+		public int ArticleId { get; init; }
 
 		public string? Comment { get; init; }
 

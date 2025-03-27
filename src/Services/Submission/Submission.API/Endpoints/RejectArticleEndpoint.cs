@@ -8,8 +8,7 @@ public static class RejectArticleEndpoint
 		{
 				app.MapPost("api/articles/{articleId:int}:reject", async (int articleId, RejectArticleCommand command, ISender sender) =>
 				{
-						command.ArticleId = articleId;
-						var response = await sender.Send(command);
+						var response = await sender.Send(command with { ArticleId = articleId });
 						return Results.Ok(response);
 				})
 				.RequireRoleAuthorization(Role.EOF)

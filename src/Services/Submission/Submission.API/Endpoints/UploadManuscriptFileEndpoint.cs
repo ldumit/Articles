@@ -10,8 +10,7 @@ namespace Submission.API.Endpoints
 						app.MapPost("api/articles/{articleId:int}/assets/manuscript:upload",
 								async ([FromRoute] int articleId, [FromForm] UploadManuscriptFileCommand command, ISender sender) =>
 						{
-								command.ArticleId = articleId;
-								var response = await sender.Send(command);
+								var response = await sender.Send(command with { ArticleId = articleId });
 								return Results.Created($"/api/articles/{command.ArticleId}/assets/{response.Id}:download", response);
 						})
 						.RequireRoleAuthorization(Role.CORAUT)

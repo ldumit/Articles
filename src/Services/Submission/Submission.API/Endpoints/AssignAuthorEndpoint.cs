@@ -8,8 +8,7 @@ public static class AssignAuthorEndpoint
 		{
 				app.MapPost("api/articles/{articleId:int}/authors", async (int articleId, AssignAuthorCommand command, ISender sender) =>
 				{
-						command.ArticleId = articleId;
-						var response = await sender.Send(command);
+						var response = await sender.Send(command with { ArticleId = articleId });
 						return Results.Ok(response);
 				})
 				.RequireRoleAuthorization(Role.CORAUT)

@@ -9,8 +9,7 @@ public static class SubmitArticleEndpoint
 		{
 				app.MapPost("api/articles/{articleId:int}:submit", async ([FromRoute] int articleId, [FromBody] SubmitArticleCommand command, ISender sender) =>
 				{
-						command.ArticleId = articleId; 
-						var response = await sender.Send(command);
+						var response = await sender.Send(command with { ArticleId = articleId });
 						return Results.Ok(response);
 				})				
 				.RequireRoleAuthorization(Role.CORAUT)

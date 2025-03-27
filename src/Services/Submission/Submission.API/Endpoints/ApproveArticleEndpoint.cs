@@ -6,12 +6,9 @@ public static class ApproveArticleEndpoint
 {
 		public static void Map(this IEndpointRouteBuilder app)
 		{
-				//todo - create a custom model binder which will map the route parameter to the command
-				//public class GenericModelBinder<T> : IModelBinder where T : class, new()
 				app.MapPost("api/articles/{articleId:int}:approve", async (int articleId, ApproveArticleCommand command, ISender sender) =>
 				{
-						command.ArticleId = articleId;
-						var response = await sender.Send(command);
+						var response = await sender.Send(command with { ArticleId = articleId });
 						return Results.Ok(response);
 				})
 				.RequireRoleAuthorization(Role.EOF)
