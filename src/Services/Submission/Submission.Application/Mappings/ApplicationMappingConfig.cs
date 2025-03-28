@@ -14,5 +14,5 @@ public class ApplicationMappingConfig : IRegister
 
         config.NewConfig<IArticleAction<ArticleActionType>, ArticleAction>()
                 .Map(dest => dest.TypeId, src => src.ActionType);
-    }
+		}
 }

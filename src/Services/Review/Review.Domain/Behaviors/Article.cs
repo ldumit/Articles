@@ -23,7 +23,7 @@ public partial class Article
 						new StageHistory { ArticleId = Id, StageId = newStage, StartDate = DateTime.UtcNow });
 				
 				AddDomainEvent(
-						new ArticleStageChangedDomainEvent(action, currentStage, newStage));
+						new ArticleStageChanged(action, currentStage, newStage));
     }
 
 		public void AssignEditor(Reviewer contributor, IArticleAction<ArticleActionType> action)
@@ -75,7 +75,7 @@ public partial class Article
 		{
 				SetStage(ArticleStage.InitialApproved, action, _stateMachineFactory);
 				
-				AddDomainEvent(new ArticleAcceptedDomainEvent(this, action));
+				AddDomainEvent(new ArticleAccepted(this, action));
 		}
 
 		public void Submit(IArticleAction<ArticleActionType> action, ArticleStateMachineFactory _stateMachineFactory)

@@ -80,7 +80,6 @@ public static class DependencyInjection
 				services.AddScoped<AssetTypeRepository>();
 				services.AddScoped<FileRepository>();
 
-				services.AddScoped<IThreadSafeMemoryCache, ThreadSafeMemoryCache>();
 				services.AddScoped<IFileService, FileService>();
 				services.AddArticleTimelineVariableResolvers();
 

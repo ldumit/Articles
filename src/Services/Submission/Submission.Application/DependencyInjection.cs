@@ -17,11 +17,12 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddApplicationServices (this IServiceCollection services, IConfiguration configuration)
     {
+				//todo - remove all commented code after testing Submission
 				//talk - fluid vs normal
 				services
-						.AddMemoryCache()                       // Basic Caching 
-						.AddMapster()                           // Scanning for mapping registration
-						.AddMapsterFromAssemblyContaining<ApplicationMappingConfig>()                      // Register Mapster mappings
+						.AddMemoryCache()																												// Basic Caching 
+						.AddMapster()																														// Scanning for mapping registration
+						.AddMapsterFromAssemblyContaining<ApplicationMappingConfig>()						// Register Mapster mappings
 						.AddValidatorsFromAssemblyContaining<CreateArticleCommandValidator>()		// Register Fluent validators as transient
 						.AddMediatR(config =>
 						{
@@ -32,11 +33,9 @@ public static class DependencyInjection
 								//config.AddOpenBehavior(typeof(LoggingBehavior<,>));
 						})
 						.AddMassTransit(configuration, Assembly.GetExecutingAssembly()); ;
-				
-				services.AddSingleton(x => new BlobServiceClient(configuration.GetConnectionString("FileServer")));
 
-				//services.AddScoped<IThreadSafeMemoryCache, MemoryCache>();
 				services.AddScoped<IFileService, FileService>();
+				services.AddSingleton(x => new BlobServiceClient(configuration.GetConnectionString("FileServer")));
 
 				services.AddScoped<ArticleStateMachineFactory>(provider => articleStage =>
 				{

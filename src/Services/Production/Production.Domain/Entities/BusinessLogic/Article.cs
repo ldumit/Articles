@@ -21,7 +21,7 @@ public partial class Article
 
 				_stageHistories.Add(new StageHistory { ArticleId = Id, StageId = newStage, StartDate = DateTime.UtcNow });
 				AddDomainEvent(
-            new ArticleStageChangedDomainEvent(action, currentStage, newStage)
+            new ArticleStageChanged(action, currentStage, newStage)
             );
     }
 
@@ -32,7 +32,7 @@ public partial class Article
 
 				_contributors.Add(new ArticleContributor() { PersonId = typesetter.Id, Role = UserRoleType.TSOF});
 
-        AddDomainEvent(new TypesetterAssignedDomainEvent(action, typesetter.Id, typesetter.UserId!.Value));
+        AddDomainEvent(new TypesetterAssigned(action, typesetter.Id, typesetter.UserId!.Value));
     }
 
 		public Asset CreateAsset(AssetTypeDefinition type, byte assetNumber = 0)

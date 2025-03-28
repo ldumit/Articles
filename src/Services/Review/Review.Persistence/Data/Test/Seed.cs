@@ -19,8 +19,8 @@ public static class Seed
     {
         using var transaction = context.Database.BeginTransaction();
 
-        context.Seed<Author>();
-        context.Seed<Journal>();
+        context.SeedFromJson<Author>();
+        context.SeedFromJson<Journal>();
 
         transaction.Commit();
     }

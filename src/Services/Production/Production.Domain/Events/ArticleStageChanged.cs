@@ -3,5 +3,5 @@ using Articles.Abstractions.Enums;
 
 namespace Production.Domain.Events;
 
-public record ArticleStageChangedDomainEvent(IArticleAction action, ArticleStage CurrentStage, ArticleStage NewStage)
+public record ArticleStageChanged(IArticleAction action, ArticleStage CurrentStage, ArticleStage NewStage)
 		: DomainEvent(action);

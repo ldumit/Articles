@@ -33,6 +33,7 @@ public static class DependencyInjection
 				services.AddScoped<AssetRepository>();
 				services.AddScoped<AssetTypeRepository>();
 				services.AddScoped<PersonRepository>();
+				
 				services.AddHostedService<DatabaseCacheLoader>();
 
 				return services;

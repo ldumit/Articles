@@ -6,9 +6,9 @@ using Review.Domain.Events;
 namespace Review.Application.Features.Articles.AcceptArticle;
 
 public class PublishArticleAceeptedEventHandler(ArticleRepository _articleRepository, IPublishEndpoint _publishEndpoint)
-        : INotificationHandler<ArticleAcceptedDomainEvent>
+        : INotificationHandler<ArticleAccepted>
 {
-    public async Task Handle(ArticleAcceptedDomainEvent notification, CancellationToken ct)
+    public async Task Handle(ArticleAccepted notification, CancellationToken ct)
     {
         var article = await _articleRepository.GetFullArticleByIdOrThrow(notification.Article.Id);
 

@@ -77,6 +77,6 @@ public partial class Asset
 		private void AddAction(IArticleAction<AssetActionType> action)
 		{
 				_actions.Add(action.Adapt<AssetAction>());
-				AddDomainEvent(new AssetActionExecutedDomainEvent(action, this.Article.Stage, this.Type, this.Number, this.CurrentFile));
+				AddDomainEvent(new AssetActionExecuted(action, this.Article.Stage, this.Type, this.Number, this.CurrentFile));
 		}
 }

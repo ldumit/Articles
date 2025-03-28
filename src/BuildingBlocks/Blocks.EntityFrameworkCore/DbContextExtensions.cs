@@ -19,7 +19,7 @@ public static class DbContextExtensions
 				};
 		}
 
-		public static void Seed<TEntity>(this DbContext context, string folderPath = "Data/Test")
+		public static void SeedFromJson<TEntity>(this DbContext context, string folderPath = "Data/Test")
 				where TEntity : class
 		{
 				if (context.Set<TEntity>().Any())
@@ -61,5 +61,14 @@ public static class DbContextExtensions
 
 				context.Database.Migrate();
 				return app;
+		}
+
+		//todo - use this generic method in all microservices
+		public static void SeedTestData<TContext>(this IServiceProvider services, Action<TContext> seeder)
+				where TContext : DbContext
+		{
+				using var scope = services.CreateScope();
+				var context = scope.ServiceProvider.GetRequiredService<TContext>();
+				seeder(context);
 		}
 }

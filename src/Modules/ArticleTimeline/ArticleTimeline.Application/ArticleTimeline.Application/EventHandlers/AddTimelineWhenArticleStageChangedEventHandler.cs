@@ -7,8 +7,8 @@ using Blocks.EntityFrameworkCore;
 namespace ArticleTimeline.Application.EventHandlers;
 
 public class AddTimelineWhenArticleStageChangedEventHandler(TransactionProvider transactionProvider, TimelineRepository timelineRepository, VariableResolverFactory variableResolverFactory)
-		: AddTimelineEventHandler<ArticleStageChangedDomainEvent>(transactionProvider, timelineRepository, variableResolverFactory)
+		: AddTimelineEventHandler<ArticleStageChanged>(transactionProvider, timelineRepository, variableResolverFactory)
 {
 		protected override SourceType GetSourceType() => SourceType.StageTransition;
-		protected override string GetSourceId(ArticleStageChangedDomainEvent eventModel) => $"{eventModel.CurrentStage}->{eventModel.NewStage}";
+		protected override string GetSourceId(ArticleStageChanged eventModel) => $"{eventModel.CurrentStage}->{eventModel.NewStage}";
 }
