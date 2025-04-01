@@ -4,52 +4,38 @@ namespace Articles.Security;
 
 public enum UserRoleType : int
 {
+		// Cross-domain: 1–9
 		[Description("Editorial Office")]
 		EOF = 1,
-		[Description("Author")]
-		AUT = 2,
-		[Description("Corresponding Author")]
-		CORAUT = 3,
-		[Description("Co-Author")]
-		COAUT = 4,
-		[Description("Review Editor")]
-		REVED = 5,
-		[Description("Reviewer")]
-		REV = 6,
-		[Description("Production Office")]
-		POF = 7,
-		[Description("Typesetting Office (Typesetter)")]
-		TSOF = 8,
-		[Description("User Admin")]
-		ADMIN = 100
-}
 
-//todo replace the following enum with the above enum
-public enum UserRoleType2 : int
-{
-		[Description("Editorial Office")]
-		EditOF = 1,
+		// Submission: 11–19
 		[Description("Author")]
-		Auth = 2,
+		AUT = 11,
 		[Description("Corresponding Author")]
-		CorAuth = 3,
-		[Description("Co-Author")]
-		CoAuth = 4,
+		CORAUT = 12,
+
+		// Review: 21–29
 		[Description("Review Editor")]
-		RevEd = 5,
+		REVED = 21,
 		[Description("Reviewer")]
-		Rev = 6,
+		REV = 22,
+
+		// Production: 31–39
 		[Description("Production Office")]
-		ProdOF = 7,
-		[Description("Typesetting Office (Typesetter)")]
-		TsetOF = 8,
+		POF = 31,
+		[Description("Typesetter")]
+		TSOF = 32,
+
+		//talk - explain the ranges 11-19 and also the gap betwen the last domain(production) to Auth, allow space for other domains/microservices 
+
+		// Auth-only: 91–99
 		[Description("User Admin")]
-		Admin = 100
+		USERADMIN = 91
 }
 
 public static class Role
 {
-		public const string ADMIN = nameof(UserRoleType.ADMIN);
+		public const string ADMIN = nameof(UserRoleType.USERADMIN);
 
 		public const string EOF = nameof(UserRoleType.EOF);
 		public const string CORAUT = nameof(UserRoleType.CORAUT);

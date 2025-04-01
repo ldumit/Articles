@@ -4,7 +4,6 @@ using Auth.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -12,15 +11,13 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Auth.Persistence.Migrations
 {
     [DbContext(typeof(AuthDBContext))]
-    [Migration("20241003091630_InitialCreate")]
-    partial class InitialCreate
+    partial class AuthDBContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.8")
+                .HasAnnotation("ProductVersion", "8.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -29,7 +26,8 @@ namespace Auth.Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnOrder(0);
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
@@ -72,7 +70,8 @@ namespace Auth.Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnOrder(0);
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
@@ -110,13 +109,6 @@ namespace Auth.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 100,
-                            Description = "Admin",
-                            Name = "ADMIN",
-                            Type = "ADMIN"
-                        },
-                        new
-                        {
                             Id = 1,
                             Description = "Editorial Office",
                             Name = "EOF",
@@ -124,52 +116,52 @@ namespace Auth.Persistence.Migrations
                         },
                         new
                         {
-                            Id = 2,
-                            Description = "Review Editor",
-                            Name = "RE",
-                            Type = "RE"
-                        },
-                        new
-                        {
-                            Id = 3,
+                            Id = 11,
                             Description = "Author",
                             Name = "AUT",
                             Type = "AUT"
                         },
                         new
                         {
-                            Id = 4,
+                            Id = 12,
                             Description = "Corresponding Author",
                             Name = "CORAUT",
                             Type = "CORAUT"
                         },
                         new
                         {
-                            Id = 5,
-                            Description = "Submitting Author",
-                            Name = "SAUT",
-                            Type = "SAUT"
+                            Id = 21,
+                            Description = "Review Editor",
+                            Name = "REVED",
+                            Type = "REVED"
                         },
                         new
                         {
-                            Id = 6,
-                            Description = "Co-Author",
-                            Name = "COAUT",
-                            Type = "COAUT"
+                            Id = 22,
+                            Description = "Reviewer",
+                            Name = "REV",
+                            Type = "REV"
                         },
                         new
                         {
-                            Id = 7,
+                            Id = 31,
                             Description = "Production Office Admin",
                             Name = "POF",
                             Type = "POF"
                         },
                         new
                         {
-                            Id = 8,
+                            Id = 32,
                             Description = "Typesetter",
                             Name = "TSOF",
                             Type = "TSOF"
+                        },
+                        new
+                        {
+                            Id = 91,
+                            Description = "user Admin",
+                            Name = "USERADMIN",
+                            Type = "USERADMIN"
                         });
                 });
 
@@ -183,6 +175,10 @@ namespace Auth.Persistence.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
+
+                    b.Property<string>("Affiliation")
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
 
                     b.Property<string>("CompanyName")
                         .HasMaxLength(256)
@@ -267,6 +263,10 @@ namespace Auth.Persistence.Migrations
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");

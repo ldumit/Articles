@@ -19,6 +19,19 @@ public static class DbContextExtensions
 				};
 		}
 
+		public static TEntity[] LoadFromJson<TEntity>(this DbContext context, string folderPath = "Data/Test")
+				where TEntity : class
+		{
+				if (context.Set<TEntity>().Any())
+						return [];
+
+				var filePath = $"{AppContext.BaseDirectory}{folderPath}/{typeof(TEntity).Name}.json";
+				if (!File.Exists(filePath))
+						return [];
+
+				return JsonConvert.DeserializeObject<TEntity[]>(File.ReadAllText(filePath), DefaultSettings) ?? [];
+		}
+
 		public static void SeedFromJson<TEntity>(this DbContext context, string folderPath = "Data/Test")
 				where TEntity : class
 		{

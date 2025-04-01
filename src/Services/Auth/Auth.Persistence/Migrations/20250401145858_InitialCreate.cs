@@ -39,9 +39,11 @@ namespace Auth.Persistence.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     Gender = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: true),
                     Position = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
                     PictureUrl = table.Column<string>(type: "nvarchar(2048)", maxLength: 2048, nullable: true),
                     CompanyName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Affiliation = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
                     RegistrationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastLogin = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedById = table.Column<int>(type: "int", nullable: false),
@@ -209,14 +211,13 @@ namespace Auth.Persistence.Migrations
                 values: new object[,]
                 {
                     { 1, null, "Editorial Office", "EOF", null, "EOF" },
-                    { 2, null, "Review Editor", "RE", null, "RE" },
-                    { 3, null, "Author", "AUT", null, "AUT" },
-                    { 4, null, "Corresponding Author", "CORAUT", null, "CORAUT" },
-                    { 5, null, "Submitting Author", "SAUT", null, "SAUT" },
-                    { 6, null, "Co-Author", "COAUT", null, "COAUT" },
-                    { 7, null, "Production Office Admin", "POF", null, "POF" },
-                    { 8, null, "Typesetter", "TSOF", null, "TSOF" },
-                    { 100, null, "Admin", "ADMIN", null, "ADMIN" }
+                    { 11, null, "Author", "AUT", null, "AUT" },
+                    { 12, null, "Corresponding Author", "CORAUT", null, "CORAUT" },
+                    { 21, null, "Review Editor", "REVED", null, "REVED" },
+                    { 22, null, "Reviewer", "REV", null, "REV" },
+                    { 31, null, "Production Office Admin", "POF", null, "POF" },
+                    { 32, null, "Typesetter", "TSOF", null, "TSOF" },
+                    { 91, null, "user Admin", "USERADMIN", null, "USERADMIN" }
                 });
 
             migrationBuilder.CreateIndex(

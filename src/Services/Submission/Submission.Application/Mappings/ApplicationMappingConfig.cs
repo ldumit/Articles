@@ -1,4 +1,5 @@
-﻿using Submission.Application.Dtos;
+﻿using Auth.Grpc;
+using Submission.Application.Dtos;
 
 namespace Submission.Application.Mappings;
 
@@ -14,5 +15,12 @@ public class ApplicationMappingConfig : IRegister
 
         config.NewConfig<IArticleAction<ArticleActionType>, ArticleAction>()
                 .Map(dest => dest.TypeId, src => src.ActionType);
+
+				config.ForType<string, EmailAddress>()
+						.MapWith(src => EmailAddress.Create(src));
+
+				config.ForType<UserInfo, Author>()
+						.Map(dest => dest.UserId, src => src.Id)
+						.Ignore(dest => dest.Id); 
 		}
 }

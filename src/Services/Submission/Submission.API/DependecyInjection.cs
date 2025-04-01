@@ -6,6 +6,11 @@ using Blocks.AspNetCore;
 using Blocks.EntityFrameworkCore;
 using Blocks.Messaging;
 using Submission.Persistence.Repositories;
+using Auth.Grpc;
+using Blocks.AspNetCore.Grpc;
+using Azure.Storage.Blobs;
+using FileStorage.AzureBlob;
+using FileStorage.Contracts;
 
 namespace Submission.API;
 
@@ -27,11 +32,12 @@ public static class DependecyInjection
 		public static IServiceCollection AddApiServices(this IServiceCollection services, IConfiguration configuration)
 		{
 				services
-						.AddHttpContextAccessor()                // For accessing HTTP context
-						.AddEndpointsApiExplorer()               // Minimal API docs (Swagger)
-						.AddSwaggerGen()                         // Swagger setup
-						.AddJwtAuthentication(configuration)     // JWT Authentication
-						.AddAuthorization();                     // Authorization configuration
+						.AddMemoryCache()														// Basic Caching 
+						.AddHttpContextAccessor()										// For accessing HTTP context
+						.AddEndpointsApiExplorer()									// Minimal API docs (Swagger)
+						.AddSwaggerGen()														// Swagger setup
+						.AddJwtAuthentication(configuration)				// JWT Authentication
+						.AddAuthorization();												// Authorization configuration
 
 				// http
 				// talk - interface segragation
@@ -44,6 +50,16 @@ public static class DependecyInjection
 				services
 						.AddScoped<IAuthorizationHandler, ArticleRoleAuthorizationHandler>()
 						.AddScoped<IArticleRoleChecker, ContributorRepository>();
+
+				//file storage
+				services.AddScoped<IFileService, FileService>();
+				services.AddSingleton(x => new BlobServiceClient(configuration.GetConnectionString("FileServer")));
+
+
+				//grpc Services
+				var grpcOptions = configuration.GetByTypeName<GrpcServicesOptions>();
+				services.AddConfiguredGrpcClient<AuthService.AuthServiceClient>(grpcOptions);
+				//services.AddConfiguredGrpcClient<JournalService.JournalerviceClient>(grpcOptions);
 
 				return services;
 		}

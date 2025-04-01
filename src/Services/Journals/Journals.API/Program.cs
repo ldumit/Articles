@@ -4,7 +4,7 @@ using Journals.API;
 using System.Text.Json.Serialization;
 using Articles.Security;
 using Blocks.Mapster;
-using Journals.Persistence.TestData;
+using Journals.Persistence.Data.Test;
 using Blocks.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);

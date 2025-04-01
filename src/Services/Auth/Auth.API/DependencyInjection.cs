@@ -1,4 +1,5 @@
-﻿using Auth.Domain.Models;
+﻿using Auth.API.Mappings;
+using Auth.Domain.Models;
 using Auth.Persistence;
 using Microsoft.AspNetCore.Identity;
 
@@ -24,5 +25,7 @@ public static class DependenciesConfiguration
 				.AddEntityFrameworkStores<AuthDBContext>()
 				.AddSignInManager<SignInManager<User>>()
 				.AddDefaultTokenProviders();
+
+				services.AddSingleton<GrpcTypeAdapterConfig>();
 		}
 }

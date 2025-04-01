@@ -10,6 +10,7 @@ using Blocks.AspNetCore;
 using Blocks.Core;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http.Json;
+using Auth.API.Features.GetUserInfo;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,8 @@ builder.Services
 				opt.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
 		});
 
+
+builder.Services.AddGrpc();
 
 builder.Services
 		.AddFastEndpoints()
@@ -59,7 +62,7 @@ app.UseFastEndpoints(config =>
 		//config..Add(new AssignUserIdPreProcessor(app.Services.GetRequiredService<IHttpContextAccessor>()));
 });
 
-
+app.MapGrpcService<GetUserInfoGrpc>();
 
 //app.MapControllers();
 

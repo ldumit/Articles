@@ -1,56 +1,50 @@
 [
   {
-    "type": "ADMIN",
-    "id": 100,
-    "name": "ADMIN",
-    "description": "Admin"
-  },
-  {
     "type": "EOF",
     "id": 1,
     "name": "EOF",
     "description": "Editorial Office"
   },
   {
-    "type": "RE",
-    "id": 2,
-    "name": "RE",
-    "description": "Review Editor"
-  },
-  {
     "type": "AUT",
-    "id": 3,
+    "id": 11,
     "name": "AUT",
     "description": "Author"
   },
   {
     "type": "CORAUT",
-    "id": 4,
+    "id": 12,
     "name": "CORAUT",
     "description": "Corresponding Author"
   },
   {
-    "type": "SAUT",
-    "id": 5,
-    "name": "SAUT",
-    "description": "Submitting Author"
+    "type": "REVED",
+    "id": 21,
+    "name": "REVED",
+    "description": "Review Editor"
   },
   {
-    "type": "COAUT",
-    "id": 6,
-    "name": "COAUT",
-    "description": "Co-Author"
-  },
+    "type": "REV",
+    "id": 22,
+    "name": "REV",
+    "description": "Reviewer"
+  },  
   {
     "type": "POF",
-    "id": 7,
+    "id": 31,
     "name": "POF",
     "description": "Production Office Admin"
   },
   {
     "type": "TSOF",
-    "id": 8,
+    "id": 32,
     "name": "TSOF",
     "description": "Typesetter"
+  },
+  {
+    "type": "USERADMIN",
+    "id": 91,
+    "name": "USERADMIN",
+    "description": "user Admin"
   }
 ]

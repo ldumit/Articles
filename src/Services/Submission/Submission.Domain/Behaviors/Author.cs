@@ -15,9 +15,7 @@ public partial class Author
 						Affiliation = affiliation
 				};
 
-				//todo - "with" creates another instance of the object
-				//var domainEvent = author.Adapt<AuthorCreated>() with { Action = action };
-				var domainEvent = new AuthorCreated(email, firstName, lastName, title, affiliation, action);
+				var domainEvent = new AuthorCreated(author, action);
 				author.AddDomainEvent(domainEvent);
 
 				return author;

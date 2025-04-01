@@ -1,6 +1,4 @@
 ﻿using Blocks.MediatR.Behaviours;
-using FileStorage.AzureBlob;
-using FileStorage.Contracts;
 using Blocks.Mapster;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,7 +6,6 @@ using Submission.Application.Features.CreateArticle;
 using Submission.Application.StateMachines;
 using System.Reflection;
 using Microsoft.Extensions.Caching.Memory;
-using Azure.Storage.Blobs;
 using Blocks.Messaging.MassTransit;
 using Submission.Application.Mappings;
 
@@ -20,7 +17,6 @@ public static class DependencyInjection
 				//todo - remove all commented code after testing Submission
 				//talk - fluid vs normal
 				services
-						.AddMemoryCache()																												// Basic Caching 
 						.AddMapster()																														// Scanning for mapping registration
 						.AddMapsterFromAssemblyContaining<ApplicationMappingConfig>()						// Register Mapster mappings
 						.AddValidatorsFromAssemblyContaining<CreateArticleCommandValidator>()		// Register Fluent validators as transient
@@ -34,12 +30,9 @@ public static class DependencyInjection
 						})
 						.AddMassTransit(configuration, Assembly.GetExecutingAssembly()); ;
 
-				services.AddScoped<IFileService, FileService>();
-				services.AddSingleton(x => new BlobServiceClient(configuration.GetConnectionString("FileServer")));
 
 				services.AddScoped<ArticleStateMachineFactory>(provider => articleStage =>
 				{
-						//var dbConntext = provider.GetRequiredService<SubmissionDbContext>();
 						var cache = provider.GetRequiredService<IMemoryCache>();
 						return new ArticleStateMachine(articleStage, cache);
 				});

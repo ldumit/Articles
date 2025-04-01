@@ -20,7 +20,7 @@ public partial class Journal
 
 				_articles.Add(article);
 
-				var domainEvent = article.Adapt<ArticleCreated>() with { Action = action };
+				var domainEvent = new ArticleCreated(article, action);
 				article.AddDomainEvent(domainEvent);
 				return article;
 		}

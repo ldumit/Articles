@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "Auth.API": {
+    "https": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
@@ -9,6 +9,13 @@
       },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:4454;http://localhost:4404"
+    },
+    "docker-compose": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
+      "publishAllPorts": true,
+      "useSSL": true
     },
     "Container (Dockerfile)": {
       "commandName": "Docker",

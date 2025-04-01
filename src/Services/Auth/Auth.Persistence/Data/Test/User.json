@@ -7,9 +7,10 @@
     "nickname": "Laur",
     "companyName": "Articles",
     "position": "Admin",
+    "Affiliation": "DotNetLabX Code Lab",
     "userRoles": [
       {
-        "roleId": 100,
+        "roleId": 91,
         "beginDate": "2024-08-01"
       }
     ]
@@ -22,9 +23,10 @@
     "nickname": "Aut1",
     "companyName": "Articles",
     "position": "Author",
+    "Affiliation": "Japan Aerospace Exploration Agency (JAXA)",
     "userRoles": [
       {
-        "roleId": 3,
+        "roleId": 11,
         "beginDate": "2024-08-01"
       }
     ]
@@ -37,9 +39,10 @@
     "nickname": "Auth2",
     "companyName": "Articles",
     "position": "Author",
+    "Affiliation": "University of Maryland, College Park",
     "userRoles": [
       {
-        "roleId": 3,
+        "roleId": 11,
         "beginDate": "2024-08-01"
       }
     ]
@@ -52,39 +55,122 @@
     "nickname": "Auth3",
     "companyName": "Articles",
     "position": "Author",
+    "Affiliation": "Tata Institute of Fundamental Research",
     "userRoles": [
       {
-        "roleId": 3,
+        "roleId": 11,
         "beginDate": "2024-08-01"
       }
     ]
   },
   {
-    "email": "coauthor.1@articles.cs",
-    "firstName": "CoAuthor",
+    "email": "corauthor.1@articles.cs",
+    "firstName": "CorAuthor",
     "lastName": "1",
     "gender": "Male",
-    "nickname": "CoAuth1",
+    "nickname": "CorAuth1",
     "companyName": "Articles",
     "position": "Author",
+    "Affiliation": "Indian Institute of Science Education and Research, Bhopal",
     "userRoles": [
       {
-        "roleId": 4,
+        "roleId": 12,
         "beginDate": "2024-08-01"
       }
     ]
   },
   {
-    "email": "coauthor.2@articles.cs",
-    "firstName": "CoAuthor",
+    "email": "corauthor.2@articles.cs",
+    "firstName": "CorAuthor",
     "lastName": "2",
     "gender": "Female",
-    "nickname": "CoAuth2",
+    "nickname": "CorAuth2",
     "companyName": "Articles",
     "position": "Author",
+    "Affiliation": "Helmholtz Centre for Materials and Coastal Research (HZG)",
     "userRoles": [
       {
-        "roleId": 4,
+        "roleId": 12,
+        "beginDate": "2024-08-01"
+      }
+    ]
+  },
+  {
+    "email": "reved.1@articles.cs",
+    "firstName": "RevEditor",
+    "lastName": "1",
+    "gender": "Male",
+    "nickname": "RevEditor1",
+    "companyName": "Articles",
+    "position": "Review Editor",
+    "Affiliation": "Indian Institute of Science Education and Research, Bhopal",
+    "userRoles": [
+      {
+        "roleId": 21,
+        "beginDate": "2024-08-01"
+      }
+    ]
+  },
+  {
+    "email": "reved.2@articles.cs",
+    "firstName": "RevEditor",
+    "lastName": "2",
+    "gender": "Male",
+    "nickname": "RevEditor2",
+    "companyName": "Articles",
+    "position": "Review Editor",
+    "Affiliation": "Helmholtz Centre for Materials and Coastal Research (HZG)",
+    "userRoles": [
+      {
+        "roleId": 21,
+        "beginDate": "2024-08-01"
+      }
+    ]
+  },
+  {
+    "email": "rev.1@articles.cs",
+    "firstName": "Reviewer",
+    "lastName": "1",
+    "gender": "Male",
+    "nickname": "Reviwer1",
+    "companyName": "Articles",
+    "position": "Reviewer",
+    "Affiliation": "Japan Aerospace Exploration Agency (JAXA)",
+    "userRoles": [
+      {
+        "roleId": 22,
+        "beginDate": "2024-08-01"
+      }
+    ]
+  },
+  {
+    "email": "rev.2@articles.cs",
+    "firstName": "Reviewer",
+    "lastName": "2",
+    "gender": "Male",
+    "nickname": "Reviwer2",
+    "companyName": "Articles",
+    "position": "Reviewer",
+    "Affiliation": "University of Maryland, College Park",
+    "userRoles": [
+      {
+        "roleId": 22,
+        "beginDate": "2024-08-01"
+      }
+    ]
+  },
+  {
+    "email": "rev.3@articles.cs",
+    "firstName": "Reviewer",
+    "lastName": "3",
+    "gender": "Male",
+    "nickname": "Reviwer3",
+    "companyName": "Articles",
+    "position": "Reviewer",
+    "Affiliation": "University of Maryland, College Park",
+    "userRoles": [
+      {
+        "roleId": 22,
         "beginDate": "2024-08-01"
       }
     ]
@@ -99,7 +185,7 @@
     "position": "Typesetter",
     "userRoles": [
       {
-        "roleId": 8,
+        "roleId": 32,
         "beginDate": "2024-08-01"
       }
     ]
@@ -114,7 +200,7 @@
     "position": "Typesetter",
     "userRoles": [
       {
-        "roleId": 8,
+        "roleId": 32,
         "beginDate": "2024-08-01"
       }
     ]
@@ -129,7 +215,7 @@
     "position": "Production Office Specialist",
     "userRoles": [
       {
-        "roleId": 7,
+        "roleId": 31,
         "beginDate": "2024-08-01"
       }
     ]

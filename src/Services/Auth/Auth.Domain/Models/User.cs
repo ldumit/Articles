@@ -11,8 +11,9 @@ public partial class User : IdentityUser<int>, IAggregateEntity<int>
 		
 		public string FullName => FirstName + " " + LastName;
 		public required Gender Gender { get; set; }
-		
-		public string? Position { get; set; } = null!;
+
+		public string? Title { get; set; } = null!;
+    public string? Position { get; set; } = null!;
 		public string? PictureUrl { get; set; } = null!;
 		public string? CompanyName { get; set; } = null!;
 		public string? Affiliation { get; set; } = null!;

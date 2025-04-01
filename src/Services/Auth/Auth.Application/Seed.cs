@@ -1,11 +1,9 @@
-﻿using Blocks.Entitities;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Auth.Domain.Models;
 using Auth.Persistence;
 using Microsoft.AspNetCore.Identity;
-using System.Text.Json;
-using Blocks.Core;
+using Blocks.EntityFrameworkCore;
 
 namespace Auth.Application;
 
@@ -26,7 +24,7 @@ public static class Seed
         const string DefaultPassword = "Pass.123!";
         using var transaction = context.Database.BeginTransaction();
 
-				var users = LoadFromJson<User>(context);
+				var users = context.LoadFromJson<User>();
         foreach (var user in users) 
         {
             user.UserName = user.Email;
@@ -36,20 +34,20 @@ public static class Seed
         transaction.Commit();
     }
 
-    private static TEntity[] LoadFromJson<TEntity>(AuthDBContext context)
-        where TEntity : class, IEntity<int>
-    {
-        if (context.Set<TEntity>().Any())
-            return Array.Empty<TEntity>();
+    //private static TEntity[] LoadFromJson<TEntity>(AuthDBContext context)
+    //    where TEntity : class, IEntity<int>
+    //{
+    //    if (context.Set<TEntity>().Any())
+    //        return Array.Empty<TEntity>();
 
-        var filePath = $"{AppContext.BaseDirectory}TestData/{typeof(TEntity).Name}.json";
-        if (File.Exists(filePath))
-        {
-            var collection = JsonExtensions.DeserializeCaseInsensitive<TEntity[]>(System.IO.File.ReadAllText(filePath));
-            if (collection != null)
-                return collection;
+    //    var filePath = $"{AppContext.BaseDirectory}TestData/{typeof(TEntity).Name}.json";
+    //    if (File.Exists(filePath))
+    //    {
+    //        var collection = JsonExtensions.DeserializeCaseInsensitive<TEntity[]>(System.IO.File.ReadAllText(filePath));
+    //        if (collection != null)
+    //            return collection;
 
-				}
-        return Array.Empty<TEntity>();
-    }
+				//}
+    //    return Array.Empty<TEntity>();
+    //}
 }

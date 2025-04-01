@@ -5,7 +5,7 @@ using Redis.OM;
 using Blocks.Redis;
 using StackExchange.Redis;
 
-namespace Journals.Persistence.TestData;
+namespace Journals.Persistence.Data.Test;
 
 public static class Seed
 {

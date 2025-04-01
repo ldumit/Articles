@@ -1,41 +1,24 @@
-﻿//using Microsoft.AspNetCore.Http;
-//using Grpc.Core;
-//using UserService;  
-// The generated namespace from the .proto file
+﻿using Microsoft.AspNetCore.Identity;
+using Mapster;
+using Grpc.Core;
+using Blocks.Exceptions;
+using Auth.Grpc;
+using Auth.Domain.Models;
+using Auth.API.Mappings;
 
 namespace Auth.API.Features.GetUserInfo;
 
+public partial class GetUserInfoGrpc(UserManager<User> _userManager, GrpcTypeAdapterConfig _typeAdapterConfig) : AuthService.AuthServiceBase
+{
+		public override async Task<GetUserResponse> GetUserById(GetUserRequest request, ServerCallContext context)
+		{
+				var user = await _userManager.FindByIdAsync(request.UserId.ToString());
+				if (user == null)
+						throw new NotFoundException("User not found");
 
-//public class GetUserInfoGrpc : UserService.UserServiceBase
-//{
-//		private readonly IUserRepository _userRepository;
-
-//		public GetUserInfoGrpc(IUserRepository userRepository)
-//		{
-//				_userRepository = userRepository;
-//		}
-
-//		// Implement the GetUserInfo RPC method
-//		public override async Task<GetUserResponse> GetUserInfo(GetUserRequest request, ServerCallContext context)
-//		{
-//				// Retrieve user information based on userId from repository
-//				var user = await _userRepository.GetUserByIdAsync(request.UserId);
-
-//				if (user == null)
-//				{
-//						// Handle user not found (optional: you could throw an exception or return an empty response)
-//						throw new RpcException(new Status(StatusCode.NotFound, "User not found"));
-//				}
-
-//				// Return the user information as a response
-//				return new GetUserResponse
-//				{
-//						UserInfo = new UserInfo
-//						{
-//								FullName = user.FullName,
-//								Email = user.Email,
-//								Affiliation = user.Affiliation
-//						}
-//				};
-//		}
-//}
+				return new GetUserResponse
+				{
+						UserInfo = user.Adapt<UserInfo>(_typeAdapterConfig)
+				};
+		}
+}

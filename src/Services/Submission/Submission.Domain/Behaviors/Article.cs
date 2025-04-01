@@ -23,7 +23,7 @@ public partial class Article
 						new StageHistory { ArticleId = Id, StageId = newStage, StartDate = DateTime.UtcNow });
 				
 				AddDomainEvent(
-						new ArticleStageChanged(action, currentStage, newStage));
+						new ArticleStageChanged(currentStage, newStage, action));
     }
 
 		public void AssignAuthor(Author author, HashSet<ContributionArea> contributionAreas, bool isCorrespondingAuthor, IArticleAction<ArticleActionType> action)
@@ -35,11 +35,12 @@ public partial class Article
 
 				Contributors.Add(new ArticleAuthor() {
 						ContributionAreas = contributionAreas,
-						PersonId = author.Id, 
+						Person = author,
+						//PersonId = author.Id, 
 						Role = role
 				});
 				AddDomainEvent(
-						new AuthorAssigned(action, author.Id, author.UserId!.Value));
+						new AuthorAssigned(author, action));
 				AddAction(action);
 		}
 
@@ -81,6 +82,6 @@ public partial class Article
 		private void AddAction(IArticleAction<ArticleActionType> action)
 		{
 				_actions.Add(action.Adapt<ArticleAction>());
-				AddDomainEvent(new ArticleActionExecuted(action, this));
+				AddDomainEvent(new ArticleActionExecuted(this, action));
 		}
 }

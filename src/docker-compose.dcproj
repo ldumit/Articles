@@ -17,4 +17,11 @@
     <None Include=".dockerignore" />
     <None Include="Dockerfile" />
   </ItemGroup>
+  
+	<ItemGroup>
+		<ProjectReference Include="Services\Submission\Submission.API\Submission.API.csproj" />
+		<ProjectReference Include="Services\Review\Review.API\Review.API.csproj" />
+		<ProjectReference Include="Services\Production\Production.API\Production.API.csproj" />
+		<!-- Add more if needed -->
+	</ItemGroup>
 </Project>

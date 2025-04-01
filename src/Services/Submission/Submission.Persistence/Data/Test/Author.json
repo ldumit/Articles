@@ -26,48 +26,39 @@
     "Affiliation": "University of Maryland, College Park"
   },
   {
-    "UserId": 4,
-    "PersonType": "Author",
-    "FirstName": "Author",
-    "LastName": "3",
-    "Title": "Dr",
-    "Email": {"Value":"author.3@articles.com"},
-     "Affiliation": "Tata Institute of Fundamental Research"
-  },
-  {
     "UserId":5,
     "PersonType": "Author",
-    "FirstName": "Co-Author",
+    "FirstName": "CorAuthor",
     "LastName": "1",
     "Title": "Ms",
-    "Email": {"Value":"coauthor.1@articles.com"},
+    "Email": {"Value":"corauthor.1@articles.com"},
     "Affiliation": "Indian Institute of Science Education and Research, Bhopal"
   },
   {
     "UserId": 6,
     "PersonType": "Author",
-    "FirstName": "Co-Author",
+    "FirstName": "CorAuthor",
     "LastName": "2",
     "Title": "Mr",
-    "Email": {"Value":"coauthor.2@articles.com"},
+    "Email": {"Value":"corauthor.2@articles.com"},
     "Affiliation": "Helmholtz Centre for Materials and Coastal Research (HZG)"
   },
-  {
-    "UserId": 9,
-    "PersonType": "Person",
-    "FirstName": "Reviewer",
-    "LastName": "1",
-    "Title": "Mr",
-    "Email": {"Value":"reviewer.1@articles.com"}
-  },
-  {
-    "UserId": 10,
-    "PersonType": "Person",
-    "FirstName": "Reviewer",
-    "LastName": "2",
-    "Title": "Ms",
-    "Email": {"Value":"reviewer.2@articles.com"}
-  },
+  //{
+  //  "UserId": 9,
+  //  "PersonType": "Person",
+  //  "FirstName": "Reviewer",
+  //  "LastName": "1",
+  //  "Title": "Mr",
+  //  "Email": {"Value":"reviewer.1@articles.com"}
+  //},
+  //{
+  //  "UserId": 10,
+  //  "PersonType": "Person",
+  //  "FirstName": "Reviewer",
+  //  "LastName": "2",
+  //  "Title": "Ms",
+  //  "Email": {"Value":"reviewer.2@articles.com"}
+  //},
   {
     "UserId": null,
     "PersonType": "Author",

@@ -6,15 +6,17 @@ package auth;
 
 // The User information returned by the service
 message UserInfo {
-    string first_name= 1;
-    string last_name= 2;
-    string email = 3;
-    string affiliation = 4;
+    int32 id = 1;
+    string first_name = 2;
+    string last_name = 3;
+    string email = 4;
+    optional string title = 5;
+    optional string affiliation = 6;
 }
 
 // The request to get user information by ID
 message GetUserRequest {
-    string user_id = 1;
+    int32 user_id = 1;
 }
 
 // The response that wraps the user info
@@ -23,6 +25,6 @@ message GetUserResponse {
 }
 
 // The User service definition
-service UserService {
-    rpc GetUserInfo(GetUserRequest) returns (GetUserResponse);
+service AuthService {
+    rpc GetUserById(GetUserRequest) returns (GetUserResponse);
 }

@@ -21,12 +21,12 @@ public static class Extensions
 						.GreaterThan(valueToCompare)
 						.WithMessage(c => ValidationMessages.InvalidId.FormatWith(propertyName));
 
-		public static IRuleBuilderOptions<T, string> MaximumLengthWithMessage<T>(this IRuleBuilder<T, string> ruleBuilder, int maxLength, string propertyName)
+		public static IRuleBuilderOptions<T, string?> MaximumLengthWithMessage<T>(this IRuleBuilder<T, string?> ruleBuilder, int maxLength, string propertyName)
 				=> ruleBuilder
 						.MaximumLength(maxLength)
 						.WithMessage(c => ValidationMessages.MaxLengthExceeded.FormatWith(propertyName, maxLength));
 
-		public static IRuleBuilderOptions<T, string> NotEmptyWithMessage<T>(this IRuleBuilder<T, string> ruleBuilder, string propertyName)
+		public static IRuleBuilderOptions<T, string?> NotEmptyWithMessage<T>(this IRuleBuilder<T, string?> ruleBuilder, string propertyName)
 				=> ruleBuilder
 						.NotEmpty()
 						.WithMessage(c => ValidationMessages.EmptyValue.FormatWith(propertyName));

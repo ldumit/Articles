@@ -1,4 +1,4 @@
 ﻿namespace Submission.Domain.Events;
 
-public record ArticleActionExecuted(IArticleAction<ArticleActionType> action, Article Article)
+public record ArticleActionExecuted(Article Article, IArticleAction<ArticleActionType> action)
 		: DomainEvent(action);

@@ -29,40 +29,40 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="MasterData\ArticleStageTransition1.json">
+    <None Update="Data\Master\ArticleStageTransition1.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="MasterData\AssetStateTransition.json">
+    <None Update="Data\Master\AssetStateTransition.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="MasterData\AssetStateTransitionCondition.json">
+    <None Update="Data\Master\AssetStateTransitionCondition.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="MasterData\AssetType2.json">
+    <None Update="Data\Master\AssetType2.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="MasterData\AssetType1.json">
+    <None Update="Data\Master\AssetType1.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="MasterData\Stage.json">
+    <None Update="Data\Master\Stage.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="TestData\Article.json">
+    <None Update="Data\Test\Article.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="TestData\AssetCurrentFileLink.json">
+    <None Update="Data\Test\AssetCurrentFileLink.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="TestData\Journal.json">
+    <None Update="Data\Test\Journal.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="TestData\Typesetter.json">
+    <None Update="Data\Test\Typesetter.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="TestData\Person.json">
+    <None Update="Data\Test\Person.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="TestData\User.json">
+    <None Update="Data\Test\User.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
