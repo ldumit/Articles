@@ -1,6 +1,5 @@
 ﻿namespace Submission.Domain.Events;
 
-//todo - create a handler which will send an integration event for the ArticleHub service
-//todo - remove DomainEvent suffix from all domain events ?!?
+//todo - do I need to notify the ArticleHub, or it is enough only when the article is submitted?
 public record ArticleCreated(Article Article, IArticleAction action)
 		: DomainEvent(action);

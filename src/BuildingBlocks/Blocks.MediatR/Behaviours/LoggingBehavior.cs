@@ -1,32 +1,40 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 
 namespace Blocks.MediatR.Behaviours;
 public class LoggingBehavior<TRequest, TResponse>
-    (ILogger<LoggingBehavior<TRequest, TResponse>> logger)
+    (ILogger<LoggingBehavior<TRequest, TResponse>> _logger, IHttpContextAccessor _httpContextAccessor)
     : IPipelineBehavior<TRequest, TResponse>
     where TRequest : notnull, IRequest<TResponse>
     where TResponse : notnull
 {
-    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken ct)
     {
-        logger.LogInformation("[START] Handle request={Request} - Response={Response} - RequestData={RequestData}",
-            typeof(TRequest).Name, typeof(TResponse).Name, request);
+				var correlationId = _httpContextAccessor.HttpContext?.Items["X-Correlation-ID"]?.ToString();
 
-        var timer = new Stopwatch();
-        timer.Start();
+				_logger.LogDebug("[Begin] Handling {Request} | CorrelationId: {CorrelationId}", typeof(TRequest).Name, correlationId);
 
-        var response = await next();
+				var stopwatch = Stopwatch.StartNew();
+				var response = await next();
+				stopwatch.Stop();
+				var requestDuration = stopwatch.Elapsed;
 
-        timer.Stop();
-        var timeTaken = timer.Elapsed;
-        if (timeTaken.Seconds > 3) // if the request is greater than 3 seconds, then log the warnings
-            logger.LogWarning("[PERFORMANCE] The request {Request} took {TimeTaken} seconds.",
-                typeof(TRequest).Name, timeTaken.Seconds);
+				var httpRequest = _httpContextAccessor.HttpContext?.Request;
+				// identifying upload/download requests
+				var isFileTransfer = httpRequest?.ContentType?.StartsWith("multipart/form-data", StringComparison.OrdinalIgnoreCase) == true
+														 || httpRequest?.Path.ToString().Contains("download", StringComparison.OrdinalIgnoreCase) == true;
 
-        logger.LogInformation("[END] Handled {Request} with {Response}", typeof(TRequest).Name, typeof(TResponse).Name);
-        return response;
+				var thresholdMs = isFileTransfer ? 3000 : 1000;
+				if (requestDuration.TotalMilliseconds > thresholdMs)
+				{
+						_logger.LogWarning("[PerfWarn] {Request} took {Elapsed} ms. (FileTransfer: {IsFileTransfer})",
+								typeof(TRequest).Name, (int)requestDuration.TotalMilliseconds, isFileTransfer);
+				}
+
+				_logger.LogDebug("End handling {Request} in {Elapsed}ms | CorrelationId: {CorrelationId}", typeof(TRequest).Name, stopwatch.ElapsedMilliseconds, correlationId);
+				return response;
     }
 }
 

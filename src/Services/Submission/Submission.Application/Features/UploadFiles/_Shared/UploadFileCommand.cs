@@ -35,11 +35,17 @@ public abstract class UploadFileValidator<TUploadFileCommand> : ArticleCommandVa
 				_assetTypeRepository = assetTypeRepository;
 
 				RuleFor(r => r.AssetType).Must(IsAssetTypeAllowed)
-						.WithMessage(command => ValidationMessages.InvalidAssetType.FormatWith(_assetTypeDefinition.Name));
-				RuleFor(command => command.File).Must(IsFileSizeValid)
-						.WithMessage(command => ValidationMessages.InvalidFileSize.FormatWith(_assetTypeDefinition.MaxFileSizeInMB));
-				RuleFor(command => command.File).Must(IsFileExtensionValid)
-						.WithMessage(command => ValidationMessages.InvalidFileExtension.FormatWith(_assetTypeDefinition.Name, command.File.GetExtension()));
+						.WithMessage(x => ValidationMessages.InvalidAssetType.FormatWith(_assetTypeDefinition.Name));
+
+				RuleFor(x => x.File)
+						.NotNullWithMessage();
+				
+				When(x => x.File != null, () =>
+				{
+						RuleFor(x => x.File)
+								.Must(IsFileSizeValid).WithMessage(x => ValidationMessages.InvalidFileSize.FormatWith(_assetTypeDefinition.MaxFileSizeInMB))
+								.Must(IsFileExtensionValid).WithMessage(x => ValidationMessages.InvalidFileExtension.FormatWith(_assetTypeDefinition.Name, x.File.GetExtension()));
+				});
 		}
 
 		public override ValidationResult Validate(ValidationContext<TUploadFileCommand> context)

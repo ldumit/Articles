@@ -12,7 +12,7 @@ public static class Extensions
 				=> rule.WithMessage(c => ValidationMessages.MaxLengthExceeded.FormatWith(propertyName, maxLength));
 
 		public static IRuleBuilderOptions<T, TProperty> WithMessageForEmpty<T, TProperty>(this IRuleBuilderOptions<T, TProperty> rule, string propertyName)
-				=> rule.WithMessage(c => ValidationMessages.EmptyValue.FormatWith(propertyName));
+				=> rule.WithMessage(c => ValidationMessages.NullOrEmptyValue.FormatWith(propertyName));
 
 
 		public static IRuleBuilderOptions<T, TProperty> GreaterThanWithMessageForInvalidId<T, TProperty>(this IRuleBuilder<T, TProperty> ruleBuilder, TProperty valueToCompare, string propertyName)
@@ -29,5 +29,10 @@ public static class Extensions
 		public static IRuleBuilderOptions<T, string?> NotEmptyWithMessage<T>(this IRuleBuilder<T, string?> ruleBuilder, string propertyName)
 				=> ruleBuilder
 						.NotEmpty()
-						.WithMessage(c => ValidationMessages.EmptyValue.FormatWith(propertyName));
+						.WithMessage(c => ValidationMessages.NullOrEmptyValue.FormatWith(propertyName));
+
+		public static IRuleBuilderOptions<T, TProperty> NotNullWithMessage<T, TProperty>(this IRuleBuilder<T, TProperty> ruleBuilder)
+				=> ruleBuilder
+						.NotNull()
+						.WithMessage(c => ValidationMessages.NullOrEmptyValue.FormatWith(typeof(TProperty).Name));
 }

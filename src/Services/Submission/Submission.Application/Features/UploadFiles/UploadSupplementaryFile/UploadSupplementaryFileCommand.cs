@@ -4,7 +4,7 @@ namespace Submission.Application.Features.UploadFiles;
 
 public record UploadSupplementaryFileCommand : UploadFileCommand;
 
-public abstract class UploadSupplementaryFileValidator : UploadFileValidator<UploadSupplementaryFileCommand>
+public class UploadSupplementaryFileValidator : UploadFileValidator<UploadSupplementaryFileCommand>
 {
 		public UploadSupplementaryFileValidator(AssetTypeRepository assetTypeRepository)
 				: base(assetTypeRepository) { }

@@ -5,6 +5,7 @@ using Blocks.AspNetCore;
 using Submission.API.Endpoints;
 using Submission.API;
 using Submission.Persistence.Data.Test;
+using Blocks.AspNetCore.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,7 +28,9 @@ app
 		.UseRouting()
 		.UseAuthentication()
 		.UseAuthorization()
-		.UseMiddleware<GlobalExceptionMiddleware>();
+		.UseMiddleware<GlobalExceptionMiddleware>()
+		.UseMiddleware<CorrelationIdMiddleware>();
+
 
 app.MapAllEndpoints();
 

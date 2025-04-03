@@ -26,7 +26,7 @@ public static class DependencyInjection
 
 								config.AddOpenBehavior(typeof(SetUserIdBehavior<,>));
 								config.AddOpenBehavior(typeof(ValidationBehavior<,>));
-								//config.AddOpenBehavior(typeof(LoggingBehavior<,>));
+								config.AddOpenBehavior(typeof(LoggingBehavior<,>));
 						})
 						.AddMassTransit(configuration, Assembly.GetExecutingAssembly()); ;
 

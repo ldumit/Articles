@@ -4,6 +4,7 @@ using Blocks.EntityFrameworkCore;
 using ArticleHub.Application;
 using ArticleHub.API;
 using Carter;
+using Blocks.AspNetCore.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,7 +29,8 @@ app
 		.UseRouting()
 		.UseAuthentication()
 		.UseAuthorization()
-		.UseMiddleware<GlobalExceptionMiddleware>();
+		.UseMiddleware<GlobalExceptionMiddleware>()
+		.UseMiddleware<CorrelationIdMiddleware>();
 
 app.Migrate<ArticleHubDbContext>();
 

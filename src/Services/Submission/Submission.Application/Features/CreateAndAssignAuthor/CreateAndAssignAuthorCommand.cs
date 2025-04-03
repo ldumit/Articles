@@ -33,7 +33,7 @@ public class CreateAndAssignAuthorCommandValidator : ArticleCommandValidator<Cre
 
 				});
 
-				RuleFor(command => command.ContributionAreas)
+				RuleFor(x => x.ContributionAreas)
 						.Must(HasMandatoryContribution)
 						.WithMessage("The author must contribute to at least one mandatory area.");
 		}
