@@ -4,14 +4,15 @@ namespace Submission.Domain.Entities;
 
 public partial class Journal
 {
-		public Article CreateArticle(string title, ArticleType Type, string scope, int journalId, IArticleAction action)
+		public Article CreateArticle(string title, ArticleType Type, string scope, IArticleAction action)
 		{
 				var article = new Article
 				{
 						Title = title,
 						Type = Type,
 						Scope = scope,
-						JournalId = journalId,
+						//JournalId = journalId,
+						Journal = this,
 						Stage = ArticleStage.Created,
 						CreatedById = action.CreatedById,
 						CreatedOn = action.CreatedOn

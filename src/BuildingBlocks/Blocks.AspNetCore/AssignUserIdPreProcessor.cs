@@ -8,7 +8,7 @@ public class AssignUserIdPreProcessor : IGlobalPreProcessor
 {
 		public Task PreProcessAsync(IPreProcessorContext context, CancellationToken ct)
 		{
-				if (context.Request is IAction articleCommand)
+				if (context.Request is IAuditableAction articleCommand)
 				{
 						var claimsProvider = context.HttpContext.Resolve<IClaimsProvider>();
 						articleCommand.CreatedById = claimsProvider.GetUserId();

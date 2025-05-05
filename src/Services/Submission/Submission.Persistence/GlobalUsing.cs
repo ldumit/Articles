@@ -2,14 +2,12 @@
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-// Internal libraries
+// Internal libraries (Building Blocks)
 global using Blocks.EntityFrameworkCore;
 global using Articles.Abstractions.Enums;
 
 // Domain
 global using Submission.Domain.Entities;
 
-//Persistence
+// Persistence
 global using Submission.Persistence.Repositories;
-
-

@@ -6,7 +6,7 @@ public class IntegrationEventsMappingConfig : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<ArticleContributor, ContributorDto>()
+        config.NewConfig<ArticleActor, ContributorDto>()
                 .Include<ArticleAuthor, ContributorDto>();
 
         config.NewConfig<Person, PersonDto>()

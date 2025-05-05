@@ -13,10 +13,6 @@ public class AssignAuthorCommandValidator : ArticleCommandValidator<AssignAuthor
 				RuleFor(c => c.AuthorId).GreaterThan(0).WithMessageForInvalidId(nameof(AssignAuthorCommand.AuthorId));
 
 				RuleFor(command => command.ContributionAreas)
-						.Must(HasMandatoryContribution)
-						.WithMessage("The author must contribute to at least one mandatory area.");
+						.NotEmptyWithMessage(nameof(AssignAuthorCommand.ContributionAreas));
 		}
-
-		private bool HasMandatoryContribution(HashSet<ContributionArea> contributionAreas)
-				=> contributionAreas.Overlaps(ContributionAreaCategories.MandatoryAreas);
 }

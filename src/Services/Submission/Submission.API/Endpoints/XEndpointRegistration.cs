@@ -10,9 +10,9 @@ public static class EndpointRegistration
 				CreateAndAssignAuthorEndpoint.Map(app);
 				UploadManuscriptFileEndpoint.Map(app);
 				UploadSupplimentaryMaterialFileEndpoint.Map(app);
+				SubmitArticleEndpoint.Map(app);
 				ApproveArticleEndpoint.Map(app);
 				RejectArticleEndpoint.Map(app);
-				SubmitArticleEndpoint.Map(app);
 				DownloadFileEndpoint.Map(app);
 				
 				return app;

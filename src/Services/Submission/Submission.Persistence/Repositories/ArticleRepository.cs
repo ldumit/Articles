@@ -6,22 +6,19 @@ public class ArticleRepository(SubmissionDbContext dbContext)
 		protected override IQueryable<Article> Query()
 		{
 				return base.Entity
-						.Include(e => e.Contributors)
+						.Include(e => e.Actors)
 						.Include(e => e.Assets);
-								//.ThenInclude(e => e.TypeRef);
 		}
 
-		public async Task<Article> GetFullArticleByIdOrThrow(int id)
+		public async Task<Article?> GetFullArticleById(int id)
 		{
-				var article = await Entity
+				return await Entity
 						.Include(e => e.Journal)
 						.Include(e => e.SubmittedBy)
-						.Include(e => e.Contributors)
+						.Include(e => e.Actors)
 								.ThenInclude(e => e.Person)
 						.Include(e => e.Assets)
 						.SingleOrDefaultAsync(e => e.Id == id);
-
-				return ReturnOrThrow(article, true);
 		}
 }
 

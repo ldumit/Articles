@@ -2,5 +2,6 @@
 
 public partial class Author : Person
 {
-		public required string Affiliation { get; init; }
+		public string? Degree { get; init; }
+		public string? Discipline{ get; init; }
 }

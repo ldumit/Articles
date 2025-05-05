@@ -25,7 +25,7 @@ var app = builder.Build();
 app
 		.UseSwagger()
 		.UseSwaggerUI()
-		.UseRouting()
+		.UseRouting()                                       // match the HTTP request to an endpoint (route) based on the URL
 		.UseAuthentication()
 		.UseAuthorization()
 		.UseMiddleware<GlobalExceptionMiddleware>()

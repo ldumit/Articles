@@ -30,10 +30,10 @@ public partial class Article
 		{
 				var role = isCorrespondingAuthor ? UserRoleType.CORAUT : UserRoleType.AUT;				
 				
-				if (Contributors.Exists(a => a.PersonId == author.Id && a.Role == role))
+				if (Actors.Exists(a => a.PersonId == author.Id && a.Role == role))
 						throw new DomainException($"Author {author.Email} is already assigned to the article");
 
-				Contributors.Add(new ArticleAuthor() {
+				Actors.Add(new ArticleAuthor() {
 						ContributionAreas = contributionAreas,
 						Person = author,
 						//PersonId = author.Id, 
@@ -46,9 +46,22 @@ public partial class Article
 
 		public void Approve(IArticleAction<ArticleActionType> action, ArticleStateMachineFactory _stateMachineFactory)
 		{
+				Actors.Add(new ArticleActor()
+				{
+						PersonId = action.CreatedById,
+						Role = UserRoleType.REVED
+				});
+
 				SetStage(ArticleStage.InitialApproved, action, _stateMachineFactory);
 				
 				AddDomainEvent(new ArticleApproved(this, action));
+		}
+
+		public void Reject(IArticleAction<ArticleActionType> action, ArticleStateMachineFactory _stateMachineFactory)
+		{
+				SetStage(ArticleStage.InitialRejected, action, _stateMachineFactory);
+
+				AddDomainEvent(new ArticleRejected(this, action));
 		}
 
 		public void Submit(IArticleAction<ArticleActionType> action, ArticleStateMachineFactory _stateMachineFactory)

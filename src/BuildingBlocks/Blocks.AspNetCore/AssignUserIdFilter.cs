@@ -9,11 +9,11 @@ public class AssignUserIdFilter(IClaimsProvider _claimsProvider) : IActionFilter
 {
 		public void OnActionExecuting(ActionExecutingContext context)
 		{
-				if (context.ActionArguments.TryGetValue("command", out var commandObj) && commandObj is IAction command)
+				if (context.ActionArguments.TryGetValue("command", out var commandObj) && commandObj is IAuditableAction command)
 				{
 						var userId = _claimsProvider.GetUserId();
 
-						var userIdProperty = typeof(IAction).GetProperty("UserId", BindingFlags.NonPublic | BindingFlags.Instance);
+						var userIdProperty = typeof(IAuditableAction).GetProperty("UserId", BindingFlags.NonPublic | BindingFlags.Instance);
 						userIdProperty?.SetValue(command, userId);
 				}
 		}

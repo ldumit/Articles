@@ -2,7 +2,9 @@
 
 public partial class Article : AggregateEntity
 {
-		public required string Title { get; init; }
+    internal Article() {}
+
+    public required string Title { get; init; }
 		public ArticleType Type { get; init; }
 		public string Scope { get; init; } = default!;
 
@@ -12,15 +14,15 @@ public partial class Article : AggregateEntity
 
     public ArticleStage Stage { get; set; }
 
-		public required int JournalId { get; init; }
-		public Journal Journal { get; init; } = null!;
+		public int JournalId { get; init; }
+		public required Journal Journal { get; init; } = null!;
 		//public string JournalSection { get; set; } = default!;
 
 		// talk - ways to represent collections 
 		private readonly List<Asset> _assets = new();
     public IReadOnlyList<Asset> Assets => _assets.AsReadOnly();
 
-		public List<ArticleContributor> Contributors { get; set; } = new() ;
+		public List<ArticleActor> Actors { get; set; } = new() ;
 		//public IEnumerable<Author> Authors => Contributors.Where(aa => aa.Person is Author).Select(aa => aa.Person as Author);
 
 		private readonly List<StageHistory> _stageHistories = new();

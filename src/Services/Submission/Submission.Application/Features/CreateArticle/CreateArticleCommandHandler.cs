@@ -9,7 +9,7 @@ public class CreateArticleCommandHandler(Repository<Journal> _journalRepository)
 		{
 				var journal = await _journalRepository.FindByIdOrThrowAsync(command.JournalId);
 
-				var article = journal.CreateArticle(command.Title, command.Type, command.Scope, command.JournalId, command);
+				var article = journal.CreateArticle(command.Title, command.Type, command.Scope, command);
 
 				await AssignCurrentUserAsAuthor(article, command);
 

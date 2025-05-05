@@ -17,13 +17,15 @@ public class PersonEntityConfiguration : EntityConfiguration<Person>
 				builder.Property(e => e.FirstName).HasMaxLength(Constraints.C64).IsRequired();
         builder.Property(e => e.LastName).HasMaxLength(Constraints.C64).IsRequired();
         builder.Property(e => e.Title).HasMaxLength(Constraints.C64);
+				builder.Property(e => e.Affiliation).IsRequired().HasMaxLength(Constraints.C512)
+						.HasComment("Institution or organization they are associated with when they conduct their research.");
 
 				builder.ComplexProperty(
 					 o => o.Email, builder =>
 					 {
 							 builder.Property(n => n.Value)
 									 .HasColumnName(builder.Metadata.PropertyInfo!.Name)
-									 .HasMaxLength(Constraints.C64).HasComment("Final name of the file after renaming");
+									 .HasMaxLength(Constraints.C64);
 					 });
 		}
 }
