@@ -2,6 +2,7 @@
 using Articles.Abstractions.Events;
 using Articles.Abstractions.Events.Dtos;
 using Submission.Domain.Events;
+using Blocks.Core;
 
 namespace Submission.Application.Features.ApproveArticle;
 
@@ -10,9 +11,9 @@ public class PublishArticleApprovedEventHandler(ArticleRepository _articleReposi
 {
 		public async Task Handle(ArticleApproved notification, CancellationToken ct)
 		{
-				var article = await _articleRepository.GetFullArticleByIdOrThrow(notification.Article.Id);
+				var article = Guard.NotFound(await _articleRepository.GetFullArticleById(notification.Article.Id));
 
-				var articleDto = article.Adapt<ArticleDto>();
-				await _publishEndpoint.Publish(new ArticleSubmittedEvent(article.Adapt<ArticleDto>()), ct);
+				var articleDto = article.Adapt<ArticleDto>(); 
+				await _publishEndpoint.Publish(new ArticleSubmittedEvent(articleDto), ct);
 		}
 }

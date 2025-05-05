@@ -1,4 +1,7 @@
-﻿namespace Submission.Application.Features.AssignAuthor;
+﻿using Blocks.Core;
+using Microsoft.AspNetCore.Http.HttpResults;
+
+namespace Submission.Application.Features.AssignAuthor;
 
 public class AssignAuthorCommandHandler(ArticleRepository _articleRepository)
 		: IRequestHandler<AssignAuthorCommand, IdResponse>

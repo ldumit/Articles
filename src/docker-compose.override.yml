@@ -59,21 +59,21 @@ services:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro  
 
-  review-api:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTP_PORTS=8080
-      - ASPNETCORE_HTTPS_PORTS=8081
-      - ConnectionStrings__Database=Server=sqlserver;Database=ReviewDb;User Id=sa;Password=Password123!;Encrypt=False;TrustServerCertificate=True
-      # - RabbitMqOptions__Host=amqp://articles-mq:5672
-      # - RabbitMqOptions__UserName=guest
-      # - RabbitMqOptions__Password=guest 
-    ports:
-      - "4405:8080"
-      - "4455:8081"
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro  
+  # review-api:
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - ASPNETCORE_HTTP_PORTS=8080
+  #     - ASPNETCORE_HTTPS_PORTS=8081
+  #     - ConnectionStrings__Database=Server=sqlserver;Database=ReviewDb;User Id=sa;Password=Password123!;Encrypt=False;TrustServerCertificate=True
+  #     # - RabbitMqOptions__Host=amqp://articles-mq:5672
+  #     # - RabbitMqOptions__UserName=guest
+  #     # - RabbitMqOptions__Password=guest 
+  #   ports:
+  #     - "4405:8080"
+  #     - "4455:8081"
+  #   volumes:
+  #     - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+  #     - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro  
 
   production-api:
     environment:
@@ -100,7 +100,7 @@ services:
     restart: always
     ports:
       - "6379:6379"
-      - "8001:8001"
+      - "8801:8801"
 
   articlehub-hasura:
     environment:

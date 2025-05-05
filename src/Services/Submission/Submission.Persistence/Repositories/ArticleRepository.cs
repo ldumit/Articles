@@ -8,20 +8,17 @@ public class ArticleRepository(SubmissionDbContext dbContext)
 				return base.Entity
 						.Include(e => e.Contributors)
 						.Include(e => e.Assets);
-								//.ThenInclude(e => e.TypeRef);
 		}
 
-		public async Task<Article> GetFullArticleByIdOrThrow(int id)
+		public async Task<Article?> GetFullArticleById(int id)
 		{
-				var article = await Entity
+				return await Entity
 						.Include(e => e.Journal)
 						.Include(e => e.SubmittedBy)
 						.Include(e => e.Contributors)
 								.ThenInclude(e => e.Person)
 						.Include(e => e.Assets)
 						.SingleOrDefaultAsync(e => e.Id == id);
-
-				return ReturnOrThrow(article, true);
 		}
 }
 

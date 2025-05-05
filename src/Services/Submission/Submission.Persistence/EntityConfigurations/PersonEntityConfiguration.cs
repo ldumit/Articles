@@ -17,6 +17,8 @@ public class PersonEntityConfiguration : EntityConfiguration<Person>
 				builder.Property(e => e.FirstName).HasMaxLength(Constraints.C64).IsRequired();
         builder.Property(e => e.LastName).HasMaxLength(Constraints.C64).IsRequired();
         builder.Property(e => e.Title).HasMaxLength(Constraints.C64);
+				builder.Property(e => e.Affiliation).IsRequired().HasMaxLength(Constraints.C512)
+						.HasComment("Institution or organization they are associated with when they conduct their research.");
 
 				builder.ComplexProperty(
 					 o => o.Email, builder =>

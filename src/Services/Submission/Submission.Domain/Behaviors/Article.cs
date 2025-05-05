@@ -46,9 +46,22 @@ public partial class Article
 
 		public void Approve(IArticleAction<ArticleActionType> action, ArticleStateMachineFactory _stateMachineFactory)
 		{
+				Contributors.Add(new ArticleContributor()
+				{
+						PersonId = action.CreatedById,
+						Role = UserRoleType.REVED
+				});
+
 				SetStage(ArticleStage.InitialApproved, action, _stateMachineFactory);
 				
 				AddDomainEvent(new ArticleApproved(this, action));
+		}
+
+		public void Reject(IArticleAction<ArticleActionType> action, ArticleStateMachineFactory _stateMachineFactory)
+		{
+				SetStage(ArticleStage.InitialRejected, action, _stateMachineFactory);
+
+				AddDomainEvent(new ArticleRejected(this, action));
 		}
 
 		public void Submit(IArticleAction<ArticleActionType> action, ArticleStateMachineFactory _stateMachineFactory)

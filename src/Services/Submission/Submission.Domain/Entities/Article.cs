@@ -2,7 +2,9 @@
 
 public partial class Article : AggregateEntity
 {
-		public required string Title { get; init; }
+    internal Article() {}
+
+    public required string Title { get; init; }
 		public ArticleType Type { get; init; }
 		public string Scope { get; init; } = default!;
 
@@ -12,8 +14,8 @@ public partial class Article : AggregateEntity
 
     public ArticleStage Stage { get; set; }
 
-		public required int JournalId { get; init; }
-		public Journal Journal { get; init; } = null!;
+		public int JournalId { get; init; }
+		public required Journal Journal { get; init; } = null!;
 		//public string JournalSection { get; set; } = default!;
 
 		// talk - ways to represent collections 

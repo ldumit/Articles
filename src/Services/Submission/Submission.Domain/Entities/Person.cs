@@ -8,6 +8,7 @@
 
 				public string? Title { get; init; }
 				public required EmailAddress Email { get; init; }
+				public required string Affiliation { get; init; }
 
 				public int? UserId { get; init; }
 

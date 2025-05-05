@@ -1,4 +1,5 @@
-﻿using FileStorage.Contracts;
+﻿using Blocks.Core;
+using FileStorage.Contracts;
 
 namespace Submission.Application.Features.DownloadFile;
 
@@ -6,7 +7,7 @@ public class DownloadFileCommandHandler(AssetRepository _assetRepository, IFileS
 {
 		public async Task<DownloadFileResponse> Handle(DownloadFileQuery command, CancellationToken cancellationToken)
 		{
-				var asset = await _assetRepository.GetByIdAsync(command.ArticleId, command.AssetId);
+				var asset = Guard.NotFound(await _assetRepository.GetByIdAsync(command.ArticleId, command.AssetId));
 
 				var (fileStream, contentType) = await _fileService.DownloadFileAsync(asset!.File.FileServerId);
 
