@@ -1,5 +1,7 @@
 ﻿namespace Submission.Domain.Entities;
 
+// NOTE: This is a Value Object but kept in Entities namespace to avoid System.IO.File name ambiguity
+
 public partial class File : IDomainObject, IValueObject
 {
     //talk - difference between required, null!, default!

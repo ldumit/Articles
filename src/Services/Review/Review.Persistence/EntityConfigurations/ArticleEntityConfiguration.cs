@@ -8,10 +8,10 @@ public class ArticleEntityConfiguration : AuditedEntityConfiguration<Article>
         builder.HasIndex(e => e.Title);
 
         //talk - using constants instead of direct numbers
-        builder.Property(e => e.Title).HasMaxLength(Constraints.C256).IsRequired();
+        builder.Property(e => e.Title).HasMaxLength(MaxLength.C256).IsRequired();
         builder.Property(e => e.Stage).HasEnumConversion().IsRequired();
 				builder.Property(e => e.Type).HasEnumConversion().IsRequired();
-				builder.Property(e => e.Scope).HasMaxLength(Constraints.C2048).IsRequired();
+				builder.Property(e => e.Scope).HasMaxLength(MaxLength.C2048).IsRequired();
 
 				builder.HasOne<Stage>().WithMany()
 					 .HasForeignKey(e => e.Stage)

@@ -1,10 +1,4 @@
-﻿using Articles.Abstractions.Enums;
-using Blocks.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Production.Domain.Entities;
-
-namespace Production.Persistence.EntityConfigurations;
+﻿namespace Production.Persistence.EntityConfigurations;
 
 public class AssetTypeDefinitionEntityConfiguration : EnumEntityConfiguration<AssetTypeDefinition, AssetType>
 {
@@ -15,7 +9,7 @@ public class AssetTypeDefinitionEntityConfiguration : EnumEntityConfiguration<As
         builder.Property(e => e.DefaultCategoryId);
 				builder.Property(e => e.MaxNumber).HasDefaultValue(0);
 
-        builder.Property(e => e.DefaultFileExtension).HasDefaultValue("pdf").IsRequired().HasMaxLength(Constraints.C8);
+        builder.Property(e => e.DefaultFileExtension).HasDefaultValue("pdf").IsRequired().HasMaxLength(MaxLength.C8);
 
 				builder.ComplexProperty(e => e.AllowedFileExtensions, builder =>
 				{

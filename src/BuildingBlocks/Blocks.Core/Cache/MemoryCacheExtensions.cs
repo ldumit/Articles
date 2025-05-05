@@ -6,7 +6,7 @@ namespace Blocks.Core.Cache;
 
 public static class MemoryCacheExtensions
 {
-    public static T GetOrCreate<T>(this IMemoryCache memoryCache, Func<ICacheEntry, T> factory)
+    public static T GetOrCreateByType<T>(this IMemoryCache memoryCache, Func<ICacheEntry, T> factory)
             => memoryCache.GetOrCreate(typeof(T).FullName!, factory)!;
 
     public static T Get<T>(this IMemoryCache cache)

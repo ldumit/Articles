@@ -21,10 +21,10 @@ public class PersonEntityConfiguration : EntityConfiguration<Person>
 						.HasValue<Typesetter>(nameof(Typesetter));
 
 				entity.Property(e => e.UserId).IsRequired(false);
-				entity.Property(e => e.FirstName).HasMaxLength(Constraints.C64).IsRequired();
-        entity.Property(e => e.LastName).HasMaxLength(Constraints.C64).IsRequired();
-        entity.Property(e => e.Title).HasMaxLength(Constraints.C64);
-        entity.Property(e => e.Email).HasMaxLength(Constraints.C256).IsRequired();
+				entity.Property(e => e.FirstName).HasMaxLength(MaxLength.C64).IsRequired();
+        entity.Property(e => e.LastName).HasMaxLength(MaxLength.C64).IsRequired();
+        entity.Property(e => e.Title).HasMaxLength(MaxLength.C64);
+        entity.Property(e => e.Email).HasMaxLength(MaxLength.C256).IsRequired();
 
 				//entity.HasOne(p => p.User)
 				//		.WithOne(u => u.Person)

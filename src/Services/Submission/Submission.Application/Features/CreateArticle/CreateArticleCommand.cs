@@ -12,11 +12,11 @@ public class CreateArticleCommandValidator : AbstractValidator<CreateArticleComm
 		{
 				RuleFor(x => x.Title)
 						.NotEmptyWithMessage(nameof(CreateArticleCommand.Title))
-						.MaximumLengthWithMessage(Constraints.C256, nameof(CreateArticleCommand.Title));
+						.MaximumLengthWithMessage(MaxLength.C256, nameof(CreateArticleCommand.Title));
 
 				RuleFor(x => x.Scope)
 						.NotEmptyWithMessage(nameof(CreateArticleCommand.Scope))
-						.MaximumLengthWithMessage(Constraints.C2048, nameof(CreateArticleCommand.Scope));
+						.MaximumLengthWithMessage(MaxLength.C2048, nameof(CreateArticleCommand.Scope));
 
 				RuleFor(c => c.JournalId).GreaterThan(0).WithMessageForInvalidId(nameof(CreateArticleCommand.JournalId));
 		}

@@ -14,16 +14,16 @@ public class PersonEntityConfiguration : EntityConfiguration<Person>
 						.HasValue<Author>(nameof(Author));
 
 				builder.Property(e => e.UserId).IsRequired(false);
-				builder.Property(e => e.FirstName).HasMaxLength(Constraints.C64).IsRequired();
-        builder.Property(e => e.LastName).HasMaxLength(Constraints.C64).IsRequired();
-        builder.Property(e => e.Title).HasMaxLength(Constraints.C64);
+				builder.Property(e => e.FirstName).HasMaxLength(MaxLength.C64).IsRequired();
+        builder.Property(e => e.LastName).HasMaxLength(MaxLength.C64).IsRequired();
+        builder.Property(e => e.Title).HasMaxLength(MaxLength.C64);
 
 				builder.ComplexProperty(
 					 o => o.Email, builder =>
 					 {
 							 builder.Property(n => n.Value)
 									 .HasColumnName(builder.Metadata.PropertyInfo!.Name)
-									 .HasMaxLength(Constraints.C64).HasComment("Final name of the file after renaming");
+									 .HasMaxLength(MaxLength.C64).HasComment("Final name of the file after renaming");
 					 });
 		}
 }

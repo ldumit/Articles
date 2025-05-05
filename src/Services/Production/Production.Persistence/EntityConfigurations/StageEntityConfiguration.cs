@@ -11,6 +11,6 @@ public class StageEntityConfiguration : EnumEntityConfiguration<Stage, ArticleSt
     {
         base.Configure(entity);
 
-        entity.Property(e => e.Info).HasMaxLength(Constraints.C512).IsRequired();
+        entity.Property(e => e.Info).HasMaxLength(MaxLength.C512).IsRequired();
     }
 }

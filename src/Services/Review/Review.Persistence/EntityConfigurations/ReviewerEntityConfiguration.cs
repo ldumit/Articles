@@ -4,7 +4,7 @@ public class ReviewerEntityConfiguration : IEntityTypeConfiguration<Reviewer>
 {
     public void Configure(EntityTypeBuilder<Reviewer> builder)
     {        				
-				builder.Property(e => e.Affiliation).IsRequired().HasMaxLength(Constraints.C512)
+				builder.Property(e => e.Affiliation).IsRequired().HasMaxLength(MaxLength.C512)
 						.HasComment("Institution or organization they are associated with when they conduct their research.");
 
 				builder.HasMany(e => e.Specializations).WithOne()

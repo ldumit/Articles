@@ -15,8 +15,8 @@ public class ArticleEntityConfiguration : EntityConfiguration<Article>
         entity.HasIndex(e => e.Title);
 
         //talk - using constants instead of direct numbers
-        entity.Property(e => e.Title).HasMaxLength(Constraints.C256).IsRequired();
-        entity.Property(e => e.Doi).HasMaxLength(Constraints.C64);
+        entity.Property(e => e.Title).HasMaxLength(MaxLength.C256).IsRequired();
+        entity.Property(e => e.Doi).HasMaxLength(MaxLength.C64);
         entity.Property(e => e.Stage).HasEnumConversion().IsRequired();
 
         entity.Property(e => e.SubmittedOn).HasColumnType("timestamp without time zone").IsRequired();

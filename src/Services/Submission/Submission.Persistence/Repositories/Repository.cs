@@ -1,10 +1,9 @@
 ﻿using Blocks.Entitities;
 
-namespace Submission.Persistence.Repositories
+namespace Submission.Persistence.Repositories;
+
+public class Repository<TEntity>(SubmissionDbContext dbContext) 
+		: Repository<SubmissionDbContext, TEntity>(dbContext)
+				where TEntity : class, IEntity<int>
 {
-		public class Repository<TEntity>(SubmissionDbContext dbContext) 
-				: Repository<SubmissionDbContext, TEntity>(dbContext)
-						where TEntity : class, IEntity<int>
-		{
-		}
 }

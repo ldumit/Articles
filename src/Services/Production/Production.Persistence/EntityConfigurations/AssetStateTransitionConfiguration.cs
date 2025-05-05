@@ -1,9 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Production.Domain.Entities;
-using Blocks.EntityFrameworkCore;
-using Blocks.EntityFrameworkCore.EntityConfigurations;
-
-namespace Production.Persistence.EntityConfigurations;
+﻿namespace Production.Persistence.EntityConfigurations;
 
 internal class AssetStateTransitionConfiguration : MetadataConfiguration<AssetStateTransition>
 {

@@ -12,6 +12,7 @@ global using Mapster;
 global using FluentValidation;
 
 // Internal libraries
+global using Blocks.Core;
 global using Blocks.MediatR;
 global using Blocks.EntityFrameworkCore;
 global using Blocks.FluentValidation;

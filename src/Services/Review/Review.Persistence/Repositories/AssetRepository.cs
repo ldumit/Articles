@@ -30,7 +30,7 @@ public class AssetRepository(ReviewDbContext _dbContext, IMemoryCache _cache)
 		}
 
 		public IEnumerable<AssetTypeDefinition> GetAssetTypes()
-				=> _cache.GetOrCreate(entry => _dbContext.AssetTypes.AsNoTracking().ToList());
+				=> _cache.GetOrCreateByType(entry => _dbContext.AssetTypes.AsNoTracking().ToList());
 
 		public AssetTypeDefinition GetAssetType(AssetType type)
 				=> GetAssetTypes().Single(e => e.Id == type);

@@ -10,7 +10,7 @@ internal class RefreshTokenEntityConfiguration : EntityConfiguration<RefreshToke
     {
         base.Configure(builder);
 
-        builder.Property(e => e.CreatedByIp).HasMaxLength(Constraints.C128);
-        builder.Property(e => e.RevokedByIp).HasMaxLength(Constraints.C128);
+        builder.Property(e => e.CreatedByIp).HasMaxLength(MaxLength.C128);
+        builder.Property(e => e.RevokedByIp).HasMaxLength(MaxLength.C128);
 		}
 }

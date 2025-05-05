@@ -32,7 +32,7 @@ namespace Blocks.EntityFrameworkCore
 						where TContext : DbContext
 						where TEntity : class, IEntity<int>
 				{
-						var entity = await repository.GetByIdAsync(id, false);
+						var entity = await repository.GetByIdAsync(id);
 						if (entity is null)
 								throw new NotFoundException($"{typeof(TEntity).Name} not found");
 						return entity!;

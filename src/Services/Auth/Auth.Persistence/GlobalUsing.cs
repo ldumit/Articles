@@ -5,12 +5,11 @@ global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 // Internal libraries
 global using Blocks.Core;
 global using Blocks.EntityFrameworkCore;
-global using Articles.Abstractions.Enums;
 
 // Domain
-global using Review.Domain.Entities;
+global using Auth.Domain;
 
 //Persistence
-global using Review.Persistence.Repositories;
+//global using Auth.Persistence;
 
 

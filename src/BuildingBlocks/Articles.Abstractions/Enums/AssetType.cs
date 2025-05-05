@@ -8,7 +8,7 @@ public enum AssetType
 		FinalPdf = 4,
 		FinalHtml = 5,
 		FinalEpub = 6,
-		Figure = 7,
-		DataSheet = 8,
-		SupplementaryFile = 9
+		SupplementaryFile = 10,
+		Figure = 11,
+		DataSheet = 12
 }

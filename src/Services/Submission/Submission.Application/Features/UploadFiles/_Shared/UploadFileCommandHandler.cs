@@ -3,7 +3,7 @@
 namespace Submission.Application.Features.UploadFiles.Shared;
 
 public class UploadFileCommandHandler<TUploadCommand>
-    (ArticleRepository _articleRepository, AssetTypeRepository _assetTypeRepository, IFileService _fileService, ArticleStateMachineFactory _stateMachineFactory)
+    (ArticleRepository _articleRepository, CachedAssetRepo _assetTypeRepository, IFileService _fileService, ArticleStateMachineFactory _stateMachineFactory)
     : IRequestHandler<TUploadCommand, IdResponse>
 		where TUploadCommand : UploadFileCommand
 {
@@ -53,7 +53,7 @@ public class UploadFileCommandHandler<TUploadCommand>
 
 		protected Asset GetOrCreateAsset(AssetTypeDefinition assetType, TUploadCommand command)
 		{
-				Asset? asset = null;
+				Asset asset = default!;
 				
 				if (!assetType.AllowsMultipleAssets) // if the asset type doesn't support multiple assets, we are overriding the single one.
 						asset = _article.Assets.SingleOrDefault(a => a.Type == assetType.Id);

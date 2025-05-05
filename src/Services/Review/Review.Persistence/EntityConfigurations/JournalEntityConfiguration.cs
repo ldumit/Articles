@@ -6,8 +6,8 @@ public class JournalEntityConfiguration : EntityConfiguration<Journal>
 		{
 				base.Configure(builder);
 
-				builder.Property(e => e.Abbreviation).HasMaxLength(Constraints.C8).IsRequired();
-				builder.Property(e => e.Name).HasMaxLength(Constraints.C64).IsRequired();
+				builder.Property(e => e.Abbreviation).HasMaxLength(MaxLength.C8).IsRequired();
+				builder.Property(e => e.Name).HasMaxLength(MaxLength.C64).IsRequired();
 
 				builder.HasOne(e => e.ChiefEditor).WithMany()
 						.HasForeignKey(e => e.ChiefEditorId)

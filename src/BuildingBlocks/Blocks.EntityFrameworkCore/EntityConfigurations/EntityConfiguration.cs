@@ -11,9 +11,9 @@ public abstract class EntityConfiguration<T> : EntityConfiguration<T, int>
 		public override void Configure(EntityTypeBuilder<T> builder)
     {
 				if(HasGeneratedId)
-				    builder.Property(col => col.Id).ValueGeneratedOnAdd().HasColumnOrder(0);
+				    builder.Property(e => e.Id).ValueGeneratedOnAdd().HasColumnOrder(0);
         else
-						builder.Property(col => col.Id).ValueGeneratedNever().HasColumnOrder(0);
+						builder.Property(e => e.Id).ValueGeneratedNever().HasColumnOrder(0);
 				base.Configure(builder);
 		}
 }
@@ -27,7 +27,7 @@ public abstract class EntityConfiguration<T, TKey> : IEntityTypeConfiguration<T>
         //builder.ToTable(new Pluralizer().Pluralize(typeof(T).Name));
         //builder.ToTable(this.EntityName);
 
-        builder.HasKey(col => col.Id);
+        builder.HasKey(e => e.Id);
         builder.SeedFromFile();
     }
 

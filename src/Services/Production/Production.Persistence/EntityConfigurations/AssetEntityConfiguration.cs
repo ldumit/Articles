@@ -17,13 +17,13 @@ internal class AssetEntityConfiguration : AuditedEntityConfiguration<Asset>
         //entity.HasIndex(e => e.StatusId);
         //entity.HasIndex(e => e.TypeId);
 
-        //builder.Property(e => e.Name).HasMaxLength(Constraints.C64).IsRequired();
+        //builder.Property(e => e.Name).HasMaxLength(MaxLength.C64).IsRequired();
 				builder.ComplexProperty(
 	         o => o.Name, builder =>
 	         {
 			         builder.Property(n => n.Value)
 					         .HasColumnName(builder.Metadata.PropertyInfo!.Name)
-					         .HasMaxLength(Constraints.C64).IsRequired();
+					         .HasMaxLength(MaxLength.C64).IsRequired();
 	         });
 
 				//builder.Property(e => e.AssetNumber).HasDefaultValue(0);

@@ -6,7 +6,7 @@ public class JournalEntityConfiguration : EntityConfiguration<Journal>
     {
         base.Configure(entity);
 
-        entity.Property(e => e.Abbreviation).HasMaxLength(Constraints.C8).IsRequired();
-        entity.Property(e => e.Name).HasMaxLength(Constraints.C64).IsRequired();
+        entity.Property(e => e.Abbreviation).HasMaxLength(MaxLength.C8).IsRequired();
+        entity.Property(e => e.Name).HasMaxLength(MaxLength.C64).IsRequired();
     }
 }

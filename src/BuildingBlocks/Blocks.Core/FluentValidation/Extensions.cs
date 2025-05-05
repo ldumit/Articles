@@ -1,5 +1,6 @@
 ﻿using Blocks.Core;
 using FluentValidation;
+using Newtonsoft.Json.Linq;
 
 namespace Blocks.FluentValidation;
 
@@ -26,7 +27,7 @@ public static class Extensions
 						.MaximumLength(maxLength)
 						.WithMessage(c => ValidationMessages.MaxLengthExceeded.FormatWith(propertyName, maxLength));
 
-		public static IRuleBuilderOptions<T, string?> NotEmptyWithMessage<T>(this IRuleBuilder<T, string?> ruleBuilder, string propertyName)
+		public static IRuleBuilderOptions<T, TProperty> NotEmptyWithMessage<T, TProperty>(this IRuleBuilder<T, TProperty> ruleBuilder, string propertyName)
 				=> ruleBuilder
 						.NotEmpty()
 						.WithMessage(c => ValidationMessages.NullOrEmptyValue.FormatWith(propertyName));

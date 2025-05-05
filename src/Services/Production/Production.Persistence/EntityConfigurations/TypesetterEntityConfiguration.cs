@@ -15,7 +15,7 @@ public class TypesetterEntityConfiguration : IEntityTypeConfiguration<Typesetter
         //entity.HasKey(e => e.UserId);
         
         entity.Property(e => e.IsDefault).HasDefaultValue(false);
-        entity.Property(e => e.CompanyName).HasMaxLength(Constraints.C64);
+        entity.Property(e => e.CompanyName).HasMaxLength(MaxLength.C64);
         
         //todo - investigate ignore and maybe talk about it
         //entity.Ignore(t => t.Id);

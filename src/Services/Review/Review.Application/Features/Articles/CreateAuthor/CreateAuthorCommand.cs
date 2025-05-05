@@ -18,21 +18,21 @@ public class CreateAuthorCommandValidator : AbstractValidator<CreateAuthorComman
     {
         RuleFor(x => x.Email)
                 .NotEmptyWithMessage(nameof(CreateAuthorCommand.Email))
-                .MaximumLengthWithMessage(Constraints.C64, nameof(CreateAuthorCommand.Email));
+                .MaximumLengthWithMessage(MaxLength.C64, nameof(CreateAuthorCommand.Email));
 
         RuleFor(x => x.FirstName)
                 .NotEmptyWithMessage(nameof(CreateAuthorCommand.FirstName))
-                .MaximumLengthWithMessage(Constraints.C64, nameof(CreateAuthorCommand.FirstName));
+                .MaximumLengthWithMessage(MaxLength.C64, nameof(CreateAuthorCommand.FirstName));
 
         RuleFor(x => x.LastName)
                 .NotEmptyWithMessage(nameof(CreateAuthorCommand.LastName))
-                .MaximumLengthWithMessage(Constraints.C64, nameof(CreateAuthorCommand.LastName));
+                .MaximumLengthWithMessage(MaxLength.C64, nameof(CreateAuthorCommand.LastName));
 
         RuleFor(x => x.Title)
-                .MaximumLengthWithMessage(Constraints.C64, nameof(CreateAuthorCommand.Title));
+                .MaximumLengthWithMessage(MaxLength.C64, nameof(CreateAuthorCommand.Title));
 
         RuleFor(x => x.Affiliation)
                 .NotEmptyWithMessage(nameof(CreateAuthorCommand.Affiliation))
-                .MaximumLengthWithMessage(Constraints.C512, nameof(CreateAuthorCommand.Affiliation));
+                .MaximumLengthWithMessage(MaxLength.C512, nameof(CreateAuthorCommand.Affiliation));
     }
 }

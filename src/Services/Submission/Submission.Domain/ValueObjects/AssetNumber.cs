@@ -10,7 +10,7 @@ public class AssetNumber : SingleValueObject<byte>
 
 		public static AssetNumber FromNumber(byte number,  AssetTypeDefinition assetType)
 		{
-				ArgumentOutOfRangeException.ThrowIfGreaterThan(number, assetType.MaxNumber, "Asset type max number already reached");
+				ArgumentOutOfRangeException.ThrowIfGreaterThan(number, assetType.MaxAssetCount, "Asset type max number already reached");
 				return new AssetNumber(number);
 		}
 

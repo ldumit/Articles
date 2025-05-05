@@ -1,10 +1,15 @@
-﻿namespace Blocks.Core;
+﻿using Blocks.Exceptions;
+
+namespace Blocks.Core;
 
 public static class Guard
 {
-		//todo - use Guard instead of ArgumentException, add more Guards, use name parameter 
-		
-		
+		//todo - use Guard instead of ArgumentException, add more Guards, use name parameter 				
+		public static void ThrowIfNullOrWhiteSpace(string value)
+				=> ArgumentException.ThrowIfNullOrWhiteSpace(value);
+		public static void ThrowIfNotEqual<T>(T value, T other) where T : IEquatable<T>?
+				=> ArgumentOutOfRangeException.ThrowIfNotEqual(value, other);
+
 		public static void ThrowIfNull<T>(T? value, string name)
 		{
 				if (value is null)
@@ -12,20 +17,16 @@ public static class Guard
 						throw new ArgumentNullException(name);
 				}
 		}
-		public static T AgainstNull<T>(T? value, string parameterName)
-		{
-				if (value is null)
-						throw new ArgumentNullException(parameterName, $"Value cannot be null: '{parameterName}'.");
-
-				return value;
-		}
-
-		public static void ThrowIfNullOrWhiteSpace(string value)
-				=> ArgumentException.ThrowIfNullOrWhiteSpace(value);
 
 		public static void ThrowIfFalse(this bool condition, string message = "Condition must be true.")
 		{
 				if (!condition)
 						throw new ArgumentException(message);
 		}
+
+		public static T AgainstNull<T>(T? value, string parameterName)
+				=> value ?? throw new ArgumentNullException(parameterName, $"Value cannot be null: '{parameterName}'.");
+
+		public static T NotFound<T>(T? entity) where T : class
+				=> entity ?? throw new NotFoundException($"{typeof(T).Name} not found");
 }

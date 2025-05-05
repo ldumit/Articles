@@ -1,6 +1,6 @@
 ﻿namespace Blocks.EntityFrameworkCore;
 
-public static class Constraints
+public static class Constraints1
 {
     public const int C0 = 0;
     public const int C8 = 8;

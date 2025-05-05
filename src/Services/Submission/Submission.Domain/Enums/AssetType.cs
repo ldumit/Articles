@@ -9,7 +9,6 @@ public static class AssetTypeCategories
 
 		public static HashSet<AssetType> SupplementaryAssets = new()
 		{
-				AssetType.Manuscript,
 				AssetType.Figure,
 				AssetType.DataSheet
 		};

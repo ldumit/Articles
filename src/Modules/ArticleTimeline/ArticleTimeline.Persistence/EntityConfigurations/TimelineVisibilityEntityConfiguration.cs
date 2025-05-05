@@ -1,9 +1,4 @@
-﻿using Blocks.EntityFrameworkCore;
-using Blocks.EntityFrameworkCore.EntityConfigurations;
-using ArticleTimeline.Domain;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-namespace ArticleTimeline.Persistence.EntityConfigurations;
+﻿namespace ArticleTimeline.Persistence.EntityConfigurations;
 
 public class TimelineVisibilityEntityConfiguration : MetadataConfiguration<TimelineVisibility>
 {
@@ -14,7 +9,7 @@ public class TimelineVisibilityEntityConfiguration : MetadataConfiguration<Timel
 				builder.HasKey(e => new { e.SourceType, e.SourceId, e.RoleType });
 
 				builder.Property(e => e.SourceType).HasEnumConversion().IsRequired();
-				builder.Property(e => e.SourceId).HasMaxLength(Constraints.C64).IsRequired();
+				builder.Property(e => e.SourceId).HasMaxLength(MaxLength.C64).IsRequired();
 				builder.Property(e => e.RoleType).HasEnumConversion().IsRequired();
     }
 }

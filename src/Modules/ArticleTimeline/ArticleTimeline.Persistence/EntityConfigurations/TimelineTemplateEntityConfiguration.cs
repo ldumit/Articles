@@ -1,9 +1,4 @@
-﻿using Blocks.EntityFrameworkCore;
-using Blocks.EntityFrameworkCore.EntityConfigurations;
-using ArticleTimeline.Domain;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-namespace ArticleTimeline.Persistence.EntityConfigurations;
+﻿namespace ArticleTimeline.Persistence.EntityConfigurations;
 
 public class TimelineTemplateEntityConfiguration : MetadataConfiguration<TimelineTemplate>
 {
@@ -14,7 +9,7 @@ public class TimelineTemplateEntityConfiguration : MetadataConfiguration<Timelin
 				builder.HasKey(e => new { e.SourceType, e.SourceId});
 
 				builder.Property(e => e.SourceType).HasEnumConversion().IsRequired();
-				builder.Property(e => e.SourceId).HasMaxLength(Constraints.C64).IsRequired();
-				builder.Property(e => e.TitleTemplate).HasMaxLength(Constraints.C256).IsRequired();
+				builder.Property(e => e.SourceId).HasMaxLength(MaxLength.C64).IsRequired();
+				builder.Property(e => e.TitleTemplate).HasMaxLength(MaxLength.C256).IsRequired();
     }
 }

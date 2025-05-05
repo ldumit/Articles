@@ -14,6 +14,6 @@ public class CreateArticleCommandValidator : AbstractValidator<InviteReviewerCom
     {
         RuleFor(x => x.Email)
             .NotEmptyWithMessage(nameof(InviteReviewerCommand.Email))
-            .MaximumLengthWithMessage(Constraints.C256, nameof(InviteReviewerCommand.Email));
+            .MaximumLengthWithMessage(MaxLength.C256, nameof(InviteReviewerCommand.Email));
     }
 }

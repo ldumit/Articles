@@ -2,14 +2,9 @@
 
 public enum ArticleType
 {
-		OriginalResearch = 1,
-		//SystematicReview = 2,
-		//BriefResearchReport = 3,
-		Editorial = 4,
-		HypothesisAndTheory = 5,
-		//Methods = 6,
-		Opinion = 7,
-		Review = 8,
-		Correction = 9,
-		//Other = 100
+		OriginalResearch = 1, // Full study with detailed research results
+		BriefResearchReport = 2, // Summary of early or small research
+		HypothesisAndTheory = 3, // Proposal of a new idea or model
+		Opinion = 4, // Personal viewpoint on a topic
+		Correction = 5 // Fixes an error in a published article
 }

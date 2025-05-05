@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Blocks.Core;
+using Newtonsoft.Json;
 
 namespace Submission.Domain.ValueObjects;
 
@@ -15,8 +16,8 @@ public class FileExtension: StringValueObject
     public static FileExtension FromFileName(string fileName, AssetTypeDefinition assetType)
     {
         var extension = Path.GetExtension(fileName).Remove(0, 1); //removing the '.'
-				ArgumentException.ThrowIfNullOrWhiteSpace(extension);
-				ArgumentOutOfRangeException.ThrowIfNotEqual(
+				Guard.ThrowIfNullOrWhiteSpace(extension);
+				Guard.ThrowIfNotEqual(
             assetType.AllowedFileExtensions.IsValidExtension(extension), true); 
 
 				return new FileExtension(extension);

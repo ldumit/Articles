@@ -6,11 +6,37 @@ using Blocks.Exceptions;
 
 namespace Blocks.EntityFrameworkCore;
 
-public interface IRepository<Entity> : IRepository<Entity, int>;
+public interface ISimpleRepository<TEntity>
+{
+		Task<TEntity?> GetByIdAsync(int id);
+		Task<TEntity> AddAsync(TEntity entity);
+		TEntity Update(TEntity entity);
+		Task<bool> DeleteByIdAsync(int id);
+		void Remove(TEntity entity);
+}
+
+public interface IRepositoryExtended<TEntity, TKey>
+{
+		Task<TEntity> GetByIdAsync(TKey id, bool throwNotFound = true);
+		IQueryable<TDto> GetAll<TDto>(Expression<Func<TEntity, TDto>> projection, Expression<Func<TEntity, object>> orderBy);
+		Task<List<TDto>> GetAllAsync<TDto>(Expression<Func<TEntity, TDto>> projection, Expression<Func<TEntity, object>> orderBy);
+		IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> predicate);
+		IQueryable<TEntity> Where(Expression<Func<TEntity, int, bool>> predicate);
+		Task<TEntity> AddAsync(TEntity entity);
+		TEntity Update(TEntity entity);
+		Task<bool> DeleteByIdAsync(TKey id);
+		void Remove(TEntity entity);
+		Task AddRangeAsync(IEnumerable<TEntity> entities);
+		void RemoveRange(IEnumerable<TEntity> entities);
+		void UpdateRange(IEnumerable<TEntity> entities);
+		Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+		void ClearTracking();
+}
 
 public interface IRepository<TEntity, TKey>
 {
-    Task<TEntity> GetByIdAsync(TKey id, bool throwNotFound = true);
+		Task<TEntity?> FindByIdAsync(TKey id);
+		Task<TEntity?> GetByIdAsync(TKey id);
     IQueryable<TDto> GetAll<TDto>(Expression<Func<TEntity, TDto>> projection, Expression<Func<TEntity, object>> orderBy);
     Task<List<TDto>> GetAllAsync<TDto>(Expression<Func<TEntity, TDto>> projection, Expression<Func<TEntity, object>> orderBy);
     IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> predicate);
@@ -27,6 +53,8 @@ public interface IRepository<TEntity, TKey>
 
     //bool SoftDelete(TKey id);
 }
+
+//todo - simplify the repository
 
 public class Repository<TContext, TEntity>(TContext dbContext) : RepositoryBase<TContext, TEntity, int>(dbContext)
 		where TContext : DbContext
@@ -52,17 +80,11 @@ public abstract class RepositoryBase<TContext, TEntity, TKey> : IRepository<TEnt
 
     public string TableName => _dbContext.Model.FindEntityType(typeof(TEntity))?.GetTableName()!;
 
-		public virtual async Task<TEntity> FindByIdAsync(TKey id, bool throwNotFound = false)
-		{
-				var entity = await _entity.FindAsync(id);
-				return ReturnOrThrow(entity, throwNotFound);
-		}
+		public virtual async Task<TEntity?> FindByIdAsync(TKey id)
+				=> await _entity.FindAsync(id);
 
-		public virtual async Task<TEntity> GetByIdAsync(TKey id, bool throwNotFound = true)
-		{
-				var entity = await Query().SingleOrDefaultAsync(e => e.Id.Equals(id));
-				return ReturnOrThrow(entity, throwNotFound);
-		}
+		public virtual async Task<TEntity?> GetByIdAsync(TKey id)
+				=> await Query().SingleOrDefaultAsync(e => e.Id.Equals(id));
 
 		protected TEntity ReturnOrThrow(TEntity? entity, bool throwNotFound)
 		{
@@ -154,8 +176,8 @@ public abstract class RepositoryBase<TContext, TEntity, TKey> : IRepository<TEnt
         _entity.UpdateRange(entities);
     }
 
-    public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-				=> await _dbContext.SaveChangesAsync(cancellationToken);
+    public async Task<int> SaveChangesAsync(CancellationToken ct = default)
+				=> await _dbContext.SaveChangesAsync(ct);
 
     public IDbContextTransaction BeginTransaction()
     {

@@ -12,7 +12,7 @@ public class ApplicationDbContext<TDbContext>(DbContextOptions<TDbContext> _opti
 {
 		public virtual IEnumerable<TEntity> GetAllCached<TEntity>()
 				where TEntity : class, ICacheable
-				=> _cache.GetOrCreate(entry => this.Set<TEntity>().AsNoTracking().ToList());
+				=> _cache.GetOrCreateByType(entry => this.Set<TEntity>().AsNoTracking().ToList());
 
 		public virtual TEntity GetByIdCached<TEntity, TId>(TId id)
 				where TEntity : class, IEntity<TId>, ICacheable
@@ -21,5 +21,5 @@ public class ApplicationDbContext<TDbContext>(DbContextOptions<TDbContext> _opti
 
 		public virtual IEnumerable<TDestination> GetAllCached<TEntity, TDestination>()
 				where TEntity : class, ICacheable
-				=> _cache.GetOrCreate(entry => this.Set<TEntity>().AsNoTracking().ProjectToType<TDestination>().ToList());
+				=> _cache.GetOrCreateByType(entry => this.Set<TEntity>().AsNoTracking().ProjectToType<TDestination>().ToList());
 }

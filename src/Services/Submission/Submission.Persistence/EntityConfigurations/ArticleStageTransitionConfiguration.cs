@@ -1,6 +1,4 @@
-﻿using Blocks.EntityFrameworkCore.EntityConfigurations;
-
-namespace Submission.Persistence.EntityConfigurations;
+﻿namespace Submission.Persistence.EntityConfigurations;
 
 internal class ArticleStageTransitionConfiguration : MetadataConfiguration<ArticleStageTransition>
 {

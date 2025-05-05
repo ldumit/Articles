@@ -13,8 +13,8 @@ public class ArticleEntityConfiguration : AuditedEntityConfiguration<Article>
         entity.HasIndex(e => e.Title);
 
         //talk - using constants instead of direct numbers
-        entity.Property(e => e.Title).HasMaxLength(Constraints.C256).IsRequired();
-        entity.Property(e => e.Doi).HasMaxLength(Constraints.C64).IsRequired();
+        entity.Property(e => e.Title).HasMaxLength(MaxLength.C256).IsRequired();
+        entity.Property(e => e.Doi).HasMaxLength(MaxLength.C64).IsRequired();
         entity.Property(e => e.VolumeId).IsRequired();
         entity.Property(e => e.Stage).HasEnumConversion().IsRequired();
 
