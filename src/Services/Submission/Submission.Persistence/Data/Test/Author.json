@@ -5,7 +5,8 @@
     "FirstName": "Laurentiu",
     "LastName": "Dumitrescu",
     "Title": "Mr",
-    "Email": {"Value":"dumitrescu.laurentiu@gmail.com"}
+    "Email": {"Value":"dumitrescu.laurentiu@gmail.com"},
+    "Affiliation": "DotNetLabX – Real .NET solutions. From developer to architect"
   },
   {
     "UserId": 2,

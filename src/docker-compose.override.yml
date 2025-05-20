@@ -119,6 +119,13 @@ services:
     restart: always
     ports:
         - "5432:5432"
+  
+  mongo-gridfs:
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: Password123!
+    ports:
+      - 27018:27017  # expose different host port
 
   rabbitmq:
     container_name: "rabbitmq"

@@ -12,6 +12,7 @@ global using Mapster;
 global using FluentValidation;
 
 // Internal libraries
+global using Blocks.Core;
 global using Blocks.MediatR;
 global using Blocks.EntityFrameworkCore;
 global using Blocks.FluentValidation;
@@ -30,4 +31,7 @@ global using Submission.Application.Features.Shared;
 //Persistence
 global using Submission.Persistence.Repositories;
 
-
+global using CachedAssetRepo = Blocks.EntityFrameworkCore.CachedRepository<
+				Submission.Persistence.SubmissionDbContext,
+				Submission.Domain.Entities.AssetTypeDefinition,
+				Articles.Abstractions.Enums.AssetType>;

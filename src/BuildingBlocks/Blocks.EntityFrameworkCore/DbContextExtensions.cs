@@ -1,4 +1,5 @@
-﻿using Blocks.Core.Cache;
+﻿using Blocks.Core;
+using Blocks.Core.Cache;
 using Blocks.Core.Json;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -42,15 +43,17 @@ public static class DbContextExtensions
 				if (!File.Exists(filePath))
 						return;
 
-				var collection = JsonConvert.DeserializeObject<TEntity[]>(File.ReadAllText(filePath), DefaultSettings);
-				//var collection = JsonExtensions.DeserializeCaseInsensitive<TEntity[]>(File.ReadAllText(filePath));
-				if (collection != null)
-						context.Set<TEntity>().AddRange(collection);
+				var rawJson = File.ReadAllText(filePath);
+				var collection = JsonConvert.DeserializeObject<TEntity[]>(rawJson, DefaultSettings);
+				if (!collection.IsNullOrEmpty())
+						context.Set<TEntity>().AddRange(collection!);
 				
 				try { context.SaveChanges(); }
 				catch (Exception ex)
 				{
-						context.Database.ExecuteSql($"DBCC CHECKIDENT({typeof(TEntity).Name}, RESEED, 0)");
+						var tableName = context.Model.FindEntityType(typeof(TEntity))?.GetTableName();
+						if (tableName is not null)
+								try { context.Database.ExecuteSql($"DBCC CHECKIDENT({tableName}, RESEED, 0)"); } catch { };
 						Console.WriteLine(ex.Message);
 						throw;
 				}

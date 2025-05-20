@@ -16,7 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
 #region Add
 
 builder.Services
-		.ConfigureOptions<FileStorage.Contracts.FileServerOptions>(builder.Configuration)
+		//.ConfigureOptions<FileStorage.Contracts.FileServerOptions>(builder.Configuration)
 		.ConfigureOptions<TransactionOptions>(builder.Configuration)
 		.Configure<JsonOptions>(opt =>
 		{
@@ -53,7 +53,7 @@ builder.Services
 //		.AsImplementedInterfaces()
 //		.WithScopedLifetime());
 
-builder.Services.AddSingleton(x => new BlobServiceClient(builder.Configuration.GetConnectionString("FileServer")));
+//builder.Services.AddSingleton(x => new BlobServiceClient(builder.Configuration.GetConnectionString("FileServer")));
 #endregion
 
 var app = builder.Build();

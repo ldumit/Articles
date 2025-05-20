@@ -13,7 +13,7 @@ using Submission.Persistence;
 namespace Submission.Persistence.Migrations
 {
     [DbContext(typeof(SubmissionDbContext))]
-    [Migration("20241127142637_InitialCreate")]
+    [Migration("20250521054703_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -121,7 +121,7 @@ namespace Submission.Persistence.Migrations
                     b.ToTable("ArticleAction", (string)null);
                 });
 
-            modelBuilder.Entity("Submission.Domain.Entities.ArticleContributor", b =>
+            modelBuilder.Entity("Submission.Domain.Entities.ArticleActor", b =>
                 {
                     b.Property<int>("ArticleId")
                         .HasColumnType("int");
@@ -136,16 +136,16 @@ namespace Submission.Persistence.Migrations
 
                     b.Property<string>("TypeDiscriminator")
                         .IsRequired()
-                        .HasMaxLength(21)
-                        .HasColumnType("nvarchar(21)");
+                        .HasMaxLength(13)
+                        .HasColumnType("nvarchar(13)");
 
                     b.HasKey("ArticleId", "PersonId", "Role");
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("ArticleContributor", (string)null);
+                    b.ToTable("ArticleActor", (string)null);
 
-                    b.HasDiscriminator<string>("TypeDiscriminator").HasValue("ArticleContributor");
+                    b.HasDiscriminator<string>("TypeDiscriminator").HasValue("ArticleActor");
 
                     b.UseTphMappingStrategy();
                 });
@@ -331,13 +331,13 @@ namespace Submission.Persistence.Migrations
                         .HasColumnType("nvarchar(64)")
                         .HasColumnOrder(2);
 
-                    b.Property<byte>("MaxFileSizeInMB")
-                        .HasColumnType("tinyint");
-
-                    b.Property<byte>("MaxNumber")
+                    b.Property<byte>("MaxAssetCount")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("tinyint")
                         .HasDefaultValue((byte)0);
+
+                    b.Property<byte>("MaxFileSizeInMB")
+                        .HasColumnType("tinyint");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -396,6 +396,12 @@ namespace Submission.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Affiliation")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)")
+                        .HasComment("Institution or organization they are associated with when they conduct their research.");
+
                     b.Property<int>("CreatedById")
                         .HasColumnType("int");
 
@@ -438,8 +444,7 @@ namespace Submission.Persistence.Migrations
                                 .IsRequired()
                                 .HasMaxLength(64)
                                 .HasColumnType("nvarchar(64)")
-                                .HasColumnName("Email")
-                                .HasComment("Final name of the file after renaming");
+                                .HasColumnName("Email");
                         });
 
                     b.HasKey("Id");
@@ -600,13 +605,13 @@ namespace Submission.Persistence.Migrations
 
             modelBuilder.Entity("Submission.Domain.Entities.ArticleAuthor", b =>
                 {
-                    b.HasBaseType("Submission.Domain.Entities.ArticleContributor");
+                    b.HasBaseType("Submission.Domain.Entities.ArticleActor");
 
                     b.Property<string>("ContributionAreas")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("ArticleContributor", (string)null);
+                    b.ToTable("ArticleActor", (string)null);
 
                     b.HasDiscriminator().HasValue("ArticleAuthor");
                 });
@@ -615,11 +620,15 @@ namespace Submission.Persistence.Migrations
                 {
                     b.HasBaseType("Submission.Domain.Entities.Person");
 
-                    b.Property<string>("Affiliation")
-                        .IsRequired()
+                    b.Property<string>("Degree")
                         .HasMaxLength(512)
                         .HasColumnType("nvarchar(512)")
-                        .HasComment("Institution or organization they are associated with when they conduct their research.");
+                        .HasComment("The author's highest academic qualification (e.g., PhD in Mathematics, MSc in Chemistry).");
+
+                    b.Property<string>("Discipline")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)")
+                        .HasComment("The author's main field of study or research (e.g., Biology, Computer Science).");
 
                     b.ToTable("Person", (string)null);
 
@@ -660,16 +669,16 @@ namespace Submission.Persistence.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Submission.Domain.Entities.ArticleContributor", b =>
+            modelBuilder.Entity("Submission.Domain.Entities.ArticleActor", b =>
                 {
                     b.HasOne("Submission.Domain.Entities.Article", "Article")
-                        .WithMany("Contributors")
+                        .WithMany("Actors")
                         .HasForeignKey("ArticleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Submission.Domain.Entities.Person", "Person")
-                        .WithMany("ArticleContributors")
+                        .WithMany("ArticleActors")
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -718,9 +727,9 @@ namespace Submission.Persistence.Migrations
                 {
                     b.Navigation("Actions");
 
-                    b.Navigation("Assets");
+                    b.Navigation("Actors");
 
-                    b.Navigation("Contributors");
+                    b.Navigation("Assets");
 
                     b.Navigation("StageHistories");
                 });
@@ -732,7 +741,7 @@ namespace Submission.Persistence.Migrations
 
             modelBuilder.Entity("Submission.Domain.Entities.Person", b =>
                 {
-                    b.Navigation("ArticleContributors");
+                    b.Navigation("ArticleActors");
                 });
 #pragma warning restore 612, 618
         }

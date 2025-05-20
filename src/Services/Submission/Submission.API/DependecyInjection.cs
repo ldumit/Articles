@@ -9,6 +9,7 @@ using Submission.Persistence.Repositories;
 using Auth.Grpc;
 using Blocks.AspNetCore.Grpc;
 using Azure.Storage.Blobs;
+using FileStorage.MongoGridFS;
 using FileStorage.AzureBlob;
 using FileStorage.Contracts;
 
@@ -19,7 +20,7 @@ public static class DependecyInjection
 		public static void ConfigureApiOptions(this IServiceCollection services, IConfiguration configuration)
 		{
 				services
-						.ConfigureOptions<FileStorage.Contracts.FileServerOptions>(configuration)
+						//.ConfigureOptions<FileStorage.Contracts.FileServerOptions>(configuration)
 						.ConfigureOptions<RabbitMqOptions>(configuration)
 						.ConfigureOptions<TransactionOptions>(configuration)
 						.Configure<JsonOptions>(opt =>
@@ -52,12 +53,12 @@ public static class DependecyInjection
 						.AddScoped<IArticleRoleChecker, ContributorRepository>();
 
 				//file storage
-				services.AddScoped<IFileService, FileService>();
-				services.AddSingleton(x => new BlobServiceClient(configuration.GetConnectionString("FileServer")));
+				services.AddMongoFileStorage(configuration);
+				//services.AddAzureFileStorage(configuration);
 
 
 				//grpc Services
-				var grpcOptions = configuration.GetByTypeName<GrpcServicesOptions>();
+				var grpcOptions = configuration.GetSectionByTypeName<GrpcServicesOptions>();
 				services.AddConfiguredGrpcClient<AuthService.AuthServiceClient>(grpcOptions);
 				//services.AddConfiguredGrpcClient<JournalService.JournalerviceClient>(grpcOptions);
 

@@ -57,7 +57,7 @@ public static class StringExtensions
 				return @this.Split('\n').Select(l => l.Trim('\r')).ToArray();
 		}
 
-		public static bool IsNullOrEmpty(this string value)
+		public static bool IsNullOrEmpty(this string? value)
 		{
 				return string.IsNullOrEmpty(value);
 		}

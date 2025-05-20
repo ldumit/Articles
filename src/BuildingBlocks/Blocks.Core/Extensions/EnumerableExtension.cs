@@ -7,10 +7,10 @@ public static class EnumerableExtensions
 		public static bool IsEmpty<T>(this IEnumerable<T> enumerable) 
         => !enumerable.Any();
 
-		public static bool IsNullOrEmpty<T>(this IEnumerable<T> enumerable)
+		public static bool IsNullOrEmpty<T>(this IEnumerable<T>? enumerable)
         => enumerable == null || !enumerable.Any();
 
-		public static bool IsNullOrEmpty<T>(this Dictionary<T, T> dict) where T : notnull
+		public static bool IsNullOrEmpty<T>(this Dictionary<T, T>? dict) where T : notnull
         => dict is null || dict.Count == 0;
 
     public static string AggregateWithAnd(this IEnumerable<string> source, Func<string, string, string> func)

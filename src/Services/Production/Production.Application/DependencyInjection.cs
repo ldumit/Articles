@@ -80,7 +80,7 @@ public static class DependencyInjection
 				services.AddScoped<AssetTypeRepository>();
 				services.AddScoped<FileRepository>();
 
-				services.AddScoped<IFileService, FileService>();
+				services.AddAzureFileStorage(configuration);
 				services.AddArticleTimelineVariableResolvers();
 
 				//services.AddScoped<IEventHandler<ArticleStageChangedDomainEvent>, AddTimelineWhenArticleStageChangedEventHandler>();

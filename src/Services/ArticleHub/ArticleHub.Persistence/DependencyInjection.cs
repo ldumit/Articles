@@ -14,7 +14,7 @@ public static class DependencyInjection
 {
 		public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
 		{
-				var hasuraOptions = configuration.GetByTypeName<HasuraOptions>();
+				var hasuraOptions = configuration.GetSectionByTypeName<HasuraOptions>();
 
 				services.AddDbContext<ArticleHubDbContext>(options 
 						=> options.UseNpgsql(configuration.GetConnectionString("Database")));

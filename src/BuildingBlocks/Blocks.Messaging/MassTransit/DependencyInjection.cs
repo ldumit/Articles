@@ -11,7 +11,7 @@ public static class DependencyInjection
 		public static IServiceCollection AddMassTransit
 				(this IServiceCollection services, IConfiguration configuration, Assembly? assembly = null)
 		{
-				var rabbitMqOptions = configuration.GetByTypeName<RabbitMqOptions>();
+				var rabbitMqOptions = configuration.GetSectionByTypeName<RabbitMqOptions>();
 
 				services.AddMassTransit(config =>
 				{

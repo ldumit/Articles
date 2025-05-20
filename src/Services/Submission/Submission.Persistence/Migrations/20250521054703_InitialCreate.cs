@@ -35,7 +35,7 @@ namespace Submission.Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false),
                     DefaultCategoryId = table.Column<int>(type: "int", nullable: false),
                     DefaultFileExtension = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false, defaultValue: "pdf"),
-                    MaxNumber = table.Column<byte>(type: "tinyint", nullable: false, defaultValue: (byte)0),
+                    MaxAssetCount = table.Column<byte>(type: "tinyint", nullable: false, defaultValue: (byte)0),
                     MaxFileSizeInMB = table.Column<byte>(type: "tinyint", nullable: false),
                     AllowedFileExtensions = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -68,10 +68,12 @@ namespace Submission.Persistence.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     Title = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
+                    Affiliation = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false, comment: "Institution or organization they are associated with when they conduct their research."),
                     UserId = table.Column<int>(type: "int", nullable: true),
                     TypeDiscriminator = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false, comment: "Final name of the file after renaming"),
-                    Affiliation = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true, comment: "Institution or organization they are associated with when they conduct their research."),
+                    Email = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    Degree = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true, comment: "The author's highest academic qualification (e.g., PhD in Mathematics, MSc in Chemistry)."),
+                    Discipline = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true, comment: "The author's main field of study or research (e.g., Biology, Computer Science)."),
                     CreatedById = table.Column<int>(type: "int", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastModifiedById = table.Column<int>(type: "int", nullable: true),
@@ -162,26 +164,26 @@ namespace Submission.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ArticleContributor",
+                name: "ArticleActor",
                 columns: table => new
                 {
                     ArticleId = table.Column<int>(type: "int", nullable: false),
                     PersonId = table.Column<int>(type: "int", nullable: false),
                     Role = table.Column<string>(type: "nvarchar(450)", nullable: false, defaultValue: "AUT"),
-                    TypeDiscriminator = table.Column<string>(type: "nvarchar(21)", maxLength: 21, nullable: false),
+                    TypeDiscriminator = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
                     ContributionAreas = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ArticleContributor", x => new { x.ArticleId, x.PersonId, x.Role });
+                    table.PrimaryKey("PK_ArticleActor", x => new { x.ArticleId, x.PersonId, x.Role });
                     table.ForeignKey(
-                        name: "FK_ArticleContributor_Article_ArticleId",
+                        name: "FK_ArticleActor_Article_ArticleId",
                         column: x => x.ArticleId,
                         principalTable: "Article",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ArticleContributor_Person_PersonId",
+                        name: "FK_ArticleActor_Person_PersonId",
                         column: x => x.PersonId,
                         principalTable: "Person",
                         principalColumn: "Id",
@@ -311,8 +313,8 @@ namespace Submission.Persistence.Migrations
                 column: "EntityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ArticleContributor_PersonId",
-                table: "ArticleContributor",
+                name: "IX_ArticleActor_PersonId",
+                table: "ArticleActor",
                 column: "PersonId");
 
             migrationBuilder.CreateIndex(
@@ -362,7 +364,7 @@ namespace Submission.Persistence.Migrations
                 name: "ArticleAction");
 
             migrationBuilder.DropTable(
-                name: "ArticleContributor");
+                name: "ArticleActor");
 
             migrationBuilder.DropTable(
                 name: "ArticleStageTransition");

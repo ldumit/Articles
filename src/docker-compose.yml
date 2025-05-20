@@ -31,6 +31,7 @@ services:
     depends_on:
       - sqlserver
       - rabbitmq
+      - mongo-gridfs
     build:
       context: .
       dockerfile: Services/Submission/Submission.API/Dockerfile
@@ -68,6 +69,12 @@ services:
     image: postgres
     # volumes:
     #   - articlehub_data:/var/lib/postgresql/data/ 
+  
+  mongo-gridfs:
+    image: mongo:6.0
+    container_name: mongo-gridfs
+    # volumes:
+    #   - mongo_gridfs_data:/data/db
 
   rabbitmq:
     image: "rabbitmq:management"
@@ -77,3 +84,4 @@ services:
 volumes:
   articlehub_data:
   rabbitmq_data:
+  mongo_gridfs_data:
