@@ -1,10 +1,4 @@
-﻿using Articles.Abstractions.Enums;
-using Blocks.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Production.Domain.Entities;
-
-namespace Production.Persistence.EntityConfigurations;
+﻿namespace Production.Persistence.EntityConfigurations;
 
 internal class AssetEntityConfiguration : AuditedEntityConfiguration<Asset>
 {
@@ -17,7 +11,6 @@ internal class AssetEntityConfiguration : AuditedEntityConfiguration<Asset>
         //entity.HasIndex(e => e.StatusId);
         //entity.HasIndex(e => e.TypeId);
 
-        //builder.Property(e => e.Name).HasMaxLength(MaxLength.C64).IsRequired();
 				builder.ComplexProperty(
 	         o => o.Name, builder =>
 	         {
@@ -26,7 +19,6 @@ internal class AssetEntityConfiguration : AuditedEntityConfiguration<Asset>
 					         .HasMaxLength(MaxLength.C64).IsRequired();
 	         });
 
-				//builder.Property(e => e.AssetNumber).HasDefaultValue(0);
 				builder.ComplexProperty(
 	         o => o.Number, builder =>
 	         {

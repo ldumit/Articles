@@ -206,7 +206,6 @@ namespace Submission.Persistence.Migrations
                     File_Extension = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
                     File_Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false, comment: "Final name of the file after renaming"),
                     Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    Number = table.Column<byte>(type: "tinyint", nullable: false, defaultValue: (byte)0),
                     CreatedById = table.Column<int>(type: "int", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
                     LastModifiedById = table.Column<int>(type: "int", nullable: true),

@@ -14,9 +14,9 @@ public class AssetRepository(SubmissionDbContext _dbContext, IMemoryCache _cache
 						.Include(x => x.Article);
     }
 
-		public async Task<Asset?> GetByTypeAndNumberAsync(int articleId, AssetType assetTypeId, int assetNumber = 0)
+		public async Task<Asset?> GetByTypeAsync(int articleId, AssetType assetTypeId)
         => await Query()
-            .SingleOrDefaultAsync(e => e.ArticleId == articleId && e.Type == assetTypeId && e.Number == assetNumber);
+            .SingleOrDefaultAsync(e => e.ArticleId == articleId && e.Type == assetTypeId);
 
 		public async Task<Asset?> GetByIdAsync(int articleId, int assetId)
 				=> await Query()

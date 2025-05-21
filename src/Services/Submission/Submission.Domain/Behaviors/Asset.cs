@@ -7,7 +7,7 @@ public partial class Asset
 		private Asset() {/* use factory method*/}
 
 		public string GenerateStorageFilePath(string fileName) 
-				=> $"Articles/{ArticleId}/{Name}/{Number}/{fileName}";
+				=> $"Articles/{ArticleId}/{Name}/{fileName}";
 
 		//talk - use internal factory method so that the Asset can be created only in the Domain
 		internal static Asset Create(Article article, AssetTypeDefinition type, byte assetNumber = 0)
@@ -17,7 +17,6 @@ public partial class Asset
 				{
 						ArticleId = article.Id,
 						Article = article,
-						Number = AssetNumber.FromNumber(assetNumber, type),
 						Name = AssetName.FromAssetType(type),
 						Type = type.Name,
 						TypeRef = type,

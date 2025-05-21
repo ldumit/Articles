@@ -13,7 +13,7 @@ using Submission.Persistence;
 namespace Submission.Persistence.Migrations
 {
     [DbContext(typeof(SubmissionDbContext))]
-    [Migration("20250521054756_SeedMasterData")]
+    [Migration("20250521074052_SeedMasterData")]
     partial class SeedMasterData
     {
         /// <inheritdoc />
@@ -288,17 +288,6 @@ namespace Submission.Persistence.Migrations
                                 .HasMaxLength(64)
                                 .HasColumnType("nvarchar(64)")
                                 .HasColumnName("Name");
-                        });
-
-                    b.ComplexProperty<Dictionary<string, object>>("Number", "Submission.Domain.Entities.Asset.Number#AssetNumber", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<byte>("Value")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("tinyint")
-                                .HasDefaultValue((byte)0)
-                                .HasColumnName("Number");
                         });
 
                     b.HasKey("Id");

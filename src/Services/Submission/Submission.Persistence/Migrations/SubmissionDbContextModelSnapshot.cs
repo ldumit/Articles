@@ -287,17 +287,6 @@ namespace Submission.Persistence.Migrations
                                 .HasColumnName("Name");
                         });
 
-                    b.ComplexProperty<Dictionary<string, object>>("Number", "Submission.Domain.Entities.Asset.Number#AssetNumber", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<byte>("Value")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("tinyint")
-                                .HasDefaultValue((byte)0)
-                                .HasColumnName("Number");
-                        });
-
                     b.HasKey("Id");
 
                     b.HasIndex("ArticleId");

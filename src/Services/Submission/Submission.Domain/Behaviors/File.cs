@@ -17,7 +17,7 @@ public partial class File
 						Extension = extension,
 						OriginalName = fileName,
 						Size = uploadResponse.FileSize,
-						FileServerId = uploadResponse.FilePath
+						FileServerId = uploadResponse.FileId
 				};
 				return file;
 		}

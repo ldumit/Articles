@@ -73,24 +73,20 @@ public partial class Article
 		}
 
 		public Asset CreateAsset(AssetTypeDefinition type, IArticleAction<ArticleActionType> action)
-    {
-				byte? maxAssetNumber = _assets
+		{
+				var assetCount = _assets
 						.Where(a => a.Type == type.Id)
-						.Select(a => (byte?)a.Number) // Cast to byte? to allow nulls
-						.Max();
+						.Count();
 
-				byte nextAssetNumber;
-				if (maxAssetNumber is not null)
-						nextAssetNumber = (byte)(maxAssetNumber + 1);
-				else
-						nextAssetNumber = type.AllowsMultipleAssets ? (byte)1 : (byte)0; // for asset types that allow multiple assets of the same type, start from 1, otherwise 0
+				if (assetCount >= type.MaxAssetCount)
+						throw new DomainException($"The maximum number of files, {type.MaxAssetCount}, allowed for {type.Name.ToString()} was already reached");
 
-				var asset = Asset.Create(this, type, nextAssetNumber);
-        _assets.Add(asset);
-				
+				var asset = Asset.Create(this, type);
+				_assets.Add(asset);
+
 				AddAction(action);
 				return asset;
-    }
+		}
 
 		private void AddAction(IArticleAction<ArticleActionType> action)
 		{
