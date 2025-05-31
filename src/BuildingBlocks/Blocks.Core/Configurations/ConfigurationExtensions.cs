@@ -22,7 +22,7 @@ public static class ConfigurationExtensions
 				return services;
 		}
 
-		public static IServiceCollection ConfigureOptions<TOptions>(this IServiceCollection services, IConfiguration configuration)
+		public static IServiceCollection ConfigureOptionsFromSection<TOptions>(this IServiceCollection services, IConfiguration configuration)
 				where TOptions : class
 		{
 				var section = configuration.GetSection(typeof(TOptions).Name);

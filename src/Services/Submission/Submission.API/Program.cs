@@ -21,19 +21,7 @@ builder.Services
 
 var app = builder.Build();
 
-#region Use
-app
-		.UseSwagger()
-		.UseSwaggerUI()
-		.UseRouting()                                       // match the HTTP request to an endpoint (route) based on the URL
-		.UseAuthentication()
-		.UseAuthorization()
-		.UseMiddleware<GlobalExceptionMiddleware>()
-		.UseMiddleware<CorrelationIdMiddleware>();
-
-
-app.MapAllEndpoints();
-
+#region InitData
 //talk - explain when is the best time to run the migration, integrate the migration in the CI pipeline
 app.Migrate<SubmissionDbContext>();
 //todo - integrate ArticleTimeline with domain events
@@ -42,6 +30,19 @@ if (app.Environment.IsDevelopment())
 {
 		app.Services.SeedTestData();
 }
+#endregion
+
+#region Use
+app
+		.UseSwagger()
+		.UseSwaggerUI()
+		.UseRouting()                                       // match the HTTP request to an endpoint (route) based on the URL
+		.UseMiddleware<GlobalExceptionMiddleware>()
+		.UseMiddleware<CorrelationIdMiddleware>()
+		.UseAuthentication()
+		.UseAuthorization();
+
+app.MapAllEndpoints();
 #endregion
 
 app.Run();

@@ -5,5 +5,3 @@ global using Submission.Domain.Entities;
 global using Submission.Domain.Enums;
 global using Submission.Domain.ValueObjects;
 global using Submission.Domain.Events;
-
-global using FileIO = System.IO.File;

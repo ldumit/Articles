@@ -8,10 +8,7 @@ using Blocks.Messaging;
 using Submission.Persistence.Repositories;
 using Auth.Grpc;
 using Blocks.AspNetCore.Grpc;
-using Azure.Storage.Blobs;
 using FileStorage.MongoGridFS;
-using FileStorage.AzureBlob;
-using FileStorage.Contracts;
 
 namespace Submission.API;
 
@@ -21,8 +18,8 @@ public static class DependecyInjection
 		{
 				services
 						//.ConfigureOptions<FileStorage.Contracts.FileServerOptions>(configuration)
-						.ConfigureOptions<RabbitMqOptions>(configuration)
-						.ConfigureOptions<TransactionOptions>(configuration)
+						.ConfigureOptionsFromSection<RabbitMqOptions>(configuration)
+						.ConfigureOptionsFromSection<TransactionOptions>(configuration)
 						.Configure<JsonOptions>(opt =>
 						{
 								opt.SerializerOptions.PropertyNameCaseInsensitive = true;

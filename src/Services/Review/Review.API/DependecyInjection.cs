@@ -15,9 +15,9 @@ public static class DependecyInjection
 		public static void ConfigureApiOptions(this IServiceCollection services, IConfiguration configuration)
 		{
 				services
-						.ConfigureOptions<FileStorage.Contracts.FileServerOptions>(configuration)
-						.ConfigureOptions<RabbitMqOptions>(configuration)
-						.ConfigureOptions<TransactionOptions>(configuration)
+						.ConfigureOptionsFromSection<FileStorage.Contracts.FileServerOptions>(configuration)
+						.ConfigureOptionsFromSection<RabbitMqOptions>(configuration)
+						.ConfigureOptionsFromSection<TransactionOptions>(configuration)
 						.Configure<JsonOptions>(opt =>
 						{
 								opt.SerializerOptions.PropertyNameCaseInsensitive = true;

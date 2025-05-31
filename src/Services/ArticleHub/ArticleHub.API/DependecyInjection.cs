@@ -13,8 +13,8 @@ public static class DependecyInjection
 		public static void ConfigureOptions(this IServiceCollection services, IConfiguration configuration)
 		{
 				services
-						.ConfigureOptions<RabbitMqOptions>(configuration)
-						.ConfigureOptions<HasuraOptions>(configuration)
+						.ConfigureOptionsFromSection<RabbitMqOptions>(configuration)
+						.ConfigureOptionsFromSection<HasuraOptions>(configuration)
 						.Configure<JsonOptions>(opt =>
 						{
 								opt.SerializerOptions.PropertyNameCaseInsensitive = true;

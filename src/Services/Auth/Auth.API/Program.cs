@@ -1,60 +1,38 @@
-using Auth.API;
-using Articles.Security;
-using FastEndpoints;
 using Auth.Application;
-using Blocks.EntityFrameworkCore;
 using Auth.Persistence;
-using System.Reflection;
-using EmailService.Contracts;
 using Blocks.AspNetCore;
-using Blocks.Core;
 using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Http.Json;
 using Auth.API.Features.GetUserInfo;
 
 var builder = WebApplication.CreateBuilder(args);
 
+#region Add
 builder.Services
-		.ConfigureOptions<EmailOptions>(builder.Configuration)
-		//.ConfigureOptions<SendGridAccountOptions>(builder.Configuration)
-		.ConfigureOptions<JwtOptions>(builder.Configuration)
-		.ConfigureOptions<PostConfigureJwtBearerOptions>()
-		.Configure<JsonOptions>(opt =>
-		{
-				opt.SerializerOptions.PropertyNameCaseInsensitive = true;
-				opt.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
-		});
-
-
-builder.Services.AddGrpc();
+		.ConfigureApiOptions(builder.Configuration); // Configure Options
 
 builder.Services
-		.AddFastEndpoints()
-		.AddEndpointsApiExplorer()
-		.AddAutoMapper(new Assembly[] {typeof(Auth.API.Features.CreateUserCommandMapping).Assembly})
-		.AddApplicationServices(builder.Configuration)
-    .AddSwaggerGen()
-    .AddJwtAuthentication(builder.Configuration)
-    .AddAuthorization()
-    .AddJwtIdentity(builder.Configuration);
+		.AddApiServices(builder.Configuration)     // Register API-specific services
+		.AddPersistenceServices(builder.Configuration);
+#endregion
 
 var app = builder.Build();
 
-app.UseSwagger();
-app.UseSwaggerUI();
-
+#region InitData
 app.Migrate<AuthDBContext>();
 if (app.Environment.IsDevelopment())
 {
 		app.SeedTestData();
 }
+#endregion
 
-//use
+#region Use
 app
+		.UseSwagger()
+		.UseSwaggerUI()
 		.UseHttpsRedirection()
+		.UseMiddleware<GlobalExceptionMiddleware>()
 		.UseAuthentication()
-		.UseAuthorization()
-		.UseMiddleware<GlobalExceptionMiddleware>();
+		.UseAuthorization();
 
 app.UseFastEndpoints(config =>
 {
@@ -63,7 +41,6 @@ app.UseFastEndpoints(config =>
 });
 
 app.MapGrpcService<GetUserInfoGrpc>();
-
-//app.MapControllers();
+#endregion
 
 app.Run();

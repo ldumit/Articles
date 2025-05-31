@@ -17,7 +17,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
 		//.ConfigureOptions<FileStorage.Contracts.FileServerOptions>(builder.Configuration)
-		.ConfigureOptions<TransactionOptions>(builder.Configuration)
+		.ConfigureOptionsFromSection<TransactionOptions>(builder.Configuration)
 		.Configure<JsonOptions>(opt =>
 		{
 				opt.SerializerOptions.PropertyNameCaseInsensitive = true;
