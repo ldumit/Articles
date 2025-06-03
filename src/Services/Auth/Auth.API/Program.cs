@@ -31,14 +31,16 @@ app
 		.UseSwaggerUI()
 		.UseHttpsRedirection()
 		.UseMiddleware<GlobalExceptionMiddleware>()
+		.UseRouting()
 		.UseAuthentication()
-		.UseAuthorization();
-
-app.UseFastEndpoints(config =>
-{
-		config.Serializer.Options.Converters.Add(new JsonStringEnumConverter());
-		//config..Add(new AssignUserIdPreProcessor(app.Services.GetRequiredService<IHttpContextAccessor>()));
-});
+		.UseAuthorization()
+		.UseEndpoints(_ => { }) // even if you don’t map controllers
+		.UseFastEndpoints(config =>
+		{
+				config.Serializer.Options.Converters.Add(new JsonStringEnumConverter());
+				//config.AuthPolicyNames = new[] { "Bearer" };
+				//config..Add(new AssignUserIdPreProcessor(app.Services.GetRequiredService<IHttpContextAccessor>()));
+		});
 
 app.MapGrpcService<GetUserInfoGrpc>();
 #endregion

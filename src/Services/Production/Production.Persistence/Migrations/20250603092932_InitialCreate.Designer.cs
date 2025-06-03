@@ -13,7 +13,7 @@ using Production.Persistence;
 namespace Production.Persistence.Migrations
 {
     [DbContext(typeof(ProductionDbContext))]
-    [Migration("20241121051739_InitialCreate")]
+    [Migration("20250603092932_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -132,6 +132,26 @@ namespace Production.Persistence.Migrations
                     b.HasKey("CurrentStage", "ActionType", "DestinationStage");
 
                     b.ToTable("ArticleStageTransition", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            CurrentStage = "Accepted",
+                            ActionType = "AssignTypesetter",
+                            DestinationStage = "InProduction"
+                        },
+                        new
+                        {
+                            CurrentStage = "FinalProduction",
+                            ActionType = "SchedulePublication",
+                            DestinationStage = "PublicationScheduled"
+                        },
+                        new
+                        {
+                            CurrentStage = "PublicationScheduled",
+                            ActionType = "Publish",
+                            DestinationStage = "Published"
+                        });
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.Asset", b =>
@@ -349,14 +369,14 @@ namespace Production.Persistence.Migrations
                             Id = 1,
                             ActionTypes = "[0,2,3]",
                             ArticleStage = "InProduction",
-                            AssetTypes = "[1,7,8,9]"
+                            AssetTypes = "[1,11,12,10]"
                         },
                         new
                         {
                             Id = 2,
                             ActionTypes = "[0,2,3]",
                             ArticleStage = "DraftProduction",
-                            AssetTypes = "[1,7,8,9]"
+                            AssetTypes = "[1,11,12,10]"
                         },
                         new
                         {

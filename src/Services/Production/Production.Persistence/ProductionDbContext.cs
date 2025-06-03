@@ -1,8 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Production.Domain.Entities;
-using Production.Persistence.EntityConfigurations;
+﻿using Production.Persistence.EntityConfigurations;
 using Microsoft.Extensions.Caching.Memory;
-using Blocks.EntityFrameworkCore;
 
 namespace Production.Persistence;
 

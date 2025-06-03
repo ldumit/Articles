@@ -29,7 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Data\Master\ArticleStageTransition1.json">
+    <None Update="Data\Master\ArticleStageTransition.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Data\Master\AssetStateTransition.json">

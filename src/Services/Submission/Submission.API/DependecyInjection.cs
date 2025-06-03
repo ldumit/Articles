@@ -18,8 +18,8 @@ public static class DependecyInjection
 		{
 				services
 						//.ConfigureOptions<FileStorage.Contracts.FileServerOptions>(configuration)
-						.ConfigureOptionsFromSection<RabbitMqOptions>(configuration)
-						.ConfigureOptionsFromSection<TransactionOptions>(configuration)
+						.AddAndValidateOptions<RabbitMqOptions>(configuration)
+						.AddAndValidateOptions<TransactionOptions>(configuration)
 						.Configure<JsonOptions>(opt =>
 						{
 								opt.SerializerOptions.PropertyNameCaseInsensitive = true;

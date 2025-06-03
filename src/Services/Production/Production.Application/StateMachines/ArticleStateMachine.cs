@@ -24,8 +24,6 @@ public class ArticleStateMachine
 				}
 		}
 
-		public bool CanFire(ArticleActionType actionType)
-		{
-				return _stateMachine.CanFire(actionType);
-		}
+		public bool CanFire(ArticleActionType actionType) 
+				=> _stateMachine.CanFire(actionType);
 }

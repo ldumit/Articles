@@ -345,6 +345,16 @@ namespace Production.Persistence.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "ArticleStageTransition",
+                columns: new[] { "ActionType", "CurrentStage", "DestinationStage" },
+                values: new object[,]
+                {
+                    { "AssignTypesetter", "Accepted", "InProduction" },
+                    { "SchedulePublication", "FinalProduction", "PublicationScheduled" },
+                    { "Publish", "PublicationScheduled", "Published" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "AssetStateTransition",
                 columns: new[] { "ActionType", "CurrentState", "DestinationState" },
                 values: new object[,]
@@ -363,8 +373,8 @@ namespace Production.Persistence.Migrations
                 columns: new[] { "Id", "ActionTypes", "ArticleStage", "AssetTypes" },
                 values: new object[,]
                 {
-                    { 1, "[0,2,3]", "InProduction", "[1,7,8,9]" },
-                    { 2, "[0,2,3]", "DraftProduction", "[1,7,8,9]" },
+                    { 1, "[0,2,3]", "InProduction", "[1,11,12,10]" },
+                    { 2, "[0,2,3]", "DraftProduction", "[1,11,12,10]" },
                     { 3, "[0]", "InProduction", "[3]" },
                     { 4, "[0,2,3,1]", "DraftProduction", "[3]" },
                     { 5, "[0,2,3]", "FinalProduction", "[4,5,6]" }

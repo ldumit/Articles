@@ -22,6 +22,7 @@ public class AssignTypesetterCommandValidator : ArticleCommandValidator<AssignTy
 				RuleFor(r => r.ArticleId).GreaterThan(0);
 				RuleFor(r => r.TypesetterId).GreaterThan(0);
 
+				// todo remove the stage transion check fromm here.  keep it only in the domain
 				RuleFor(r => r).MustAsync(async (r, _, cancellation) => await IsActionValid(r))
 						.WithMessage("Action not allowed");
 		}
