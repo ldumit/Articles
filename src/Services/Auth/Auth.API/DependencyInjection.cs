@@ -9,11 +9,14 @@ using EmailService.Smtp;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Identity;
 using System.Reflection;
+using System.Security.Claims;
 using System.Text.Json.Serialization;
+using FastEndpoints.Swagger;
+using Auth.API.Features;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Auth.Application;
 
-//todo move it to Application project
 public static class DependenciesConfiguration
 {
 		public static void ConfigureApiOptions(this IServiceCollection services, IConfiguration configuration)
@@ -31,14 +34,22 @@ public static class DependenciesConfiguration
 
 		public static IServiceCollection AddApiServices(this IServiceCollection services, IConfiguration configuration)
 		{
+				services.AddControllers();
+
 				services
 						.AddFastEndpoints()
+						//.AddFastEndpoints(o =>
+						//{
+						//		o.DisableAutoDiscovery = true;
+						//		o.Assemblies = new[] { typeof(TestEndpoint).Assembly }; // force manual discovery
+						//})
+						.SwaggerDocument()
 						.AddEndpointsApiExplorer()                  // Minimal API docs (Swagger)
-						.AddAutoMapper(new Assembly[] { typeof(Auth.API.Features.CreateUserCommandMapping).Assembly })
+						.AddAutoMapper(new Assembly[] { typeof(CreateUserCommandMapping).Assembly })
 						.AddSwaggerGen()                            // Swagger setup
+						.AddJwtIdentity(configuration)
 						.AddJwtAuthentication(configuration)        // JWT Authentication
-						.AddAuthorization()                         // Authorization configuration
-						.AddJwtIdentity(configuration);
+						.AddAuthorization();                         // Authorization configuration
 
 				services.AddGrpc();
 
@@ -51,7 +62,7 @@ public static class DependenciesConfiguration
 
 		public static IServiceCollection AddJwtIdentity(this IServiceCollection services, IConfiguration configuration)
 		{
-				services.AddIdentity<User, Domain.Roles.Role>(options =>
+				services.AddIdentityCore<User>(options =>
 				{
 						// Lockout settings
 						options.Lockout.AllowedForNewUsers = true;
@@ -59,11 +70,16 @@ public static class DependenciesConfiguration
 						options.Lockout.MaxFailedAccessAttempts = 5;
 
 						options.User.RequireUniqueEmail = false; //to-do - change back to true after test training users not needed anymore
-																										 //options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+/ ";
+						//options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+/ ";
 				})
 				.AddEntityFrameworkStores<AuthDBContext>()
 				.AddSignInManager<SignInManager<User>>()
 				.AddDefaultTokenProviders();
+
+				services.Configure<IdentityOptions>(options =>
+				{
+						options.ClaimsIdentity.RoleClaimType = ClaimTypes.Role;
+				});
 
 				services.AddSingleton<GrpcTypeAdapterConfig>();
 

@@ -3,6 +3,7 @@ using Auth.Persistence;
 using Blocks.AspNetCore;
 using System.Text.Json.Serialization;
 using Auth.API.Features.GetUserInfo;
+using FastEndpoints.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +22,7 @@ var app = builder.Build();
 app.Migrate<AuthDBContext>();
 if (app.Environment.IsDevelopment())
 {
-		app.SeedTestData();
+		//app.SeedTestData();
 }
 #endregion
 
@@ -31,16 +32,20 @@ app
 		.UseSwaggerUI()
 		.UseHttpsRedirection()
 		.UseMiddleware<GlobalExceptionMiddleware>()
-		.UseRouting()
 		.UseAuthentication()
+		.UseRouting()
 		.UseAuthorization()
-		.UseEndpoints(_ => { }) // even if you don’t map controllers
+		.UseEndpoints(endpoints =>
+		{
+				endpoints.MapControllers(); // required if using MVC
+				endpoints.MapDefaultControllerRoute(); // optional
+		})
 		.UseFastEndpoints(config =>
 		{
 				config.Serializer.Options.Converters.Add(new JsonStringEnumConverter());
-				//config.AuthPolicyNames = new[] { "Bearer" };
 				//config..Add(new AssignUserIdPreProcessor(app.Services.GetRequiredService<IHttpContextAccessor>()));
-		});
+		})
+		.UseSwaggerGen();
 
 app.MapGrpcService<GetUserInfoGrpc>();
 #endregion

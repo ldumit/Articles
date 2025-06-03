@@ -8,6 +8,7 @@ using Blocks.FastEnpoints;
 using ArticleTimeline.Persistence;
 using ArticleTimeline.Application;
 using FileStorage.AzureBlob;
+using Blocks.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,6 +47,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseMiddleware<GlobalExceptionMiddleware>();
+
 app.UseAuthentication();
 app.UseRouting();
 app.UseAuthorization();

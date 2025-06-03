@@ -6,7 +6,6 @@ using System.Reflection;
 using Production.Application;
 using FastEndpoints.Swagger;
 using Blocks.AspNetCore;
-using ArticleTimeline.Application.VariableResolvers;
 using FileStorage.AzureBlob;
 using Production.Persistence.Repositories;
 

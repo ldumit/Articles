@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Blocks.Core;
+using System.Security.Claims;
 
 namespace Articles.Security;
 
@@ -27,6 +28,7 @@ public static class ConfigureAuthentication
 										IssuerSigningKey = new SymmetricSecurityKey(Encoding.Default.GetBytes(jwtOptions.Secret)),
 										ValidateAudience = false,
 										RequireExpirationTime = true,
+										RoleClaimType = ClaimTypes.Role
 								};
 						});
 

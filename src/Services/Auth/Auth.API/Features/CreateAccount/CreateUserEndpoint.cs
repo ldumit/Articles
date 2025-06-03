@@ -9,12 +9,19 @@ using User = Auth.Domain.Users.User;
 
 namespace Auth.API.Features;
 
-[AllowAnonymous]
-//[Authorize(Roles = Articles.Security.Role.ADMIN)]
+//[AllowAnonymous]
+[Authorize(Roles = Articles.Security.Role.ADMIN)]
+//[Authorize()]
 [HttpPost("users")]
 public class CreateUserEndpoint(UserManager<User> userManager, AutoMapper.IMapper mapper, IEmailService emailService, IHttpContextAccessor httpContextAccessor, IOptions<EmailOptions> emailOptions) 
 		: Endpoint<CreateUserCommand, CreateUserResponse>
 {
+		//public override void Configure()
+		////{
+		//		Post("users");
+		//		Roles(Articles.Security.Role.ADMIN); // same as [Authorize(Roles=...)]
+		//}
+
 		public override async Task HandleAsync(CreateUserCommand command, CancellationToken ct)
     {
         var user = await userManager.FindByNameAsync(command.Email);

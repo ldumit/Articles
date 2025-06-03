@@ -25,7 +25,7 @@ public class SendConfirmationEmailOnUserCreatedHandler
 		public EmailMessage BuildConfirmationEmail(User user, string resetLink, string fromEmailAddress)
 		{
 				const string ConfirmationEmail =
-						@"Dear {0}, \nAn account has been created for you. \nPlease set your password using the following URL: {1}";
+						"Dear {0},<br/>An account has been created for you.<br/>Please set your password using the following URL: <br/>{1}";
 
 				return new EmailMessage(
 						"Your Account Has Been Created – Set Your Password",
