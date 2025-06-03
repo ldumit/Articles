@@ -14,7 +14,7 @@ internal class AssetEntityConfiguration : AuditedEntityConfiguration<Asset>
 				builder.ComplexProperty(
 	         o => o.Name, builder =>
 	         {
-			         builder.Property(n => n.Value)
+			         builder.Property(vo => vo.Value)
 					         .HasColumnName(builder.Metadata.PropertyInfo!.Name)
 					         .HasMaxLength(MaxLength.C64).IsRequired();
 	         });

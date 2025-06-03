@@ -2,7 +2,7 @@
 using FastEndpoints;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
-using Auth.Domain.Models;
+using Auth.Domain.Users;
 using Blocks.Exceptions;
 using EmailService.Contracts;
 using Blocks.AspNetCore;

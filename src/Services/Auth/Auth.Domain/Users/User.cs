@@ -1,23 +1,24 @@
-﻿using Blocks.Domain;
-using Blocks.Entitities;
+﻿using Auth.Domain.Users;
+using Auth.Domain.Users.Enums;
+using Auth.Domain.Users.ValueObjects;
+using Blocks.Domain;
 using Microsoft.AspNetCore.Identity;
 
-namespace Auth.Domain.Models;
+namespace Auth.Domain.Users;
 
 public partial class User : IdentityUser<int>, IAggregateEntity<int>
 {
 		public required string FirstName { get; set; }
-    public required string LastName { get; set; }
-		
+    public required string LastName { get; set; }		
 		public string FullName => FirstName + " " + LastName;
+
 		public required Gender Gender { get; set; }
+    public HonorificTitle? Honorific{ get; set; }
 
-		public string? Title { get; set; } = null!;
-    public string? Position { get; set; } = null!;
+		public ProfessionalProfile? ProfessionalProfile { get; set; }
+
+
 		public string? PictureUrl { get; set; } = null!;
-		public string? CompanyName { get; set; } = null!;
-		public string? Affiliation { get; set; } = null!;
-
 		public DateTime RegistrationDate { get; set; } = DateTime.UtcNow;
 		public DateTime? LastLogin { get; set; }
 
@@ -25,12 +26,13 @@ public partial class User : IdentityUser<int>, IAggregateEntity<int>
 		public List<RefreshToken> RefreshTokens { get; set; } = new();
 		public virtual List<UserRole> UserRoles { get; set; } = new();
 
-		//Aggregate
+		//Audit
 		public int CreatedById { get; set; } = default!;
 		public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
 		public int? LastModifiedById { get; set; } = 0;
 		public DateTime? LasModifiedOn { get; set; } = DateTime.UtcNow;
 
+		//Aggregate
 		private List<IDomainEvent> _domainEvents = new();
 		public IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents;
 		public void AddDomainEvent(IDomainEvent eventItem) => _domainEvents.Add(eventItem);

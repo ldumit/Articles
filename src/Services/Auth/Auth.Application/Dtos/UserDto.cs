@@ -1,4 +1,4 @@
-﻿using Auth.Domain;
+﻿using Auth.Domain.Users.Enums;
 
 namespace Auth.Application.Dtos;
 

@@ -1,5 +1,6 @@
-﻿using Blocks.Entitities;
-namespace Auth.Domain.Models;
+﻿using System;
+
+namespace Auth.Domain.Users;
 
 public class RefreshToken : Entity
 {
@@ -13,5 +14,5 @@ public class RefreshToken : Entity
     public string? RevokedByIp { get; set; } = null!;
     //todo do I need this field?
     public string? ReplacedByToken { get; set; }
-    public bool IsActive => Revoked == null && !IsExpired;
+    public bool IsActive => Revoked is null && !IsExpired;
 }

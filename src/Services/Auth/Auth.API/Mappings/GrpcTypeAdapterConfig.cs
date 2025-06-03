@@ -1,6 +1,5 @@
-﻿using Auth.Domain.Models;
+﻿using Auth.Domain.Users;
 using Auth.Grpc;
-using Mapster;
 
 namespace Auth.API.Mappings;
 

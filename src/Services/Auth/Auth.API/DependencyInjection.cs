@@ -1,7 +1,7 @@
 ﻿using Articles.Security;
 using Auth.API;
 using Auth.API.Mappings;
-using Auth.Domain.Models;
+using Auth.Domain.Users;
 using Auth.Persistence;
 using Blocks.Security;
 using EmailService.Contracts;
@@ -42,7 +42,7 @@ public static class DependenciesConfiguration
 
 				services.AddGrpc();
 
-				services.AddScoped<IEmailService, SmtpEmailService>();
+				services.AddSingleton<IEmailService, SmtpEmailService>();
 				services.AddScoped<TokenFactory>();
 
 				return services;
@@ -51,7 +51,7 @@ public static class DependenciesConfiguration
 
 		public static IServiceCollection AddJwtIdentity(this IServiceCollection services, IConfiguration configuration)
 		{
-				services.AddIdentity<User, Domain.Models.Role>(options =>
+				services.AddIdentity<User, Domain.Roles.Role>(options =>
 				{
 						// Lockout settings
 						options.Lockout.AllowedForNewUsers = true;

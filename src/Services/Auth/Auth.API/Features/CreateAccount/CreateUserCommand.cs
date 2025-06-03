@@ -1,31 +1,39 @@
 ﻿using Articles.Security;
-using Auth.Domain;
+using Auth.Domain.Users;
+using Auth.Domain.Users.Enums;
 
 namespace Auth.API.Features;
 
-public record CreateUserCommand
+public class CreateUserCommand: IUserCreationInfo
 {
-    public required string Email { get; set; }
-    public required string FirstName { get; set; }
-    public required string LastName { get; set; }
-		public required Gender Gender { get; set; }
+    public required string Email { get; init; }
+    public required string FirstName { get; init; }
+    public required string LastName { get; init; }
+		public required Gender Gender { get; init; }
 
-		public string PhoneNumber { get; set; } = default!;
-    public string PhotoUrl { get; set; } = default!;
-		public string CompanyName { get; set; } = default!;
-		public string Position { get; set; } = default!;
+		public Honorific? Honorific { get; init; }
+		public string? PhoneNumber { get; init; }
+    public string? PictureUrl { get; init; }
+		public string? CompanyName { get; init; }
+		public string? Position { get; init; }
+		public string? Affiliation { get; init; }
 
-    public List<UserRoleDto> UserRoles { get; set; } = new();
+		public required IReadOnlyList<UserRoleDto> UserRoles { get; init; } = new List<UserRoleDto>();
 
-    public int? EmployeeId { get; set; }
-    public bool IsSuperUser { get; set; }
+    public int? EmployeeId { get; init; }
+		public bool IsSuperUser { get; init; } = false;
+
+		IReadOnlyList<IUserRole> IUserCreationInfo.UserRoles => UserRoles;
 }
 
-public record UserRoleDto
-{
-		public UserRoleType Type { get; set; }
-		public DateTime? BeginDate { get; set; }
-		public DateTime? ExpiringDate { get; set; }
-}
+public record UserRoleDto(
+		UserRoleType Type,
+		DateTime? StartDate,
+		DateTime? ExpiringDate
+) : IUserRole;
 
-public record CreateUserResponse(string Email, int UserId, string Token);
+public record CreateUserResponse(
+		string Email, 
+		int UserId, 
+		string Token
+);

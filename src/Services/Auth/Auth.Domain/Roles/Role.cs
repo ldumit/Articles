@@ -1,8 +1,7 @@
-﻿using Blocks.Entitities;
-using Articles.Security;
+﻿using Articles.Security;
 using Microsoft.AspNetCore.Identity;
 
-namespace Auth.Domain.Models;
+namespace Auth.Domain.Roles;
 
 public class Role : IdentityRole<int>, IEntity
 {

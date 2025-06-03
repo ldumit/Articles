@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using FastEndpoints;
 using Microsoft.AspNetCore.Identity;
 using System.Net;
-using Auth.Application;
 using System.Security.Claims;
 using Microsoft.Extensions.Options;
-using Auth.Domain.Models;
+using Auth.Domain.Users;
 using Articles.Security;
 using Blocks.Security;
 

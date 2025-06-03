@@ -1,59 +1,40 @@
 ﻿namespace Blocks.Entitities;
 
-public abstract class ValueObject : IDomainObject
+public abstract class ValueObject : IEquatable<ValueObject>, IDomainObject
 {
-		protected static bool EqualOperator(ValueObject left, ValueObject right)
+		protected abstract IEnumerable<object?> GetEqualityComponents();
+		
+		public override bool Equals(object? obj)
 		{
-				return ReferenceEquals(left, null) ^ ReferenceEquals(right, null)
-						? false
-						: ReferenceEquals(left, null) || left.Equals(right);
-		}
-
-		protected static bool NotEqualOperator(ValueObject left, ValueObject right)
-		{
-				return !(EqualOperator(left, right));
-		}
-
-		protected abstract IEnumerable<object> GetAtomicValues();
-
-		public override bool Equals(object obj)
-		{
-				var equals = true;
-
-				if (obj == null || obj.GetType() != GetType())
-				{
-						equals = false;
-				}
+				if (obj is null || obj.GetType() != GetType())
+						return false;
 
 				var other = (ValueObject)obj;
 
-				var thisValues = GetAtomicValues().GetEnumerator();
-				var otherValues = other.GetAtomicValues().GetEnumerator();
-
-				while (thisValues.MoveNext() && otherValues.MoveNext())
-				{
-						if (ReferenceEquals(thisValues.Current, null) ^ ReferenceEquals(otherValues.Current, null))
-						{
-								equals = false;
-						}
-						if (thisValues.Current != null && !thisValues.Current.Equals(otherValues.Current))
-						{
-								equals = false;
-						}
-				}
-
-				return equals && !thisValues.MoveNext() && !otherValues.MoveNext();
+				return GetEqualityComponents().SequenceEqual(other.GetEqualityComponents());
 		}
 
 		public override int GetHashCode()
 		{
-				return GetAtomicValues()
-				 .Select(x => x != null ? x.GetHashCode() : 0)
-				 .Aggregate((x, y) => x ^ y);
+				return GetEqualityComponents()
+						.Aggregate(1, (current, obj) =>
+								current * 23 + (obj?.GetHashCode() ?? 0));
 		}
 
-		public ValueObject GetCopy()
+		public bool Equals(ValueObject? other)
 		{
-				return MemberwiseClone() as ValueObject;
+				return 
+						other is not null && GetType() == other.GetType()
+						&& GetEqualityComponents().SequenceEqual(other.GetEqualityComponents());
+		}
+
+		public static bool operator ==(ValueObject? a, ValueObject? b)
+		{
+				return Equals(a, b);
+		}
+
+		public static bool operator !=(ValueObject? a, ValueObject? b)
+		{
+				return !Equals(a, b);
 		}
 }

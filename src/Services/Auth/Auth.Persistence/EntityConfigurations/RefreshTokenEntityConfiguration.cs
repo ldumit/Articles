@@ -1,6 +1,4 @@
-﻿using Blocks.EntityFrameworkCore;
-using Auth.Domain.Models;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Auth.Domain.Users;
 
 namespace Auth.Persistence;
 

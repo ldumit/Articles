@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.Text.Json;
 
@@ -50,23 +51,21 @@ namespace Blocks.EntityFrameworkCore
 				}
 
 				public static PropertyBuilder<IReadOnlyList<T>> HasJsonReadOnlyListConversion<T>(this PropertyBuilder<IReadOnlyList<T>> builder)
-				{
-						return builder.HasConversion(BuildJsonReadOnlyListConvertor<T>());
-				}
+						=> builder.HasConversion(BuildJsonReadOnlyListConvertor<T>());
+
 				public static PropertyBuilder<T> HasJsonCollectionConversion<T>(this PropertyBuilder<T> builder)
-				{
-						return builder.HasConversion(BuildJsonListConvertor<T>());
-				}
+						=> builder.HasConversion(BuildJsonListConvertor<T>());
 
 				public static ComplexTypePropertyBuilder<T> HasJsonListConversion<T>(this ComplexTypePropertyBuilder<T> builder)
-				{
-						return builder.HasConversion(BuildJsonReadOnlyListConvertor<T>());
-				}
+						=> builder.HasConversion(BuildJsonReadOnlyListConvertor<T>());
 
 				public static PropertyBuilder<TCollection> HasJsonListConversion<TCollection, T>(this PropertyBuilder<TCollection> builder)
 						where TCollection : IList<T>
-				{
-						return builder.HasConversion(BuildJsonListConvertor<TCollection>());
-				}
+						=> builder.HasConversion(BuildJsonListConvertor<TCollection>());
+
+				public static PropertyBuilder<TProperty> HasColumnNameSameAsProperty<TProperty>(this PropertyBuilder<TProperty> builder)
+						=> builder.HasColumnName(builder.Metadata.PropertyInfo?.Name);
+				public static ComplexTypePropertyBuilder<TProperty> HasColumnNameSameAsProperty<TProperty>(this ComplexTypePropertyBuilder<TProperty> builder)
+						=> builder.HasColumnName(builder.Metadata.PropertyInfo?.Name);
 		}
 }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Auth.Domain.Models;
+using Auth.Domain.Users;
 using Auth.Persistence;
 using Microsoft.AspNetCore.Identity;
 using Blocks.EntityFrameworkCore;

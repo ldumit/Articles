@@ -1,4 +1,4 @@
-﻿using Auth.Domain.Models;
+﻿using Auth.Domain.Users;
 using AutoMapper;
 
 namespace Auth.API.Features;

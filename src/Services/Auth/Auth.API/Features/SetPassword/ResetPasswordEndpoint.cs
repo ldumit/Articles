@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using FastEndpoints;
 using Microsoft.AspNetCore.Identity;
-using Auth.Domain.Models;
+using Auth.Domain.Users;
 using Blocks.Exceptions;
 
 namespace Auth.API.Features;

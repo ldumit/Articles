@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
 using Auth.Persistence.EntityConfigurations;
-using Auth.Domain.Models;
+using Auth.Domain.Users;
+using Auth.Domain.Users;
+using Auth.Domain.Roles;
 
 namespace Auth.Persistence;
 
