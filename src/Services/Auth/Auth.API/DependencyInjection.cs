@@ -1,19 +1,17 @@
-﻿using Articles.Security;
-using Auth.API;
-using Auth.API.Mappings;
-using Auth.Domain.Users;
-using Auth.Persistence;
+﻿using System.Reflection;
+using System.Security.Claims;
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Http.Json;
+using Microsoft.AspNetCore.Identity;
+using FastEndpoints.Swagger;
+using Articles.Security;
 using Blocks.Security;
 using EmailService.Contracts;
 using EmailService.Smtp;
-using Microsoft.AspNetCore.Http.Json;
-using Microsoft.AspNetCore.Identity;
-using System.Reflection;
-using System.Security.Claims;
-using System.Text.Json.Serialization;
-using FastEndpoints.Swagger;
+using Auth.API;
+using Auth.API.Mappings;
+using Auth.Persistence;
 using Auth.API.Features;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Auth.Application;
 
@@ -38,11 +36,6 @@ public static class DependenciesConfiguration
 
 				services
 						.AddFastEndpoints()
-						//.AddFastEndpoints(o =>
-						//{
-						//		o.DisableAutoDiscovery = true;
-						//		o.Assemblies = new[] { typeof(TestEndpoint).Assembly }; // force manual discovery
-						//})
 						.SwaggerDocument()
 						.AddEndpointsApiExplorer()                  // Minimal API docs (Swagger)
 						.AddAutoMapper(new Assembly[] { typeof(CreateUserCommandMapping).Assembly })
@@ -72,6 +65,7 @@ public static class DependenciesConfiguration
 						options.User.RequireUniqueEmail = false; //to-do - change back to true after test training users not needed anymore
 						//options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+/ ";
 				})
+			  .AddRoles<Auth.Domain.Roles.Role>()
 				.AddEntityFrameworkStores<AuthDBContext>()
 				.AddSignInManager<SignInManager<User>>()
 				.AddDefaultTokenProviders();

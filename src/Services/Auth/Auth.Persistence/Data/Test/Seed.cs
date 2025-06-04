@@ -1,14 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Auth.Domain.Users;
-using Auth.Persistence;
 using Microsoft.AspNetCore.Identity;
-using Blocks.EntityFrameworkCore;
 
-namespace Auth.Application;
+namespace Auth.Persistence.Data.Test;
 
-// todo : move to Persistence project
-// todo : create Data > Master/Test folder structure and move json files there
 public static class Seed
 {
     public static void SeedTestData(this IHost host)
@@ -33,21 +29,4 @@ public static class Seed
 
         transaction.Commit();
     }
-
-    //private static TEntity[] LoadFromJson<TEntity>(AuthDBContext context)
-    //    where TEntity : class, IEntity<int>
-    //{
-    //    if (context.Set<TEntity>().Any())
-    //        return Array.Empty<TEntity>();
-
-    //    var filePath = $"{AppContext.BaseDirectory}TestData/{typeof(TEntity).Name}.json";
-    //    if (File.Exists(filePath))
-    //    {
-    //        var collection = JsonExtensions.DeserializeCaseInsensitive<TEntity[]>(System.IO.File.ReadAllText(filePath));
-    //        if (collection != null)
-    //            return collection;
-
-				//}
-    //    return Array.Empty<TEntity>();
-    //}
 }

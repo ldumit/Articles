@@ -121,7 +121,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ClientServices", "ClientSer
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserServiceGrpcClient", "ClientServices\UserServiceGrpcClient\UserServiceGrpcClient.csproj", "{07C20046-7142-4640-B363-335E8716DE69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway", "ApiGateway\ApiGateway.csproj", "{9515CFB6-587B-4CB6-9191-129A432849A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiGateway", "ApiGateway\ApiGateway.csproj", "{9515CFB6-587B-4CB6-9191-129A432849A7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blocks.FastEndpoints", "BuildingBlocks\Blocks.FastEndpoints\Blocks.FastEndpoints.csproj", "{CF20E575-831D-4254-850D-75AADAA6B005}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -313,6 +315,10 @@ Global
 		{9515CFB6-587B-4CB6-9191-129A432849A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9515CFB6-587B-4CB6-9191-129A432849A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9515CFB6-587B-4CB6-9191-129A432849A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF20E575-831D-4254-850D-75AADAA6B005}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF20E575-831D-4254-850D-75AADAA6B005}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF20E575-831D-4254-850D-75AADAA6B005}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF20E575-831D-4254-850D-75AADAA6B005}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -372,6 +378,7 @@ Global
 		{B18C577B-F65B-4B56-92F1-1DE6D376CE56} = {21C7AC73-03EE-4274-880D-90FA2A25AB9F}
 		{A7B4DE2E-21A2-44FC-8A82-0813E1B4E9D6} = {21C7AC73-03EE-4274-880D-90FA2A25AB9F}
 		{07C20046-7142-4640-B363-335E8716DE69} = {8324F40B-DAB8-499F-9D43-49698B20E9B9}
+		{CF20E575-831D-4254-850D-75AADAA6B005} = {119E4BB2-4239-487F-B5F7-3BCED9AFF33C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DB8333BC-C32E-4759-8E3B-CC033665D9E0}

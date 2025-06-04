@@ -17,8 +17,8 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Azure.Storage.Blobs" Version="12.22.1" />
-    <PackageReference Include="FastEndpoints" Version="5.30.0" />
-    <PackageReference Include="FastEndpoints.Swagger" Version="5.30.0" />
+    <PackageReference Include="FastEndpoints" Version="6.1.0" />
+    <PackageReference Include="FastEndpoints.Swagger" Version="6.1.0" />
     <PackageReference Include="Mapster" Version="7.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
@@ -39,6 +39,7 @@
     <ProjectReference Include="..\..\..\BuildingBlocks\Blocks.AspNetCore\Blocks.AspNetCore.csproj" />
     <ProjectReference Include="..\..\..\BuildingBlocks\Blocks.EntityFrameworkCore\Blocks.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\..\..\BuildingBlocks\Blocks.Core\Blocks.Core.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Blocks.FastEndpoints\Blocks.FastEndpoints.csproj" />
     <ProjectReference Include="..\..\..\Modules\FileService\FileService.Contracts\FileStorage.Contracts.csproj" />
     <ProjectReference Include="..\Production.Persistence\Production.Persistence.csproj" />
     <ProjectReference Include="..\Production.Domain\Production.Domain.csproj" />

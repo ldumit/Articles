@@ -1,13 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using FastEndpoints;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
-using Auth.Domain.Users;
 using Blocks.Exceptions;
 using EmailService.Contracts;
 using Blocks.AspNetCore;
 using Flurl;
-
 
 namespace Auth.API.Features.SendChangePasswordLink;
 

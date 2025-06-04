@@ -8,8 +8,11 @@
 
   <ItemGroup>
     <PackageReference Include="FastEndpoints" Version="6.1.0" />
-    <PackageReference Include="FastEndpoints.Swagger" Version="6.1.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Blocks.AspNetCore\Blocks.AspNetCore.csproj" />
+    <ProjectReference Include="..\Blocks.Domain\Blocks.Domain.csproj" />
   </ItemGroup>
 
 </Project>

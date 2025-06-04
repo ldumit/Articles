@@ -1,8 +1,6 @@
-﻿using FluentValidation;
+﻿namespace Auth.API.Features;
 
-namespace Auth.API.Features;
-
-public class LoginCommandValidator : AbstractValidator<LoginCommand>
+public class LoginCommandValidator : Validator<LoginCommand>
 {
 		public LoginCommandValidator()
 		{
