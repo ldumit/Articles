@@ -1,9 +1,10 @@
+using FastEndpoints.Swagger;
+using Blocks.AspNetCore;
+using Blocks.FastEndpoints;
+using Auth.Persistence.Data.Test;
 using Auth.Application;
 using Auth.Persistence;
-using Blocks.AspNetCore;
-using System.Text.Json.Serialization;
 using Auth.API.Features.GetUserInfo;
-using FastEndpoints.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,30 +23,25 @@ var app = builder.Build();
 app.Migrate<AuthDBContext>();
 if (app.Environment.IsDevelopment())
 {
-		//app.SeedTestData();
+		app.SeedTestData();
 }
 #endregion
 
 #region Use
 app
-		.UseSwagger()
-		.UseSwaggerUI()
-		.UseHttpsRedirection()
-		.UseMiddleware<GlobalExceptionMiddleware>()
-		.UseAuthentication()
-		.UseRouting()
-		.UseAuthorization()
-		.UseEndpoints(endpoints =>
-		{
-				endpoints.MapControllers(); // required if using MVC
-				endpoints.MapDefaultControllerRoute(); // optional
-		})
-		.UseFastEndpoints(config =>
-		{
-				config.Serializer.Options.Converters.Add(new JsonStringEnumConverter());
-				//config..Add(new AssignUserIdPreProcessor(app.Services.GetRequiredService<IHttpContextAccessor>()));
-		})
-		.UseSwaggerGen();
+		.UseSwagger()								// Exposes Swagger JSON docs; can be early
+		.UseSwaggerUI()							// Enables Swagger UI; must come after UseSwagger
+
+		.UseHttpsRedirection()			// Redirects HTTP to HTTPS; safe early
+
+		.UseMiddleware<GlobalExceptionMiddleware>() // Global exception handling; must come early to catch errors
+
+		.UseRouting()								// Enables endpoint routing; must come before UseAuthorization
+		.UseAuthentication()				// Adds JWT cookie/header parsing; must be before UseAuthorization
+		.UseAuthorization()					// Evaluates [Authorize]; must come after UseRouting and UseAuthentication
+
+		.UseCustomFastEndpoints()		// Registers and customizes FastEndpoints; must come after UseAuthorization to enforce role policies
+		.UseSwaggerGen();						// FastEndpoints Swagger; must come after UseCustomFastEndpoints
 
 app.MapGrpcService<GetUserInfoGrpc>();
 #endregion

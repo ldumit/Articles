@@ -1,4 +1,5 @@
-﻿using Blocks.AspNetCore;
+﻿using Articles.Abstractions.Enums;
+using Blocks.AspNetCore;
 using Blocks.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Infrastructure;

@@ -7,8 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FastEndpoints" Version="6.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Blocks.AspNetCore\Blocks.AspNetCore.csproj" />
     <ProjectReference Include="..\Blocks.Domain\Blocks.Domain.csproj" />
-    <ProjectReference Include="..\Blocks.Core\Blocks.Core.csproj" />
   </ItemGroup>
 
 </Project>

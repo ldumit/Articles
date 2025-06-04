@@ -1,4 +1,5 @@
-﻿using Auth.Domain.Users.Enums;
+﻿using Articles.Abstractions.Enums;
+using Auth.Domain.Users.Enums;
 using Blocks.Core;
 using Newtonsoft.Json;
 
@@ -16,7 +17,7 @@ public class HonorificTitle : StringValueObject
         return new HonorificTitle(honorific.Trim());
     }
 
-    public static HonorificTitle Create(Honorific? honorific)
+    public static HonorificTitle? Create(Honorific? honorific)
     {
 				if(honorific.HasValue)
 				    return new HonorificTitle(honorific!.ToString());

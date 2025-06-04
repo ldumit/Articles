@@ -1,5 +1,4 @@
-﻿using Auth.Domain.Users;
-using Auth.Grpc;
+﻿using Auth.Grpc;
 
 namespace Auth.API.Mappings;
 

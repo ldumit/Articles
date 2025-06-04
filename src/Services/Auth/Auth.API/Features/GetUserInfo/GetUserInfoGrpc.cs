@@ -2,7 +2,6 @@
 using Grpc.Core;
 using Blocks.Exceptions;
 using Auth.Grpc;
-using Auth.Domain.Users;
 using Auth.API.Mappings;
 
 namespace Auth.API.Features.GetUserInfo;

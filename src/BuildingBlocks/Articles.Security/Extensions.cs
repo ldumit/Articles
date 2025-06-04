@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Articles.Abstractions.Enums;
+using Microsoft.AspNetCore.Builder;
 
 namespace Articles.Security;
 

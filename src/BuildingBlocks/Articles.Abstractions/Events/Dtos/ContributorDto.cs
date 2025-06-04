@@ -1,4 +1,4 @@
-﻿using Articles.Security;
+﻿using Articles.Abstractions.Enums;
 
 namespace Articles.Abstractions.Events.Dtos;
 

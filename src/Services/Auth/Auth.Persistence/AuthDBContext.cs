@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Auth.Persistence.EntityConfigurations;
 using Auth.Domain.Users;
-using Auth.Domain.Users;
 using Auth.Domain.Roles;
 
 namespace Auth.Persistence;
@@ -39,9 +38,11 @@ public class AuthDBContext :
     {
         base.OnModelCreating(builder);
 
-        //builder.HasDefaultSchema("security");
+				//builder.HasDefaultSchema("security");
 
-        builder.ApplyConfiguration(new UserEntityConfiguration());
+				builder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
+
+				builder.ApplyConfiguration(new UserEntityConfiguration());
 				builder.ApplyConfiguration(new RoleEntityConfiguration());
 				builder.ApplyConfiguration(new RefreshTokenEntityConfiguration());
 		}

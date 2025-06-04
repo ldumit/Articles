@@ -9,3 +9,6 @@ global using FastEndpoints;
 global using Blocks.Core;
 global using Blocks.EntityFrameworkCore;
 global using Blocks.FluentValidation;
+
+// Domain
+global using Auth.Domain.Users;

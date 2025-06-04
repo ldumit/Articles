@@ -1,7 +1,4 @@
-﻿using Blocks.Entitities;
-using Articles.Security;
-
-namespace Production.Domain.Entities
+﻿namespace Production.Domain.Entities
 {
 		public class ArticleContributor : IChildEntity
 		{

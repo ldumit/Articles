@@ -1,5 +1,4 @@
 ﻿using Blocks.Core;
-using Articles.Security;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Data;
@@ -8,6 +7,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using Auth.Domain.Users;
+using Articles.Security;
 
 namespace Blocks.Security;
 

@@ -1,4 +1,6 @@
-﻿namespace Articles.Security;
+﻿using Articles.Abstractions.Enums;
+
+namespace Articles.Security;
 
 public interface IArticleRoleChecker
 {

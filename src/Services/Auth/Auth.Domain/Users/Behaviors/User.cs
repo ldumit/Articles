@@ -21,7 +21,7 @@ public partial class User
 						PictureUrl = userInfo.PictureUrl,
 						Honorific = HonorificTitle.Create(userInfo.Honorific),
 						ProfessionalProfile = ProfessionalProfile.Create(userInfo.Position, userInfo.CompanyName, userInfo.Affiliation),
-						UserRoles = userInfo.UserRoles.Select(r => UserRole.Create(r.Type, r.StartDate, r.ExpiringDate)).ToList(),
+						_userRoles = userInfo.UserRoles.Select(r => UserRole.Create(r)).ToList(),
 						CreatedOn = DateTime.UtcNow
 				};
 

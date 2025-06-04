@@ -1,4 +1,5 @@
-﻿using Articles.Security;
+﻿using Articles.Abstractions.Enums;
+using Articles.Security;
 
 namespace ArticleHub.Domain.Entities;
 

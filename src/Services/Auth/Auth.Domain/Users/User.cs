@@ -1,5 +1,4 @@
-﻿using Auth.Domain.Users;
-using Auth.Domain.Users.Enums;
+﻿using Auth.Domain.Users.Enums;
 using Auth.Domain.Users.ValueObjects;
 using Blocks.Domain;
 using Microsoft.AspNetCore.Identity;
@@ -22,9 +21,10 @@ public partial class User : IdentityUser<int>, IAggregateEntity<int>
 		public DateTime RegistrationDate { get; set; } = DateTime.UtcNow;
 		public DateTime? LastLogin { get; set; }
 
+		private List<UserRole> _userRoles = new List<UserRole>();
+		public virtual IReadOnlyList<UserRole> UserRoles => _userRoles;
 
 		public List<RefreshToken> RefreshTokens { get; set; } = new();
-		public virtual List<UserRole> UserRoles { get; set; } = new();
 
 		//Audit
 		public int CreatedById { get; set; } = default!;

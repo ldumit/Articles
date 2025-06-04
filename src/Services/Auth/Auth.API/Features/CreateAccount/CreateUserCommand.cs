@@ -1,5 +1,4 @@
-﻿using Articles.Security;
-using Auth.Domain.Users;
+﻿using Articles.Abstractions.Enums;
 using Auth.Domain.Users.Enums;
 
 namespace Auth.API.Features;
@@ -13,7 +12,7 @@ public class CreateUserCommand: IUserCreationInfo
 
 		public Honorific? Honorific { get; init; }
 		public string? PhoneNumber { get; init; }
-    public string? PictureUrl { get; init; }
+		public string? PictureUrl { get; init; }
 		public string? CompanyName { get; init; }
 		public string? Position { get; init; }
 		public string? Affiliation { get; init; }

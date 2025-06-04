@@ -1,10 +1,10 @@
 ﻿namespace Auth.Domain.Users.Enums;
 
-public enum Honorific
-{
+//public enum Honorific
+//{
 
-    Mr,
-    Mrs,
-    Dr,
-    Prof
-}
+//    Mr,
+//    Mrs,
+//    Dr,
+//    Prof
+//}

@@ -1,4 +1,4 @@
-﻿using Articles.Security;
+﻿using Articles.Abstractions.Enums;
 using Microsoft.AspNetCore.Identity;
 
 namespace Auth.Domain.Roles;

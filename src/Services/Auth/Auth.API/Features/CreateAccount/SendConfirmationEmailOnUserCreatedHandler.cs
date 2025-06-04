@@ -1,8 +1,7 @@
-﻿using Auth.Domain.Users;
-using EmailService.Contracts;
-using Blocks.AspNetCore;
-using Flurl;
+﻿using Flurl;
 using Microsoft.Extensions.Options;
+using Blocks.AspNetCore;
+using EmailService.Contracts;
 using Auth.Domain.Users.Events;
 
 namespace Auth.API.Features.CreateAccount;
