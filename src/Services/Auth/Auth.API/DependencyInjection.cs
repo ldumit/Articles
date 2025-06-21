@@ -5,22 +5,19 @@ using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Identity;
 using FastEndpoints.Swagger;
 using Articles.Security;
-using Blocks.Security;
-using EmailService.Contracts;
 using EmailService.Smtp;
 using Auth.API;
 using Auth.API.Mappings;
 using Auth.Persistence;
 using Auth.API.Features;
 
-namespace Auth.Application;
+namespace Auth.Api;
 
 public static class DependenciesConfiguration
 {
-		public static void ConfigureApiOptions(this IServiceCollection services, IConfiguration configuration)
+		public static IServiceCollection ConfigureApiOptions(this IServiceCollection services, IConfiguration configuration)
 		{
 				services
-						.AddAndValidateOptions<EmailOptions>(configuration)
 						.AddAndValidateOptions<JwtOptions>(configuration)
 						.ConfigureOptions<PostConfigureJwtBearerOptions>()
 						.Configure<JsonOptions>(opt =>
@@ -28,9 +25,11 @@ public static class DependenciesConfiguration
 								opt.SerializerOptions.PropertyNameCaseInsensitive = true;
 								opt.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
 						});
+
+				return services;
 		}
 
-		public static IServiceCollection AddApiServices(this IServiceCollection services, IConfiguration configuration)
+		public static IServiceCollection AddApiServices(this IServiceCollection services, IConfiguration config)
 		{
 				services.AddControllers();
 
@@ -40,14 +39,13 @@ public static class DependenciesConfiguration
 						.AddEndpointsApiExplorer()                  // Minimal API docs (Swagger)
 						.AddAutoMapper(new Assembly[] { typeof(CreateUserCommandMapping).Assembly })
 						.AddSwaggerGen()                            // Swagger setup
-						.AddJwtIdentity(configuration)
-						.AddJwtAuthentication(configuration)        // JWT Authentication
+						.AddJwtIdentity(config)
+						.AddJwtAuthentication(config)        // JWT Authentication
 						.AddAuthorization();                         // Authorization configuration
 
 				services.AddGrpc();
 
-				services.AddSingleton<IEmailService, SmtpEmailService>();
-				services.AddScoped<TokenFactory>();
+				services.AddSmtpEmailService(config);
 
 				return services;
 		}

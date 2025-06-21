@@ -24,7 +24,8 @@ public partial class User : IdentityUser<int>, IAggregateEntity<int>
 		private List<UserRole> _userRoles = new List<UserRole>();
 		public virtual IReadOnlyList<UserRole> UserRoles => _userRoles;
 
-		public List<RefreshToken> RefreshTokens { get; set; } = new();
+		private List<RefreshToken> _refreshTokens = new();
+		public virtual IReadOnlyList<RefreshToken> RefreshTokens => _refreshTokens;
 
 		//Audit
 		public int CreatedById { get; set; } = default!;

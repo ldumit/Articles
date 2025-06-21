@@ -1,5 +1,5 @@
-﻿using Flurl;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
+using Flurl;
 using Blocks.AspNetCore;
 using EmailService.Contracts;
 using Auth.Domain.Users.Events;

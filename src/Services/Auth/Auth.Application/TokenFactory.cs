@@ -9,7 +9,7 @@ using System.Text;
 using Auth.Domain.Users;
 using Articles.Security;
 
-namespace Blocks.Security;
+namespace Auth.Application;
 
 public class TokenFactory
 {
@@ -29,8 +29,8 @@ public class TokenFactory
 						return new RefreshToken
 						{
 								Token = Convert.ToBase64String(randomBytes),
-								Expires = DateTime.UtcNow.AddDays(7),
-								Created = DateTime.UtcNow,
+								ExpiresOn = DateTime.UtcNow.AddDays(7),
+								CreatedOn = DateTime.UtcNow,
 								CreatedByIp = Network.GetLocalIPAddress(),
 						};
 				}

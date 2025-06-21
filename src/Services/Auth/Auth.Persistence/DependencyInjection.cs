@@ -4,9 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Auth.Persistence;
 public static class DependencyInjection
 {
-    public static IServiceCollection AddPersistenceServices (this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddPersistenceServices (this IServiceCollection services, IConfiguration config)
     {
-        var connectionString = configuration.GetConnectionString("Database");
+        var connectionString = config.GetConnectionString("Database");
 				services.AddDbContext<AuthDBContext>(opts => opts.UseSqlServer(connectionString));
 
 				return services;

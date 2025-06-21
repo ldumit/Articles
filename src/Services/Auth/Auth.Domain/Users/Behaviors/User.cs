@@ -1,6 +1,5 @@
-﻿using Auth.Domain.Users.ValueObjects;
-using Blocks.Core;
-using EmailService.Contracts;
+﻿using Blocks.Core;
+using Auth.Domain.Users.ValueObjects;
 
 namespace Auth.Domain.Users;
 public partial class User
@@ -30,16 +29,10 @@ public partial class User
 				return user;
 		}
 
-		public EmailMessage BuildConfirmationEmail(string resetLink, string fromEmailAddress)
+		public void AssignRefreshToken(RefreshToken refreshToken)
 		{
-				const string ConfirmationEmail =
-						@"Dear {0}, An account has been created for you. Please set your password using the following URL: {1}";
-
-				return new EmailMessage(
-						"Confirmation",
-						new Content(ContentType.Html, string.Format(ConfirmationEmail, this.FullName, resetLink)),
-						new EmailAddress("articles", fromEmailAddress),
-						new List<EmailAddress> { new EmailAddress(this.FullName, this.Email!) }
-						);
+				if (refreshToken is null )
+						throw new ArgumentNullException(nameof(refreshToken));
+				_refreshTokens.Add(refreshToken);
 		}
 }

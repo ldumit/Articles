@@ -1,8 +1,8 @@
-﻿using System.Net;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Blocks.Security;
+using Blocks.Exceptions;
+using Auth.Application;
 
 namespace Auth.API.Features;
 
@@ -15,18 +15,18 @@ public class LoginEndpoint(UserManager<User> _userManager, SignInManager<User> _
 		{
 				var user = await _userManager.FindByEmailAsync(command.Email);
 				if (user is null)
-						ThrowError("User not found", (int)HttpStatusCode.BadRequest);
+						throw new BadRequestException($"User not found {command.Email}");
 
-				var result = await _signInManager.CheckPasswordSignInAsync(user, command.Password, lockoutOnFailure: false);
-				if (!result.Succeeded) 
-						ThrowError("Invalid credentials", (int) HttpStatusCode.BadRequest);
+				var result = await _signInManager.CheckPasswordSignInAsync(user, command.Password, lockoutOnFailure: false); // turn lockoutOnFailure to true if you want to block the account after a few tries
+				if (!result.Succeeded)
+						throw new BadRequestException($"Invalid credentials for {command.Email}");
 
 				var userRoles = await _userManager.GetRolesAsync(user);
 
-				var jwtToken = _tokenFactory.GenerateJWTToken(user.Id.ToString(), user.FullName, command.Email, userRoles, Array.Empty<Claim>());
-				
+				var jwtToken = _tokenFactory.GenerateJWTToken(user.Id.ToString(), user.FullName, command.Email, userRoles, Array.Empty<Claim>());				
 				var refreshToken = _tokenFactory.GenerateRefreshToken();
-				user.RefreshTokens.Add(refreshToken);
+
+				user.AssignRefreshToken(refreshToken);
 				await _userManager.UpdateAsync(user);
 
 				await SendAsync(new LoginResponse(command.Email, jwtToken, refreshToken.Token));

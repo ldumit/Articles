@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Auth.Domain.Users.Events;
 
-using User = Auth.Domain.Users.User;
-
 namespace Auth.API.Features;
 
 [Authorize(Roles = Articles.Security.Role.ADMIN)]

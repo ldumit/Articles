@@ -2,6 +2,7 @@ using FastEndpoints.Swagger;
 using Blocks.AspNetCore;
 using Blocks.FastEndpoints;
 using Auth.Persistence.Data.Test;
+using Auth.Api;
 using Auth.Application;
 using Auth.Persistence;
 using Auth.API.Features.GetUserInfo;
@@ -13,8 +14,9 @@ builder.Services
 		.ConfigureApiOptions(builder.Configuration); // Configure Options
 
 builder.Services
-		.AddApiServices(builder.Configuration)     // Register API-specific services
-		.AddPersistenceServices(builder.Configuration);
+		.AddApiServices(builder.Configuration)							// Register API-specific services
+		.AddApplicationServices(builder.Configuration)			// Register Applicaiton-specific services
+		.AddPersistenceServices(builder.Configuration);     // Register Persistence-specific services
 #endregion
 
 var app = builder.Build();

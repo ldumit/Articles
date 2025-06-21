@@ -2,18 +2,18 @@
 
 public class EmailOptions
 {
-    public string EmailServiceProvider { get; set; }
-    public string EmailFromAddress { get; set; }
-    public Smtp Smtp { get; set; }
+		public string EmailServiceProvider { get; init; } = null!;
+		public string EmailFromAddress { get; init; } = null!;
+		public Smtp Smtp { get; init; } = null!;
 }
 
 public class Smtp
 {
-    public string Host { get; set; }
-    public int Port { get; set; }
-    public string Username { get; set; }
-    public string Password { get; set; }
-    public string DeliveryMethod { get; set; }
-    public string PickupDirectoryLocation { get; set; }
-    public bool UseSSL { get; set; }
+		public string Host { get; init; } = null!;
+		public int Port { get; init; }
+		public string Username { get; init; } = null!;
+		public string Password { get; init; } = null!;
+		public string DeliveryMethod { get; init; } = null!;
+		public string PickupDirectoryLocation { get; init; } = null!;
+		public bool UseSSL { get; init; }
 }
