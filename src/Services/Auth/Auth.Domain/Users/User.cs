@@ -1,7 +1,7 @@
-﻿using Auth.Domain.Users.Enums;
-using Auth.Domain.Users.ValueObjects;
+﻿using Microsoft.AspNetCore.Identity;
 using Blocks.Domain;
-using Microsoft.AspNetCore.Identity;
+using Auth.Domain.Users.Enums;
+using Auth.Domain.Users.ValueObjects;
 
 namespace Auth.Domain.Users;
 

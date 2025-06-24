@@ -1,6 +1,4 @@
-﻿using Auth.Domain.Roles;
-
-namespace Auth.Persistence.EntityConfigurations;
+﻿namespace Auth.Persistence.EntityConfigurations;
 
 internal class RoleEntityConfiguration : EntityConfiguration<Role>
 {

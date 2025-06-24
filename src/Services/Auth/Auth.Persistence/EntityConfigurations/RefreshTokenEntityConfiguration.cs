@@ -1,6 +1,4 @@
-﻿using Auth.Domain.Users;
-
-namespace Auth.Persistence;
+﻿namespace Auth.Persistence;
 
 internal class RefreshTokenEntityConfiguration : EntityConfiguration<RefreshToken>
 {

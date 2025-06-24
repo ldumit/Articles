@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Auth.Domain.Users;
+﻿namespace Auth.Domain.Users;
 
 public class RefreshToken : Entity
 {

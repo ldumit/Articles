@@ -2,7 +2,7 @@
 
 namespace Blocks.Entitities;
 
-//todo: rename Blocks.Entitities to Blocks.Domain.Entities
+//todo: rename Blocks.Entitities to Blocks.Domain.Entities or Blocks.Domain(to keep the same namespace for all)
 
 public interface IEntity : IEntity<int>
 {

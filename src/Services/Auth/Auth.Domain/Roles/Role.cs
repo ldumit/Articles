@@ -1,5 +1,5 @@
-﻿using Articles.Abstractions.Enums;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
+using Articles.Abstractions.Enums;
 
 namespace Auth.Domain.Roles;
 

@@ -1,5 +1,4 @@
 ﻿using Articles.Abstractions.Enums;
-using Auth.Domain.Users.Enums;
 using Blocks.Core;
 using Newtonsoft.Json;
 
