@@ -21,7 +21,6 @@ public static class DependencyInjection
     {
 				//talk - fluid vs normal
 				services
-						.AddMemoryCache()                       // Basic Caching 
 						.AddMapster()                           // Scanning for mapping registration
 						.AddMapsterFromAssemblyContaining<ApplicationMappingConfig>()                      // Register Mapster mappings
 						.AddValidatorsFromAssemblyContaining<CreateArticleCommandValidator>()		// Register Fluent validators as transient
@@ -31,16 +30,10 @@ public static class DependencyInjection
 
 								config.AddOpenBehavior(typeof(SetUserIdBehavior<,>));
 								config.AddOpenBehavior(typeof(ValidationBehavior<,>));
-								//config.AddOpenBehavior(typeof(LoggingBehavior<,>));
+								config.AddOpenBehavior(typeof(LoggingBehavior<,>));
 						})
 						.AddMassTransit(configuration, Assembly.GetExecutingAssembly()); ;
 				
-				services.AddSingleton(x => new BlobServiceClient(configuration.GetConnectionString("FileServer")));
-
-				//services.AddScoped<IThreadSafeMemoryCache, MemoryCache>();
-				services.AddScoped<IFileService, FileService>();
-				services.AddScoped<IEmailService, SmtpEmailService>();
-
 				services.AddScoped<ArticleStateMachineFactory>(provider => articleStage =>
 				{
 						//var dbConntext = provider.GetRequiredService<SubmissionDbContext>();

@@ -1,12 +1,15 @@
-﻿using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.Json;
-using Blocks.Core;
+﻿using Auth.Grpc;
 using Blocks.AspNetCore;
+using Blocks.AspNetCore.Grpc;
+using Blocks.Core;
 using Blocks.EntityFrameworkCore;
 using Blocks.Messaging;
+using EmailService.Smtp;
+using FileStorage.AzureBlob;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Json;
 using Review.Persistence.Repositories;
-using Carter;
+using System.Text.Json.Serialization;
 
 namespace Review.API;
 
@@ -15,9 +18,8 @@ public static class DependecyInjection
 		public static void ConfigureApiOptions(this IServiceCollection services, IConfiguration configuration)
 		{
 				services
-						.ConfigureOptionsFromSection<FileStorage.Contracts.FileServerOptions>(configuration)
-						.ConfigureOptionsFromSection<RabbitMqOptions>(configuration)
-						.ConfigureOptionsFromSection<TransactionOptions>(configuration)
+						.AddAndValidateOptions<RabbitMqOptions>(configuration)
+						.AddAndValidateOptions<TransactionOptions>(configuration)
 						.Configure<JsonOptions>(opt =>
 						{
 								opt.SerializerOptions.PropertyNameCaseInsensitive = true;
@@ -28,12 +30,13 @@ public static class DependecyInjection
 		public static IServiceCollection AddApiServices(this IServiceCollection services, IConfiguration configuration)
 		{
 				services
-						.AddCarter()
-						.AddHttpContextAccessor()                // For accessing HTTP context
-						.AddEndpointsApiExplorer()               // Minimal API docs (Swagger)
-						.AddSwaggerGen()                         // Swagger setup
-						.AddJwtAuthentication(configuration)     // JWT Authentication
-						.AddAuthorization();                     // Authorization configuration
+						.AddMemoryCache()                       // Basic Caching 
+						.AddCarter()														// Register Minimal Api endpoints		
+						.AddHttpContextAccessor()								// For accessing HTTP context
+						.AddEndpointsApiExplorer()              // Minimal API docs (Swagger)
+						.AddSwaggerGen()                        // Swagger setup
+						.AddJwtAuthentication(configuration)    // JWT Authentication
+						.AddAuthorization();                    // Authorization configuration
 
 				// http
 				// talk - interface segragation
@@ -46,6 +49,19 @@ public static class DependecyInjection
 				services
 						.AddScoped<IAuthorizationHandler, ArticleRoleAuthorizationHandler>()
 						.AddScoped<IArticleRoleChecker, ContributorRepository>();
+
+				// external services or modules
+				services.AddAzureFileStorage(configuration);
+				services.AddSmtpEmailService(configuration);
+
+				// grpc Services
+				var grpcOptions = configuration.GetSectionByTypeName<GrpcServicesOptions>();
+				services.AddConfiguredGrpcClient<AuthService.AuthServiceClient>(grpcOptions);
+				// todo - add this service
+				//services.AddConfiguredGrpcClient<JournalService.JournalerviceClient>(grpcOptions);
+
+				//todo do I need this IThreadSafeMemoryCache?
+				//services.AddScoped<IThreadSafeMemoryCache, MemoryCache>();
 
 				return services;
 		}

@@ -1,6 +1,6 @@
 ﻿namespace Review.Domain.Entities;
 
-public class ArticleAuthor : ArticleContributor
+public class ArticleAuthor : ArticleActor
 {
 		public HashSet<ContributionArea> ContributionAreas { get; init; } = null!;
 }

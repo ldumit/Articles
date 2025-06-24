@@ -5,6 +5,7 @@ using Review.Domain.Events;
 
 namespace Review.Application.Features.Articles.AcceptArticle;
 
+//todo Publish is not a good name even if it means Publish integration event
 public class PublishArticleAceeptedEventHandler(ArticleRepository _articleRepository, IPublishEndpoint _publishEndpoint)
         : INotificationHandler<ArticleAccepted>
 {

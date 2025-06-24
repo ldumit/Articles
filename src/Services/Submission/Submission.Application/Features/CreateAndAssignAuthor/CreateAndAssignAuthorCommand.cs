@@ -14,7 +14,8 @@ public class CreateAndAssignAuthorCommandValidator : ArticleCommandValidator<Cre
 				{
 						RuleFor(x => x.Email)
 								.NotEmptyWithMessage(nameof(CreateAndAssignAuthorCommand.Email))
-								.MaximumLengthWithMessage(MaxLength.C64, nameof(CreateAndAssignAuthorCommand.Email));
+								.MaximumLengthWithMessage(MaxLength.C64, nameof(CreateAndAssignAuthorCommand.Email))
+								.EmailAddress();
 
 						RuleFor(x => x.FirstName)
 								.NotEmptyWithMessage(nameof(CreateAndAssignAuthorCommand.FirstName))

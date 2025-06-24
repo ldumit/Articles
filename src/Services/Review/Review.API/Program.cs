@@ -20,6 +20,14 @@ builder.Services
 
 var app = builder.Build();
 
+#region InitData
+app.Migrate<ReviewDbContext>();
+if (app.Environment.IsDevelopment())
+{
+		app.SeedTestData();
+}
+#endregion
+
 #region Use
 app
 		.UseSwagger()
@@ -30,15 +38,6 @@ app
 		.UseMiddleware<GlobalExceptionMiddleware>();
 
 app.MapAllEndpoints();
-
-//talk - explain when is the best time to run the migration, integrate the migration in the CI pipeline
-app.Migrate<ReviewDbContext>();
-//todo - integrate ArticleTimeline with domain events
-//app.Migrate<ArticleTimelineDbContext>();
-if (app.Environment.IsDevelopment())
-{
-		app.SeedTestData();
-}
 #endregion
 
 app.Run();

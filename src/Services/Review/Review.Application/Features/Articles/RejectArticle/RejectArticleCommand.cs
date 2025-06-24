@@ -4,7 +4,7 @@ namespace Review.Application.Features.Articles.RejectArticle;
 
 public record RejectArticleCommand : ArticleCommand
 {
-    public override ArticleActionType ActionType => ArticleActionType.Reject;
+    public override ArticleActionType ActionType => ArticleActionType.RejectArticle;
 }
 
 

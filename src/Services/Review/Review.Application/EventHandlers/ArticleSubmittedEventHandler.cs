@@ -37,8 +37,7 @@ public class ArticleSubmittedEventHandler(ReviewDbContext _dbContext) : IConsume
 								_dbContext.Persons.Add(contributor);
 						}
 
-						article.Contributors.Add(
-								new ArticleContributor { ArticleId = article.Id, PersonId = contributor.Id, Role = contributorDto.Role });
+						article.AssignActor(contributor.Id, contributorDto.Role);
 				}
 
 				_dbContext.Articles.Add(article);

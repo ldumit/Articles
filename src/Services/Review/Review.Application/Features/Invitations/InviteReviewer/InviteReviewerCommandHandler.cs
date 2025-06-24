@@ -1,43 +1,32 @@
-﻿using Flurl;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Flurl;
 using Blocks.AspNetCore;
 using EmailService.Contracts;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using EmailAddress = EmailService.Contracts.EmailAddress;
-using Microsoft.Extensions.Options;
 
 namespace Review.Application.Features.Invitations.InviteReviewer;
 
-public class InviteReviewerHandler(ArticleRepository _articleRepository, IClaimsProvider _claimsProvider, IEmailService _emailService, IHttpContextAccessor _httpContextAccessor, IOptions<EmailOptions> emailOptions)
-                : IRequestHandler<InviteReviewerCommand, IdResponse>
+public class InviteReviewerCommandHandler(
+    ArticleRepository _articleRepository, IClaimsProvider _claimsProvider, IEmailService _emailService, IHttpContextAccessor _httpContextAccessor, IOptions<EmailOptions> emailOptions)
+    : IRequestHandler<InviteReviewerCommand, IdResponse>
 {
     public async Task<IdResponse> Handle(InviteReviewerCommand command, CancellationToken cancellationToken)
     {
         var article = await _articleRepository.GetByIdOrThrowAsync(command.ArticleId);
+				var editor = await _articleRepository.Context.Editors.SingleAsync(r => r.UserId == _claimsProvider.GetUserId());
 
-        var reviewer = await _articleRepository.Context.Reviewers.SingleOrDefaultAsync(r => command.Email.Equals(r.Email, StringComparison.CurrentCultureIgnoreCase));
-        var editor = await _articleRepository.Context.Reviewers.SingleAsync(r => r.UserId == _claimsProvider.GetUserId());
-
-        var invitation = new ReviewInvitation
-        {
-            ArticleId = article.Id,
-            EmailAddress = command.Email,
-            FullName = command.FullName,
-            SentById = _claimsProvider.GetUserId(),
-            ExpiresOn = DateTime.UtcNow.AddDays(7),
-            Token = Guid.NewGuid().ToString(),
-        };
-
-        article.Invitations.Add(invitation);
+        var invitation = article.AddReviewInvitation(command.UserId, command.Email, command.FullName, command);
         await _articleRepository.SaveChangesAsync();
 
+        // todo - decide if it is necessary here a domain event or not
         await _emailService.SendEmailAsync(BuildEmailMessage(invitation, editor));
-
 
         return new IdResponse(article.Id);
     }
 
-    private EmailMessage BuildEmailMessage(ReviewInvitation invitation, Reviewer editor)
+    private EmailMessage BuildEmailMessage(ReviewInvitation invitation, Editor editor)
     {
         const string InvitationEmail =
                 @"Dear Contributor, 
@@ -48,7 +37,6 @@ public class InviteReviewerHandler(ArticleRepository _articleRepository, IClaims
         var url =
                 _httpContextAccessor.HttpContext?.Request.BaseUrl()
                 .AppendPathSegment($"articles/{invitation.ArticleId}/invitations/{invitation.Token}/status");
-        //.SetQueryParams(new { token });
 
         return new EmailMessage(
                 "Review Invitation",

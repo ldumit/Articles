@@ -7,7 +7,7 @@ public class AcceptArticleCommandHandler(ArticleRepository _articleRepository, A
     {
         var article = await _articleRepository.FindByIdOrThrowAsync(command.ArticleId);
 
-        article.Approve(command, _stateMachineFactory);
+        article.Accept(command, _stateMachineFactory);
 
         await _articleRepository.SaveChangesAsync();
 

@@ -14,7 +14,4 @@ public class AssignEditorCommandValidator : ArticleCommandValidator<AssignEditor
     {
         RuleFor(c => c.EditorId).GreaterThan(0).WithMessageForInvalidId(nameof(AssignEditorCommand.EditorId));
     }
-
-    private bool HasMandatoryContribution(HashSet<ContributionArea> contributionAreas)
-            => contributionAreas.Overlaps(ContributionAreaCategories.MandatoryAreas);
 }

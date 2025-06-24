@@ -2,7 +2,7 @@
 
 namespace Review.Domain.Entities
 {
-		public class ArticleContributor : IChildEntity
+		public class ArticleActor : IChildEntity
 		{
         public int ArticleId { get; init; }
 				public virtual Article Article { get; init; } = null!;

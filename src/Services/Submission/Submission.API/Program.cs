@@ -24,8 +24,6 @@ var app = builder.Build();
 #region InitData
 //talk - explain when is the best time to run the migration, integrate the migration in the CI pipeline
 app.Migrate<SubmissionDbContext>();
-//todo - integrate ArticleTimeline with domain events
-//app.Migrate<ArticleTimelineDbContext>();
 if (app.Environment.IsDevelopment())
 {
 		app.Services.SeedTestData();

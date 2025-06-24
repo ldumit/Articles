@@ -3,7 +3,7 @@
 public record CreateArticleCommand(int JournalId, string Title, ArticleType Type, string Scope)
 		: ArticleCommand<ArticleActionType, IdResponse>
 {
-		public override ArticleActionType ActionType => ArticleActionType.Create;
+		public override ArticleActionType ActionType => ArticleActionType.CreateArticle;
 }
 
 public class CreateArticleCommandValidator : AbstractValidator<CreateArticleCommand>

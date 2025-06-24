@@ -8,7 +8,7 @@ public partial class ReviewDbContext(DbContextOptions<ReviewDbContext> options, 
 {
     #region Entities
     public virtual DbSet<Article> Articles { get; set; }
-		public virtual DbSet<ArticleContributor> ArticleContributors { get; set; }
+		public virtual DbSet<ArticleActor> ArticleContributors { get; set; }
 		public virtual DbSet<Asset> Assets { get; set; }
     public virtual DbSet<AssetTypeDefinition> AssetTypes { get; set; }
     public virtual DbSet<Journal> Journals { get; set; }
@@ -17,6 +17,7 @@ public partial class ReviewDbContext(DbContextOptions<ReviewDbContext> options, 
 		public virtual DbSet<Person> Persons { get; set; }
 		public virtual DbSet<Author> Authors { get; set; }
 		public virtual DbSet<Reviewer> Reviewers { get; set; }
+		public virtual DbSet<Editor> Editors { get; set; }
 		public virtual DbSet<ReviewInvitation> ReviewInvitations { get; set; }
 		#endregion
 

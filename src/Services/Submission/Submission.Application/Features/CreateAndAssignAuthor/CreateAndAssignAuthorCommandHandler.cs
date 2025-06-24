@@ -1,10 +1,11 @@
 ﻿using Auth.Grpc;
 using Microsoft.EntityFrameworkCore;
+using static Auth.Grpc.AuthService;
 
 
 namespace Submission.Application.Features.CreateAndAssignAuthor;
 
-public class CreateAndAssignAuthorCommandHandler(ArticleRepository _articleRepository, AuthService.AuthServiceClient _authClient)
+public class CreateAndAssignAuthorCommandHandler(ArticleRepository _articleRepository, AuthServiceClient _authClient)
 		: IRequestHandler<CreateAndAssignAuthorCommand, IdResponse>
 {
 		public async Task<IdResponse> Handle(CreateAndAssignAuthorCommand command, CancellationToken ct)
@@ -13,27 +14,27 @@ public class CreateAndAssignAuthorCommandHandler(ArticleRepository _articleRepos
 
 				Author? author;
 				if (command.UserId is null) // Author is not an User
-						//author = command.Adapt<Author>();
 						author = Author.Create(command.Email!, command.FirstName!, command.LastName!, command.Title, command.Affiliation!, command);
 				else                        // Author is an User
-						author = await CreateAuthorFromUser(_articleRepository, _authClient, command, ct);
+						author = await CreateAuthorFromUser(command, ct);
 
 				article.AssignAuthor(author, command.ContributionAreas, command.IsCorrespondingAuthor, command);
 
-				await _articleRepository.SaveChangesAsync();
+				await _articleRepository.SaveChangesAsync(ct);
 
 				return new IdResponse(article.Id);
 		}
 
-		private static async Task<Author> CreateAuthorFromUser(ArticleRepository _articleRepository, AuthService.AuthServiceClient _authClient, CreateAndAssignAuthorCommand command, CancellationToken ct)
+		// This logic may be extracted into AuthorFactory if reused later (that's the reason for being static)
+		private async Task<Author> CreateAuthorFromUser(CreateAndAssignAuthorCommand command, CancellationToken ct)
 		{
 				var author = await _articleRepository.Context.Authors.FirstOrDefaultAsync(x => x.UserId == command.UserId!.Value, ct);
 				if (author is null)
 				{
 						var response = _authClient.GetUserById(new GetUserRequest { UserId = command.UserId!.Value });
 						var userInfo = response.UserInfo;
-						author = Author.Create(userInfo.Email!, userInfo.FirstName!, userInfo.LastName!, userInfo.Title, userInfo.Affiliation!, command);
-
+						author = Author.Create(userInfo.Email, userInfo.FirstName, userInfo.LastName, userInfo.Title, userInfo.Affiliation, command);
+						// or if you preffer a simpler aproach you can just use Adapt
 						//author = response.UserInfo.Adapt<Author>();
 						await _articleRepository.Context.Authors.AddAsync(author, ct);
 				}

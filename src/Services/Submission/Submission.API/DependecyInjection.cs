@@ -17,7 +17,6 @@ public static class DependecyInjection
 		public static void ConfigureApiOptions(this IServiceCollection services, IConfiguration configuration)
 		{
 				services
-						//.ConfigureOptions<FileStorage.Contracts.FileServerOptions>(configuration)
 						.AddAndValidateOptions<RabbitMqOptions>(configuration)
 						.AddAndValidateOptions<TransactionOptions>(configuration)
 						.Configure<JsonOptions>(opt =>
@@ -49,14 +48,13 @@ public static class DependecyInjection
 						.AddScoped<IAuthorizationHandler, ArticleRoleAuthorizationHandler>()
 						.AddScoped<IArticleRoleChecker, ContributorRepository>();
 
-				//file storage
+				// external services or modules
 				services.AddMongoFileStorage(configuration);
-				//services.AddAzureFileStorage(configuration);
-
 
 				//grpc Services
 				var grpcOptions = configuration.GetSectionByTypeName<GrpcServicesOptions>();
 				services.AddConfiguredGrpcClient<AuthService.AuthServiceClient>(grpcOptions);
+				// todo - add this service
 				//services.AddConfiguredGrpcClient<JournalService.JournalerviceClient>(grpcOptions);
 
 				return services;

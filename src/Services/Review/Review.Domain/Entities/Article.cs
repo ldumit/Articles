@@ -20,8 +20,8 @@ public partial class Article : AggregateEntity
 		private readonly List<Asset> _assets = new();
     public IReadOnlyList<Asset> Assets => _assets.AsReadOnly();
 
-		private readonly List<ArticleContributor> _contributors = new();
-		public IList<ArticleContributor> Contributors => _contributors; //todo - make it readonly
+		private readonly List<ArticleActor> _actors = new();
+		public IReadOnlyList<ArticleActor> Actors => _actors;
 
 		//public List<ArticleContributor> Contributors { get; set; } = new() ;
 		//public IEnumerable<Author> Authors => Contributors.Where(aa => aa.Person is Author).Select(aa => aa.Person as Author);
@@ -33,6 +33,5 @@ public partial class Article : AggregateEntity
 		public IReadOnlyList<ArticleAction> Actions => _actions.AsReadOnly();
 
 		private readonly List<ReviewInvitation> _invitations = new();
-		public IList<ReviewInvitation> Invitations => _invitations;
-		//public IReadOnlyList<ReviewInvitation> Invitations { get; private set; } = null!;
+		public IReadOnlyList<ReviewInvitation> Invitations => _invitations;
 }

@@ -1,6 +1,4 @@
-﻿using Articles.Security;
-
-namespace Submission.Domain.Entities;
+﻿namespace Submission.Domain.Entities;
 
 public class ArticleActor : IChildEntity
 {

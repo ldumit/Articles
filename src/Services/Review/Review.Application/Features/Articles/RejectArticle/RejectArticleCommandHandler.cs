@@ -1,10 +1,16 @@
-﻿using Review.Application.Features.Articles._Shared;
-using Review.Domain.StateMachines;
+﻿namespace Review.Application.Features.Articles.RejectArticle;
 
-namespace Review.Application.Features.Articles.RejectArticle;
-
-public class RejectArticleCommandHandler(ArticleRepository articleRepository, ArticleStateMachineFactory stateMachineFactory)
-        : ArticleActionCommandHandler<RejectArticleCommand>(articleRepository, stateMachineFactory)
+public class RejectArticleCommandHandler(ArticleRepository _articleRepository, ArticleStateMachineFactory _stateMachineFactory)
+				: IRequestHandler<RejectArticleCommand, IdResponse>
 {
-    protected override ArticleStage NextStage => ArticleStage.InitialRejected;
+		public async Task<IdResponse> Handle(RejectArticleCommand command, CancellationToken cancellationToken)
+		{
+				var article = await _articleRepository.FindByIdOrThrowAsync(command.ArticleId);
+
+				article.Reject(command, _stateMachineFactory);
+
+				await _articleRepository.SaveChangesAsync();
+
+				return new IdResponse(article.Id);
+		}
 }

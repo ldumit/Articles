@@ -1,6 +1,5 @@
 ﻿using Mapster;
 using Blocks.Domain;
-using Articles.Security;
 using Submission.Domain.StateMachines;
 
 namespace Submission.Domain.Entities;

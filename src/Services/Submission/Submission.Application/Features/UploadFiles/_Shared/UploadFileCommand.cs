@@ -21,7 +21,7 @@ public abstract record UploadFileCommand : ArticleCommand
     [Required]
     public IFormFile File { get; init; } = null!;
 
-		public override ArticleActionType ActionType => ArticleActionType.Upload;
+		public override ArticleActionType ActionType => ArticleActionType.UploadAsset;
 }
 
 public abstract class UploadFileValidator<TUploadFileCommand> : ArticleCommandValidator<TUploadFileCommand>

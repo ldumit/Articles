@@ -1,8 +1,9 @@
-﻿using System.Data.Common;
+﻿using Blocks.Core;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Data.Common;
 
 namespace Review.Persistence;
 
@@ -29,10 +30,12 @@ public static class DependencyInjection
 				services.AddScoped<TransactionProvider>();
 
 				services.AddScoped(typeof(Repository<>));
-				services.AddScoped<ArticleRepository>();
-				services.AddScoped<AssetRepository>();
-				services.AddScoped<AssetTypeRepository>();
-				services.AddScoped<PersonRepository>();
+				services.AddImplementationsOfGeneric(typeof(Repository<>));
+
+				//services.AddScoped<ArticleRepository>();
+				//services.AddScoped<AssetRepository>();
+				//services.AddScoped<AssetTypeRepository>();
+				//services.AddScoped<PersonRepository>();
 				services.AddHostedService<DatabaseCacheLoader>();
 
 				return services;

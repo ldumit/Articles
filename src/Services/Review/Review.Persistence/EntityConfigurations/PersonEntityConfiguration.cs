@@ -7,11 +7,14 @@ public class PersonEntityConfiguration : EntityConfiguration<Person>
         base.Configure(builder);
 
 				builder.HasIndex(x => x.UserId).IsUnique();
+				builder.HasIndex(p => new { p.Email, p.TypeDiscriminator }).IsUnique();
 
 				//talk about EF Core inheritance
 				builder.HasDiscriminator(e => e.TypeDiscriminator)
 						.HasValue<Person>(nameof(Person))
-						.HasValue<Author>(nameof(Author));
+						.HasValue<Author>(nameof(Author))
+						.HasValue<Reviewer>(nameof(Reviewer))
+						.HasValue<Editor>(nameof(Editor));
 
 				builder.Property(e => e.UserId).IsRequired(false);
 				builder.Property(e => e.FirstName).HasMaxLength(MaxLength.C64).IsRequired();

@@ -1,14 +1,11 @@
 ﻿namespace Review.Domain.Enums;
 
-//decide -  keep AssetActionType & ArticleActionType separetly?
 public enum ArticleActionType
 {
-		Create,
-		CreateAuthor,
 		AssignEditor,
+		CreateReviewer,
 		InviteReviewer,
-		Upload,
-		Submit,
-		Approve,
-		Reject,
+		UploadAsset,
+		AcceptArticle,
+		RejectArticle,
 }

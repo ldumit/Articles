@@ -1,8 +1,9 @@
-﻿using System.Data.Common;
+﻿using Blocks.Core;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Data.Common;
 
 namespace Submission.Persistence;
 
@@ -27,6 +28,8 @@ public static class DependencyInjection
 				});
 				
 				services.AddScoped<TransactionProvider>();
+
+				services.AddImplementationsOfGeneric(typeof(Repository<>));
 
 				services.AddScoped(typeof(Repository<>));
 				services.AddScoped<ArticleRepository>();

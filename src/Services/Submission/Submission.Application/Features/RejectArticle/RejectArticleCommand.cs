@@ -2,7 +2,7 @@
 
 public record RejectArticleCommand : ArticleCommand
 {
-		public override ArticleActionType ActionType => ArticleActionType.Reject;
+		public override ArticleActionType ActionType => ArticleActionType.RejectDraft;
 }
 
 

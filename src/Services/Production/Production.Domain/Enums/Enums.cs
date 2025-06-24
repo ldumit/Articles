@@ -6,7 +6,7 @@ namespace Production.Domain.Enums;
 public enum ArticleActionType
 {
 		AssignTypesetter,
-		Publish,
+		PublishArticle,
 		SchedulePublication,
 		//Accept = 101
 }

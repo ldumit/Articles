@@ -3,15 +3,15 @@
 public class AssignEditorCommandHandler(ArticleRepository _articleRepository)
         : IRequestHandler<AssignEditorCommand, IdResponse>
 {
-    public async Task<IdResponse> Handle(AssignEditorCommand command, CancellationToken cancellationToken)
+    public async Task<IdResponse> Handle(AssignEditorCommand command, CancellationToken ct)
     {
-        var article = await _articleRepository.GetByIdOrThrowAsync(command.ArticleId);
+				var editor = await _articleRepository.Context.Editors.FindByIdOrThrowAsync(command.EditorId);
 
-        var editor = await _articleRepository.Context.Reviewers.FindByIdOrThrowAsync(command.EditorId);
+				var article = await _articleRepository.GetByIdOrThrowAsync(command.ArticleId);
 
         article.AssignEditor(editor, command);
 
-        await _articleRepository.SaveChangesAsync();
+        await _articleRepository.SaveChangesAsync(ct);
 
         return new IdResponse(article.Id);
     }
