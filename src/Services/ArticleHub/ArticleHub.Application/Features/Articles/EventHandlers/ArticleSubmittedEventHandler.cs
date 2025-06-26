@@ -27,7 +27,7 @@ public class ArticleSubmittedEventHandler(ArticleHubDbContext _dbContext) : ICon
 						dest.SubmittedById = articleDto.SubmittedBy.Id;
 				});
 
-				foreach (var contributorDto in articleDto.Contributors)
+				foreach (var contributorDto in articleDto.Actors)
 				{
 						var contributor = await _dbContext.Persons.FirstOrDefaultAsync(p => p.Id == contributorDto.Person.Id);
 						if (contributor == null)

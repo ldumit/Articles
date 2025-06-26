@@ -1,5 +1,5 @@
 [
 		{"CurrentStage": "Accepted", "ActionType": "AssignTypesetter", "DestinationStage": "InProduction"},
 		{"CurrentStage": "FinalProduction", "ActionType": "SchedulePublication", "DestinationStage": "PublicationScheduled"},
-		{"CurrentStage": "PublicationScheduled", "ActionType": "Publish", "DestinationStage": "Published"}
+		{"CurrentStage": "PublicationScheduled", "ActionType": "PublishArticle", "DestinationStage": "Published"}
 ]

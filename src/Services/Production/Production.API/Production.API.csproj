@@ -41,8 +41,6 @@
     <ProjectReference Include="..\..\..\BuildingBlocks\Blocks.Core\Blocks.Core.csproj" />
     <ProjectReference Include="..\..\..\BuildingBlocks\Blocks.FastEndpoints\Blocks.FastEndpoints.csproj" />
     <ProjectReference Include="..\..\..\Modules\FileService\FileService.Contracts\FileStorage.Contracts.csproj" />
-    <ProjectReference Include="..\Production.Persistence\Production.Persistence.csproj" />
-    <ProjectReference Include="..\Production.Domain\Production.Domain.csproj" />
     <ProjectReference Include="..\Production.Application\Production.Application.csproj" />
   </ItemGroup>
 

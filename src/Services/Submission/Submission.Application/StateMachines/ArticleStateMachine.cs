@@ -16,8 +16,13 @@ public class ArticleStateMachine : IArticleStateMachine
 				var transitions = cache.Get<List<ArticleStageTransition>>();
 				foreach (var transition in transitions)
 				{
-						_stateMachine.Configure(transition.CurrentStage)
-								.Permit(transition.ActionType, transition.DestinationStage);
+						if (transition.CurrentStage != transition.DestinationStage)
+								_stateMachine.Configure(transition.CurrentStage)
+										.Permit(transition.ActionType, transition.DestinationStage);
+						else
+								_stateMachine.Configure(transition.CurrentStage)
+										.PermitReentry(transition.ActionType);
+
 				}
 		}
 

@@ -18,7 +18,6 @@
     <ProjectReference Include="..\..\..\BuildingBlocks\Blocks.AspNetCore\Blocks.AspNetCore.csproj" />
     <ProjectReference Include="..\..\..\Modules\ArticleTimeline\ArticleTimeline.Application\ArticleTimeline.Application\ArticleTimeline.Application.csproj" />
     <ProjectReference Include="..\..\..\Modules\FileService\FileService.AzureBlob\FileStorage.AzureBlob.csproj" />
-    <ProjectReference Include="..\..\..\Modules\FileService\FileService.Contracts\FileStorage.Contracts.csproj" />
     <ProjectReference Include="..\Production.Persistence\Production.Persistence.csproj" />
   </ItemGroup>
 

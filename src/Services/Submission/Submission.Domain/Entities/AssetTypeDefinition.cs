@@ -12,5 +12,5 @@ public partial class AssetTypeDefinition : EnumEntity<AssetType>, ICacheable
 		public required byte MaxFileSizeInMB{ get; init; }
 
 		public int MaxFileSizeInBytes => (MaxFileSizeInMB * 1024 * 1024);
-		public bool AllowsMultipleAssets => MaxAssetCount > 0;
+		public bool AllowsMultipleAssets => MaxAssetCount > 1;
 }

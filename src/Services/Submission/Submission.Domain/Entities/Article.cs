@@ -22,7 +22,9 @@ public partial class Article : AggregateEntity
 		private readonly List<Asset> _assets = new();
     public IReadOnlyList<Asset> Assets => _assets.AsReadOnly();
 
-		public List<ArticleActor> Actors { get; set; } = new() ;
+		private readonly List<ArticleActor> _actors = new();
+		public IReadOnlyList<ArticleActor> Actors => _actors.AsReadOnly();
+
 		//public IEnumerable<Author> Authors => Contributors.Where(aa => aa.Person is Author).Select(aa => aa.Person as Author);
 
 		private readonly List<StageHistory> _stageHistories = new();

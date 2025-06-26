@@ -28,7 +28,7 @@ public class ArticleSubmittedEventHandler(ReviewDbContext _dbContext) : IConsume
 
 
 				//create contributors
-				foreach (var contributorDto in articleDto.Contributors)
+				foreach (var contributorDto in articleDto.Actors)
 				{
 						var contributor = await _dbContext.Persons.FirstOrDefaultAsync(p => p.Id == contributorDto.Person.Id);
 						if (contributor is null)

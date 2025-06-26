@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Auth.Persistence.Migrations
 {
     [DbContext(typeof(AuthDBContext))]
-    [Migration("20250602121657_InitialCreate")]
+    [Migration("20250625073131_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -25,51 +25,7 @@ namespace Auth.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Auth.Domain.Entities.RefreshToken", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnOrder(0);
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedByIp")
-                        .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
-
-                    b.Property<DateTime>("Expires")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ReplacedByToken")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("Revoked")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("RevokedByIp")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
-
-                    b.Property<string>("Token")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("RefreshTokens");
-                });
-
-            modelBuilder.Entity("Auth.Domain.Entities.Role", b =>
+            modelBuilder.Entity("Auth.Domain.Roles.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -168,7 +124,51 @@ namespace Auth.Persistence.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Auth.Domain.Entities.User", b =>
+            modelBuilder.Entity("Auth.Domain.Users.RefreshToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnOrder(0);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedByIp")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpiresOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ReplacedByToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RevokedByIp")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<DateTime?>("RevokedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokens");
+                });
+
+            modelBuilder.Entity("Auth.Domain.Users.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -387,7 +387,7 @@ namespace Auth.Persistence.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Auth.Domain.Entities.UserRole", b =>
+            modelBuilder.Entity("Auth.Domain.Users.UserRole", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUserRole<int>");
 
@@ -400,18 +400,18 @@ namespace Auth.Persistence.Migrations
                     b.HasDiscriminator().HasValue("UserRole");
                 });
 
-            modelBuilder.Entity("Auth.Domain.Entities.RefreshToken", b =>
+            modelBuilder.Entity("Auth.Domain.Users.RefreshToken", b =>
                 {
-                    b.HasOne("Auth.Domain.Entities.User", null)
+                    b.HasOne("Auth.Domain.Users.User", null)
                         .WithMany("RefreshTokens")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Auth.Domain.Entities.User", b =>
+            modelBuilder.Entity("Auth.Domain.Users.User", b =>
                 {
-                    b.OwnsOne("Auth.Domain.ValueObjects.HonorificTitle", "Honorific", b1 =>
+                    b.OwnsOne("Auth.Domain.Users.ValueObjects.HonorificTitle", "Honorific", b1 =>
                         {
                             b1.Property<int>("UserId")
                                 .HasColumnType("int");
@@ -430,7 +430,7 @@ namespace Auth.Persistence.Migrations
                                 .HasForeignKey("UserId");
                         });
 
-                    b.OwnsOne("Auth.Domain.ValueObjects.ProfessionalProfile", "ProfessionalProfile", b1 =>
+                    b.OwnsOne("Auth.Domain.Users.ValueObjects.ProfessionalProfile", "ProfessionalProfile", b1 =>
                         {
                             b1.Property<int>("UserId")
                                 .HasColumnType("int");
@@ -465,7 +465,7 @@ namespace Auth.Persistence.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
-                    b.HasOne("Auth.Domain.Entities.Role", null)
+                    b.HasOne("Auth.Domain.Roles.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -474,7 +474,7 @@ namespace Auth.Persistence.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
-                    b.HasOne("Auth.Domain.Entities.User", null)
+                    b.HasOne("Auth.Domain.Users.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -483,7 +483,7 @@ namespace Auth.Persistence.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
-                    b.HasOne("Auth.Domain.Entities.User", null)
+                    b.HasOne("Auth.Domain.Users.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -492,7 +492,7 @@ namespace Auth.Persistence.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
-                    b.HasOne("Auth.Domain.Entities.Role", null)
+                    b.HasOne("Auth.Domain.Roles.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -501,23 +501,23 @@ namespace Auth.Persistence.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.HasOne("Auth.Domain.Entities.User", null)
+                    b.HasOne("Auth.Domain.Users.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Auth.Domain.Entities.UserRole", b =>
+            modelBuilder.Entity("Auth.Domain.Users.UserRole", b =>
                 {
-                    b.HasOne("Auth.Domain.Entities.User", null)
+                    b.HasOne("Auth.Domain.Users.User", null)
                         .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Auth.Domain.Entities.User", b =>
+            modelBuilder.Entity("Auth.Domain.Users.User", b =>
                 {
                     b.Navigation("RefreshTokens");
 

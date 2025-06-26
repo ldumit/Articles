@@ -187,10 +187,10 @@ namespace Auth.Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     Token = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Expires = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ExpiresOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedByIp = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Revoked = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    RevokedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     RevokedByIp = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
                     ReplacedByToken = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },

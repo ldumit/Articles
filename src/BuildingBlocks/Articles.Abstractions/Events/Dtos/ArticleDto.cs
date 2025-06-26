@@ -14,5 +14,5 @@ public record ArticleDto(
 		DateTime SubmittedOn, 
 		DateTime? AcceptedOn, 
 		DateTime? PublishedOn, 
-		List<ContributorDto> Contributors
+		List<ActorDto> Actors
 		);

@@ -10,6 +10,7 @@ public static class AssetTypeCategories
 		public static HashSet<AssetType> SupplementaryAssets = new()
 		{
 				AssetType.Figure,
-				AssetType.DataSheet
+				AssetType.DataSheet,
+				AssetType.SupplementaryFile,
 		};
 }

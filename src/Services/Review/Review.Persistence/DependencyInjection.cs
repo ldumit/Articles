@@ -1,5 +1,4 @@
-﻿using Blocks.Core;
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,7 +6,7 @@ using System.Data.Common;
 
 namespace Review.Persistence;
 
-public static class DependencyInjection
+public static class DependencyInjectionG
 {
     public static IServiceCollection AddPersistenceServices (this IServiceCollection services, IConfiguration configuration)
     {

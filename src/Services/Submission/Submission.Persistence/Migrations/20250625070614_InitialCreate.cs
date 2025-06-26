@@ -260,11 +260,12 @@ namespace Submission.Persistence.Migrations
                 columns: new[] { "ActionType", "CurrentStage", "DestinationStage" },
                 values: new object[,]
                 {
-                    { "Upload", "Created", "ManuscriptUploaded" },
-                    { "Submit", "ManuscriptUploaded", "Submitted" },
-                    { "Create", "None", "Created" },
-                    { "Approve", "Submitted", "InitialApproved" },
-                    { "Reject", "Submitted", "InitialRejected" }
+                    { "UploadAsset", "Created", "ManuscriptUploaded" },
+										{ "UploadAsset", "ManuscriptUploaded", "ManuscriptUploaded" },
+										{ "SubmitDraft", "ManuscriptUploaded", "Submitted" },
+                    { "CreateArticle", "None", "Created" },
+                    { "ApproveDraft", "Submitted", "InitialApproved" },
+                    { "RejectDraft", "Submitted", "InitialRejected" }
                 });
 
             migrationBuilder.InsertData(

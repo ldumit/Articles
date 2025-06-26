@@ -8,10 +8,10 @@ public partial class Article
 {
 		public void SetStage(ArticleStage newStage, IArticleAction<ArticleActionType> action, ArticleStateMachineFactory stateMachineFactory)
     {
-				if (newStage == Stage)
-            return;
-
 				stateMachineFactory.ValidateStageTransition(Stage, action.ActionType);
+
+				if (newStage == Stage) // there is no transition to be done
+						return;
 
 				var currentStage = Stage;
 				Stage = newStage;
@@ -29,10 +29,10 @@ public partial class Article
 		{
 				var role = isCorrespondingAuthor ? UserRoleType.CORAUT : UserRoleType.AUT;				
 				
-				if (Actors.Exists(a => a.PersonId == author.Id && a.Role == role))
+				if (_actors.Exists(a => a.PersonId == author.Id && a.Role == role))
 						throw new DomainException($"Author {author.Email} is already assigned to the article");
 
-				Actors.Add(new ArticleAuthor() {
+				_actors.Add(new ArticleAuthor() {
 						ContributionAreas = contributionAreas,
 						Person = author,
 						//PersonId = author.Id, 
@@ -43,11 +43,11 @@ public partial class Article
 				AddAction(action);
 		}
 
-		public void Approve(IArticleAction<ArticleActionType> action, ArticleStateMachineFactory _stateMachineFactory)
+		public void Approve(Person editor, IArticleAction<ArticleActionType> action, ArticleStateMachineFactory _stateMachineFactory)
 		{
-				Actors.Add(new ArticleActor()
+				_actors.Add(new ArticleActor()
 				{
-						PersonId = action.CreatedById,
+						Person = editor,
 						Role = UserRoleType.REVED
 				});
 
@@ -65,6 +65,8 @@ public partial class Article
 
 		public void Submit(IArticleAction<ArticleActionType> action, ArticleStateMachineFactory _stateMachineFactory)
 		{
+				//if (!_assets.Exists(a => a.Type == AssetType.DraftPdf))
+				//		throw new DomainException("Cannot submit the article. Please upload the manuscript (Draft PDF) first");
 				SubmittedById = action.CreatedById;
 				SubmittedOn = action.CreatedOn;
 
@@ -84,6 +86,19 @@ public partial class Article
 				_assets.Add(asset);
 
 				AddAction(action);
+				return asset;
+		}
+
+		public Asset GetOrCreateAsset(AssetTypeDefinition assetType, IArticleAction<ArticleActionType> action)
+		{
+				Asset asset = default!;
+
+				if (!assetType.AllowsMultipleAssets) // if the asset type doesn't support multiple assets, we are overriding the single one.
+						asset = this.Assets.SingleOrDefault(a => a.Type == assetType.Id);
+
+				if (asset is null)
+						asset = this.CreateAsset(assetType, action);
+
 				return asset;
 		}
 

@@ -2,7 +2,7 @@
 
 namespace Articles.Abstractions.Events.Dtos;
 
-public record ContributorDto(
+public record ActorDto(
 		UserRoleType Role, 
 		PersonDto Person
 		); 

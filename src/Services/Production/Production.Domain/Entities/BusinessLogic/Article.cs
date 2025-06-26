@@ -1,7 +1,4 @@
-﻿using Articles.Abstractions;
-using Articles.Abstractions.Enums;
-using Blocks.Domain;
-using Articles.Security;
+﻿using Blocks.Domain;
 using Production.Domain.Enums;
 using Production.Domain.Events;
 

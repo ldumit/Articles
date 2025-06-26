@@ -13,7 +13,7 @@ using Submission.Persistence;
 namespace Submission.Persistence.Migrations
 {
     [DbContext(typeof(SubmissionDbContext))]
-    [Migration("20250521074052_SeedMasterData")]
+    [Migration("20250625070717_SeedMasterData")]
     partial class SeedMasterData
     {
         /// <inheritdoc />
@@ -169,31 +169,31 @@ namespace Submission.Persistence.Migrations
                         new
                         {
                             CurrentStage = "None",
-                            ActionType = "Create",
+                            ActionType = "CreateArticle",
                             DestinationStage = "Created"
                         },
                         new
                         {
                             CurrentStage = "Created",
-                            ActionType = "Upload",
+                            ActionType = "UploadAsset",
                             DestinationStage = "ManuscriptUploaded"
                         },
                         new
                         {
                             CurrentStage = "ManuscriptUploaded",
-                            ActionType = "Submit",
+                            ActionType = "SubmitDraft",
                             DestinationStage = "Submitted"
                         },
                         new
                         {
                             CurrentStage = "Submitted",
-                            ActionType = "Approve",
+                            ActionType = "ApproveDraft",
                             DestinationStage = "InitialApproved"
                         },
                         new
                         {
                             CurrentStage = "Submitted",
-                            ActionType = "Reject",
+                            ActionType = "RejectDraft",
                             DestinationStage = "InitialRejected"
                         });
                 });
