@@ -35,7 +35,7 @@ namespace Review.Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false),
                     DefaultCategoryId = table.Column<int>(type: "int", nullable: false),
                     DefaultFileExtension = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false, defaultValue: "pdf"),
-                    MaxNumber = table.Column<byte>(type: "tinyint", nullable: false, defaultValue: (byte)0),
+                    MaxAssetCount = table.Column<byte>(type: "tinyint", nullable: false, defaultValue: (byte)0),
                     MaxFileSizeInMB = table.Column<byte>(type: "tinyint", nullable: false),
                     AllowedFileExtensions = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -57,29 +57,6 @@ namespace Review.Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Journal", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Person",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
-                    UserId = table.Column<int>(type: "int", nullable: true),
-                    TypeDiscriminator = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false, comment: "Final name of the file after renaming"),
-                    Affiliation = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true, comment: "Institution or organization they are associated with when they conduct their research."),
-                    CreatedById = table.Column<int>(type: "int", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LastModifiedById = table.Column<int>(type: "int", nullable: true),
-                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Person", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -125,12 +102,6 @@ namespace Review.Persistence.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Article_Person_SubmittedById",
-                        column: x => x.SubmittedById,
-                        principalTable: "Person",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_Article_Stage_Stage",
                         column: x => x.Stage,
                         principalTable: "Stage",
@@ -162,33 +133,6 @@ namespace Review.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ArticleContributor",
-                columns: table => new
-                {
-                    ArticleId = table.Column<int>(type: "int", nullable: false),
-                    PersonId = table.Column<int>(type: "int", nullable: false),
-                    Role = table.Column<string>(type: "nvarchar(450)", nullable: false, defaultValue: "AUT"),
-                    TypeDiscriminator = table.Column<string>(type: "nvarchar(21)", maxLength: 21, nullable: false),
-                    ContributionAreas = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ArticleContributor", x => new { x.ArticleId, x.PersonId, x.Role });
-                    table.ForeignKey(
-                        name: "FK_ArticleContributor_Article_ArticleId",
-                        column: x => x.ArticleId,
-                        principalTable: "Article",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ArticleContributor_Person_PersonId",
-                        column: x => x.PersonId,
-                        principalTable: "Person",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Asset",
                 columns: table => new
                 {
@@ -204,7 +148,6 @@ namespace Review.Persistence.Migrations
                     File_Extension = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
                     File_Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false, comment: "Final name of the file after renaming"),
                     Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    Number = table.Column<byte>(type: "tinyint", nullable: false, defaultValue: (byte)0),
                     CreatedById = table.Column<int>(type: "int", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
                     LastModifiedById = table.Column<int>(type: "int", nullable: true),
@@ -225,6 +168,37 @@ namespace Review.Persistence.Migrations
                         principalTable: "AssetTypeDefinition",
                         principalColumn: "Name",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Person",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
+                    Affiliation = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false, comment: "Institution or organization they are associated with when they conduct their research."),
+                    UserId = table.Column<int>(type: "int", nullable: true),
+                    TypeDiscriminator = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+										Degree = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true, comment: "The author's highest academic qualification (e.g., PhD in Mathematics, MSc in Chemistry)."),
+										Discipline = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true, comment: "The author's main field of study or research (e.g., Biology, Computer Science)."),
+										ArticleId = table.Column<int>(type: "int", nullable: true),
+                    CreatedById = table.Column<int>(type: "int", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastModifiedById = table.Column<int>(type: "int", nullable: true),
+                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Person", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Person_Article_ArticleId",
+                        column: x => x.ArticleId,
+                        principalTable: "Article",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -254,16 +228,127 @@ namespace Review.Persistence.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "ArticleActor",
+                columns: table => new
+                {
+                    ArticleId = table.Column<int>(type: "int", nullable: false),
+                    PersonId = table.Column<int>(type: "int", nullable: false),
+                    Role = table.Column<string>(type: "nvarchar(450)", nullable: false, defaultValue: "AUT"),
+                    TypeDiscriminator = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
+                    ContributionAreas = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ArticleActor", x => new { x.ArticleId, x.PersonId, x.Role });
+                    table.ForeignKey(
+                        name: "FK_ArticleActor_Article_ArticleId",
+                        column: x => x.ArticleId,
+                        principalTable: "Article",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ArticleActor_Person_PersonId",
+                        column: x => x.PersonId,
+                        principalTable: "Person",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "JournalEditor",
+                columns: table => new
+                {
+                    JournalId = table.Column<int>(type: "int", nullable: false),
+                    EditorId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JournalEditor", x => new { x.JournalId, x.EditorId });
+                    table.ForeignKey(
+                        name: "FK_JournalEditor_Journal_JournalId",
+                        column: x => x.JournalId,
+                        principalTable: "Journal",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_JournalEditor_Person_EditorId",
+                        column: x => x.EditorId,
+                        principalTable: "Person",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ReviewerSpecialization",
+                columns: table => new
+                {
+                    JournalId = table.Column<int>(type: "int", nullable: false),
+                    ReviewerId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ReviewerSpecialization", x => new { x.JournalId, x.ReviewerId });
+                    table.ForeignKey(
+                        name: "FK_ReviewerSpecialization_Journal_JournalId",
+                        column: x => x.JournalId,
+                        principalTable: "Journal",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ReviewerSpecialization_Person_ReviewerId",
+                        column: x => x.ReviewerId,
+                        principalTable: "Person",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ReviewInvitation",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ArticleId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: true),
+                    EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SentOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SentById = table.Column<int>(type: "int", nullable: false),
+                    ExpiresOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Token = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    CreatedById = table.Column<int>(type: "int", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastModifiedById = table.Column<int>(type: "int", nullable: true),
+                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ReviewInvitation", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ReviewInvitation_Article_ArticleId",
+                        column: x => x.ArticleId,
+                        principalTable: "Article",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ReviewInvitation_Person_SentById",
+                        column: x => x.SentById,
+                        principalTable: "Person",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "ArticleStageTransition",
                 columns: new[] { "ActionType", "CurrentStage", "DestinationStage" },
                 values: new object[,]
                 {
-                    { "Upload", "Created", "ManuscriptUploaded" },
-                    { "Submit", "ManuscriptUploaded", "Submitted" },
-                    { "Create", "None", "Created" },
-                    { "Approve", "Submitted", "InitialApproved" },
-                    { "Reject", "Submitted", "InitialRejected" }
+                    { "AcceptArticle", "AwaitingDecision", "Accepted" },
+                    { "RejectArticle", "AwaitingDecision", "Rejected" },
+                    { "UploadReviewReport", "InReview", "AwaitingDecision" },
+                    { "UploadReviewReport", "InReview", "InReview" }
                 });
 
             migrationBuilder.InsertData(
@@ -311,8 +396,8 @@ namespace Review.Persistence.Migrations
                 column: "EntityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ArticleContributor_PersonId",
-                table: "ArticleContributor",
+                name: "IX_ArticleActor_PersonId",
+                table: "ArticleActor",
                 column: "PersonId");
 
             migrationBuilder.CreateIndex(
@@ -332,11 +417,36 @@ namespace Review.Persistence.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_JournalEditor_EditorId",
+                table: "JournalEditor",
+                column: "EditorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Person_ArticleId",
+                table: "Person",
+                column: "ArticleId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Person_UserId",
                 table: "Person",
                 column: "UserId",
                 unique: true,
                 filter: "[UserId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ReviewerSpecialization_ReviewerId",
+                table: "ReviewerSpecialization",
+                column: "ReviewerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ReviewInvitation_ArticleId",
+                table: "ReviewInvitation",
+                column: "ArticleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ReviewInvitation_SentById",
+                table: "ReviewInvitation",
+                column: "SentById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Stage_Name",
@@ -353,16 +463,32 @@ namespace Review.Persistence.Migrations
                 name: "IX_StageHistory_StageId",
                 table: "StageHistory",
                 column: "StageId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Article_Person_SubmittedById",
+                table: "Article",
+                column: "SubmittedById",
+                principalTable: "Person",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Article_Journal_JournalId",
+                table: "Article");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Article_Person_SubmittedById",
+                table: "Article");
+
             migrationBuilder.DropTable(
                 name: "ArticleAction");
 
             migrationBuilder.DropTable(
-                name: "ArticleContributor");
+                name: "ArticleActor");
 
             migrationBuilder.DropTable(
                 name: "ArticleStageTransition");
@@ -371,19 +497,28 @@ namespace Review.Persistence.Migrations
                 name: "Asset");
 
             migrationBuilder.DropTable(
+                name: "JournalEditor");
+
+            migrationBuilder.DropTable(
+                name: "ReviewerSpecialization");
+
+            migrationBuilder.DropTable(
+                name: "ReviewInvitation");
+
+            migrationBuilder.DropTable(
                 name: "StageHistory");
 
             migrationBuilder.DropTable(
                 name: "AssetTypeDefinition");
 
             migrationBuilder.DropTable(
-                name: "Article");
-
-            migrationBuilder.DropTable(
                 name: "Journal");
 
             migrationBuilder.DropTable(
                 name: "Person");
+
+            migrationBuilder.DropTable(
+                name: "Article");
 
             migrationBuilder.DropTable(
                 name: "Stage");

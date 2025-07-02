@@ -7,7 +7,7 @@ public class GetArticleQueryHandler(ArticleRepository _articleRepository)
 {
     public async Task<GetArticleResonse> Handle(GetArticleQuery command, CancellationToken ct)
     {
-        var article = await _articleRepository.GetFullArticleByIdOrThrow(command.ArticleId);
+        var article = await _articleRepository.GetFullArticleById(command.ArticleId);
 
         return new GetArticleResonse(article.Adapt<ArticleDto>());
     }

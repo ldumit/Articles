@@ -1,32 +1,36 @@
-#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
+# Base image for runtime
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER app
 WORKDIR /app
 EXPOSE 8080 8081
 
+# Build stage
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
 ARG BUILD_CONFIGURATION=Release
 ARG APP_NAME=Review.API
 ARG PROJECT_PATH=Services/Review/${APP_NAME}
 
+# Set working directory to project folder
 WORKDIR /src/${PROJECT_PATH}
-COPY ${PROJECT_PATH}/${APP_NAME}.csproj ${PROJECT_PATH}/
-RUN dotnet restore ${PROJECT_PATH}
 
-# Copy the rest of the files after restoring dependencies
-COPY . .
+# Copy only the .csproj for caching restore
+COPY ${PROJECT_PATH}/${APP_NAME}.csproj ./
+RUN dotnet restore
 
-# Publish the app - there is no need for "dontnet build" since "dotnet publish" will do that
-RUN dotnet publish ${PROJECT_PATH}/${APP_NAME}.csproj -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+# Copy ONLY the full project folder to prevent cross-service contamination
+COPY ${PROJECT_PATH}/ ./
 
-# Final Image
+# Publish
+RUN dotnet publish ${APP_NAME}.csproj -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+
+# Final runtime image
 FROM base AS final
 WORKDIR /app
 COPY --from=build /app/publish .
 
-# We need to define the ARG again here in order to create an ENV variable for the runtime
+# Set runtime app name (optional for logging, inspection, etc.)
 ARG APP_NAME
 ENV APP_NAME=${APP_NAME}
-ENTRYPOINT dotnet /app/${APP_NAME}.dll
+
+ENTRYPOINT ["dotnet", "/app/${APP_NAME}.dll"]

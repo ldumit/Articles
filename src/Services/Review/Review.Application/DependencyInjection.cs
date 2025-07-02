@@ -1,17 +1,12 @@
 ﻿using Blocks.MediatR.Behaviours;
-using FileStorage.AzureBlob;
-using FileStorage.Contracts;
 using Blocks.Mapster;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Review.Application.StateMachines;
 using System.Reflection;
 using Microsoft.Extensions.Caching.Memory;
-using Azure.Storage.Blobs;
 using Blocks.Messaging.MassTransit;
 using Review.Application.Mappings;
-using EmailService.Smtp;
-using EmailService.Contracts;
 using Review.Application.Features.Invitations.InviteReviewer;
 
 namespace Review.Application;

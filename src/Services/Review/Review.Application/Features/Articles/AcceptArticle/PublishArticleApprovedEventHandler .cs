@@ -11,9 +11,9 @@ public class PublishArticleAceeptedEventHandler(ArticleRepository _articleReposi
 {
     public async Task Handle(ArticleAccepted notification, CancellationToken ct)
     {
-        var article = await _articleRepository.GetFullArticleByIdOrThrow(notification.Article.Id);
+        var article = await _articleRepository.GetFullArticleById(notification.Article.Id);
 
         var articleDto = article.Adapt<ArticleDto>();
-        await _publishEndpoint.Publish(new ArticleSubmittedEvent(article.Adapt<ArticleDto>()), ct);
+        await _publishEndpoint.Publish(new ArticleAcceptedEvent(article.Adapt<ArticleDto>()), ct);
     }
 }

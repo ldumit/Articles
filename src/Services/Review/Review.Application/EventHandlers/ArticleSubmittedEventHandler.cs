@@ -44,4 +44,5 @@ public class ArticleSubmittedEventHandler(ReviewDbContext _dbContext) : IConsume
 
 				await _dbContext.SaveChangesAsync();
 		}
+
 }

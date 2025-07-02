@@ -3,18 +3,25 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MassTransit;
 using Blocks.Core;
+using Blocks.Core.Extensions;
 
 namespace Blocks.Messaging.MassTransit;
 
 public static class DependencyInjection
 {
 		public static IServiceCollection AddMassTransit
-				(this IServiceCollection services, IConfiguration configuration, Assembly? assembly = null)
+				(this IServiceCollection services, IConfiguration configuration, Assembly assembly)
 		{
 				var rabbitMqOptions = configuration.GetSectionByTypeName<RabbitMqOptions>();
 
+				var serviceName = assembly.GetServiceName();
+
 				services.AddMassTransit(config =>
 				{
+						config.SetEndpointNameFormatter(
+								new SnakeCaseWithServiceSuffixNameFormatter(serviceName)
+						);
+
 						if (assembly != null)
 								config.AddConsumers(assembly);
 

@@ -1,7 +1,7 @@
 [
   {
     "UserId": 1,
-    "PersonType": "Person",
+    "TypeDiscriminator": "Person",
     "FirstName": "Laurentiu",
     "LastName": "Dumitrescu",
     "Title": "Mr",
@@ -10,16 +10,18 @@
   },
   {
     "UserId": 2,
-    "PersonType": "Author",
+    "TypeDiscriminator": "Author",
     "FirstName": "Author",
     "LastName": "1",
     "Title": "Mr",
     "Email": {"Value":"author.1@articles.org"},
-    "Affiliation": "Japan Aerospace Exploration Agency (JAXA)"
+    "Affiliation": "Japan Aerospace Exploration Agency (JAXA)",
+    "Degree": "PhD",
+    "Discipline": "Aerospace Engineering"
   },
   {
     "UserId": 3,
-    "PersonType": "Author",
+    "TypeDiscriminator": "Author",
     "FirstName": "Author",
     "LastName": "2",
     "Title": "Ms",
@@ -28,7 +30,7 @@
   },
   {
     "UserId":5,
-    "PersonType": "Author",
+    "TypeDiscriminator": "Author",
     "FirstName": "CorAuthor",
     "LastName": "1",
     "Title": "Ms",
@@ -37,16 +39,18 @@
   },
   {
     "UserId": 6,
-    "PersonType": "Author",
+    "TypeDiscriminator": "Author",
     "FirstName": "CorAuthor",
     "LastName": "2",
     "Title": "Mr",
     "Email": {"Value":"corauthor.2@articles.com"},
-    "Affiliation": "Helmholtz Centre for Materials and Coastal Research (HZG)"
+    "Affiliation": "Helmholtz Centre for Materials and Coastal Research (HZG)",
+    "Degree": "MsC",
+    "Discipline": "Planetary Science"
   },
   //{
   //  "UserId": 9,
-  //  "PersonType": "Person",
+  //  "TypeDiscriminator": "Person",
   //  "FirstName": "Reviewer",
   //  "LastName": "1",
   //  "Title": "Mr",
@@ -54,7 +58,7 @@
   //},
   //{
   //  "UserId": 10,
-  //  "PersonType": "Person",
+  //  "TypeDiscriminator": "Person",
   //  "FirstName": "Reviewer",
   //  "LastName": "2",
   //  "Title": "Ms",
@@ -62,7 +66,7 @@
   //},
   {
     "UserId": null,
-    "PersonType": "Author",
+    "TypeDiscriminator": "Author",
     "FirstName": "Author",
     "LastName": "4-NoUser",
     "Title": "Mr",

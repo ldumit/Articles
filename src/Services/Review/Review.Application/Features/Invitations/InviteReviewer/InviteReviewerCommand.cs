@@ -3,7 +3,7 @@
 namespace Review.Application.Features.Invitations.InviteReviewer;
 
 public record InviteReviewerCommand(int? UserId, string FirstName, string LastName, string Email)
-        : ArticleCommand<ArticleActionType, IdResponse>
+        : ArticleCommand<IdResponse>
 {
 		public override ArticleActionType ActionType => ArticleActionType.InviteReviewer;
 		public string FullName => FirstName + ' ' + LastName;

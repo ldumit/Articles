@@ -1,6 +1,4 @@
-﻿using Articles.Security;
-
-namespace Review.Domain.Entities
+﻿namespace Review.Domain.Entities
 {
 		public class ArticleActor : IChildEntity
 		{

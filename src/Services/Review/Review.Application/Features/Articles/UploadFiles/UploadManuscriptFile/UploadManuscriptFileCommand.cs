@@ -2,7 +2,10 @@
 
 namespace Review.Application.Features.Articles.UploadFiles.UploadManuscriptFile;
 
-public record UploadManuscriptFileCommand : UploadFileCommand;
+public record UploadManuscriptFileCommand : UploadFileCommand
+{
+		public override ArticleActionType ActionType => ArticleActionType.UploadReviewReport;
+}
 
 public class UploadManuscriptCommandValidator : UploadFileValidator<UploadManuscriptFileCommand>
 {

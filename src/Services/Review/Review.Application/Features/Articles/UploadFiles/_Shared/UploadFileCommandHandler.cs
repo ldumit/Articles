@@ -21,7 +21,7 @@ public class UploadFileCommandHandler<TUploadCommand>
         try
         {
             asset.CreateFile(uploadResponse, assetType, command);
-            _article.SetStage(NextStage, command, _stateMachineFactory);
+            _article.SetStage(NextStage, _stateMachineFactory, command);
 
             await _articleRepository.SaveChangesAsync();
         }

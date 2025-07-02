@@ -1,10 +1,10 @@
+using Carter;
 using Blocks.AspNetCore;
-using ArticleHub.Persistence;
 using Blocks.EntityFrameworkCore;
+using Blocks.AspNetCore.Middlewares;
+using ArticleHub.Persistence;
 using ArticleHub.Application;
 using ArticleHub.API;
-using Carter;
-using Blocks.AspNetCore.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,8 +13,8 @@ builder.Services
 		.ConfigureOptions(builder.Configuration);        // Configure Options
 
 builder.Services
-		.AddApiServices(builder.Configuration)              // Register API-specific services
-		.AddApplicationServices(builder.Configuration)      // Register Application/Infrastructure-specific services
+		.AddApiServices(builder.Configuration)              // Register API/Infra-specific services
+		.AddApplicationServices(builder.Configuration)      // Register Application-specific services
 		.AddPersistenceServices(builder.Configuration);     // Register Persistence-specific services
 #endregion
 

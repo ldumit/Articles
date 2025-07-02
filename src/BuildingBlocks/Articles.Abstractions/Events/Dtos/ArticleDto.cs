@@ -6,7 +6,7 @@ public record ArticleDto(
 		int Id, 
 		string Title,
 		string Scope,
-		string Doi,
+		string? Doi,
 		ArticleType Type,
 		ArticleStage Stage, 
 		JournalDto Journal,
@@ -14,5 +14,6 @@ public record ArticleDto(
 		DateTime SubmittedOn, 
 		DateTime? AcceptedOn, 
 		DateTime? PublishedOn, 
-		List<ActorDto> Actors
+		List<ActorDto> Actors,
+		List<AssetDto> Assets
 		);

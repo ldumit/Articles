@@ -21,10 +21,12 @@ public enum ArticleStage : int
 		//Review
 		[Description("Article is under review")]
 		InReview = 201,
-		[Description("Reviewer feedback received")]
-		ReviewerFeedback = 202,
-		[Description("Revision requested")]
-		RevisionRequested = 203,
+		[Description("Reviewer feedback received, pending editor decision")]
+		AwaitingDecision = 202,
+
+		//talk: not implemented, but real, requires review rounds
+		//[Description("Revision requested")]
+		//RevisionRequested = 203, 
 		[Description("Article accepted")]
 		Accepted = 204,
 		[Description("Article rejected")]

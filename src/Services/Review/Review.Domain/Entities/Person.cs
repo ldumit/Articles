@@ -8,11 +8,12 @@
 
 				public string? Title { get; init; }
 				public required EmailAddress Email { get; init; }
+				public string EmailValue => Email.Value;
 				public required string Affiliation { get; init; }
 
 				public int? UserId { get; init; }
 
-				public IReadOnlyList<ArticleActor> ArticleContributors { get; private set; } = new List<ArticleActor>();
+				public IReadOnlyList<ArticleActor> ArticleActors { get; private set; } = new List<ArticleActor>();
 
 				public string TypeDiscriminator { get; init; } = null!; // EF discriminator
 		}

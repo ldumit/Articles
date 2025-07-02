@@ -2,7 +2,10 @@
 
 namespace Review.Application.Features.Articles.UploadFiles.UploadReviewReport;
 
-public record UploadReviewReportCommand : UploadFileCommand;
+public record UploadReviewReportCommand : UploadFileCommand
+{
+		public override ArticleActionType ActionType => ArticleActionType.UploadReviewReport;
+}
 
 public abstract class UploadReviewReportCommandValidator : UploadFileValidator<UploadReviewReportCommand>
 {

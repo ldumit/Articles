@@ -12,7 +12,7 @@
 
 				public int? UserId { get; init; }
 
-				public IReadOnlyList<ArticleActor> ArticleActors { get; private set; } = new List<ArticleActor>();
+				public IReadOnlyCollection<ArticleActor> ArticleActors { get; private set; } = new HashSet<ArticleActor>();
 
 				public string TypeDiscriminator { get; init; } = null!; // EF discriminator
 		}

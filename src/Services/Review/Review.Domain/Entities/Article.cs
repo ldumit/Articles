@@ -14,18 +14,15 @@ public partial class Article : AggregateEntity
 
 		public required int JournalId { get; init; }
 		public Journal Journal { get; init; } = null!;
-		//public string JournalSection { get; set; } = default!;
 
 		// talk - ways to represent collections 
 		private readonly List<Asset> _assets = new();
     public IReadOnlyList<Asset> Assets => _assets.AsReadOnly();
 
 		private readonly List<ArticleActor> _actors = new();
-		public IReadOnlyList<ArticleActor> Actors => _actors;
-
-		//public List<ArticleContributor> Contributors { get; set; } = new() ;
-		//public IEnumerable<Author> Authors => Contributors.Where(aa => aa.Person is Author).Select(aa => aa.Person as Author);
-
+		public IReadOnlyList<ArticleActor> Actors => _actors.AsReadOnly();
+		public IEnumerable<Author> Authors => _actors.Where(aa => aa.Person is Author).Select(aa => aa.Person as Author);
+		
 		private readonly List<StageHistory> _stageHistories = new();
     public IReadOnlyList<StageHistory> StageHistories => _stageHistories.AsReadOnly();
 

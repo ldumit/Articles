@@ -1,7 +1,6 @@
 ﻿using Blocks.Entitities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Blocks.EntityFrameworkCore
 {
@@ -11,14 +10,19 @@ namespace Blocks.EntityFrameworkCore
 				{
 						foreach (var entity in modelBuilder.Model.GetEntityTypes())
 						{
-								if (typeof(IValueObject).IsAssignableFrom(entity.ClrType)) // we don't create tables for value objects
+								// we don't create tables for value objects
+								if (typeof(IValueObject).IsAssignableFrom(entity.ClrType))
 										continue;
 
-								var baseType = entity.BaseType;
-								if (baseType == null) // check if we have inheritance, in that case we need to use the base class name.
-										modelBuilder.Entity(entity.ClrType).ToTable(entity.ClrType.Name);
-								else
-										modelBuilder.Entity(entity.ClrType).ToTable(baseType.ClrType.Name);
+
+								// Find the *root* base type (top of hierarchy) (for TPH strategy)
+								var rootType = entity;
+								while (rootType.BaseType != null)
+								{
+										rootType = rootType.BaseType;
+								}
+
+								modelBuilder.Entity(entity.ClrType).ToTable(rootType.ClrType.Name);
 						}
 				}
 
@@ -54,24 +58,7 @@ namespace Blocks.EntityFrameworkCore
 								{
 										foreignKey.SetConstraintName(foreignKey.GetConstraintName()?.ToLower());
 								}
-
-								//foreach (var index in entity.GetIndexes())
-								//{
-								//		index.SetName(index.Name?.ToLower());
-								//}
 						}
 				}
-
-
-				//todo the following methods don't work because the propertyBuilder is for property Value not for the complex type
-				//public static ComplexTypePropertyBuilder<TProperty> HasColumnNameUsingPropertyName<TProperty>(this ComplexTypePropertyBuilder<TProperty> propertyBuilder)
-				//{
-				//		return propertyBuilder.HasColumnName(propertyBuilder.Metadata.PropertyInfo!.Name);
-				//}
-
-				//public static ComplexTypePropertyBuilder<TProperty> HasColumnNameUsingTypeAndPropertyName<TProperty>(this ComplexTypePropertyBuilder<TProperty> propertyBuilder)
-				//		=> propertyBuilder.HasColumnName($"" +
-				//				$"{propertyBuilder.Metadata.DeclaringType!.Name}_" +
-				//				$"{propertyBuilder.Metadata.PropertyInfo!.Name}");
 		}
 }

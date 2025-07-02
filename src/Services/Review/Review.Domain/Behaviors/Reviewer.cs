@@ -21,4 +21,10 @@ public partial class Reviewer
 
 				return reviewer;
 		}
+
+		public void AddSpecialization(Journal journal)
+		{
+				//if (!_specializations.Contains(journal))
+				//		_specializations.Add(journal);
+		}
 }

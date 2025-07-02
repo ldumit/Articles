@@ -7,7 +7,13 @@ public class PersonEntityConfiguration : EntityConfiguration<Person>
         base.Configure(builder);
 
 				builder.HasIndex(x => x.UserId).IsUnique();
-				builder.HasIndex(p => new { p.Email, p.TypeDiscriminator }).IsUnique();
+
+
+				//builder.HasIndex(p => new { p.Email.Value, p.TypeDiscriminator }).IsUnique();
+				// using Raw SQL here because at this moment we cannot use a value object to create a composite index
+				builder.HasAnnotation(
+						"RawSql:Index",
+						"CREATE UNIQUE INDEX IX_Person_Email_TypeDiscriminator ON Person (Email, TypeDiscriminator)");
 
 				//talk about EF Core inheritance
 				builder.HasDiscriminator(e => e.TypeDiscriminator)
@@ -18,15 +24,17 @@ public class PersonEntityConfiguration : EntityConfiguration<Person>
 
 				builder.Property(e => e.UserId).IsRequired(false);
 				builder.Property(e => e.FirstName).HasMaxLength(MaxLength.C64).IsRequired();
-        builder.Property(e => e.LastName).HasMaxLength(MaxLength.C64).IsRequired();
-        builder.Property(e => e.Title).HasMaxLength(MaxLength.C64);
+				builder.Property(e => e.LastName).HasMaxLength(MaxLength.C64).IsRequired();
+				builder.Property(e => e.Title).HasMaxLength(MaxLength.C64);
+				builder.Property(e => e.Affiliation).IsRequired().HasMaxLength(MaxLength.C512)
+						.HasComment("Institution or organization they are associated with when they conduct their research.");
 
 				builder.ComplexProperty(
 					 o => o.Email, builder =>
 					 {
 							 builder.Property(n => n.Value)
 									 .HasColumnName(builder.Metadata.PropertyInfo!.Name)
-									 .HasMaxLength(MaxLength.C64).HasComment("Final name of the file after renaming");
+									 .HasMaxLength(MaxLength.C64);
 					 });
 		}
 }

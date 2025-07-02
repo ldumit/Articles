@@ -3,13 +3,17 @@
 public class ReviewerEntityConfiguration : IEntityTypeConfiguration<Reviewer>
 {
     public void Configure(EntityTypeBuilder<Reviewer> builder)
-    {        				
-				builder.Property(e => e.Affiliation).IsRequired().HasMaxLength(MaxLength.C512)
-						.HasComment("Institution or organization they are associated with when they conduct their research.");
+    {
+				builder.HasBaseType<Person>();
 
-				builder.HasMany(e => e.Specializations).WithOne()
-						.IsRequired()
-						.OnDelete(DeleteBehavior.NoAction);
+				// talk - many to many relation from the Domain POV
+				// talk - the property is called Specialization but here we are talking abiout tables so ReviewerJournal is a better name
+				//builder.HasMany(r => r.Specializations).WithMany()
+				//		.UsingEntity(j => j.ToTable("ReviewerJournal"));
+
+				//builder.HasMany(r => r.Specializations).WithMany();
+
+				builder.HasMany(r => r.Specializations).WithOne(j => j.Reviewer);
 
 		}
 }

@@ -1,15 +1,15 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Blocks.AspNetCore;
+using EmailService.Contracts;
+using Flurl;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using Flurl;
-using Blocks.AspNetCore;
-using EmailService.Contracts;
 using EmailAddress = EmailService.Contracts.EmailAddress;
 
 namespace Review.Application.Features.Invitations.InviteReviewer;
 
 public class InviteReviewerCommandHandler(
-    ArticleRepository _articleRepository, IClaimsProvider _claimsProvider, IEmailService _emailService, IHttpContextAccessor _httpContextAccessor, IOptions<EmailOptions> emailOptions)
+    ArticleRepository _articleRepository, ReviewerRepository _reviewRepository, IClaimsProvider _claimsProvider, IEmailService _emailService, IHttpContextAccessor _httpContextAccessor, IOptions<EmailOptions> emailOptions)
     : IRequestHandler<InviteReviewerCommand, IdResponse>
 {
     public async Task<IdResponse> Handle(InviteReviewerCommand command, CancellationToken cancellationToken)
@@ -17,8 +17,18 @@ public class InviteReviewerCommandHandler(
         var article = await _articleRepository.GetByIdOrThrowAsync(command.ArticleId);
 				var editor = await _articleRepository.Context.Editors.SingleAsync(r => r.UserId == _claimsProvider.GetUserId());
 
-        var invitation = article.AddReviewInvitation(command.UserId, command.Email, command.FullName, command);
-        await _articleRepository.SaveChangesAsync();
+        ReviewInvitation invitation = default!;
+				if (command.UserId != null)
+        {
+            var reviewer = await _reviewRepository.GetByUserIdAsync(command.UserId.Value);
+            if(reviewer is not null) // the reviewer exists
+                invitation = article.InviteReviewer(reviewer, command);
+				}
+        
+        if(invitation is null)
+						invitation = article.InviteReviewer(command.UserId, command.Email, command.FullName, command);
+
+				await _articleRepository.SaveChangesAsync();
 
         // todo - decide if it is necessary here a domain event or not
         await _emailService.SendEmailAsync(BuildEmailMessage(invitation, editor));

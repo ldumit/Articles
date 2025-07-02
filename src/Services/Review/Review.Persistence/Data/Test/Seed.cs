@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Review.Domain.Entities;
-using Blocks.EntityFrameworkCore;
 
 namespace Review.Persistence.Data.Test;
 
@@ -19,7 +17,7 @@ public static class Seed
     {
         using var transaction = context.Database.BeginTransaction();
 
-        context.SeedFromJson<Author>();
+        context.SeedFromJson<Person>();
         context.SeedFromJson<Journal>();
 
         transaction.Commit();

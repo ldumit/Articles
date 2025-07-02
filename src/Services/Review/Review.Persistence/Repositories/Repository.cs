@@ -1,10 +1,9 @@
 ﻿using Blocks.Entitities;
 
-namespace Review.Persistence.Repositories
+namespace Review.Persistence.Repositories;
+
+public class Repository<TEntity>(ReviewDbContext dbContext) 
+		: Repository<ReviewDbContext, TEntity>(dbContext)
+				where TEntity : class, IEntity<int>
 {
-		public class Repository<TEntity>(ReviewDbContext dbContext) 
-				: Repository<ReviewDbContext, TEntity>(dbContext)
-						where TEntity : class, IEntity<int>
-		{
-		}
 }

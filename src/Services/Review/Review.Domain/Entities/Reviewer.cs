@@ -2,6 +2,7 @@
 
 public partial class Reviewer : Person
 {
-		//todo make this private and expose the readonly list
-		public List<Journal> Specializations { get; init; } = null!;
+
+		private readonly HashSet<ReviewerSpecialization> _specializations = new();
+		public IReadOnlyCollection<ReviewerSpecialization> Specializations => _specializations;
 }

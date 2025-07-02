@@ -2,6 +2,6 @@
 
 public class Editor : Reviewer
 {
-		private readonly List<JournalEditor> _journals = new();
-		public IReadOnlyList<JournalEditor> Journals => _journals.AsReadOnly();
+		private readonly HashSet<JournalEditor> _journals = new();
+		public IReadOnlyCollection<JournalEditor> JournalEditors => _journals;
 }

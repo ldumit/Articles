@@ -20,7 +20,7 @@ internal class ArticleContributorEntityConfiguration : IEntityTypeConfiguration<
 						.OnDelete(DeleteBehavior.Cascade);
 
 				builder.HasOne(aa => aa.Person)
-						.WithMany(a => a.ArticleContributors)
+						.WithMany(a => a.ArticleActors)
 						.HasForeignKey(aa => aa.PersonId)
 						.OnDelete(DeleteBehavior.Restrict);
 		}

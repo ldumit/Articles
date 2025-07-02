@@ -1,5 +1,4 @@
-﻿using Review.Persistence.EntityConfigurations;
-using Microsoft.Extensions.Caching.Memory;
+﻿using Microsoft.Extensions.Caching.Memory;
 
 namespace Review.Persistence;
 
@@ -23,21 +22,7 @@ public partial class ReviewDbContext(DbContextOptions<ReviewDbContext> options, 
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-				//todo use the following line:
-				//modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
-
-				modelBuilder.ApplyConfiguration(new ArticleEntityConfiguration());
-				modelBuilder.ApplyConfiguration(new ArticleStageTransitionConfiguration());
-				modelBuilder.ApplyConfiguration(new AssetEntityConfiguration());
-        modelBuilder.ApplyConfiguration(new ArticleActionEntityConfiguration());
-				modelBuilder.ApplyConfiguration(new AssetTypeDefinitionEntityConfiguration());
-				modelBuilder.ApplyConfiguration(new ArticleContributorEntityConfiguration());
-				modelBuilder.ApplyConfiguration(new ArticleAuthorEntityConfiguration());
-				modelBuilder.ApplyConfiguration(new AuthorEntityConfiguration());
-        modelBuilder.ApplyConfiguration(new JournalEntityConfiguration());
-        modelBuilder.ApplyConfiguration(new StageEntityConfiguration());
-        modelBuilder.ApplyConfiguration(new StageHistoryEntityConfiguration());
-				modelBuilder.ApplyConfiguration(new PersonEntityConfiguration());
+				modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
 
         modelBuilder.UseClrTypeNamesForTables();
 

@@ -10,7 +10,7 @@ public partial class Asset
 				=> $"Articles/{ArticleId}/{Name}/{fileName}";
 
 		//talk - use internal factory method so that the Asset can be created only in the Domain
-		internal static Asset Create(Article article, AssetTypeDefinition type, byte assetNumber = 0)
+		internal static Asset Create(Article article, AssetTypeDefinition type)
 		{
 				//talk - value objects for AssetName & AssetNumber, encapsulate validation						
 				return new Asset()

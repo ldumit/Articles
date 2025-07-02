@@ -1,4 +1,4 @@
 ﻿namespace Review.Domain.Events;
 
-public record ArticleActionExecuted(IArticleAction<ArticleActionType> action, Article Article)
+public record ArticleActionExecuted(Article Article, IArticleAction action)
 		: DomainEvent(action);

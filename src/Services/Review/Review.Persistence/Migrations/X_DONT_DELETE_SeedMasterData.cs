@@ -12,7 +12,7 @@ namespace Review.Persistence.Migrations
         {
 						migrationBuilder.Sql(@"
             INSERT INTO [AssetTypeDefinition] 
-            (id, name, description, defaultCategoryId, maxNumber, allowedFileExtensions, defaultFileExtension, MaxFileSizeInMB)
+            (id, name, description, defaultCategoryId, maxAssetCount, allowedFileExtensions, defaultFileExtension, MaxFileSizeInMB)
             VALUES
             (1, 'Manuscript', 'Manuscript', 1, 0, '[""pdf""]', 'pdf', 50),
             (2, 'ReviewReport', 'Reviewer Report', 3, 0, '[""pdf""]', 'pdf', 50),

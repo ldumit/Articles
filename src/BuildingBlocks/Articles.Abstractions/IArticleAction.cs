@@ -8,6 +8,4 @@ public interface IArticleAction : IAuditableAction
 }
 
 public interface IArticleAction<TActionType> : IAuditableAction<TActionType>, IArticleAction
-		where TActionType : Enum
-{
-}
+		where TActionType : Enum;

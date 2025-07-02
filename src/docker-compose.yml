@@ -36,14 +36,14 @@ services:
       context: .
       dockerfile: Services/Submission/Submission.API/Dockerfile
 
-  # review-api:
-  #   image: ${DOCKER_REGISTRY-}review-api
-  #   depends_on:
-  #     - sqlserver
-  #     - rabbitmq
-  #   build:
-  #     context: .
-  #     dockerfile: Services/Review/Review.API/Dockerfile
+  review-api:
+    image: ${DOCKER_REGISTRY-}review-api
+    depends_on:
+      - sqlserver
+      - rabbitmq
+    build:
+      context: .
+      dockerfile: Services/Review/Review.API/Dockerfile
 
   production-api:
     image: ${DOCKER_REGISTRY-}production-api

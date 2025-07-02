@@ -7,7 +7,7 @@ public class RejectArticleCommandHandler(ArticleRepository _articleRepository, A
 		{
 				var article = await _articleRepository.FindByIdOrThrowAsync(command.ArticleId);
 
-				article.Reject(command, _stateMachineFactory);
+				article.Reject(_stateMachineFactory, command);
 
 				await _articleRepository.SaveChangesAsync();
 

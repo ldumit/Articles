@@ -1,6 +1,4 @@
-﻿using Articles.Security;
-
-namespace Submission.Persistence.EntityConfigurations;
+﻿namespace Submission.Persistence.EntityConfigurations;
 
 internal class ArticleActorEntityConfiguration : IEntityTypeConfiguration<ArticleActor>
 {

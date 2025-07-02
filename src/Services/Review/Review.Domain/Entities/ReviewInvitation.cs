@@ -15,8 +15,9 @@ public partial class ReviewInvitation : AggregateEntity
 		public Person SentBy { get; set; } = null!;
 
 		public required DateTime ExpiresOn { get; init; }
+		public bool IsExpired => ExpiresOn < DateTime.UtcNow;
 
-    public required string Token { get; set; }
+		public required string Token { get; set; }
 
     public InvitationStatus Status { get; set; } = InvitationStatus.Open;
 }

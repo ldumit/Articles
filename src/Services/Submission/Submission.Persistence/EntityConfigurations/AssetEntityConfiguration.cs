@@ -32,10 +32,6 @@ internal class AssetEntityConfiguration : AuditedEntityConfiguration<Asset>
             .HasPrincipalKey(e => e.Name)
             .IsRequired();
 
-				//builder.OwnsOne(e => e.File);
-
-				//builder.ComplexProperty(e => e.File);
-
 				builder.ComplexProperty(e => e.File, fileBuilder =>
 				{
 						new FileEntityConfiguration().Configure(fileBuilder);

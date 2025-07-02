@@ -1,4 +1,5 @@
 ﻿using FileStorage.Contracts;
+using System;
 
 namespace Review.Domain.Entities;
 
@@ -7,22 +8,23 @@ public partial class Asset
 		private Asset() {/* use factory method*/}
 
 		public string GenerateStorageFilePath(string fileName) 
-				=> $"Articles/{ArticleId}/{Name}/{Number}/{fileName}";
+				=> $"Articles/{ArticleId}/{Name}/{fileName}";
 
 		//talk - use internal factory method so that the Asset can be created only in the Domain
-		internal static Asset Create(Article article, AssetTypeDefinition type, byte assetNumber = 0)
+		internal static Asset Create(Article article, AssetTypeDefinition type)
 		{
 				//talk - value objects for AssetName & AssetNumber, encapsulate validation						
 				return new Asset()
 				{
 						ArticleId = article.Id,
 						Article = article,
-						Number = AssetNumber.FromNumber(assetNumber, type),
 						Name = AssetName.FromAssetType(type),
 						Type = type.Name,
 						TypeRef = type,
 						CategoryId = type.DefaultCategoryId,
-						State = AssetState.None
+						State = AssetState.None,
+						//CreatedById = action.CreatedById,
+						//CreatedOn = action.CreatedOn
 				};
 		}
 

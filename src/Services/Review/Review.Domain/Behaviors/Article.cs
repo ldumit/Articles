@@ -1,13 +1,13 @@
-﻿using Blocks.Core.Security;
+﻿using Mapster;
+using Blocks.Core.Security;
 using Blocks.Domain;
-using Mapster;
 using Review.Domain.StateMachines;
 
 namespace Review.Domain.Entities;
 
 public partial class Article
 {
-		public void SetStage(ArticleStage newStage, IArticleAction<ArticleActionType> action, ArticleStateMachineFactory stateMachineFactory)
+		public void SetStage(ArticleStage newStage, ArticleStateMachineFactory stateMachineFactory, IArticleAction action)
     {
 				if (newStage == Stage)
             return;
@@ -23,10 +23,10 @@ public partial class Article
 						new StageHistory { ArticleId = Id, StageId = newStage, StartDate = DateTime.UtcNow });
 				
 				AddDomainEvent(
-						new ArticleStageChanged(action, currentStage, newStage));
+						new ArticleStageChanged(currentStage, newStage, action));
     }
 
-		public void AssignEditor(Editor actor, IArticleAction<ArticleActionType> action)
+		public void AssignEditor(Editor actor, IArticleAction action)
 		{
 				if (_actors.Exists(a => a.PersonId == actor.Id && a.Role == UserRoleType.REVED))
 						throw new DomainException($"Editor {actor.Email} is already assigned to the article");
@@ -37,20 +37,22 @@ public partial class Article
 				_actors.Add(new ArticleActor() { PersonId = actor.Id, Role = UserRoleType.REVED });
 
 				AddDomainEvent(
-						new EditorAssigned(action, actor.Id, actor.UserId!.Value));
+						new EditorAssigned(actor.Id, actor.UserId!.Value, action));
 				
 				AddAction(action);
 		}
 
-		public void AssignReviewer(Reviewer actor, IArticleAction<ArticleActionType> action)
+		public void AssignReviewer(Reviewer actor, IArticleAction action)
 		{
 				if (_actors.Exists(a => a.PersonId == actor.Id && a.Role == UserRoleType.REV))
 						throw new DomainException($"Reviewer {actor.Email} is already assigned to the article");
 
+				actor.AddSpecialization(this.Journal);
+
 				_actors.Add(new ArticleActor() { PersonId = actor.Id, Role = UserRoleType.REV });
 
 				AddDomainEvent(
-						new ReviewerAssigned(action, actor.Id, actor.UserId!.Value));
+						new ReviewerAssigned(actor.Id, actor.UserId!.Value, action));
 
 				AddAction(action);
 		}
@@ -60,77 +62,77 @@ public partial class Article
 				_actors.Add(new ArticleActor { ArticleId = this.Id, PersonId = personId, Role = roleType });
 		}
 
-
-		//public void InviteReviewer(string emailAddress, IArticleAction<ArticleActionType> action)
-		//{
-		//		if (_contributors.Exists(a => a.PersonId == contributor.Id && a.Role == UserRoleType.REV))
-		//				throw new DomainException($"Reviewer {contributor.Email} is already assigned to the article");
-
-		//		_contributors.Add(new ArticleContributor() { PersonId = contributor.Id, Role = UserRoleType.REV });
-
-		//		var invitation = new ReviewInvitation { ArticleId = Id, EmailAddress = Email, SentById = _claimsProvider.GetUserId(), ExpiresOn = DateTime.UtcNow.AddDays(7) };
-
-
-		//		AddDomainEvent(
-		//				new ReviewerAssigned(action, contributor.Id, contributor.UserId!.Value));
-
-		//		AddAction(action);
-		//}
-
-		public void Accept(IArticleAction<ArticleActionType> action, ArticleStateMachineFactory _stateMachineFactory)
+		public void Accept(ArticleStateMachineFactory _stateMachineFactory, IArticleAction action)
 		{
-				SetStage(ArticleStage.Accepted, action, _stateMachineFactory);
+				SetStage(ArticleStage.Accepted, _stateMachineFactory, action);
 				
 				AddDomainEvent(new ArticleAccepted(this, action));
 		}
 
-		public void Reject(IArticleAction<ArticleActionType> action, ArticleStateMachineFactory _stateMachineFactory)
+		public void Reject(ArticleStateMachineFactory _stateMachineFactory, IArticleAction action)
 		{
-				SetStage(ArticleStage.Rejected, action, _stateMachineFactory);
+				SetStage(ArticleStage.Rejected, _stateMachineFactory, action);
 
 				AddDomainEvent(new ArticleRejected(this, action));
 		}
 
-		public Asset CreateAsset(AssetTypeDefinition type, IArticleAction<ArticleActionType> action)
-    {
-				byte? maxAssetNumber = _assets
+		public Asset CreateAsset(AssetTypeDefinition type, IArticleAction action)
+		{
+				var assetCount = _assets
 						.Where(a => a.Type == type.Id)
-						.Select(a => (byte?)a.Number) // Cast to byte? to allow nulls
-						.Max();
+						.Count();
 
-				byte nextAssetNumber;
-				if (maxAssetNumber is not null)
-						nextAssetNumber = (byte)(maxAssetNumber + 1);
-				else
-						nextAssetNumber = type.AllowsMultipleAssets ? (byte)1 : (byte)0; // for asset types that allow multiple assets of the same type, start from 1, otherwise 0
+				if (assetCount >= type.MaxAssetCount)
+						throw new DomainException($"The maximum number of files, {type.MaxAssetCount}, allowed for {type.Name.ToString()} was already reached");
 
-				var asset = Asset.Create(this, type, nextAssetNumber);
-        _assets.Add(asset);
-				
+				var asset = Asset.Create(this, type);
+				_assets.Add(asset);
+
 				AddAction(action);
 				return asset;
-    }
+		}
 
-		public ReviewInvitation AddReviewInvitation(int? userId, string emailAddress, string fullName, IArticleAction<ArticleActionType> action)
+		public ReviewInvitation InviteReviewer(Reviewer reviewer, IArticleAction action)
 		{
+				if (!reviewer.Specializations.Any(s => s.JournalId == this.JournalId))
+						throw new DomainException($"Reviewer {reviewer.FullName} is not specialized in article's journal");
+
+				return CreateInvitation(reviewer.UserId, reviewer.Email.Value, reviewer.FullName, action: action);
+		}
+
+		public ReviewInvitation InviteReviewer(int? userId, string email, string fullName, IArticleAction action)
+		{
+				return CreateInvitation(userId, email, fullName, action);
+		}
+
+		private ReviewInvitation CreateInvitation(int? userId, string email, string fullName, IArticleAction action)
+		{
+				// check if there is an active invitation for this email
+				if (_invitations.Any(i =>
+								i.EmailAddress.Trim().ToUpperInvariant() == email.Trim().ToUpperInvariant()
+								&& !i.IsExpired)) 
+						throw new DomainException($"Reviewer {fullName} ({email}) was already invited");
+
 				var invitation = new ReviewInvitation
 				{
 						ArticleId = this.Id,
-						EmailAddress = emailAddress,
+						EmailAddress = email,
 						FullName = fullName,
 						SentById = action.CreatedById,
 						ExpiresOn = DateTime.UtcNow.AddDays(7),
 						Token = Base64UrlTokenGenerator.Generate(),
 				};
 
+				AddDomainEvent(new ReviewerInvited(invitation, action));
+
 				_invitations.Add(invitation);
 				return invitation;
 		}
 
-		private void AddAction(IArticleAction<ArticleActionType> action)
+		private void AddAction(IArticleAction action)
 		{
 				_actions.Add(action.Adapt<ArticleAction>());
-				AddDomainEvent(new ArticleActionExecuted(action, this));
+				AddDomainEvent(new ArticleActionExecuted(this, action));
 		}
 
 }

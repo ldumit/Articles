@@ -16,7 +16,6 @@ public partial class Article : AggregateEntity
 
 		public int JournalId { get; init; }
 		public required Journal Journal { get; init; } = null!;
-		//public string JournalSection { get; set; } = default!;
 
 		// talk - ways to represent collections 
 		private readonly List<Asset> _assets = new();
