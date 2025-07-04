@@ -1,34 +1,57 @@
-﻿using Blocks.Exceptions;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Blocks.Exceptions;
+using Auth.Domain.Persons;
 using Auth.Domain.Users.Events;
+using Auth.Persistence.Repositories;
 
 namespace Auth.API.Features;
 
 [Authorize(Roles = Articles.Security.Role.ADMIN)]
 [HttpPost("users")]
-public class CreateUserEndpoint(UserManager<User> userManager) 
+public class CreateUserEndpoint(UserManager<User> _userManager, PersonRepository _personRepository) 
 		: Endpoint<CreateUserCommand, CreateUserResponse>
 {
 		public override async Task HandleAsync(CreateUserCommand command, CancellationToken ct)
     {
-        var user = await userManager.FindByNameAsync(command.Email);
-        if(user != null)
+				var person = await _personRepository.GetByEmailAsync(command.Email, ct);
+				if(person?.User != null) // check if email is already used by an existing User
 						throw new BadRequestException($"User with email {command.Email} already exists");
+			
+				if (person is null) // create new Person if not exists
+						person = await CreatePersonAsync(command, ct);
 
-				user = Auth.Domain.Users.User.Create(command);
+				//start transaction to ensure atomic creation 
+				await using var transaction = await _personRepository.BeginTransactionAsync(ct);
 
-				var result = await userManager.CreateAsync(user);
+				var user = Auth.Domain.Users.User.Create(command, person);
+
+				var result = await _userManager.CreateAsync(user);
 				if (!result.Succeeded)
 				{
 						var errorMessages = string.Join(" | ", result.Errors.Select(e => $"{e.Code}: {e.Description}"));
 						throw new BadRequestException($"Unable to create user: {errorMessages}");
 				}
 
-				var ressetPasswordToken = await userManager.GeneratePasswordResetTokenAsync(user);
+				// link User to Person and Save
+				person.AssignUser(user);
+				await _personRepository.SaveChangesAsync(ct);
 
-				await PublishAsync(new UserCreated(user, ressetPasswordToken));
+				var resetPasswordToken = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-				await SendAsync(new CreateUserResponse(command.Email, user.Id, ressetPasswordToken));
+				await PublishAsync(new UserCreated(user, resetPasswordToken));
+
+				await transaction.CommitAsync(ct);
+
+				await SendAsync(new CreateUserResponse(command.Email, user.Id, resetPasswordToken));
     }
+
+		private async Task<Person> CreatePersonAsync(CreateUserCommand command, CancellationToken ct)
+		{
+				var person = Person.Create(command);
+
+				await _personRepository.AddAsync(person, ct);
+				await _personRepository.SaveChangesAsync(ct);
+				return person;
+		}
 }

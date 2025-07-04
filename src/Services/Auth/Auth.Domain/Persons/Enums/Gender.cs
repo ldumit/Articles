@@ -1,4 +1,4 @@
-﻿namespace Auth.Domain.Users.Enums;
+﻿namespace Auth.Domain.Persons.Enums;
 
 public enum Gender
 {

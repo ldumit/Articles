@@ -3,7 +3,7 @@
 namespace Submission.Persistence.Repositories;
 
 public class Repository<TEntity>(SubmissionDbContext dbContext) 
-		: Repository<SubmissionDbContext, TEntity>(dbContext)
+		: RepositoryBase<SubmissionDbContext, TEntity>(dbContext)
 				where TEntity : class, IEntity<int>
 {
 }

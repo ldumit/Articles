@@ -6,11 +6,11 @@ public partial class Article : AggregateEntity
 		public ArticleType Type { get; init; }
 		public string Scope { get; init; } = default!;
 
-		public DateTime? SubmittedOn { get; set; }
-    public int? SubmittedById { get; set; }
-    public Person? SubmittedBy { get; set; }
+		public DateTime? SubmittedOn { get; init; }
+    public int? SubmittedById { get;  init; }
+    public Person? SubmittedBy { get; init; }
 
-    public ArticleStage Stage { get; set; }
+    public ArticleStage Stage { get; private set; }
 
 		public required int JournalId { get; init; }
 		public Journal Journal { get; init; } = null!;

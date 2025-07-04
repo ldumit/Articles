@@ -4,7 +4,7 @@ namespace Submission.Domain.Entities;
 
 public partial class Person
 {
-		public static Person Create(int? userId, string email, string firstName, string lastName, string? title, string affiliation, IArticleAction action)
+		public static Person Create(int? userId, string email, string firstName, string lastName, string? honorific, string affiliation, IArticleAction action)
 		{
 				return new Person
 				{
@@ -12,7 +12,7 @@ public partial class Person
 						Email = EmailAddress.Create(email),
 						FirstName = firstName,
 						LastName = lastName,
-						Title = title,
+						Honorific = honorific,
 						Affiliation = affiliation
 				};
 		}
@@ -25,7 +25,7 @@ public partial class Person
 						Email = EmailAddress.Create(userInfo.Email),
 						FirstName = userInfo.FirstName,
 						LastName = userInfo.LastName,
-						Title = userInfo.Title,
+						Honorific = userInfo.Honorific,
 						Affiliation = userInfo.Affiliation
 				};
 		}

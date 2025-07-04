@@ -6,9 +6,8 @@
 				public required string LastName { get; init; }
 				public string FullName => FirstName + " " + LastName;
 
-				public string? Title { get; init; }
+				public string? Honorific { get; init; }
 				public required EmailAddress Email { get; init; }
-				public string EmailValue => Email.Value;
 				public required string Affiliation { get; init; }
 
 				public int? UserId { get; init; }

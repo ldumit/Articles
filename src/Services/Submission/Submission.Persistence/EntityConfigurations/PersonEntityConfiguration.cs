@@ -16,7 +16,7 @@ public class PersonEntityConfiguration : EntityConfiguration<Person>
 				builder.Property(e => e.UserId).IsRequired(false);
 				builder.Property(e => e.FirstName).HasMaxLength(MaxLength.C64).IsRequired();
         builder.Property(e => e.LastName).HasMaxLength(MaxLength.C64).IsRequired();
-        builder.Property(e => e.Title).HasMaxLength(MaxLength.C64);
+        builder.Property(e => e.Honorific).HasMaxLength(MaxLength.C64);
 				builder.Property(e => e.Affiliation).IsRequired().HasMaxLength(MaxLength.C512)
 						.HasComment("Institution or organization they are associated with when they conduct their research.");
 

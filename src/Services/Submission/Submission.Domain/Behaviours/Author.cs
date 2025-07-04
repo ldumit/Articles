@@ -4,14 +4,14 @@ namespace Submission.Domain.Entities;
 
 public partial class Author
 {
-    public static Author Create(string email, string firstName, string lastName, string? title, string affiliation, IArticleAction action)
+    public static Author Create(string email, string firstName, string lastName, string? honorific, string affiliation, IArticleAction action)
 		{
 				var author = new Author
 				{
 						Email = EmailAddress.Create(email),
 						FirstName = firstName,
 						LastName = lastName,
-						Title = title,
+						Honorific = honorific,
 						Affiliation = affiliation
 				};
 

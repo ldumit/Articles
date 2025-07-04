@@ -1,0 +1,274 @@
+[
+  {
+    "email": "dumitrescu.laurentiu@gmail.com",
+    "firstName": "Laurentiu",
+    "lastName": "Dumitrescu",
+    "gender": "Male",
+    "honorific": null,
+    "pictureUrl": null,
+    "professionalProfile": {
+      "position": "Admin",
+      "companyName": "Articles",
+      "affiliation": "DotNetLabX Code Lab"
+    },
+    "user": {
+      "email": "dumitrescu.laurentiu@gmail.com",
+      "userRoles": [
+        { "roleId": 91, "beginDate": "2024-08-01" }
+      ]
+    }
+  },
+  {
+    "email": "author.1@articles.cs",
+    "firstName": "Author",
+    "lastName": "1",
+    "gender": "Female",
+    "honorific": null,
+    "pictureUrl": null,
+    "professionalProfile": {
+      "position": "Author",
+      "companyName": "Articles",
+      "affiliation": "Japan Aerospace Exploration Agency (JAXA)"
+    },
+    "user": {
+      "email": "author.1@articles.cs",
+      "userRoles": [
+        { "roleId": 11, "beginDate": "2024-08-01" }
+      ]
+    }
+  },
+  {
+    "email": "author.2@articles.cs",
+    "firstName": "Author",
+    "lastName": "2",
+    "gender": "Male",
+    "honorific": null,
+    "pictureUrl": null,
+    "professionalProfile": {
+      "position": "Author",
+      "companyName": "Articles",
+      "affiliation": "University of Maryland, College Park"
+    },
+    "user": {
+      "userRoles": [
+        { "roleId": 11, "beginDate": "2024-08-01" }
+      ]
+    }
+  },
+  {
+    "email": "author.3@articles.cs",
+    "firstName": "Author",
+    "lastName": "3",
+    "gender": "Male",
+    "honorific": null,
+    "pictureUrl": null,
+    "professionalProfile": {
+      "position": "Author",
+      "companyName": "Articles",
+      "affiliation": "Tata Institute of Fundamental Research"
+    },
+    "user": {
+      "userRoles": [
+        { "roleId": 11, "beginDate": "2024-08-01" }
+      ]
+    }
+  },
+  {
+    "email": "corauthor.1@articles.cs",
+    "firstName": "CorAuthor",
+    "lastName": "1",
+    "gender": "Male",
+    "honorific": null,
+    "pictureUrl": null,
+    "professionalProfile": {
+      "position": "Author",
+      "companyName": "Articles",
+      "affiliation": "Indian Institute of Science Education and Research, Bhopal"
+    },
+    "user": {
+      "userRoles": [
+        { "roleId": 12, "beginDate": "2024-08-01" }
+      ]
+    }
+  },
+  {
+    "email": "corauthor.2@articles.cs",
+    "firstName": "CorAuthor",
+    "lastName": "2",
+    "gender": "Female",
+    "honorific": null,
+    "pictureUrl": null,
+    "professionalProfile": {
+      "position": "Author",
+      "companyName": "Articles",
+      "affiliation": "Helmholtz Centre for Materials and Coastal Research (HZG)"
+    },
+    "user": {
+      "userRoles": [
+        { "roleId": 12, "beginDate": "2024-08-01" }
+      ]
+    }
+  },
+  {
+    "email": "reved.1@articles.cs",
+    "firstName": "RevEditor",
+    "lastName": "1",
+    "gender": "Male",
+    "honorific": null,
+    "pictureUrl": null,
+    "professionalProfile": {
+      "position": "Review Editor",
+      "companyName": "Articles",
+      "affiliation": "Indian Institute of Science Education and Research, Bhopal"
+    },
+    "user": {
+      "userRoles": [
+        { "roleId": 21, "beginDate": "2024-08-01" }
+      ]
+    }
+  },
+  {
+    "email": "reved.2@articles.cs",
+    "firstName": "RevEditor",
+    "lastName": "2",
+    "gender": "Male",
+    "honorific": null,
+    "pictureUrl": null,
+    "professionalProfile": {
+      "position": "Review Editor",
+      "companyName": "Articles",
+      "affiliation": "Helmholtz Centre for Materials and Coastal Research (HZG)"
+    },
+    "user": {
+      "userRoles": [
+        { "roleId": 21, "beginDate": "2024-08-01" }
+      ]
+    }
+  },
+  {
+    "email": "rev.1@articles.cs",
+    "firstName": "Reviewer",
+    "lastName": "1",
+    "gender": "Male",
+    "honorific": null,
+    "pictureUrl": null,
+    "professionalProfile": {
+      "position": "Reviewer",
+      "companyName": "Articles",
+      "affiliation": "Japan Aerospace Exploration Agency (JAXA)"
+    },
+    "user": {
+      "userRoles": [
+        { "roleId": 22, "beginDate": "2024-08-01" }
+      ]
+    }
+  },
+  {
+    "email": "rev.2@articles.cs",
+    "firstName": "Reviewer",
+    "lastName": "2",
+    "gender": "Male",
+    "honorific": null,
+    "pictureUrl": null,
+    "professionalProfile": {
+      "position": "Reviewer",
+      "companyName": "Articles",
+      "affiliation": "University of Maryland, College Park"
+    },
+    "user": {
+      "userRoles": [
+        { "roleId": 22, "beginDate": "2024-08-01" }
+      ]
+    }
+  },
+  {
+    "email": "rev.3@articles.cs",
+    "firstName": "Reviewer",
+    "lastName": "3",
+    "gender": "Male",
+    "honorific": null,
+    "pictureUrl": null,
+    "professionalProfile": {
+      "position": "Reviewer",
+      "companyName": "Articles",
+      "affiliation": "University of Maryland, College Park"
+    },
+    "user": {
+      "userRoles": [
+        { "roleId": 22, "beginDate": "2024-08-01" }
+      ]
+    }
+  },
+  {
+    "email": "typesetter.1@articles.cs",
+    "firstName": "Typesetter",
+    "lastName": "1",
+    "gender": "Female",
+    "honorific": null,
+    "pictureUrl": null,
+    "professionalProfile": {
+      "position": "Typesetter",
+      "companyName": "Typesetting Company1",
+      "affiliation": null
+    },
+    "user": {
+      "userRoles": [
+        { "roleId": 32, "beginDate": "2024-08-01" }
+      ]
+    }
+  },
+  {
+    "email": "typesetter.2@articles.cs",
+    "firstName": "Typesetter",
+    "lastName": "2",
+    "gender": "Female",
+    "honorific": null,
+    "pictureUrl": null,
+    "professionalProfile": {
+      "position": "Typesetter",
+      "companyName": "Typesetting Company2",
+      "affiliation": null
+    },
+    "user": {
+      "userRoles": [
+        { "roleId": 32, "beginDate": "2024-08-01" }
+      ]
+    }
+  },
+  {
+    "email": "pof.1@articles.cs",
+    "firstName": "POF",
+    "lastName": "1",
+    "gender": "Female",
+    "honorific": null,
+    "pictureUrl": null,
+    "professionalProfile": {
+      "position": "Production Office Specialist",
+      "companyName": "Articles",
+      "affiliation": null
+    },
+    "user": {
+      "userRoles": [
+        { "roleId": 31, "beginDate": "2024-08-01" }
+      ]
+    }
+  },
+  {
+    "email": "eof.1@articles.cs",
+    "firstName": "EOF",
+    "lastName": "1",
+    "gender": "Male",
+    "honorific": null,
+    "pictureUrl": null,
+    "professionalProfile": {
+      "position": "Editorial Office Admin",
+      "companyName": "Articles",
+      "affiliation": null
+    },
+    "user": {
+      "userRoles": [
+        { "roleId": 1, "beginDate": "2024-08-01" }
+      ]
+    }
+  }
+]

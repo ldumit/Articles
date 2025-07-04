@@ -2,19 +2,25 @@
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 
-namespace Review.Domain.ValueObjects;
+namespace Auth.Domain.Persons.ValueObjects;
 
 public class EmailAddress : StringValueObject
 {
 		[JsonConstructor]
-		internal EmailAddress(string value) => Value = value;
+		internal EmailAddress(string value)
+		{
+				Value = value;
+				NormalizedEmail = value.ToUpperInvariant();
+		}
+		
+		public string NormalizedEmail { get; internal set; }
 
 		public static EmailAddress Create(string value)
 		{
 				Guard.ThrowIfNullOrWhiteSpace(value);
 				Guard.ThrowIfFalse(IsValidEmail(value), "Invalid email format.");
 
-				return new EmailAddress(value.ToLower());
+				return new EmailAddress(value);
 		}
 
 		private static bool IsValidEmail(string email)
@@ -30,15 +36,6 @@ public class EmailAddress : StringValueObject
 		public static implicit operator string(EmailAddress email)
 				=> email.Value;
 
-		public static bool operator ==(EmailAddress a, string b)
-		{
-				if (ReferenceEquals(a, null) && b == null) return true;
-				if (ReferenceEquals(a, null) || b == null) return false;
-				return string.Equals(a.Value, b, StringComparison.OrdinalIgnoreCase);
-		}
-		public static bool operator !=(EmailAddress a, string b)
-				=> !(a == b);
-
 		public override int GetHashCode()
-				=> StringComparer.OrdinalIgnoreCase.GetHashCode(Value);
+				=> NormalizedEmail.GetHashCode();
 }

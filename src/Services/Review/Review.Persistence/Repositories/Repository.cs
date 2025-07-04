@@ -3,7 +3,7 @@
 namespace Review.Persistence.Repositories;
 
 public class Repository<TEntity>(ReviewDbContext dbContext) 
-		: Repository<ReviewDbContext, TEntity>(dbContext)
+		: RepositoryBase<ReviewDbContext, TEntity>(dbContext)
 				where TEntity : class, IEntity<int>
 {
 }

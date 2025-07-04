@@ -1,5 +1,5 @@
 ﻿using Articles.Abstractions.Enums;
-using Auth.Domain.Users.Enums;
+using Auth.Domain.Persons.Enums;
 
 namespace Auth.API.Features;
 
@@ -26,10 +26,13 @@ public class CreateUserCommand: IUserCreationInfo
 }
 
 public record UserRoleDto(
-		UserRoleType Type,
+		UserRoleType RoleType,
 		DateTime? StartDate,
 		DateTime? ExpiringDate
-) : IUserRole;
+) : IUserRole
+{
+		public UserRoleType RoleId => RoleType;
+}
 
 public record CreateUserResponse(
 		string Email, 

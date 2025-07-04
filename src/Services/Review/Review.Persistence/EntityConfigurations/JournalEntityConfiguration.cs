@@ -2,6 +2,8 @@
 
 public class JournalEntityConfiguration : EntityConfiguration<Journal>
 {
+		protected override bool HasGeneratedId => false;
+
 		public override void Configure(EntityTypeBuilder<Journal> builder)
 		{
 				base.Configure(builder);

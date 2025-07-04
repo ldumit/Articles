@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Auth.Persistence.Repositories;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Auth.Persistence;
@@ -8,6 +9,8 @@ public static class DependencyInjection
     {
         var connectionString = config.GetConnectionString("Database");
 				services.AddDbContext<AuthDBContext>(opts => opts.UseSqlServer(connectionString));
+
+        services.AddScoped<PersonRepository>();
 
 				return services;
     }

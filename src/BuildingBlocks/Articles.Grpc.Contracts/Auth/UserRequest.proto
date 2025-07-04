@@ -10,7 +10,7 @@ message UserInfo {
     string first_name = 2;
     string last_name = 3;
     string email = 4;
-    optional string title = 5;
+    optional string honorific = 5;
     optional string affiliation = 6;
 }
 

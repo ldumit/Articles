@@ -23,14 +23,14 @@ public class ArticleSubmittedEventHandler(ReviewDbContext _dbContext) : IConsume
 				var article = articleDto.AdaptWith<Article>(dest =>
 				{
 						//dest.Journal = journal;
-						dest.SubmittedById = articleDto.SubmittedBy.Id;
+						//dest.SubmittedById = articleDto.SubmittedBy.Id;
 				});
 
 
 				//create contributors
 				foreach (var contributorDto in articleDto.Actors)
 				{
-						var contributor = await _dbContext.Persons.FirstOrDefaultAsync(p => p.Id == contributorDto.Person.Id);
+						var contributor = await _dbContext.Persons.FirstOrDefaultAsync(p => p.Email == contributorDto.Person.Email);
 						if (contributor is null)
 						{
 								contributor = contributorDto.Person.Adapt<Person>();

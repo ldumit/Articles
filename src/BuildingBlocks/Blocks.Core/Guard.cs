@@ -27,6 +27,6 @@ public static class Guard
 		public static T AgainstNull<T>(T? value, string parameterName)
 				=> value ?? throw new ArgumentNullException(parameterName, $"Value cannot be null: '{parameterName}'.");
 
-		public static T NotFound<T>(T? entity) where T : class
-				=> entity ?? throw new NotFoundException($"{typeof(T).Name} not found");
+		public static T NotFound<T>(T? value) where T : class
+				=> value ?? throw new NotFoundException($"{typeof(T).Name} not found");
 }

@@ -7,10 +7,10 @@ public class AuthDBContext(DbContextOptions<AuthDBContext> options) :
 		{
 
 		// no need to add Roles & Users here, they are already in the base class
-		public virtual DbSet<RefreshToken> RefreshTokens{ get; set; }
+		public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
+		public virtual DbSet<Person> Persons { get; set; }
 
-
-    protected override void OnModelCreating(ModelBuilder builder)
+		protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
 

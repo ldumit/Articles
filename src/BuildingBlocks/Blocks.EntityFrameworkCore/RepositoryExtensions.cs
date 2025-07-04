@@ -8,7 +8,7 @@ namespace Blocks.EntityFrameworkCore
 		public static class RepositoryExtensions
 		{
 				// talk about why we is better to create an extension method in this case.
-				public static async Task<TEntity> FindByIdOrThrowAsync<TEntity, TContext>(this Repository<TContext, TEntity> repository, int id)
+				public static async Task<TEntity> FindByIdOrThrowAsync<TEntity, TContext>(this RepositoryBase<TContext, TEntity> repository, int id)
 						where TContext : DbContext
 						where TEntity : class, IEntity<int>
 				{
@@ -28,7 +28,7 @@ namespace Blocks.EntityFrameworkCore
 				}
 
 				//talk about the difference between FindByIdAsync and GetByIdAsync
-				public static async Task<TEntity> GetByIdOrThrowAsync<TEntity, TContext>(this Repository<TContext, TEntity> repository, int id)
+				public static async Task<TEntity> GetByIdOrThrowAsync<TEntity, TContext>(this RepositoryBase<TContext, TEntity> repository, int id)
 						where TContext : DbContext
 						where TEntity : class, IEntity<int>
 				{
@@ -38,7 +38,7 @@ namespace Blocks.EntityFrameworkCore
 						return entity!;
 				}
 
-				public static async Task<TEntity> GetByIdOrThrowAsync<TEntity, TContext>(this Repository<TContext, TEntity> repository, Func<int, Task<TEntity>> getByIdFunc, int id)
+				public static async Task<TEntity> GetByIdOrThrowAsync<TEntity, TContext>(this RepositoryBase<TContext, TEntity> repository, Func<int, Task<TEntity>> getByIdFunc, int id)
 						where TContext : DbContext
 						where TEntity : class, IEntity<int>
 				{

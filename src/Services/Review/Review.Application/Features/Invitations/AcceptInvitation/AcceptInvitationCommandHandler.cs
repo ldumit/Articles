@@ -36,7 +36,7 @@ public class AcceptInvitationCommandHandler(ArticleRepository _articleRepository
 				{
 						var response = _authClient.GetUserById(new GetUserRequest { UserId = command.CreatedById });
 						var userInfo = response.UserInfo;
-						reviewer = Reviewer.Create(userInfo.Email, userInfo.FirstName, userInfo.LastName, userInfo.Title, userInfo.Affiliation, command);
+						reviewer = Reviewer.Create(userInfo.Email, userInfo.FirstName, userInfo.LastName, userInfo.Honorific, userInfo.Affiliation, command);
 
 						//author = response.UserInfo.Adapt<Author>();
 						await _articleRepository.Context.Reviewers.AddAsync(reviewer, ct);

@@ -2,6 +2,7 @@
 using Blocks.Core.Security;
 using Blocks.Domain;
 using Review.Domain.StateMachines;
+using Articles.Abstractions.Events.Dtos;
 
 namespace Review.Domain.Entities;
 
@@ -47,7 +48,7 @@ public partial class Article
 				if (_actors.Exists(a => a.PersonId == actor.Id && a.Role == UserRoleType.REV))
 						throw new DomainException($"Reviewer {actor.Email} is already assigned to the article");
 
-				actor.AddSpecialization(this.Journal);
+				actor.AddSpecialization(new ReviewerSpecialization() { JournalId = this.JournalId, ReviewerId = actor.Id});
 
 				_actors.Add(new ArticleActor() { PersonId = actor.Id, Role = UserRoleType.REV });
 
@@ -135,4 +136,31 @@ public partial class Article
 				AddDomainEvent(new ArticleActionExecuted(this, action));
 		}
 
+		public static Article AcceptSubmitted(ArticleDto articleDto)
+		{
+				return new Article
+				{
+						JournalId = articleDto.Journal.Id,
+						Title = articleDto.Title,
+						Type = articleDto.Type,
+						Scope = articleDto.Scope,
+						SubmittedById = articleDto.SubmittedBy.Id,
+						SubmittedOn = articleDto.SubmittedOn,
+						Stage = articleDto.Stage,
+				};
+		}
+
+		public static TPerson CreatePerson<TPerson>(PersonDto person)
+				where TPerson : Person, new()
+		{
+				return new TPerson
+				{
+						FirstName = person.FirstName,
+						LastName = person.LastName,
+						Honorific = person.Honorific,
+						Affiliation = person.Affiliation,
+						Email = person.Email,
+						UserId = person.UserId,
+				};
+		}
 }

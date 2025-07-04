@@ -22,6 +22,55 @@ namespace Auth.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Auth.Domain.Persons.Person", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CreatedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<DateTime?>("LasModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("LastModifiedById")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("PictureUrl")
+                        .HasMaxLength(2048)
+                        .HasColumnType("nvarchar(2048)");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Persons");
+                });
+
             modelBuilder.Entity("Auth.Domain.Roles.Role", b =>
                 {
                     b.Property<int>("Id")
@@ -195,16 +244,6 @@ namespace Auth.Persistence.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
                     b.Property<DateTime?>("LasModifiedOn")
                         .HasColumnType("datetime2");
 
@@ -213,11 +252,6 @@ namespace Auth.Persistence.Migrations
 
                     b.Property<int?>("LastModifiedById")
                         .HasColumnType("int");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -236,15 +270,14 @@ namespace Auth.Persistence.Migrations
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("PersonId")
+                        .HasColumnType("int");
+
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
-
-                    b.Property<string>("PictureUrl")
-                        .HasMaxLength(2048)
-                        .HasColumnType("nvarchar(2048)");
 
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
@@ -268,6 +301,9 @@ namespace Auth.Persistence.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("PersonId")
+                        .IsUnique();
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -397,6 +433,91 @@ namespace Auth.Persistence.Migrations
                     b.HasDiscriminator().HasValue("UserRole");
                 });
 
+            modelBuilder.Entity("Auth.Domain.Persons.Person", b =>
+                {
+                    b.OwnsOne("Auth.Domain.Persons.ValueObjects.EmailAddress", "Email", b1 =>
+                        {
+                            b1.Property<int>("PersonId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("NormalizedEmail")
+                                .IsRequired()
+                                .HasMaxLength(64)
+                                .HasColumnType("nvarchar(64)")
+                                .HasColumnName("NormalizedEmail");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasMaxLength(64)
+                                .HasColumnType("nvarchar(64)")
+                                .HasColumnName("Email");
+
+                            b1.HasKey("PersonId");
+
+                            b1.HasIndex("NormalizedEmail")
+                                .IsUnique();
+
+                            b1.ToTable("Persons");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PersonId");
+                        });
+
+                    b.OwnsOne("Auth.Domain.Persons.ValueObjects.HonorificTitle", "Honorific", b1 =>
+                        {
+                            b1.Property<int>("PersonId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasMaxLength(32)
+                                .HasColumnType("nvarchar(32)")
+                                .HasColumnName("Honorific");
+
+                            b1.HasKey("PersonId");
+
+                            b1.ToTable("Persons");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PersonId");
+                        });
+
+                    b.OwnsOne("Auth.Domain.Persons.ValueObjects.ProfessionalProfile", "ProfessionalProfile", b1 =>
+                        {
+                            b1.Property<int>("PersonId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Affiliation")
+                                .HasMaxLength(256)
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("Affiliation");
+
+                            b1.Property<string>("CompanyName")
+                                .HasMaxLength(128)
+                                .HasColumnType("nvarchar(128)")
+                                .HasColumnName("CompanyName");
+
+                            b1.Property<string>("Position")
+                                .HasMaxLength(64)
+                                .HasColumnType("nvarchar(64)")
+                                .HasColumnName("Position");
+
+                            b1.HasKey("PersonId");
+
+                            b1.ToTable("Persons");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PersonId");
+                        });
+
+                    b.Navigation("Email")
+                        .IsRequired();
+
+                    b.Navigation("Honorific");
+
+                    b.Navigation("ProfessionalProfile");
+                });
+
             modelBuilder.Entity("Auth.Domain.Users.RefreshToken", b =>
                 {
                     b.HasOne("Auth.Domain.Users.User", null)
@@ -408,56 +529,13 @@ namespace Auth.Persistence.Migrations
 
             modelBuilder.Entity("Auth.Domain.Users.User", b =>
                 {
-                    b.OwnsOne("Auth.Domain.Users.ValueObjects.HonorificTitle", "Honorific", b1 =>
-                        {
-                            b1.Property<int>("UserId")
-                                .HasColumnType("int");
+                    b.HasOne("Auth.Domain.Persons.Person", "Person")
+                        .WithOne("User")
+                        .HasForeignKey("Auth.Domain.Users.User", "PersonId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                            b1.Property<string>("Value")
-                                .IsRequired()
-                                .HasMaxLength(32)
-                                .HasColumnType("nvarchar(32)")
-                                .HasColumnName("Honorific");
-
-                            b1.HasKey("UserId");
-
-                            b1.ToTable("AspNetUsers");
-
-                            b1.WithOwner()
-                                .HasForeignKey("UserId");
-                        });
-
-                    b.OwnsOne("Auth.Domain.Users.ValueObjects.ProfessionalProfile", "ProfessionalProfile", b1 =>
-                        {
-                            b1.Property<int>("UserId")
-                                .HasColumnType("int");
-
-                            b1.Property<string>("Affiliation")
-                                .HasMaxLength(32)
-                                .HasColumnType("nvarchar(32)")
-                                .HasColumnName("Affiliation");
-
-                            b1.Property<string>("CompanyName")
-                                .HasMaxLength(32)
-                                .HasColumnType("nvarchar(32)")
-                                .HasColumnName("CompanyName");
-
-                            b1.Property<string>("Position")
-                                .HasMaxLength(32)
-                                .HasColumnType("nvarchar(32)")
-                                .HasColumnName("Position");
-
-                            b1.HasKey("UserId");
-
-                            b1.ToTable("AspNetUsers");
-
-                            b1.WithOwner()
-                                .HasForeignKey("UserId");
-                        });
-
-                    b.Navigation("Honorific");
-
-                    b.Navigation("ProfessionalProfile");
+                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -512,6 +590,11 @@ namespace Auth.Persistence.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Auth.Domain.Persons.Person", b =>
+                {
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Auth.Domain.Users.User", b =>

@@ -20,7 +20,7 @@
     <None Update="Data\Master\Role.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Data\Test\User.json">
+    <None Update="Data\Test\Person.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

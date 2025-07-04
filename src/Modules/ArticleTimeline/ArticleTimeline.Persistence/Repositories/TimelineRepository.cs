@@ -8,7 +8,7 @@ using Articles.Abstractions;
 namespace ArticleTimeline.Persistence.Repositories;
 
 public class TimelineRepository(ArticleTimelineDbContext dbContext) 
-    : Repository<ArticleTimelineDbContext, Timeline>(dbContext)
+    : RepositoryBase<ArticleTimelineDbContext, Timeline>(dbContext)
 {
     public virtual IQueryable<Domain.Timeline> GetByArticleId(int articleId, UserRoleType role,int lastTakenId,int take) 
     {

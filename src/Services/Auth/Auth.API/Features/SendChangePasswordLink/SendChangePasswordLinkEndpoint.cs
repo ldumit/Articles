@@ -40,7 +40,7 @@ public class SendChangePasswordLinkEndpoint(UserManager<User> _userManager, IEma
 
 				return new EmailMessage(
 						"Confirmation",
-						new Content(ContentType.Html, string.Format(SetPasswordEmail, user.FirstName + " " + user.LastName, url)),
+						new Content(ContentType.Html, string.Format(SetPasswordEmail, user.FullName, url)),
 						new EmailAddress("articles", _emailOptions.Value.EmailFromAddress),
 						new List<EmailAddress> { new EmailAddress(user.FullName, user.Email) }
 						);

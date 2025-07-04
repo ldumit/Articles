@@ -41,7 +41,7 @@ public interface IRepository<TEntity, TKey>
     Task<List<TDto>> GetAllAsync<TDto>(Expression<Func<TEntity, TDto>> projection, Expression<Func<TEntity, object>> orderBy);
     IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> predicate);
     IQueryable<TEntity> Where(Expression<Func<TEntity, int, bool>> predicate);
-    Task<TEntity> AddAsync(TEntity entity);
+    Task<TEntity> AddAsync(TEntity entity, CancellationToken ct = default);
     TEntity Update(TEntity entity);
     Task<bool> DeleteByIdAsync(TKey id);
     void Remove(TEntity entity);
@@ -56,7 +56,7 @@ public interface IRepository<TEntity, TKey>
 
 //todo - simplify the repository
 
-public class Repository<TContext, TEntity>(TContext dbContext) : RepositoryBase<TContext, TEntity, int>(dbContext)
+public class RepositoryBase<TContext, TEntity>(TContext dbContext) : RepositoryBase<TContext, TEntity, int>(dbContext)
 		where TContext : DbContext
 		where TEntity : class, IEntity<int>;
 
@@ -133,9 +133,9 @@ public abstract class RepositoryBase<TContext, TEntity, TKey> : IRepository<TEnt
     public virtual IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> predicate) { return _entity.Where(predicate); }
     public virtual IQueryable<TEntity> Where(Expression<Func<TEntity, int, bool>> predicate) { return _entity.Where(predicate); }
 
-    public virtual async Task<TEntity> AddAsync(TEntity entity)
+    public virtual async Task<TEntity> AddAsync(TEntity entity, CancellationToken ct = default)
     {
-        var addedEntity = await _entity.AddAsync(entity);
+        var addedEntity = await _entity.AddAsync(entity, ct);
         return addedEntity.Entity;
     }
 
@@ -179,10 +179,9 @@ public abstract class RepositoryBase<TContext, TEntity, TKey> : IRepository<TEnt
     public async Task<int> SaveChangesAsync(CancellationToken ct = default)
 				=> await _dbContext.SaveChangesAsync(ct);
 
-    public IDbContextTransaction BeginTransaction()
-    {
-        return _dbContext.Database.BeginTransaction();
-    }
+    public Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken ct = default)
+        => _dbContext.Database.BeginTransactionAsync(ct);
+
     public void ClearTracking()
     {
         _dbContext.ChangeTracker.Clear();

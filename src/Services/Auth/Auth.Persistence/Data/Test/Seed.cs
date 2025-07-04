@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using Auth.Domain.Users;
 using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
 
 namespace Auth.Persistence.Data.Test;
 
@@ -20,13 +21,29 @@ public static class Seed
         const string DefaultPassword = "Pass.123!";
         using var transaction = context.Database.BeginTransaction();
 
-				var users = context.LoadFromJson<User>();
-        foreach (var user in users) 
+				var persons = context.LoadFromJson<Person>();
+        foreach (var person in persons) 
         {
-            user.UserName = user.Email;
-						var result = userManager.CreateAsync(user, DefaultPassword).GetAwaiter().GetResult();
+            var user = person.User;
+            person.User = null;
+						context.Persons.Add(person);
+            context.SaveChanges();
+
+						if (user != null) {
+                user.UserName = person.Email;
+                user.Email = person.Email;
+								user.PersonId = person.Id;
+
+								var result = userManager.CreateAsync(user, DefaultPassword).GetAwaiter().GetResult();
+								if (!result.Succeeded)
+								{
+										throw new Exception($"User creation failed for {person.Email}");
+								}
+                person.UserId = user.Id;
+						}
 				}
 
-        transaction.Commit();
+				context.SaveChanges();
+				transaction.Commit();
     }
 }

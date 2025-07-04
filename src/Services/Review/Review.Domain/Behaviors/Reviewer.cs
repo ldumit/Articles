@@ -11,7 +11,7 @@ public partial class Reviewer
 						Email = EmailAddress.Create(email),
 						FirstName = firstName,
 						LastName = lastName,
-						Title = title,
+						Honorific = title,
 						Affiliation = affiliation
 				};
 
@@ -22,9 +22,9 @@ public partial class Reviewer
 				return reviewer;
 		}
 
-		public void AddSpecialization(Journal journal)
+		public void AddSpecialization(ReviewerSpecialization specialization)
 		{
-				//if (!_specializations.Contains(journal))
-				//		_specializations.Add(journal);
+				if (!_specializations.Contains(specialization))
+						_specializations.Add(specialization);
 		}
 }

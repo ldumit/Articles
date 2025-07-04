@@ -1,4 +1,4 @@
-﻿namespace Auth.Domain.Users.ValueObjects;
+﻿namespace Auth.Domain.Persons.ValueObjects;
 
 public sealed class ProfessionalProfile : ValueObject
 {

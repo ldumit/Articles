@@ -7,5 +7,6 @@ global using Blocks.Core;
 global using Blocks.EntityFrameworkCore;
 
 // Domain
+global using Auth.Domain.Persons;
 global using Auth.Domain.Users;
 global using Auth.Domain.Roles;

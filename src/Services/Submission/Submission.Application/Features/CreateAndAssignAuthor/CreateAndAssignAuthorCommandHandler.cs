@@ -33,7 +33,7 @@ public class CreateAndAssignAuthorCommandHandler(ArticleRepository _articleRepos
 				{
 						var response = _authClient.GetUserById(new GetUserRequest { UserId = command.UserId!.Value });
 						var userInfo = response.UserInfo;
-						author = Author.Create(userInfo.Email, userInfo.FirstName, userInfo.LastName, userInfo.Title, userInfo.Affiliation, command);
+						author = Author.Create(userInfo.Email, userInfo.FirstName, userInfo.LastName, userInfo.Honorific, userInfo.Affiliation, command);
 						// or if you preffer a simpler aproach you can just use Adapt
 						//author = response.UserInfo.Adapt<Author>();
 						await _articleRepository.Context.Authors.AddAsync(author, ct);

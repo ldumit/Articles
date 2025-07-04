@@ -1,5 +1,4 @@
-﻿using Articles.Abstractions;
-using Mapster;
+﻿using Mapster;
 
 namespace Auth.Domain.Users;
 
@@ -17,6 +16,7 @@ public partial class UserRole
 						throw new ArgumentException("Expiring date must be after the start date.", nameof(userRoleInfo.ExpiringDate));
 
 				var userRole = userRoleInfo.Adapt<UserRole>();
+
 				return userRole;
 		}
 }

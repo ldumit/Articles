@@ -2,7 +2,7 @@
 using Blocks.Core;
 using Newtonsoft.Json;
 
-namespace Auth.Domain.Users.ValueObjects;
+namespace Auth.Domain.Persons.ValueObjects;
 
 public class HonorificTitle : StringValueObject
 {
