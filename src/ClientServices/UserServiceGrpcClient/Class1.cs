@@ -17,7 +17,7 @@
 
 //		public async Task<UserInfo> GetUserInfoAsync(string userId)
 //		{
-//				var request = new GetUserRequest { UserId = userId };
+//				var request = new GetPersonRequest { UserId = userId };
 //				var response = await _userServiceClient.GetUserInfoAsync(request);
 //				return response.UserInfo;
 //		}

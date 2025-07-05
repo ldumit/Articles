@@ -2,7 +2,9 @@
 
 public class PersonEntityConfiguration : EntityConfiguration<Person>
 {
-    public override void Configure(EntityTypeBuilder<Person> builder)
+		protected override bool HasGeneratedId => false;
+
+		public override void Configure(EntityTypeBuilder<Person> builder)
     {
         base.Configure(builder);
 

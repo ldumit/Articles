@@ -8,4 +8,7 @@ public class PersonRepository(AuthDBContext dbContext)
 
 		public async Task<Person?> GetByEmailAsync(string email, CancellationToken ct = default)
 				=> await Query().SingleOrDefaultAsync(p => p.Email.NormalizedEmail == email.ToUpperInvariant(), ct);
+
+		public async Task<Person?> GetByUserIdAsync(int userId, CancellationToken ct = default)
+				=> await Query().SingleOrDefaultAsync(p => p.UserId == userId, ct);
 }

@@ -1,11 +1,10 @@
 ﻿using Auth.Grpc;
 using Microsoft.EntityFrameworkCore;
 using Submission.Persistence;
-using static Auth.Grpc.AuthService;
 
 namespace Submission.Application.Features.ApproveArticle;
 
-public class ApproveArticleCommandHandler(ArticleRepository _articleRepository, PersonRepository _personRepository, ArticleStateMachineFactory _stateMachineFactory, AuthServiceClient _authClient)
+public class ApproveArticleCommandHandler(ArticleRepository _articleRepository, PersonRepository _personRepository, ArticleStateMachineFactory _stateMachineFactory, IPersonService _personClient)
 		: IRequestHandler<ApproveArticleCommand, IdResponse>
 {
 		public async Task<IdResponse> Handle(ApproveArticleCommand command, CancellationToken ct)
@@ -28,9 +27,9 @@ public class ApproveArticleCommandHandler(ArticleRepository _articleRepository, 
 				var person = await _articleRepository.Context.Persons.FirstOrDefaultAsync(x => x.UserId == userId, ct);
 				if (person is null)
 				{
-						var response = _authClient.GetUserById(new GetUserRequest { UserId = userId });
-						var userInfo = response.UserInfo;
-						person = Person.Create(userInfo, action);
+						var response = await _personClient.GetPersonByUserIdAsync(new GetPersonByUserIdRequest{ UserId = userId });
+						var personInfo = response.PersonInfo;
+						person = Person.Create(personInfo, action);
 						await context.Persons.AddAsync(person, ct);
 				}
 

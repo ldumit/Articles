@@ -5,7 +5,7 @@ using Auth.Persistence.Data.Test;
 using Auth.Api;
 using Auth.Application;
 using Auth.Persistence;
-using Auth.API.Features.GetUserInfo;
+using Auth.API.Features.Persons;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,7 +45,7 @@ app
 		.UseCustomFastEndpoints()		// Registers and customizes FastEndpoints; must come after UseAuthorization to enforce role policies
 		.UseSwaggerGen();						// FastEndpoints Swagger; must come after UseCustomFastEndpoints
 
-app.MapGrpcService<GetUserInfoGrpc>();
+app.MapGrpcService<PersonGrpcService>();
 #endregion
 
 app.Run();

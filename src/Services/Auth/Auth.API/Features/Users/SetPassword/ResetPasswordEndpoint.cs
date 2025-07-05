@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Auth.Domain.Users;
 using Blocks.Exceptions;
 
-namespace Auth.API.Features;
+namespace Auth.API.Features.Users.SetPassword;
 
 [AllowAnonymous]
 [HttpPost("set-first-password", "reset-password")]

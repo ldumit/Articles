@@ -6,7 +6,7 @@ public record CreateReviewerCommand(
         string Email,
         string FirstName,
         string LastName,
-        string? Title,
+        Honorific? Honorific,
         string Affiliation) : ArticleCommand
 {
     public override ArticleActionType ActionType => ArticleActionType.CreateReviewer;
@@ -27,9 +27,6 @@ public class CreateReviewerCommandValidator : AbstractValidator<CreateReviewerCo
         RuleFor(x => x.LastName)
                 .NotEmptyWithMessage(nameof(CreateReviewerCommand.LastName))
                 .MaximumLengthWithMessage(MaxLength.C64, nameof(CreateReviewerCommand.LastName));
-
-        RuleFor(x => x.Title)
-                .MaximumLengthWithMessage(MaxLength.C64, nameof(CreateReviewerCommand.Title));
 
         RuleFor(x => x.Affiliation)
                 .NotEmptyWithMessage(nameof(CreateReviewerCommand.Affiliation))

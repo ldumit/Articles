@@ -149,18 +149,4 @@ public partial class Article
 						Stage = articleDto.Stage,
 				};
 		}
-
-		public static TPerson CreatePerson<TPerson>(PersonDto person)
-				where TPerson : Person, new()
-		{
-				return new TPerson
-				{
-						FirstName = person.FirstName,
-						LastName = person.LastName,
-						Honorific = person.Honorific,
-						Affiliation = person.Affiliation,
-						Email = person.Email,
-						UserId = person.UserId,
-				};
-		}
 }

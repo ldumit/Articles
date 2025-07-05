@@ -1,4 +1,4 @@
-﻿namespace Auth.API.Features;
+﻿namespace Auth.API.Features.Users.Login;
 
 public class LoginCommandValidator : Validator<LoginCommand>
 {

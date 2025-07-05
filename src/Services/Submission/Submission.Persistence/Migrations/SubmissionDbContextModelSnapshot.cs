@@ -178,6 +178,12 @@ namespace Submission.Persistence.Migrations
                         new
                         {
                             CurrentStage = "ManuscriptUploaded",
+                            ActionType = "UploadAsset",
+                            DestinationStage = "ManuscriptUploaded"
+                        },
+                        new
+                        {
+                            CurrentStage = "ManuscriptUploaded",
                             ActionType = "SubmitDraft",
                             DestinationStage = "Submitted"
                         },
@@ -352,11 +358,8 @@ namespace Submission.Persistence.Migrations
             modelBuilder.Entity("Submission.Domain.Entities.Journal", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnOrder(0);
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Abbreviation")
                         .IsRequired()
@@ -376,11 +379,8 @@ namespace Submission.Persistence.Migrations
             modelBuilder.Entity("Submission.Domain.Entities.Person", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnOrder(0);
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Affiliation")
                         .IsRequired()
@@ -399,6 +399,10 @@ namespace Submission.Persistence.Migrations
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
+                    b.Property<int?>("Honorific")
+                        .HasMaxLength(64)
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("LasModifiedOn")
                         .HasColumnType("datetime2");
 
@@ -407,10 +411,6 @@ namespace Submission.Persistence.Migrations
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<string>("Title")
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 

@@ -1,6 +1,6 @@
 ﻿using Auth.Domain.Users;
 
-namespace Auth.API.Features;
+namespace Auth.API.Features.Users.CreateAccount;
 
 public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
 {

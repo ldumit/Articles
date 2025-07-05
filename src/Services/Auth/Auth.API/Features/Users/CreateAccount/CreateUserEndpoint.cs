@@ -5,7 +5,7 @@ using Auth.Domain.Persons;
 using Auth.Domain.Users.Events;
 using Auth.Persistence.Repositories;
 
-namespace Auth.API.Features;
+namespace Auth.API.Features.Users.CreateAccount;
 
 [Authorize(Roles = Articles.Security.Role.ADMIN)]
 [HttpPost("users")]
@@ -24,7 +24,7 @@ public class CreateUserEndpoint(UserManager<User> _userManager, PersonRepository
 				//start transaction to ensure atomic creation 
 				await using var transaction = await _personRepository.BeginTransactionAsync(ct);
 
-				var user = Auth.Domain.Users.User.Create(command, person);
+				var user = Domain.Users.User.Create(command, person);
 
 				var result = await _userManager.CreateAsync(user);
 				if (!result.Succeeded)

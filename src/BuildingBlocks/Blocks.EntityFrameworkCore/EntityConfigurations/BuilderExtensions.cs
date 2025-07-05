@@ -14,6 +14,11 @@ namespace Blocks.EntityFrameworkCore
                 e => e.ToString(),
                 value => (TEnum)Enum.Parse(typeof(TEnum), value));
         }
+				public static PropertyBuilder<TEnum> HasEnumConversionAsString<TEnum>(this PropertyBuilder<TEnum> builder)
+						where TEnum : Enum
+				{
+						return builder.HasConversion<string>();
+				}
 
 				public static PropertyBuilder<IReadOnlyList<string>> HasCsvListConversion(this PropertyBuilder<IReadOnlyList<string>> builder)
 				{

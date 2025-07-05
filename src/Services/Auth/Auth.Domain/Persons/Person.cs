@@ -1,4 +1,4 @@
-﻿using Auth.Domain.Persons.Enums;
+﻿using Articles.Abstractions.Enums;
 using Auth.Domain.Persons.ValueObjects;
 using Auth.Domain.Users;
 

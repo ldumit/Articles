@@ -1,22 +1,9 @@
-﻿using Articles.Abstractions.Enums;
-using Auth.Domain.Persons.Enums;
+﻿using Articles.Abstractions;
+using Articles.Abstractions.Enums;
 
 namespace Auth.Domain.Users;
 
-public interface IPersonCeationInfo
-{
-		string Email { get; }
-		string FirstName { get; }
-		string LastName { get; }
-		Gender Gender { get; }
-
-		Honorific? Honorific { get; }
-		string? PictureUrl { get; }
-		string? CompanyName { get; }
-		string? Position { get; }
-		string? Affiliation { get; }
-}
-public interface IUserCreationInfo : IPersonCeationInfo
+public interface IUserCreationInfo : IPersonCreationInfo
 {
 		string? PhoneNumber { get; }
 		IReadOnlyList<IUserRole> UserRoles { get; }

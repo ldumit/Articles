@@ -1,21 +1,26 @@
 [
   {
-    "name": "Medicine",
-    "abbreviation": "med"
-  },
-  {
-    "name": "Public Health",
-    "abbreviation": "pubh"
-  },
-  {
-    "name": "Young Minds",
-    "abbreviation": "ymind"
-  },
-  {
+    "id": 1,
     "name": "Aerospace Engineering",
     "abbreviation": "apace"
   },
   {
+    "id": 2,
+    "name": "Medicine",
+    "abbreviation": "med"
+  },
+  {
+    "id": 3,
+    "name": "Public Health",
+    "abbreviation": "pubh"
+  },
+  {
+    "id": 4,
+    "name": "Young Minds",
+    "abbreviation": "ymind"
+  },
+  {
+    "id": 5,
     "name": " Aquaculture",
     "abbreviation": "aquac"
   }  

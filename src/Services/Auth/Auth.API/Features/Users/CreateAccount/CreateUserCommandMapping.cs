@@ -1,7 +1,7 @@
 ﻿using Auth.Domain.Users;
 using AutoMapper;
 
-namespace Auth.API.Features;
+namespace Auth.API.Features.Users.CreateAccount;
 
 public class CreateUserCommandMapping : Profile
 {

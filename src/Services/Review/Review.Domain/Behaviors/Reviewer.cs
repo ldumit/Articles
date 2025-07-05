@@ -4,14 +4,14 @@ namespace Review.Domain.Entities;
 
 public partial class Reviewer
 {
-		public static Reviewer Create(string email, string firstName, string lastName, string? title, string affiliation, IArticleAction action)
+		public static Reviewer Create(string email, string firstName, string lastName, string? honorific, string affiliation, IArticleAction action)
 		{
 				var reviewer = new Reviewer
 				{
 						Email = EmailAddress.Create(email),
 						FirstName = firstName,
 						LastName = lastName,
-						Honorific = title,
+						Honorific = honorific,
 						Affiliation = affiliation
 				};
 

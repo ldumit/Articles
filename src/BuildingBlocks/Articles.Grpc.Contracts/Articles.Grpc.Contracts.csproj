@@ -7,20 +7,22 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Grpc.AspNetCore" Version="2.70.0" />
-    <PackageReference Include="Grpc.Tools" Version="2.71.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.6" />
+    <PackageReference Include="protobuf-net" Version="3.2.52" />
+    <PackageReference Include="protobuf-net.Grpc" Version="1.2.2" />
+    <PackageReference Include="System.ServiceModel.Primitives" Version="4.5.3" />
   </ItemGroup>
 		
 <ItemGroup>
-  <Protobuf Include="Auth\UserRequest.proto" GrpcServices="Both" />
+  <Protobuf Include="Auth\PersonContracts.proto" GrpcServices="None" />
 </ItemGroup>
 		
 <ItemGroup>
   <Folder Include="Journal\" />
+</ItemGroup>
+		
+<ItemGroup>
+  <ProjectReference Include="..\Articles.Abstractions\Articles.Abstractions.csproj" />
 </ItemGroup>
 
 </Project>

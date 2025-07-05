@@ -3,14 +3,14 @@
 namespace Articles.Abstractions.Enums;
 
 [ProtoContract]
-public enum Honorific
+public enum Gender
 {
 		[ProtoEnum]
-		Mr,
+		NotDeclared = 0,
 		[ProtoEnum]
-		Ms,
+		Male = 1,
 		[ProtoEnum]
-		Dr,
+		Female = 2,
 		[ProtoEnum]
-		Prof
+		Neutral = 3
 }

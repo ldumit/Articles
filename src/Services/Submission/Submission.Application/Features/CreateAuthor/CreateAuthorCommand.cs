@@ -4,7 +4,7 @@ public record CreateAuthorCommand(
 		string Email,
 		string FirstName,
 		string LastName,
-		string? Title,
+		Honorific? Honorific,
 		string Affiliation) : ArticleCommand
 {
 		public override ArticleActionType ActionType =>  ArticleActionType.CreateAuthor;
@@ -25,9 +25,6 @@ public class CreateAuthorCommandValidator : AbstractValidator<CreateAuthorComman
 				RuleFor(x => x.LastName)
 						.NotEmptyWithMessage(nameof(CreateAuthorCommand.LastName))
 						.MaximumLengthWithMessage(MaxLength.C64, nameof(CreateAuthorCommand.LastName));
-
-				RuleFor(x => x.Title)
-						.MaximumLengthWithMessage(MaxLength.C64, nameof(CreateAuthorCommand.Title));
 
 				RuleFor(x => x.Affiliation)
 						.NotEmptyWithMessage(nameof(CreateAuthorCommand.Affiliation))

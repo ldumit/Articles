@@ -49,8 +49,7 @@ namespace Submission.Persistence.Migrations
                 name: "Journal",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     Abbreviation = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false)
                 },
@@ -63,11 +62,10 @@ namespace Submission.Persistence.Migrations
                 name: "Person",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
+										Honorific = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
                     Affiliation = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false, comment: "Institution or organization they are associated with when they conduct their research."),
                     UserId = table.Column<int>(type: "int", nullable: true),
                     TypeDiscriminator = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
@@ -261,8 +259,8 @@ namespace Submission.Persistence.Migrations
                 values: new object[,]
                 {
                     { "UploadAsset", "Created", "ManuscriptUploaded" },
-										{ "UploadAsset", "ManuscriptUploaded", "ManuscriptUploaded" },
-										{ "SubmitDraft", "ManuscriptUploaded", "Submitted" },
+                    { "SubmitDraft", "ManuscriptUploaded", "Submitted" },
+                    { "UploadAsset", "ManuscriptUploaded", "ManuscriptUploaded" },
                     { "CreateArticle", "None", "Created" },
                     { "ApproveDraft", "Submitted", "InitialApproved" },
                     { "RejectDraft", "Submitted", "InitialRejected" }

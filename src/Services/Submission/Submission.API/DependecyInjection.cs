@@ -53,7 +53,8 @@ public static class DependecyInjection
 
 				//grpc Services
 				var grpcOptions = configuration.GetSectionByTypeName<GrpcServicesOptions>();
-				services.AddConfiguredGrpcClient<AuthService.AuthServiceClient>(grpcOptions);
+				services.AddCodeFirstGrpcClient<IPersonService>(grpcOptions, "Person");
+				//services.AddConfiguredGrpcClient<PersonService.PersonServiceClient>(grpcOptions);
 				// todo - add this service
 				//services.AddConfiguredGrpcClient<JournalService.JournalerviceClient>(grpcOptions);
 

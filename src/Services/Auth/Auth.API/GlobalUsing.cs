@@ -12,3 +12,4 @@ global using Blocks.FluentValidation;
 
 // Domain
 global using Auth.Domain.Users;
+global using Auth.Domain.Persons;

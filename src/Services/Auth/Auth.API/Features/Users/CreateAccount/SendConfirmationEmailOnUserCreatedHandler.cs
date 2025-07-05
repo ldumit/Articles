@@ -4,7 +4,7 @@ using Blocks.AspNetCore;
 using EmailService.Contracts;
 using Auth.Domain.Users.Events;
 
-namespace Auth.API.Features.CreateAccount;
+namespace Auth.API.Features.Users.CreateAccount;
 
 public class SendConfirmationEmailOnUserCreatedHandler
 		(IEmailService emailService, IHttpContextAccessor httpContextAccessor, IOptions<EmailOptions> emailOptions) 

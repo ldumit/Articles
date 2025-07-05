@@ -19,7 +19,7 @@ public class ApplicationMappingConfig : IRegister
 				config.ForType<string, EmailAddress>()
 						.MapWith(src => EmailAddress.Create(src));
 
-				config.ForType<UserInfo, Author>()
+				config.ForType<PersonInfo, Author>()
 						.Map(dest => dest.UserId, src => src.Id)
 						.Ignore(dest => dest.Id); 
 		}

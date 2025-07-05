@@ -1,12 +1,15 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Grpc.Core;
+using Grpc.Net.Client;
+using Microsoft.Extensions.DependencyInjection;
 using Polly;
-using Grpc.Core;
+using ProtoBuf.Grpc.Client;
+using ProtoBuf.Grpc.Configuration;
 
 namespace Blocks.AspNetCore.Grpc;
 
 public static class GrpcClientRegistrationExtensions
 {
-		public static IHttpClientBuilder AddConfiguredGrpcClient<TClient>(this IServiceCollection services, GrpcServicesOptions grpcOptions, string? serviceKey = null)
+		public static IHttpClientBuilder AddConfiguredGrpcClient1<TClient>(this IServiceCollection services, GrpcServicesOptions grpcOptions, string? serviceKey = null)
 				where TClient : class
 		{
 				//serviceKey ??= typeof(TClient).Namespace?.Split('.').FirstOrDefault()?.ToLowerInvariant();
@@ -42,5 +45,56 @@ public static class GrpcClientRegistrationExtensions
 				}
 
 				return clientBuilder;
+		}
+
+		public static IServiceCollection AddGrpcServiceSingleton2<TClient>(this IServiceCollection services, GrpcServicesOptions grpcOptions, string? serviceKey = null)
+		{
+				serviceKey ??= typeof(TClient).Name.Replace("Client", "").Replace("Service", "");
+
+				if (string.IsNullOrWhiteSpace(serviceKey) || !grpcOptions.Services.TryGetValue(serviceKey, out var serviceSettings))
+				{
+						throw new InvalidOperationException($"Missing GrpcService config for: {typeof(TClient).Name}");
+				}
+
+				var channel = GrpcChannel.ForAddress(serviceSettings.Url);
+				return services;
+		}
+
+		public static IServiceCollection AddCodeFirstGrpcClient<TClient>(this IServiceCollection services, GrpcServicesOptions grpcOptions, string? serviceKey = null)
+				where TClient : class
+		{
+				serviceKey ??= typeof(TClient).Name.Replace("Client", "").Replace("Service", "");
+
+				if (string.IsNullOrWhiteSpace(serviceKey)
+						|| !grpcOptions.Services.TryGetValue(serviceKey, out var serviceSettings))
+				{
+						throw new InvalidOperationException($"Missing GrpcService config for: {typeof(TClient).Name}");
+				}
+				//// Register the GrpcChannel singleton
+				//services.AddSingleton(sp =>
+				//		GrpcChannel.ForAddress(serviceSettings.Url));
+
+				//// Register the strongly-typed gRPC client singleton
+				//services.AddScoped(sp =>
+				//{
+				//		var channel = sp.GetRequiredService<GrpcChannel>();
+				//		return channel.CreateGrpcService<TClient>();
+				//});
+
+
+				services.AddScoped(sp =>
+				{
+						var channel = GrpcChannel.ForAddress(serviceSettings.Url,
+								new GrpcChannelOptions
+								{
+										HttpHandler = new HttpClientHandler
+										{
+												ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+										}
+								});
+						return channel.CreateGrpcService<TClient>();
+				});
+
+				return services;
 		}
 }

@@ -1,15 +1,18 @@
-﻿using System.Reflection;
-using System.Security.Claims;
-using System.Text.Json.Serialization;
+﻿using Articles.Security;
+using Auth.API;
+using Auth.API.Features.Persons;
+using Auth.API.Features.Users.CreateAccount;
+using Auth.API.Mappings;
+using Auth.Grpc;
+using Auth.Persistence;
+using EmailService.Smtp;
+using FastEndpoints.Swagger;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Identity;
-using FastEndpoints.Swagger;
-using Articles.Security;
-using EmailService.Smtp;
-using Auth.API;
-using Auth.API.Mappings;
-using Auth.Persistence;
-using Auth.API.Features;
+using ProtoBuf.Grpc.Server;
+using System.IO.Compression;
+using System.Security.Claims;
+using System.Text.Json.Serialization;
 
 namespace Auth.Api;
 
@@ -36,16 +39,22 @@ public static class DependenciesConfiguration
 				services
 						.AddFastEndpoints()
 						.SwaggerDocument()
-						.AddEndpointsApiExplorer()                  // Minimal API docs (Swagger)
-						.AddAutoMapper(new Assembly[] { typeof(CreateUserCommandMapping).Assembly })
-						.AddSwaggerGen()                            // Swagger setup
+						.AddEndpointsApiExplorer()											// Minimal API docs (Swagger)
+						.AddAutoMapper([typeof(CreateUserCommandMapping).Assembly])
+						.AddSwaggerGen()																// Swagger setup
 						.AddJwtIdentity(config)
-						.AddJwtAuthentication(config)        // JWT Authentication
-						.AddAuthorization();                         // Authorization configuration
+						.AddJwtAuthentication(config)										// JWT Authentication
+						.AddAuthorization();														// Authorization configuration
 
-				services.AddGrpc();
+				services.AddCodeFirstGrpc(options =>
+				{
+						options.ResponseCompressionLevel = CompressionLevel.Fastest;
+						options.EnableDetailedErrors = true;
+				});
 
 				services.AddSmtpEmailService(config);
+
+				services.AddScoped<IPersonService, PersonGrpcService>();
 
 				return services;
 		}

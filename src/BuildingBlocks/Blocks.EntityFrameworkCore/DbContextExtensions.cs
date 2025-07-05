@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Blocks.EntityFrameworkCore;
 
@@ -16,7 +17,8 @@ public static class DbContextExtensions
 		{
 				DefaultSettings = new JsonSerializerSettings
 				{
-						ContractResolver = new PrivateContractResolver()
+						ContractResolver = new PrivateContractResolver(),
+						Converters = { new StringEnumConverter() }
 				};
 		}
 

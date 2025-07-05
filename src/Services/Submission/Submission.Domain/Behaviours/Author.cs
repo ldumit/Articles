@@ -1,23 +1,28 @@
-﻿using Mapster;
+﻿using Auth.Grpc;
+using Honorific = Articles.Abstractions.Enums.Honorific;
 
 namespace Submission.Domain.Entities;
 
 public partial class Author
-{
-    public static Author Create(string email, string firstName, string lastName, string? honorific, string affiliation, IArticleAction action)
+{      
+		public static Author Create(PersonInfo personInfo, IArticleAction action)
 		{
 				var author = new Author
 				{
-						Email = EmailAddress.Create(email),
-						FirstName = firstName,
-						LastName = lastName,
-						Honorific = honorific,
-						Affiliation = affiliation
+						Id = personInfo.Id,
+						UserId = personInfo.UserId,
+						Email = EmailAddress.Create(personInfo.Email),
+						FirstName = personInfo.FirstName,
+						LastName = personInfo.LastName,
+						Honorific = personInfo.Honorific,
+						Affiliation = personInfo.ProfessionalProfile.Affiliation,
+						CreatedById = action.CreatedById,
+						CreatedOn = DateTime.UtcNow
 				};
 
 				var domainEvent = new AuthorCreated(author, action);
 				author.AddDomainEvent(domainEvent);
 
 				return author;
-		}
+		}		
 }

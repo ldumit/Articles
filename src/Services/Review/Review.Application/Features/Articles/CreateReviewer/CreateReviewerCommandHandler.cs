@@ -12,7 +12,7 @@ public class CreateReviewerCommandHandler(Repository<Person> _personRepository)
 				if (exists)
 						throw new BadRequestException("A reviewer with this email already exists.");
 
-        var reviewer = Reviewer.Create(command.Email, command.FirstName, command.LastName, command.Title, command.Affiliation, command);
+        var reviewer = Reviewer.Create(command.Email, command.FirstName, command.LastName, command.Honorific.ToString(), command.Affiliation, command);
         await _personRepository.AddAsync(reviewer);
 
         await _personRepository.SaveChangesAsync();

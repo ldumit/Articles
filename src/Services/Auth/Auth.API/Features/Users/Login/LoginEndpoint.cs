@@ -5,7 +5,7 @@ using Blocks.Exceptions;
 using Auth.Application;
 using Auth.Persistence.Repositories;
 
-namespace Auth.API.Features;
+namespace Auth.API.Features.Users.Login;
 
 [AllowAnonymous]
 [HttpPost("login")]

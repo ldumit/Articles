@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Auth.API.Features;
+namespace Auth.API.Features.Users.SetPassword;
 
 public class SetPasswordValidator : AbstractValidator<SetPasswordCommand>
 {

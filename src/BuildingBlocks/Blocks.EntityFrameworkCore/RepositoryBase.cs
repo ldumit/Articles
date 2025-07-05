@@ -36,7 +36,7 @@ public interface IRepositoryExtended<TEntity, TKey>
 public interface IRepository<TEntity, TKey>
 {
 		Task<TEntity?> FindByIdAsync(TKey id);
-		Task<TEntity?> GetByIdAsync(TKey id);
+		Task<TEntity?> GetByIdAsync(TKey id, CancellationToken ct = default);
     IQueryable<TDto> GetAll<TDto>(Expression<Func<TEntity, TDto>> projection, Expression<Func<TEntity, object>> orderBy);
     Task<List<TDto>> GetAllAsync<TDto>(Expression<Func<TEntity, TDto>> projection, Expression<Func<TEntity, object>> orderBy);
     IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> predicate);
@@ -83,7 +83,7 @@ public abstract class RepositoryBase<TContext, TEntity, TKey> : IRepository<TEnt
 		public virtual async Task<TEntity?> FindByIdAsync(TKey id)
 				=> await _entity.FindAsync(id);
 
-		public virtual async Task<TEntity?> GetByIdAsync(TKey id)
+		public virtual async Task<TEntity?> GetByIdAsync(TKey id, CancellationToken ct = default)
 				=> await Query().SingleOrDefaultAsync(e => e.Id.Equals(id));
 
 		protected TEntity ReturnOrThrow(TEntity? entity, bool throwNotFound)

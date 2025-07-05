@@ -1,11 +1,12 @@
-﻿using Auth.Domain.Persons.ValueObjects;
+﻿using Articles.Abstractions;
+using Auth.Domain.Persons.ValueObjects;
 using Auth.Domain.Users;
 
 namespace Auth.Domain.Persons;
 
 public partial class Person
 {
-		public static Person Create(IPersonCeationInfo userInfo)
+		public static Person Create(IPersonCreationInfo userInfo)
 		{
 				var person = new Person
 				{

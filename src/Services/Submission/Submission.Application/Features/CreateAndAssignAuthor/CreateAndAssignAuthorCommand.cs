@@ -1,6 +1,6 @@
 ﻿namespace Submission.Application.Features.CreateAndAssignAuthor;
 
-public record CreateAndAssignAuthorCommand(int? UserId, string? FirstName, string? LastName, string? Email, string? Title, string? Affiliation, bool IsCorrespondingAuthor, HashSet<ContributionArea> ContributionAreas)
+public record CreateAndAssignAuthorCommand(int? PersonId, string? FirstName, string? LastName, string? Email, Honorific? Honorific, string? Affiliation, bool IsCorrespondingAuthor, HashSet<ContributionArea> ContributionAreas)
 		: ArticleCommand
 {
 		public override ArticleActionType ActionType => ArticleActionType.AssignAuthor;
@@ -10,7 +10,7 @@ public class CreateAndAssignAuthorCommandValidator : ArticleCommandValidator<Cre
 {
 		public CreateAndAssignAuthorCommandValidator()
 		{
-				When(c => c.UserId == null, () =>
+				When(c => c.PersonId == null, () =>
 				{
 						RuleFor(x => x.Email)
 								.NotEmptyWithMessage(nameof(CreateAndAssignAuthorCommand.Email))
@@ -24,9 +24,6 @@ public class CreateAndAssignAuthorCommandValidator : ArticleCommandValidator<Cre
 						RuleFor(x => x.LastName)
 								.NotEmptyWithMessage(nameof(CreateAndAssignAuthorCommand.LastName))
 								.MaximumLengthWithMessage(MaxLength.C256, nameof(CreateAndAssignAuthorCommand.LastName));
-
-						RuleFor(x => x.Title)
-								.MaximumLengthWithMessage(MaxLength.C32, nameof(CreateAndAssignAuthorCommand.LastName));
 
 						RuleFor(x => x.Affiliation)
 								.NotEmptyWithMessage(nameof(CreateAndAssignAuthorCommand.Affiliation))

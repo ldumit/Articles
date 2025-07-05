@@ -13,8 +13,8 @@ using Submission.Persistence;
 namespace Submission.Persistence.Migrations
 {
     [DbContext(typeof(SubmissionDbContext))]
-    [Migration("20250625070614_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250704151013_SeedMasterData")]
+    partial class SeedMasterData
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -175,6 +175,12 @@ namespace Submission.Persistence.Migrations
                         new
                         {
                             CurrentStage = "Created",
+                            ActionType = "UploadAsset",
+                            DestinationStage = "ManuscriptUploaded"
+                        },
+                        new
+                        {
+                            CurrentStage = "ManuscriptUploaded",
                             ActionType = "UploadAsset",
                             DestinationStage = "ManuscriptUploaded"
                         },
@@ -355,11 +361,8 @@ namespace Submission.Persistence.Migrations
             modelBuilder.Entity("Submission.Domain.Entities.Journal", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnOrder(0);
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Abbreviation")
                         .IsRequired()
@@ -379,11 +382,8 @@ namespace Submission.Persistence.Migrations
             modelBuilder.Entity("Submission.Domain.Entities.Person", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnOrder(0);
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Affiliation")
                         .IsRequired()
@@ -402,6 +402,10 @@ namespace Submission.Persistence.Migrations
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
+                    b.Property<int?>("Honorific")
+                        .HasMaxLength(64)
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("LasModifiedOn")
                         .HasColumnType("datetime2");
 
@@ -410,10 +414,6 @@ namespace Submission.Persistence.Migrations
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<string>("Title")
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 

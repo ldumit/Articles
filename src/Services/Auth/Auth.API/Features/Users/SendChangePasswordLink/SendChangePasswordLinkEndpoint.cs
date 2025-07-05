@@ -6,7 +6,7 @@ using EmailService.Contracts;
 using Blocks.AspNetCore;
 using Flurl;
 
-namespace Auth.API.Features.SendChangePasswordLink;
+namespace Auth.API.Features.Users.SendChangePasswordLink;
 
 [AllowAnonymous]
 [HttpPost("send-change-password-link")]
