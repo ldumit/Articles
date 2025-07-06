@@ -14,6 +14,7 @@ public class PublishArticleApprovedEventHandler(ArticleRepository _articleReposi
 				var article = Guard.NotFound(await _articleRepository.GetFullArticleById(notification.Article.Id));
 
 				var articleDto = article.Adapt<ArticleDto>(); 
+
 				await _publishEndpoint.Publish(new ArticleSubmittedEvent(articleDto), ct);
 		}
 }

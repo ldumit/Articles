@@ -136,9 +136,9 @@ public partial class Article
 				AddDomainEvent(new ArticleActionExecuted(this, action));
 		}
 
-		public static Article AcceptSubmitted(ArticleDto articleDto)
+		public static Article AcceptSubmitted(ArticleDto articleDto, List<ArticleActor> actors, List<Asset> assets)
 		{
-				return new Article
+				var article = new Article
 				{
 						JournalId = articleDto.Journal.Id,
 						Title = articleDto.Title,
@@ -146,7 +146,11 @@ public partial class Article
 						Scope = articleDto.Scope,
 						SubmittedById = articleDto.SubmittedBy.Id,
 						SubmittedOn = articleDto.SubmittedOn,
-						Stage = articleDto.Stage,
+						Stage = articleDto.Stage						
 				};
+				article._actors.AddRange(actors);
+				article._assets.AddRange(assets);
+
+				return article;
 		}
 }

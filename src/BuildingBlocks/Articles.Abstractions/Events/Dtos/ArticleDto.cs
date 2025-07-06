@@ -13,7 +13,7 @@ public record ArticleDto(
 		PersonDto SubmittedBy, 
 		DateTime SubmittedOn, 
 		DateTime? AcceptedOn, 
-		DateTime? PublishedOn, 
+		DateTime? PublishedOn,
 		List<ActorDto> Actors,
 		List<AssetDto> Assets
 		);
