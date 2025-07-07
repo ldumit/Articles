@@ -1,0 +1,48 @@
+@startuml
+skinparam participant {
+  FontSize 12
+  BackgroundColor White
+  BorderColor Black
+}
+skinparam boxPadding 5
+skinparam boxBorderThickness 1
+
+actor Client
+
+box " API / Application Layer " #E6F0FF
+  participant Endpoint as "CreateJournalEndpoint\n(FastEndpoints)"
+  participant Validator as "CreateJournalValidator\n(FluentValidation)"
+end box
+
+box " Persistence Layer " #FFE0E0
+  participant DbContext as "JournalDbContext\n(Redis OM)"
+  participant Repository as "Repository<Journal>\n(Redis OM)"
+end box
+
+box " Domain Layer " #FFF0E0
+  participant Journal as "Journal\n(Aggregate)"
+end box
+
+Client -> Endpoint : HTTP POST /journals (CreateJournalCommand)
+activate Endpoint
+
+Endpoint -> Validator : Validate command
+Validator --> Endpoint : OK
+
+Endpoint -> Repository : Check if Abbreviation/Name exists
+Repository --> Endpoint : Exists / NotExists
+
+Endpoint -> DbContext : Editors.AnyAsync(ChiefEditorId)
+DbContext --> Endpoint : true / false
+
+Endpoint -> Journal : Map(CreateJournalCommand)
+
+Endpoint -> Repository : AddAsync(journal)
+Repository --> Endpoint : OK
+
+Endpoint -> Repository : SaveAllAsync()
+Repository --> Endpoint : OK
+
+Endpoint --> Client : 200 OK (IdResponse)
+deactivate Endpoint
+@enduml
