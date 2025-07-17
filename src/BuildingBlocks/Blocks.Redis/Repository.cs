@@ -23,14 +23,18 @@ public class Repository<T>
 
 		public async Task AddAsync(T entity)
 		{
-				entity.Id = await GenerateNewId();
+				if (entity.Id < 0)
+						throw new InvalidOperationException($"Invalid ID: {entity.Id}. IDs must be positive or zero.");
+
+				if (entity.Id == 0)
+						entity.Id = await GenerateNewId();
+
 				await _collection.InsertAsync(entity);
 		}
 
 		public async Task UpdateAsync(T entity) => await _collection.UpdateAsync(entity);
 
 		public async Task DeleteAsync(T entity) => await _collection.DeleteAsync(entity);
-		public async Task SaveAllAsync() => await _collection.SaveAsync();
 
 		public async Task<int> GenerateNewId() => (int) await _redisDb.StringIncrementAsync($"{typeof(T).Name}:Id:Sequence");
 		public async Task<int> GenerateNewId<TOther>() => (int)await _redisDb.StringIncrementAsync($"{typeof(TOther).Name}:Id:Sequence");

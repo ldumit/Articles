@@ -1,14 +1,11 @@
-﻿using Articles.Security;
-using Auth.Grpc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Grpc.Core;
 using Blocks.Exceptions;
 using Blocks.Redis;
-using FastEndpoints;
-using Grpc.Core;
+using Articles.Security;
+using Auth.Grpc;
 using Journals.API.Features.Shared;
-using Journals.Domain.Journals;
 using Journals.Persistence;
-using Mapster;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Journals.API.Features.Journals.Create;
 
@@ -21,17 +18,15 @@ public class CreateJournalEndpoint(JournalDbContext _dbContext, Repository<Journ
 {
     public override async Task HandleAsync(CreateJournalCommand command, CancellationToken ct)
     {
-        if (_journalRepository.Collection.Any(j =>j.Abbreviation == command.Abbreviation || j.NormalizedName == command.NormalizedName))
+        if (_journalRepository.Collection.Any(j => j.Abbreviation == command.Abbreviation ||  j.NormalizedName == command.NormalizedName ))
             throw new BadRequestException("Journal with the same name or abbreviation already exists");
 
         if (!_editorRepository.Collection.Any(e => e.Id == command.ChiefEditorId))
             await CreateEditor(command.ChiefEditorId, ct);
-						//throw new NotFoundException("Chief Editor cannot be found");
 
 				var journal = command.Adapt<Journal>();
 
         await _journalRepository.AddAsync(journal);
-        await _journalRepository.SaveAllAsync();
 
         await SendAsync(new IdResponse(journal.Id));
     }
