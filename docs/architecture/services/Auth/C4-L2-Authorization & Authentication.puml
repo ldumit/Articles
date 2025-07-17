@@ -16,7 +16,7 @@ package "Auth Service" #F0F8FF {
 }
 
 package "Submission Service" #F9F0FF {
-  [Submission Endpoint\n(FastEndpoints)] as SubAPI
+  [Submission Endpoint] as SubAPI
   [Authorization Middleware\n(.NET Identity – Roles/Claims)] as AuthZ
 }
 
