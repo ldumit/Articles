@@ -70,17 +70,6 @@ public static class GrpcClientRegistrationExtensions
 				{
 						throw new InvalidOperationException($"Missing GrpcService config for: {typeof(TClient).Name}");
 				}
-				//// Register the GrpcChannel singleton
-				//services.AddSingleton(sp =>
-				//		GrpcChannel.ForAddress(serviceSettings.Url));
-
-				//// Register the strongly-typed gRPC client singleton
-				//services.AddScoped(sp =>
-				//{
-				//		var channel = sp.GetRequiredService<GrpcChannel>();
-				//		return channel.CreateGrpcService<TClient>();
-				//});
-
 
 				services.AddScoped(sp =>
 				{

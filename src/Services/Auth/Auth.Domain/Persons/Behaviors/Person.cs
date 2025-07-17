@@ -15,7 +15,7 @@ public partial class Person
 						LastName = userInfo.LastName,
 						Gender = userInfo.Gender,
 						PictureUrl = userInfo.PictureUrl,
-						Honorific = HonorificTitle.Create(userInfo.Honorific),
+						Honorific = HonorificTitle.FromEnum(userInfo.Honorific),
 						ProfessionalProfile = ProfessionalProfile.Create(userInfo.Position, userInfo.CompanyName, userInfo.Affiliation),
 						CreatedOn = DateTime.UtcNow
 				};

@@ -14,7 +14,7 @@ public class CreateJournalCommandValidator : Validator<CreateJournalCommand>
     {
 				RuleFor(r => r.Abbreviation).NotEmpty();
 				RuleFor(r => r.Name).NotEmpty();
-				RuleFor(r => r.ISSN).NotEmpty();
+				RuleFor(r => r.ISSN).NotEmpty().Matches(@"\d{4}-\d{3}[\dX]").WithMessage("Invalid ISSN format");
 				RuleFor(r => r.Description).NotEmpty();
 				RuleFor(r => r.ChiefEditorId).GreaterThan(0);
 		}

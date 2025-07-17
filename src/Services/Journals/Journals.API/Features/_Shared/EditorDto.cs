@@ -1,4 +1,4 @@
-﻿using Journals.Domain.Entities;
+﻿using Journals.Domain.Journals.Enums;
 
 namespace Journals.API.Features.Shared;
 

@@ -4,9 +4,9 @@ using Mapster;
 using Articles.Security;
 using Blocks.Redis;
 using Blocks.Linq;
-using Journals.Domain.Entities;
 using Journals.API.Features.Shared;
-using Journals.Domain.Events;
+using Journals.Domain.Journals;
+using Journals.Domain.Journals.Events;
 
 namespace Journals.API.Features.Sections.Update;
 

@@ -1,11 +1,11 @@
 ﻿using FastEndpoints;
 using Microsoft.AspNetCore.Authorization;
 using Mapster;
-using Journals.Domain.Entities;
 using Journals.API.Features.Shared;
 using Articles.Security;
 using Blocks.Redis;
-using Journals.Domain.Events;
+using Journals.Domain.Journals;
+using Journals.Domain.Journals.Events;
 
 namespace Journals.API.Features.Journals.Update;
 

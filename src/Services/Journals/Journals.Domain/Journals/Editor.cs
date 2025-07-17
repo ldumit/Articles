@@ -1,7 +1,7 @@
 ﻿using Blocks.Redis;
 using Redis.OM.Modeling;
 
-namespace Journals.Domain.Entities;
+namespace Journals.Domain.Journals;
 
 [Document(StorageType = StorageType.Hash)]
 public class Editor : Entity
@@ -10,8 +10,10 @@ public class Editor : Entity
 
 		[Indexed]
     public required string FullName { get; init; }
+
 		[Indexed]
-		public required string Location { get; init; }
+		public required string Affiliation { get; init; }
+
 		[Indexed]
-		public required string University { get; init; }
+		public required int PersonId{ get; init; }
 }

@@ -6,19 +6,13 @@ public class GrpcTypeAdapterConfig : TypeAdapterConfig
 {
 		public GrpcTypeAdapterConfig()
 		{
+				// this is for standard GRPC, we can safely remove it
 				this.ForType<string?, string>()
 						.MapWith(src => src ?? string.Empty);
 
 				this.NewConfig<Person, PersonInfo>()
-						//.Ignore(dest => dest.Honorific)
-						.IgnoreNullValues(true);
-						
-
-				//this.NewConfig<Articles.Abstractions.Enums.Gender, Gender>()
-				//		.MapWith(src => (Gender)src);
-
-				//this.NewConfig<Articles.Abstractions.Enums.Honorific, Honorific>()
-				//		.MapWith(src => (Honorific)src);
+						.IgnoreNullValues(true); //mapster might have problems managing null values.
+					
 
 				this.NewConfig<Auth.Domain.Persons.ValueObjects.ProfessionalProfile, ProfessionalProfile>();
 		}

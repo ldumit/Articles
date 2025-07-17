@@ -1,9 +1,9 @@
-﻿using Journals.Domain.Entities;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Redis.OM;
 using Blocks.Redis;
 using StackExchange.Redis;
+using Journals.Domain.Journals;
 
 namespace Journals.Persistence.Data.Test;
 

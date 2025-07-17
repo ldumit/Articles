@@ -1,59 +1,54 @@
-using FastEndpoints;
 using FastEndpoints.Swagger;
-using Journals.API;
-using System.Text.Json.Serialization;
-using Articles.Security;
-using Blocks.Mapster;
-using Journals.Persistence.Data.Test;
 using Blocks.AspNetCore;
+using Journals.API;
+using Journals.Persistence;
+using Journals.Persistence.Data.Test;
+using Blocks.FastEndpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
 #region Add
-builder.Services.AddControllers();
 
 builder.Services
-	.AddFastEndpoints()
-	.AddEndpointsApiExplorer()
-	.AddSwaggerGen()
-	.AddApplicationServices(builder.Configuration)
-	.AddJwtAuthentication(builder.Configuration)
-	.AddMapster()
-	.AddAuthorization()
-	;
+		.ConfigureApiOptions(builder.Configuration);				// Configure Options
 
+builder.Services
+		.AddApiServices(builder.Configuration)              // Register API-specific services
+		.AddPersistenceServices(builder.Configuration);     // Register Persistence-specific services
 #endregion
 
 var app = builder.Build();
 
-#region Use
-app.UseSwagger()
-		.UseSwaggerUI()
-		.UseRedis()
-		.UseHttpsRedirection()
-		.UseAuthentication()
-		.UseRouting()
-		.UseAuthorization()
-		.UseEndpoints(endpoints =>
-		{
-				endpoints.MapControllers();
-				endpoints.MapDefaultControllerRoute();
-
-		})
-		.UseMiddleware<GlobalExceptionMiddleware>();
-
-app
-.UseFastEndpoints(config =>
-{
-		config.Serializer.Options.Converters.Add(new JsonStringEnumConverter());
-})
-.UseSwaggerGen();
-
-
+#region InitData
 if (app.Environment.IsDevelopment())
 {
 		await app.SeedTestData();
 }
+#endregion
+
+#region Use
+app
+		.UseSwagger()
+		.UseSwaggerUI()
+
+		.UseRedis()
+		
+		.UseHttpsRedirection()
+		
+		.UseMiddleware<GlobalExceptionMiddleware>()
+		
+		.UseRouting()
+		.UseAuthentication()
+		.UseAuthorization()
+		//.UseEndpoints(endpoints =>
+		//{
+		//		endpoints.MapControllers();
+		//		endpoints.MapDefaultControllerRoute();
+
+		//})
+
+		.UseCustomFastEndpoints()
+		.UseSwaggerGen();
 #endregion
 
 app.Run();

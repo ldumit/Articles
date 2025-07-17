@@ -1,4 +1,4 @@
-﻿using Journals.Domain.Entities;
+﻿using Journals.Domain.Journals;
 using Redis.OM;
 
 namespace Journals.API;

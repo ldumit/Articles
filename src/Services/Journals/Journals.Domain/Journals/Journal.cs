@@ -1,13 +1,15 @@
 ﻿using Blocks.Redis;
+using Journals.Domain.Journals.Enums;
+using Journals.Domain.Journals.ValueObjects;
 using Redis.OM.Modeling;
 
-namespace Journals.Domain.Entities;
+namespace Journals.Domain.Journals;
 
 [Document(StorageType = StorageType.Json)]
 public partial class Journal : Entity
 {
 		[Indexed]
-		public string Abbreviation { get; init; }
+		public required string Abbreviation { get; init; }
 
 		private string _name;
 		[Indexed]
@@ -22,10 +24,10 @@ public partial class Journal : Entity
 		}
 		[Indexed] 
 		//talk about normalizing the Name so we can do case-insensitive searches
-		public string NormalizedName { get; init; }
+		public required string NormalizedName { get; init; }
 
-		public string Description { get; init; }
-    public string ISSN { get; init; } //unique ID in the publishing world
+		public required string Description { get; init; }
+    public required string ISSN { get; init; } //unique ID in the publishing world
     public int ChiefEditorId { get; init; }
 
 		//public int DefaultTypesetter { get; set; }

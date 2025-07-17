@@ -34,7 +34,8 @@ public static class DependenciesConfiguration
 
 		public static IServiceCollection AddApiServices(this IServiceCollection services, IConfiguration config)
 		{
-				services.AddControllers();
+				//todo - do I need this line here?
+				//services.AddControllers();
 
 				services
 						.AddFastEndpoints()
@@ -54,7 +55,8 @@ public static class DependenciesConfiguration
 
 				services.AddSmtpEmailService(config);
 
-				services.AddScoped<IPersonService, PersonGrpcService>();
+				//todo - do I need this registration here?
+				//services.AddScoped<IPersonService, PersonGrpcService>();
 
 				return services;
 		}

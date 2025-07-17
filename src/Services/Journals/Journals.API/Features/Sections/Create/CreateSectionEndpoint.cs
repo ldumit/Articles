@@ -1,12 +1,12 @@
 ﻿using FastEndpoints;
 using Microsoft.AspNetCore.Authorization;
 using Mapster;
-using Journals.Domain.Entities;
 using Journals.API.Features.Shared;
 using Blocks.Exceptions;
 using Blocks.Core;
 using Articles.Security;
 using Blocks.Redis;
+using Journals.Domain.Journals;
 
 namespace Journals.API.Features.Sections.Create;
 

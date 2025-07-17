@@ -16,7 +16,7 @@ public class HonorificTitle : StringValueObject
         return new HonorificTitle(honorific.Trim());
     }
 
-    public static HonorificTitle? Create(Honorific? honorific)
+    public static HonorificTitle? FromEnum(Honorific? honorific)
     {
 				if(honorific.HasValue)
 				    return new HonorificTitle(honorific!.ToString());

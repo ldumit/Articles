@@ -14,11 +14,11 @@ namespace Submission.API;
 
 public static class DependecyInjection
 {
-		public static void ConfigureApiOptions(this IServiceCollection services, IConfiguration configuration)
+		public static void ConfigureApiOptions(this IServiceCollection services, IConfiguration config)
 		{
 				services
-						.AddAndValidateOptions<RabbitMqOptions>(configuration)
-						.AddAndValidateOptions<TransactionOptions>(configuration)
+						.AddAndValidateOptions<RabbitMqOptions>(config)
+						.AddAndValidateOptions<TransactionOptions>(config)
 						.Configure<JsonOptions>(opt =>
 						{
 								opt.SerializerOptions.PropertyNameCaseInsensitive = true;
@@ -26,14 +26,14 @@ public static class DependecyInjection
 						});
 		}
 
-		public static IServiceCollection AddApiServices(this IServiceCollection services, IConfiguration configuration)
+		public static IServiceCollection AddApiServices(this IServiceCollection services, IConfiguration config)
 		{
 				services
 						.AddMemoryCache()														// Basic Caching 
 						.AddHttpContextAccessor()										// For accessing HTTP context
 						.AddEndpointsApiExplorer()									// Minimal API docs (Swagger)
 						.AddSwaggerGen()														// Swagger setup
-						.AddJwtAuthentication(configuration)				// JWT Authentication
+						.AddJwtAuthentication(config)				// JWT Authentication
 						.AddAuthorization();												// Authorization configuration
 
 				// http
@@ -49,10 +49,10 @@ public static class DependecyInjection
 						.AddScoped<IArticleRoleChecker, ContributorRepository>();
 
 				// external services or modules
-				services.AddMongoFileStorage(configuration);
+				services.AddMongoFileStorage(config);
 
 				//grpc Services
-				var grpcOptions = configuration.GetSectionByTypeName<GrpcServicesOptions>();
+				var grpcOptions = config.GetSectionByTypeName<GrpcServicesOptions>();
 				services.AddCodeFirstGrpcClient<IPersonService>(grpcOptions, "Person");
 				//services.AddConfiguredGrpcClient<PersonService.PersonServiceClient>(grpcOptions);
 				// todo - add this service
