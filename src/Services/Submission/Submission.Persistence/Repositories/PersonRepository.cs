@@ -3,12 +3,12 @@
 public class PersonRepository(SubmissionDbContext dbContext) 
 		: Repository<Person>(dbContext)
 {
-		public async Task<Person> GetByUserId(int userId)
+		public async Task<Person?> GetByUserIdAsync(int userId)
 				=> await Query()
-						.SingleAsync(e => e.UserId == userId);
+						.SingleOrDefaultAsync(e => e.UserId == userId);
 
-		public async Task<Person> GetByEmail(string email)
+		public async Task<Person?> GetByEmailAsync(string email)
 				=> await Query()
-						.SingleAsync(e => e.Email.Value.ToLower() == email.ToLower()); //not all databases are case-insensitive
+						.SingleOrDefaultAsync(e => e.Email.Value.ToLower() == email.ToLower()); //not all databases are case-insensitive
 }
 

@@ -23,7 +23,7 @@ public static class Extensions
 				=> (int)await redisDb.StringIncrementAsync($"{typeof(TEntity).Name}:Id:Sequence");
 
 
-		public static async Task Seed<TEntity>(this RedisConnectionProvider provider, IDatabase redisDb, string folderPath = "TestData")
+		public static async Task SeedFromJson<TEntity>(this RedisConnectionProvider provider, IDatabase redisDb, string folderPath = "Data/Test")
 				where TEntity : Entity
 		{
 				var collection = provider.RedisCollection<TEntity>();
@@ -39,7 +39,7 @@ public static class Extensions
 				{
 						foreach (var entity in entities)
 						{
-								//if (entity.Id == default)
+								if (entity.Id == default)
 										entity.Id = await redisDb.GenerateNewId<TEntity>();
 						}
 						await collection.InsertAsync(entities);

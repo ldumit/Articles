@@ -1,5 +1,5 @@
 [
-  {
+  {//1
     "email": "dumitrescu.laurentiu@gmail.com",
     "firstName": "Laurentiu",
     "lastName": "Dumitrescu",
@@ -14,11 +14,11 @@
     "user": {
       "email": "dumitrescu.laurentiu@gmail.com",
       "userRoles": [
-        { "roleId": 91, "beginDate": "2024-08-01" }
+        { "roleId": 91, "beginDate": "2024-07-01" }
       ]
     }
   },
-  {
+  {//2
     "email": "author.1@articles.cs",
     "firstName": "Author",
     "lastName": "1",
@@ -28,7 +28,7 @@
     "professionalProfile": {
       "position": "Author",
       "companyName": "Articles",
-      "affiliation": "Japan Aerospace Exploration Agency (JAXA)"
+      "affiliation": "Transatlantic Aerospace Technology Hub, Montreal"
     },
     "user": {
       "email": "author.1@articles.cs",
@@ -37,7 +37,7 @@
       ]
     }
   },
-  {
+  {//3
     "email": "author.2@articles.cs",
     "firstName": "Author",
     "lastName": "2",
@@ -47,7 +47,7 @@
     "professionalProfile": {
       "position": "Author",
       "companyName": "Articles",
-      "affiliation": "University of Maryland, College Park"
+      "affiliation": "Centre for Sustainable Urban Technologies, Manchester"
     },
     "user": {
       "userRoles": [
@@ -55,7 +55,7 @@
       ]
     }
   },
-  {
+  {//4
     "email": "author.3@articles.cs",
     "firstName": "Author",
     "lastName": "3",
@@ -65,7 +65,7 @@
     "professionalProfile": {
       "position": "Author",
       "companyName": "Articles",
-      "affiliation": "Tata Institute of Fundamental Research"
+      "affiliation": "School of Game Design and Mechanics, Austin"
     },
     "user": {
       "userRoles": [
@@ -73,7 +73,7 @@
       ]
     }
   },
-  {
+  {//5
     "email": "corauthor.1@articles.cs",
     "firstName": "CorAuthor",
     "lastName": "1",
@@ -83,7 +83,7 @@
     "professionalProfile": {
       "position": "Author",
       "companyName": "Articles",
-      "affiliation": "Indian Institute of Science Education and Research, Bhopal"
+      "affiliation": "Foundation for Youth Innovation and Learning, Cape Town"
     },
     "user": {
       "userRoles": [
@@ -91,7 +91,7 @@
       ]
     }
   },
-  {
+  {//6
     "email": "corauthor.2@articles.cs",
     "firstName": "CorAuthor",
     "lastName": "2",
@@ -101,7 +101,7 @@
     "professionalProfile": {
       "position": "Author",
       "companyName": "Articles",
-      "affiliation": "Helmholtz Centre for Materials and Coastal Research (HZG)"
+      "affiliation": "International Institute of Aerospace Innovation, Abu Dhabi"
     },
     "user": {
       "userRoles": [
@@ -109,7 +109,7 @@
       ]
     }
   },
-  {
+  {//7
     "email": "reved.1@articles.cs",
     "firstName": "RevEditor",
     "lastName": "1",
@@ -119,7 +119,7 @@
     "professionalProfile": {
       "position": "Review Editor",
       "companyName": "Articles",
-      "affiliation": "Indian Institute of Science Education and Research, Bhopal"
+      "affiliation": "European Institute for Applied Artificial Intelligence, Zürich"
     },
     "user": {
       "userRoles": [
@@ -127,17 +127,17 @@
       ]
     }
   },
-  {
+  {//8
     "email": "reved.2@articles.cs",
     "firstName": "RevEditor",
     "lastName": "2",
-    "gender": "Male",
+    "gender": "Female",
     "honorific": null,
     "pictureUrl": null,
     "professionalProfile": {
       "position": "Review Editor",
       "companyName": "Articles",
-      "affiliation": "Helmholtz Centre for Materials and Coastal Research (HZG)"
+      "affiliation": "Institute for Behavioral Neuroscience, Sydney"
     },
     "user": {
       "userRoles": [
@@ -145,7 +145,25 @@
       ]
     }
   },
-  {
+  {//9
+    "email": "reved.3@articles.cs",
+    "firstName": "RevEditor",
+    "lastName": "3",
+    "gender": "Female",
+    "honorific": null,
+    "pictureUrl": null,
+    "professionalProfile": {
+      "position": "Review Editor",
+      "companyName": "Articles",
+      "affiliation": "Academy for Creative Young Thinkers, New Delhi"
+    },
+    "user": {
+      "userRoles": [
+        { "roleId": 21, "beginDate": "2024-08-01" }
+      ]
+    }
+  },
+  {//10
     "email": "rev.1@articles.cs",
     "firstName": "Reviewer",
     "lastName": "1",
@@ -155,7 +173,7 @@
     "professionalProfile": {
       "position": "Reviewer",
       "companyName": "Articles",
-      "affiliation": "Japan Aerospace Exploration Agency (JAXA)"
+      "affiliation": "Advanced Simulation & Gaming Lab, Seoul"
     },
     "user": {
       "userRoles": [
@@ -163,7 +181,7 @@
       ]
     }
   },
-  {
+  {//11
     "email": "rev.2@articles.cs",
     "firstName": "Reviewer",
     "lastName": "2",
@@ -173,7 +191,7 @@
     "professionalProfile": {
       "position": "Reviewer",
       "companyName": "Articles",
-      "affiliation": "University of Maryland, College Park"
+      "affiliation": "Foundation for Youth Innovation and Learning, Cape Town"
     },
     "user": {
       "userRoles": [
@@ -181,7 +199,7 @@
       ]
     }
   },
-  {
+  {//12
     "email": "rev.3@articles.cs",
     "firstName": "Reviewer",
     "lastName": "3",
@@ -191,7 +209,7 @@
     "professionalProfile": {
       "position": "Reviewer",
       "companyName": "Articles",
-      "affiliation": "University of Maryland, College Park"
+      "affiliation": "Asia-Pacific Smart Infrastructure Lab, Kuala Lumpur"
     },
     "user": {
       "userRoles": [
@@ -199,7 +217,7 @@
       ]
     }
   },
-  {
+  {//13
     "email": "typesetter.1@articles.cs",
     "firstName": "Typesetter",
     "lastName": "1",
@@ -217,7 +235,7 @@
       ]
     }
   },
-  {
+  {//14
     "email": "typesetter.2@articles.cs",
     "firstName": "Typesetter",
     "lastName": "2",
@@ -235,7 +253,7 @@
       ]
     }
   },
-  {
+  {//15
     "email": "pof.1@articles.cs",
     "firstName": "POF",
     "lastName": "1",
@@ -253,7 +271,7 @@
       ]
     }
   },
-  {
+  {//16
     "email": "eof.1@articles.cs",
     "firstName": "EOF",
     "lastName": "1",

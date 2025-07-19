@@ -1,6 +1,4 @@
-﻿using FastEndpoints;
-using Mapster;
-using Journals.Persistence;
+﻿using Journals.Persistence;
 using Journals.API.Features.Shared;
 using Blocks.Redis;
 

@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using StackExchange.Redis;
 using Redis.OM;
 using Blocks.Redis;
-using StackExchange.Redis;
 using Journals.Domain.Journals;
 
-namespace Journals.Persistence.Data.Test;
+namespace Journals.Persistence.Data;
 
 public static class Seed
 {
@@ -19,7 +19,7 @@ public static class Seed
 
     public static async Task SeedTestData(this RedisConnectionProvider provider, IDatabase redisDb)
     {
-				await provider.Seed<Editor>(redisDb);
-				await provider.Seed<Journal>(redisDb);
+				await provider.SeedFromJson<Editor>(redisDb);
+				await provider.SeedFromJson<Journal>(redisDb);
 		}
 }

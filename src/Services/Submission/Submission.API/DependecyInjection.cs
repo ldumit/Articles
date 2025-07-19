@@ -9,6 +9,7 @@ using Submission.Persistence.Repositories;
 using Auth.Grpc;
 using Blocks.AspNetCore.Grpc;
 using FileStorage.MongoGridFS;
+using Journals.Grpc;
 
 namespace Submission.API;
 
@@ -54,9 +55,8 @@ public static class DependecyInjection
 				//grpc Services
 				var grpcOptions = config.GetSectionByTypeName<GrpcServicesOptions>();
 				services.AddCodeFirstGrpcClient<IPersonService>(grpcOptions, "Person");
-				//services.AddConfiguredGrpcClient<PersonService.PersonServiceClient>(grpcOptions);
-				// todo - add this service
-				//services.AddConfiguredGrpcClient<JournalService.JournalerviceClient>(grpcOptions);
+				services.AddCodeFirstGrpcClient<IJournalService>(grpcOptions, "Journal");
+
 
 				return services;
 		}

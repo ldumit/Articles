@@ -11,9 +11,9 @@ public partial class Journal : Entity
 		[Indexed]
 		public required string Abbreviation { get; init; }
 
-		private string _name;
-		[Indexed]
-		public string Name
+		private string _name = null!;
+		[Searchable]
+		public required string Name
 		{
 				get => _name;
 				init
@@ -22,10 +22,11 @@ public partial class Journal : Entity
 						NormalizedName = _name.ToLowerInvariant(); // Normalize on set
 				}
 		}
-		[Indexed] 
+		[Indexed(Sortable = true)]
 		//talk about normalizing the Name so we can do case-insensitive searches
 		public required string NormalizedName { get; init; }
 
+		[Searchable]
 		public required string Description { get; init; }
     public required string ISSN { get; init; } //unique ID in the publishing world
     public int ChiefEditorId { get; init; }

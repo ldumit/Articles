@@ -1,15 +1,23 @@
 ﻿using Articles.Abstractions;
 using Articles.Abstractions.Enums;
-using Grpc.Core;
 using ProtoBuf;
 using ProtoBuf.Grpc;
 using System.ServiceModel;
 
 namespace Auth.Grpc;
 
-// ENUMS
-
-// MESSAGES
+[ServiceContract]
+public interface IPersonService
+{
+		[OperationContract]
+		ValueTask<GetPersonResponse> GetPersonByIdAsync(GetPersonRequest request, CallContext context = default);
+		[OperationContract]
+		ValueTask<GetPersonResponse> GetPersonByUserIdAsync(GetPersonByUserIdRequest request, CallContext context = default);
+		[OperationContract]
+		ValueTask<GetPersonResponse> GetPersonByEmailAsync(GetPersonByEmailRequest request, CallContext context = default);
+		[OperationContract]
+		ValueTask<CreatePersonResponse> CreatePersonAsync(CreatePersonRequest request, CallContext context = default);
+}
 
 [ProtoContract]
 public class ProfessionalProfile
@@ -119,17 +127,4 @@ public class CreatePersonResponse
 {
 		[ProtoMember(1)]
 		public PersonInfo PersonInfo { get; set; } = default!;
-}
-
-[ServiceContract]
-public interface IPersonService
-{
-		[OperationContract]
-		ValueTask<GetPersonResponse> GetPersonByIdAsync(GetPersonRequest request, CallContext context = default);
-		[OperationContract]
-		ValueTask<GetPersonResponse> GetPersonByUserIdAsync(GetPersonByUserIdRequest request, CallContext context = default);
-		[OperationContract]
-		ValueTask<GetPersonResponse> GetPersonByEmailAsync(GetPersonByEmailRequest request, CallContext context = default);
-		[OperationContract]
-		ValueTask<CreatePersonResponse> CreatePersonAsync(CreatePersonRequest request, CallContext context = default);
 }

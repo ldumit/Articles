@@ -12,6 +12,9 @@ public class Editor : Entity
     public required string FullName { get; init; }
 
 		[Indexed]
+		public required string Email{ get; init; }
+
+		[Indexed]
 		public required string Affiliation { get; init; }
 
 		[Indexed]

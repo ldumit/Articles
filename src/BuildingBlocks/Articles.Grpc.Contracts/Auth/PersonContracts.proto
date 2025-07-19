@@ -4,6 +4,14 @@ option csharp_namespace = "Auth.Grpc";
 
 package auth;
 
+// Service definition
+service PersonService {
+    rpc GetPersonById(GetPersonRequest) returns (GetPersonResponse);
+    rpc GetPersonByUserId(GetPersonByUserIdRequest) returns (GetPersonResponse);
+    rpc GetPersonByEmail(GetPersonByEmailRequest) returns (GetPersonResponse);
+    rpc CreatePerson(CreatePersonRequest) returns (CreatePersonResponse);
+}
+
 enum Honorific
 {
 		Mr = 0;
@@ -70,12 +78,4 @@ message CreatePersonRequest {
 
 message CreatePersonResponse {
     PersonInfo person_info = 1;
-}
-
-// Service definition
-service PersonService {
-    rpc GetPersonById(GetPersonRequest) returns (GetPersonResponse);
-    rpc GetPersonByUserId(GetPersonByUserIdRequest) returns (GetPersonResponse);
-    rpc GetPersonByEmail(GetPersonByEmailRequest) returns (GetPersonResponse);
-    rpc CreatePerson(CreatePersonRequest) returns (CreatePersonResponse);
 }

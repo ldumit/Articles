@@ -10,5 +10,6 @@ public class MappingConfig : IRegister
 		{
 				config.NewConfig<Journal, JournalDto>().MapToConstructor();
 				config.NewConfig<Section, SectionDto>().MapToConstructor();
+				config.NewConfig<Editor, EditorDto>().MapToConstructor();
 		}
 }

@@ -1,9 +1,11 @@
-﻿using Articles.Security;
-using Auth.Grpc;
+﻿using Microsoft.AspNetCore.Http.Json;
+using ProtoBuf.Grpc.Server;
+using System.IO.Compression;
+using System.Text.Json.Serialization;
 using Blocks.AspNetCore.Grpc;
 using Blocks.Mapster;
-using Microsoft.AspNetCore.Http.Json;
-using System.Text.Json.Serialization;
+using Articles.Security;
+using Auth.Grpc;
 
 namespace Journals.API;
 
@@ -24,8 +26,6 @@ public static class DependencyInjection
 
 		public static IServiceCollection AddApiServices(this IServiceCollection services, IConfiguration config)
 		{
-				///services.AddControllers();
-
 				services
 					.AddFastEndpoints()
 					.AddEndpointsApiExplorer()
@@ -35,9 +35,16 @@ public static class DependencyInjection
 					.AddAuthorization()
 					;
 
+				// Grpc server
+				services.AddCodeFirstGrpc(options =>
+				{
+						options.ResponseCompressionLevel = CompressionLevel.Fastest;
+						options.EnableDetailedErrors = true;
+				});
+
+				// Grpc clients
 				var grpcOptions = config.GetSectionByTypeName<GrpcServicesOptions>();
 				services.AddCodeFirstGrpcClient<IPersonService>(grpcOptions, "Person");
-
 
 				return services;
 		}

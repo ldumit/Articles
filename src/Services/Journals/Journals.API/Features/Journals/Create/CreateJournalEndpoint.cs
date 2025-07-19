@@ -13,12 +13,12 @@ namespace Journals.API.Features.Journals.Create;
 [Authorize(Roles = Role.EOF)]
 [HttpPost("journals")]
 [Tags("Journals")]
-public class CreateJournalEndpoint(JournalDbContext _dbContext, Repository<Journal> _journalRepository, Repository<Editor> _editorRepository, IPersonService _personClient)
+public class CreateJournalEndpoint(Repository<Journal> _journalRepository, Repository<Editor> _editorRepository, IPersonService _personClient)
     : Endpoint<CreateJournalCommand, IdResponse>
 {
     public override async Task HandleAsync(CreateJournalCommand command, CancellationToken ct)
     {
-        if (_journalRepository.Collection.Any(j => j.Abbreviation == command.Abbreviation ||  j.NormalizedName == command.NormalizedName ))
+				if (_journalRepository.Collection.Any(j => j.Abbreviation == command.Abbreviation ||  j.NormalizedName == command.NormalizedName ))
             throw new BadRequestException("Journal with the same name or abbreviation already exists");
 
         if (!_editorRepository.Collection.Any(e => e.Id == command.ChiefEditorId))
@@ -39,6 +39,7 @@ public class CreateJournalEndpoint(JournalDbContext _dbContext, Repository<Journ
 				{
 						Id = personInfo.UserId!.Value,
 						PersonId = personInfo.Id,
+						Email = personInfo.Email,
 						Affiliation = personInfo.ProfessionalProfile!.Affiliation,
 						FullName = personInfo.FirstName + " " + personInfo.LastName,
 				};

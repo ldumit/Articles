@@ -1,12 +1,8 @@
-﻿using FastEndpoints;
-using Microsoft.AspNetCore.Authorization;
-using Mapster;
+﻿using Microsoft.AspNetCore.Authorization;
 using Journals.API.Features.Shared;
 using Blocks.Exceptions;
-using Blocks.Core;
 using Articles.Security;
 using Blocks.Redis;
-using Journals.Domain.Journals;
 
 namespace Journals.API.Features.Sections.Create;
 
@@ -28,7 +24,6 @@ public class CreateSectionEndpoint(Repository<Journal> _repository)
 				journal.Sections.Add(section);
 
 				await _repository.UpdateAsync(journal);
-				await _repository.SaveAllAsync();
 
 				await SendAsync(new IdResponse(section.Id));
     }

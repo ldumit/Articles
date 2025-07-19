@@ -1,27 +1,22 @@
 [
   {
     "id": 1,
-    "name": "Aerospace Engineering",
-    "abbreviation": "apace"
+    "name": "Artificial Intelligence Systems",
+    "abbreviation": "aisys"
   },
   {
     "id": 2,
-    "name": "Medicine",
-    "abbreviation": "med"
+    "name": "Behavioral Psychology",
+    "abbreviation": "behpsych"
   },
   {
     "id": 3,
-    "name": "Public Health",
-    "abbreviation": "pubh"
+    "name": "Aerospace Engineering",
+    "abbreviation": "aeroeng"
   },
   {
     "id": 4,
-    "name": "Young Minds",
-    "abbreviation": "ymind"
-  },
-  {
-    "id": 5,
-    "name": " Aquaculture",
-    "abbreviation": "aquac"
-  }  
+    "name": "Young Thinkers",
+    "abbreviation": "ythink"
+  }
 ]

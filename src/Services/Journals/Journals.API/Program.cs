@@ -2,8 +2,9 @@ using FastEndpoints.Swagger;
 using Blocks.AspNetCore;
 using Journals.API;
 using Journals.Persistence;
-using Journals.Persistence.Data.Test;
 using Blocks.FastEndpoints;
+using Journals.API.Features.Journals;
+using Journals.Persistence.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,12 +20,6 @@ builder.Services
 
 var app = builder.Build();
 
-#region InitData
-if (app.Environment.IsDevelopment())
-{
-		await app.SeedTestData();
-}
-#endregion
 
 #region Use
 app
@@ -40,15 +35,18 @@ app
 		.UseRouting()
 		.UseAuthentication()
 		.UseAuthorization()
-		//.UseEndpoints(endpoints =>
-		//{
-		//		endpoints.MapControllers();
-		//		endpoints.MapDefaultControllerRoute();
-
-		//})
 
 		.UseCustomFastEndpoints()
 		.UseSwaggerGen();
+#endregion
+
+app.MapGrpcService<JournalGrpcService>();
+
+#region InitData
+if (app.Environment.IsDevelopment())
+{
+		await app.SeedTestData();
+}
 #endregion
 
 app.Run();

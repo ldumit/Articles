@@ -17,7 +17,7 @@
     "LastName": "1",
     "Honorific": "Mr",
     "Email": {"Value":"author.1@articles.org"},
-    "Affiliation": "Japan Aerospace Exploration Agency (JAXA)",
+    "Affiliation": "JTransatlantic Aerospace Technology Hub, Montreal",
     "Degree": "PhD",
     "Discipline": "Aerospace Engineering"
   },
@@ -29,7 +29,7 @@
     "LastName": "2",
     "Honorific": "Ms",
     "Email": {"Value":"author.2@articles.com"},
-    "Affiliation": "University of Maryland, College Park"
+    "Affiliation": "Centre for Sustainable Urban Technologies, Manchester"
   },
   {
     "Id": 5,
@@ -39,7 +39,7 @@
     "LastName": "1",
     "Honorific": "Ms",
     "Email": {"Value":"corauthor.1@articles.com"},
-    "Affiliation": "Indian Institute of Science Education and Research, Bhopal"
+    "Affiliation": "Foundation for Youth Innovation and Learning, Cape Town"
   },
   {
     "Id": 6,
@@ -49,7 +49,7 @@
     "LastName": "2",
     "Honorific": "Mr",
     "Email": {"Value":"corauthor.2@articles.com"},
-    "Affiliation": "Helmholtz Centre for Materials and Coastal Research (HZG)",
+    "Affiliation": "International Institute of Aerospace Innovation, Abu Dhabi",
     "Degree": "MsC",
     "Discipline": "Planetary Science"
   }//,

@@ -18,10 +18,6 @@
 </ItemGroup>
 		
 <ItemGroup>
-  <Folder Include="Journal\" />
-</ItemGroup>
-		
-<ItemGroup>
   <ProjectReference Include="..\Articles.Abstractions\Articles.Abstractions.csproj" />
 </ItemGroup>
 

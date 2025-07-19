@@ -1,6 +1,7 @@
 ﻿using Redis.OM.Searching;
 using Redis.OM;
 using StackExchange.Redis;
+using Redis.OM.Aggregation;
 
 namespace Blocks.Redis;
 
@@ -16,6 +17,9 @@ public class Repository<T>
 
 		public IRedisCollection<T> Collection => _collection;
 
+		public RedisAggregationSet<T> Aggregate => _provider.AggregationSet<T>();
+
+		public T? GetById(int id) => _collection.FindById(id.ToString());
 		public async Task<T?> GetByIdAsync(int id) => await _collection.FindByIdAsync(id.ToString());
 		public async Task<T> GetByIdOrThrowAsync(int id) => await _collection.GetByIdOrThrowAsync(id);
 
