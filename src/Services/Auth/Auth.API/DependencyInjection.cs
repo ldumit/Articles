@@ -1,9 +1,7 @@
 ﻿using Articles.Security;
 using Auth.API;
-using Auth.API.Features.Persons;
 using Auth.API.Features.Users.CreateAccount;
 using Auth.API.Mappings;
-using Auth.Grpc;
 using Auth.Persistence;
 using EmailService.Smtp;
 using FastEndpoints.Swagger;
@@ -34,18 +32,17 @@ public static class DependenciesConfiguration
 
 		public static IServiceCollection AddApiServices(this IServiceCollection services, IConfiguration config)
 		{
-				//todo - do I need this line here?
-				//services.AddControllers();
-
 				services
 						.AddFastEndpoints()
 						.SwaggerDocument()
 						.AddEndpointsApiExplorer()											// Minimal API docs (Swagger)
-						.AddAutoMapper([typeof(CreateUserCommandMapping).Assembly])
+						//.AddAutoMapper([typeof(CreateUserCommandMapping).Assembly])
 						.AddSwaggerGen()																// Swagger setup
 						.AddJwtIdentity(config)
 						.AddJwtAuthentication(config)										// JWT Authentication
-						.AddAuthorization();														// Authorization configuration
+						.AddAuthorization();                            // Authorization configuration
+
+				services.AddSingleton<GrpcTypeAdapterConfig>();			//mapster mappings for grpc contracts
 
 				services.AddCodeFirstGrpc(options =>
 				{
@@ -71,7 +68,7 @@ public static class DependenciesConfiguration
 						options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
 						options.Lockout.MaxFailedAccessAttempts = 5;
 
-						options.User.RequireUniqueEmail = false; //to-do - change back to true after test training users not needed anymore
+						//options.User.RequireUniqueEmail = false; //to-do - change back to true after test training users not needed anymore
 						//options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+/ ";
 				})
 			  .AddRoles<Auth.Domain.Roles.Role>()
@@ -83,8 +80,6 @@ public static class DependenciesConfiguration
 				{
 						options.ClaimsIdentity.RoleClaimType = ClaimTypes.Role;
 				});
-
-				services.AddSingleton<GrpcTypeAdapterConfig>();
 
 				return services;
 		}

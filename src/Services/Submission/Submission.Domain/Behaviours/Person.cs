@@ -14,7 +14,7 @@ public partial class Person
 						FirstName = userInfo.FirstName,
 						LastName = userInfo.LastName,
 						Honorific = userInfo.Honorific,
-						Affiliation = userInfo.ProfessionalProfile.Affiliation,
+						Affiliation = userInfo.ProfessionalProfile!.Affiliation,
 						CreatedById = action.CreatedById,
 						CreatedOn = DateTime.UtcNow
 				};

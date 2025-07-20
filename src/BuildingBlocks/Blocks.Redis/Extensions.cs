@@ -9,7 +9,7 @@ namespace Blocks.Redis;
 public static class Extensions
 {
 		public static async Task<T?> GetByIdAsync<T>(this IRedisCollection<T> collection, int id)
-		=> await collection.FindByIdAsync(id.ToString());
+				=> await collection.FindByIdAsync(id.ToString());
 
 		public static async Task<T> GetByIdOrThrowAsync<T>(this IRedisCollection<T> collection, int id)
 		{

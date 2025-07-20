@@ -45,7 +45,7 @@ public partial class Article
 
 		public void Approve(Person editor, IArticleAction<ArticleActionType> action, ArticleStateMachineFactory _stateMachineFactory)
 		{
-				_actors.Add(new ArticleActor()
+				_actors.Add(new ArticleActor
 				{
 						Person = editor,
 						Role = UserRoleType.REVED
@@ -65,11 +65,10 @@ public partial class Article
 
 		public void Submit(IArticleAction<ArticleActionType> action, ArticleStateMachineFactory _stateMachineFactory)
 		{
-				//if (!_assets.Exists(a => a.Type == AssetType.DraftPdf))
-				//		throw new DomainException("Cannot submit the article. Please upload the manuscript (Draft PDF) first");
 				SubmittedById = action.CreatedById;
 				SubmittedOn = action.CreatedOn;
 
+				// todo add an ArticleSubmitted domain event
 				SetStage(ArticleStage.Submitted, action, _stateMachineFactory);
 		}
 
