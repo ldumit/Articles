@@ -1,5 +1,5 @@
-﻿using FileStorage.Contracts;
-using System;
+﻿using Articles.Abstractions.Events.Dtos;
+using FileStorage.Contracts;
 
 namespace Review.Domain.Entities;
 
@@ -28,10 +28,29 @@ public partial class Asset
 				};
 		}
 
+
 		public File CreateFile(UploadResponse uploadResponse, AssetTypeDefinition assetType, IArticleAction<ArticleActionType> action)
 		{
 				File = File.CreateFile(uploadResponse, this, assetType);
 				State = AssetState.Uploaded;
 				return File;
+		}
+
+		public static Asset CreateFromSubmission(AssetDto assetDto, AssetTypeDefinition type, int articleId)
+		{
+				//talk - value objects for AssetName & AssetNumber, encapsulate validation						
+				var asset = new Asset()
+				{
+						ArticleId = articleId,
+						//Article = article,
+						Name = AssetName.FromAssetType(type),
+						Type = type.Id,
+						//CategoryId = type.DefaultCategoryId,
+						State = AssetState.Uploaded,
+				};
+
+				asset.File = File.CreateFile(assetDto.File, type);
+
+				return asset;
 		}
 }

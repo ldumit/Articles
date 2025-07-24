@@ -2,7 +2,9 @@
 
 public class PersonEntityConfiguration : EntityConfiguration<Person>
 {
-    public override void Configure(EntityTypeBuilder<Person> builder)
+		protected override bool HasGeneratedId => false;
+
+		public override void Configure(EntityTypeBuilder<Person> builder)
     {
         base.Configure(builder);
 
@@ -23,8 +25,8 @@ public class PersonEntityConfiguration : EntityConfiguration<Person>
 						.HasValue<Editor>(nameof(Editor));
 
 				builder.Property(e => e.UserId).IsRequired(false);
-				builder.Property(e => e.FirstName).HasMaxLength(MaxLength.C64).IsRequired();
-				builder.Property(e => e.LastName).HasMaxLength(MaxLength.C64).IsRequired();
+				builder.Property(e => e.FirstName).IsRequired().HasMaxLength(MaxLength.C64);
+				builder.Property(e => e.LastName).IsRequired().HasMaxLength(MaxLength.C64);
 				builder.Property(e => e.Honorific).HasMaxLength(MaxLength.C32);
 				builder.Property(e => e.Affiliation).IsRequired().HasMaxLength(MaxLength.C512)
 						.HasComment("Institution or organization they are associated with when they conduct their research.");

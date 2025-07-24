@@ -21,7 +21,7 @@ public partial class Article : AggregateEntity
 
 		private readonly List<ArticleActor> _actors = new();
 		public IReadOnlyList<ArticleActor> Actors => _actors.AsReadOnly();
-		public IEnumerable<Author> Authors => _actors.Where(aa => aa.Person is Author).Select(aa => aa.Person as Author);
+		//public IEnumerable<Author> Authors => _actors.Where(aa => aa.Person is Author).Select(aa => aa.Person as Author);
 		
 		private readonly List<StageHistory> _stageHistories = new();
     public IReadOnlyList<StageHistory> StageHistories => _stageHistories.AsReadOnly();

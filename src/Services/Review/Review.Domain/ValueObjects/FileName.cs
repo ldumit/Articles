@@ -5,7 +5,7 @@ namespace Review.Domain.ValueObjects;
 public class FileName : StringValueObject
 {
 		[JsonConstructor]
-		private FileName(string value) => Value = value;
+		internal FileName(string value) => Value = value;
 
 		public static FileName From(Asset asset, FileExtension extension)
 		{

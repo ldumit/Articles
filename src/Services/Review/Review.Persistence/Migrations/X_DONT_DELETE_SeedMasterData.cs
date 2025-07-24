@@ -20,9 +20,9 @@ namespace Review.Persistence.Migrations
             (4, 'FinalPdf', 'Final PDF', 3, 0, '[""pdf""]', 'pdf', 50),
             (5, 'FinalHtml', 'Final HTML Zip', 3, 0, '[""zip""]', 'zip', 100),
             (6, 'FinalEpub', 'Final Epub', 3, 0, '[""epub""]', 'epub', 5),
-            (7, 'Figure', 'HTML Figure', 2, 12, '[""jpg"",""png"",""tif"",""tiff"",""eps""]', 'tif', 10),
-            (8, 'DataSheet', 'Data Sheet', 2, 12, '[""csv"",""xls""]', 'csv', 1),
-            (9, 'SupplementaryFile', 'Supplementary File', 2, 12, '[]', 'pdf', 10);
+            (11, 'Figure', 'HTML Figure', 2, 12, '[""jpg"",""png"",""tif"",""tiff"",""eps""]', 'tif', 10),
+            (12, 'DataSheet', 'Data Sheet', 2, 12, '[""csv"",""xls""]', 'csv', 1),
+            (10, 'SupplementaryFile', 'Supplementary File', 2, 12, '[]', 'pdf', 10);
         ");
 				}
 

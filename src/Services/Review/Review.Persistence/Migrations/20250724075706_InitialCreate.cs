@@ -49,8 +49,7 @@ namespace Review.Persistence.Migrations
                 name: "Journal",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     Abbreviation = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false)
                 },
@@ -174,18 +173,17 @@ namespace Review.Persistence.Migrations
                 name: "Person",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    Honorific = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
+                    Honorific = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: true),
                     Affiliation = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false, comment: "Institution or organization they are associated with when they conduct their research."),
                     UserId = table.Column<int>(type: "int", nullable: true),
                     TypeDiscriminator = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-										Degree = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true, comment: "The author's highest academic qualification (e.g., PhD in Mathematics, MSc in Chemistry)."),
-										Discipline = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true, comment: "The author's main field of study or research (e.g., Biology, Computer Science)."),
-										ArticleId = table.Column<int>(type: "int", nullable: true),
+                    Degree = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true, comment: "The author's highest academic qualification (e.g., PhD in Mathematics, MSc in Chemistry)."),
+                    Discipline = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true, comment: "The author's main field of study or research (e.g., Biology, Computer Science)."),
+                    ArticleId = table.Column<int>(type: "int", nullable: true),
                     CreatedById = table.Column<int>(type: "int", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastModifiedById = table.Column<int>(type: "int", nullable: true),

@@ -346,11 +346,8 @@ namespace Review.Persistence.Migrations
             modelBuilder.Entity("Review.Domain.Entities.Journal", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnOrder(0);
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Abbreviation")
                         .IsRequired()
@@ -385,11 +382,8 @@ namespace Review.Persistence.Migrations
             modelBuilder.Entity("Review.Domain.Entities.Person", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnOrder(0);
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Affiliation")
                         .IsRequired()
@@ -408,6 +402,10 @@ namespace Review.Persistence.Migrations
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
+                    b.Property<string>("Honorific")
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
                     b.Property<DateTime?>("LasModifiedOn")
                         .HasColumnType("datetime2");
 
@@ -416,10 +414,6 @@ namespace Review.Persistence.Migrations
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<string>("Title")
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
@@ -693,6 +687,16 @@ namespace Review.Persistence.Migrations
 
                     b.Property<int?>("ArticleId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Degree")
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)")
+                        .HasComment("The author's highest academic qualification (e.g., PhD in Mathematics, MSc in Chemistry).");
+
+                    b.Property<string>("Discipline")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)")
+                        .HasComment("The author's main field of study or research (e.g., Biology, Computer Science).");
 
                     b.HasIndex("ArticleId");
 

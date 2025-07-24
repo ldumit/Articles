@@ -1,50 +1,55 @@
 [
   {
+    "Id": 1,
     "UserId": 1,
     "TypeDiscriminator": "Person",
     "FirstName": "Laurentiu",
     "LastName": "Dumitrescu",
-    "Title": "Mr",
+    "Honorific": "Mr",
     "Email": {"Value":"dumitrescu.laurentiu@gmail.com"},
     "Affiliation": "DotNetLabX – Real .NET solutions. From developer to architect"
   },
   {
+    "Id": 2,
     "UserId": 2,
     "TypeDiscriminator": "Author",
     "FirstName": "Author",
     "LastName": "1",
-    "Title": "Mr",
+    "Honorific": "Mr",
     "Email": {"Value":"author.1@articles.org"},
-    "Affiliation": "Japan Aerospace Exploration Agency (JAXA)",
+    "Affiliation": "JTransatlantic Aerospace Technology Hub, Montreal",
     "Degree": "PhD",
     "Discipline": "Aerospace Engineering"
   },
   {
+    "Id": 3,
     "UserId": 3,
     "TypeDiscriminator": "Author",
     "FirstName": "Author",
     "LastName": "2",
-    "Title": "Ms",
+    "Honorific": "Ms",
     "Email": {"Value":"author.2@articles.com"},
-    "Affiliation": "University of Maryland, College Park"
+    "Affiliation": "Centre for Sustainable Urban Technologies, Manchester"
   },
   {
+    "Id": 5,
     "UserId":5,
     "TypeDiscriminator": "Author",
     "FirstName": "CorAuthor",
     "LastName": "1",
-    "Title": "Ms",
+    "Honorific": "Ms",
     "Email": {"Value":"corauthor.1@articles.com"},
-    "Affiliation": "Indian Institute of Science Education and Research, Bhopal"
+    "Affiliation": "Foundation for Youth Innovation and Learning, Cape Town"
   },
   {
+    "Id": 6,
     "UserId": 6,
     "TypeDiscriminator": "Author",
     "FirstName": "CorAuthor",
     "LastName": "2",
-    "Title": "Mr",
+    "Honorific": "Mr",
     "Email": {"Value":"corauthor.2@articles.com"},
-    "Affiliation": "Helmholtz Centre for Materials and Coastal Research (HZG)",
+    "Affiliation": "International Institute of Aerospace Innovation, Abu Dhabi",
     "Degree": "MsC",
     "Discipline": "Planetary Science"
   },
@@ -64,13 +69,13 @@
   //  "Title": "Ms",
   //  "Email": {"Value":"reviewer.2@articles.com"}
   //},
-  {
-    "UserId": null,
-    "PersonType": "Author",
-    "FirstName": "Author",
-    "LastName": "4-NoUser",
-    "Title": "Mr",
-    "Email": {"Value":"author.4@articles.org"},
-    "Affiliation": "Tokyo University of Technology"
-  }
+  //{
+  //  "UserId": null,
+  //  "PersonType": "Author",
+  //  "FirstName": "Author",
+  //  "LastName": "4-NoUser",
+  //  "Title": "Mr",
+  //  "Email": {"Value":"author.4@articles.org"},
+  //  "Affiliation": "Tokyo University of Technology"
+  //}
 ]

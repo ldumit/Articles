@@ -6,7 +6,12 @@ using Blocks.Domain;
 
 namespace Review.Application.Features.Articles.EventHandlers;
 
-public class ArticleSubmittedEventHandler(PersonRepository _personRepository, Repository<Journal> _journalRepository, ReviewDbContext _dbContext, IPersonService _personService) : IConsumer<ArticleSubmittedEvent>
+public class ArticleSubmittedEventHandler(
+		PersonRepository _personRepository, 
+		Repository<Journal> _journalRepository, 
+		ReviewDbContext _dbContext,
+		AssetTypeRepository _assetTypeRepository,
+		IPersonService _personService) : IConsumer<ArticleSubmittedEvent>
 {
 		public async Task Consume(ConsumeContext<ArticleSubmittedEvent> context)
 		{
@@ -17,23 +22,42 @@ public class ArticleSubmittedEventHandler(PersonRepository _personRepository, Re
 				foreach (var actorDto in articleDto.Actors)
 				{
 						var person = await _personRepository.GetByIdAsync(actorDto.Person.Id);
-						if (person is null)
+						ArticleActor actor = default!;
+						//if (person is null)
 						{
-								var response = await _personService.GetPersonByIdAsync(new GetPersonRequest { PersonId = actorDto.Person.Id }, context.CancellationToken);
-								var personInfo = response.PersonInfo;
-
-								switch (actorDto.Role)
+								//var response = await _personService.GetPersonByIdAsync(new GetPersonRequest { PersonId = actorDto.Person.Id }, context.CancellationToken);
+								//var personInfo = response.PersonInfo;
+								if (actorDto.Role == UserRoleType.AUT || actorDto.Role == UserRoleType.CORAUT)
 								{
-										case UserRoleType.AUT:
-												person = personInfo.Adapt<Author>(); break;
-										case UserRoleType.REVED:
-												person = personInfo.Adapt<Editor>(); break;
-										default:
-												throw new DomainException($"Unknow role for {personInfo.Email}");
+										if(person is null)
+												person = actorDto.Person.Adapt<Author>();
+
+										actor = new ArticleAuthor { 
+												PersonId = person.Id, 
+												Person = person,
+												Role = actorDto.Role, 
+												ContributionAreas = actorDto.ContributionAreas
+										};
 								}
-								actors.Add(new ArticleActor { PersonId = person.Id });
-								await _personRepository.AddAsync(person);
+								else if(actorDto.Role == UserRoleType.REVED)
+								{
+										if (person is null)
+												person = actorDto.Person.Adapt<Editor>();
+
+										actor = new ArticleActor { 
+												PersonId = person.Id, 
+												Person = person,
+												Role = actorDto.Role 
+										};
+								}
+								else
+								{
+										// decide : or ignore, just log a warning
+										throw new DomainException($"Unknow role for {actorDto.Person.Email}");
+								}
 						}
+						actors.Add(actor);
+						//await _personRepository.AddAsync(person);
 
 						//article.AssignActor(actor.Id, actorDto.Role);
 				}
@@ -42,8 +66,13 @@ public class ArticleSubmittedEventHandler(PersonRepository _personRepository, Re
 				var assets = new List<Asset>();
 				foreach (var assetDto in articleDto.Assets)
 				{
+						var assetTypeDefinition = _assetTypeRepository.GetById(assetDto.Type);
+
+						var asset = Asset.CreateFromSubmission(assetDto, assetTypeDefinition, articleDto.Id);
+
 						//todo create assets & files, then download & upload files) 
 
+						assets.Add(asset);
 				}
 
 				//find or create journal
@@ -51,13 +80,13 @@ public class ArticleSubmittedEventHandler(PersonRepository _personRepository, Re
 				if (journal is null)
 				{
 						journal = articleDto.Journal.Adapt<Journal>();
-						_dbContext.Journals.Add(journal);
+						await _journalRepository.AddAsync(journal);
 				}
 
 				var article = Article.AcceptSubmitted(articleDto, actors, assets);
+				journal.AddArticle(article);
 
-
-				_dbContext.Articles.Add(article);
+				//_dbContext.Articles.Add(article);
 
 				await _dbContext.SaveChangesAsync();
 		}
