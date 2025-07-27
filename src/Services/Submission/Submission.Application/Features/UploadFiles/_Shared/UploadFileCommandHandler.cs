@@ -18,7 +18,7 @@ public class UploadFileCommandHandler<TUploadCommand>
 
 				_article.SetStage(NextStage, command, _stateMachineFactory);
 
-				var uploadResponse = await UploadFile(command, asset, assetType);
+				var uploadResponse = await UploadFile(command, asset, assetType, ct);
 				
 				try
 				{
@@ -28,7 +28,7 @@ public class UploadFileCommandHandler<TUploadCommand>
 				}
 				catch (Exception)
 				{
-            await _fileService.TryDeleteFileAsync(uploadResponse.FilePath); // delete the file if something is wrong
+            await _fileService.TryDeleteAsync(uploadResponse.StoragePath); // delete the file if something is wrong
             throw;
 				}
 
@@ -37,11 +37,11 @@ public class UploadFileCommandHandler<TUploadCommand>
 
 		protected virtual ArticleStage NextStage => _article!.Stage;
 
-		protected async Task<UploadResponse> UploadFile(UploadFileCommand command, Asset asset, AssetTypeDefinition assetType)
+		protected async Task<FileMetadata> UploadFile(UploadFileCommand command, Asset asset, AssetTypeDefinition assetType, CancellationToken ct)
     {
         var filePath = asset.GenerateStorageFilePath(command.File.FileName);
         //talk about tags
-        return await _fileService.UploadFileAsync(
+        return await _fileService.UploadAsync(
 						filePath, 
 						command.File, 
 						//overwrite: !assetType.AllowsMultipleAssets, // if the asset type does not support multiple assets, we are overriding the file.
@@ -49,6 +49,6 @@ public class UploadFileCommandHandler<TUploadCommand>
 						tags: new Dictionary<string, string>{ 
                     {"entity", nameof(Asset)},
                     {"entityId", asset.Id.ToString()}
-                });
+                }, ct);
     }
 }

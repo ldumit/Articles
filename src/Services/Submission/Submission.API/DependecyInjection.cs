@@ -50,7 +50,7 @@ public static class DependecyInjection
 						.AddScoped<IArticleRoleChecker, ContributorRepository>();
 
 				// external services or modules
-				services.AddMongoFileStorage(config);
+				services.AddMongoFileStorageAsSingletone(config);
 
 				//grpc Services
 				var grpcOptions = config.GetSectionByTypeName<GrpcServicesOptions>();

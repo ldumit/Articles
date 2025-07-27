@@ -1,6 +1,8 @@
-﻿namespace FileStorage.AzureBlob;
+﻿using FileStorage.Contracts;
 
-public class AzureBlobFileStorageOptions
+namespace FileStorage.AzureBlob;
+
+public class AzureBlobFileStorageOptions : IFileStorageOptions
 {
 		public string ConnectionStringName { get; init; } = default!;
 		public string ContainerName { get; init; } = default!;

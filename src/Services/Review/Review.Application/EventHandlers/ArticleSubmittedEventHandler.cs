@@ -1,8 +1,9 @@
-﻿using MassTransit;
-using Articles.Abstractions.Events;
-using Review.Persistence;
-using Auth.Grpc;
+﻿using Articles.Abstractions.Events;
 using Blocks.Domain;
+using FileStorage.Contracts;
+using MassTransit;
+using Review.Application.FileStorage;
+using Review.Persistence;
 
 namespace Review.Application.Features.Articles.EventHandlers;
 
@@ -11,7 +12,9 @@ public class ArticleSubmittedEventHandler(
 		Repository<Journal> _journalRepository, 
 		ReviewDbContext _dbContext,
 		AssetTypeRepository _assetTypeRepository,
-		IPersonService _personService) : IConsumer<ArticleSubmittedEvent>
+		IFileService reviewFileService,
+		FileServiceFactory fileServiceFactory) 
+		: IConsumer<ArticleSubmittedEvent>
 {
 		public async Task Consume(ConsumeContext<ArticleSubmittedEvent> context)
 		{
@@ -62,6 +65,9 @@ public class ArticleSubmittedEventHandler(
 						//article.AssignActor(actor.Id, actorDto.Role);
 				}
 
+				//var submissionFileService = fileServiceFactory(FileStorageType.Submission);
+				var submissionFileService = fileServiceFactory(FileStorageType.Submission);
+
 				//create actors
 				var assets = new List<Asset>();
 				foreach (var assetDto in articleDto.Assets)
@@ -70,6 +76,13 @@ public class ArticleSubmittedEventHandler(
 
 						var asset = Asset.CreateFromSubmission(assetDto, assetTypeDefinition, articleDto.Id);
 
+						var(fileStream, fileMetada) = await submissionFileService.DownloadAsync(asset.File.FileServerId, context.CancellationToken);
+
+						var fileMetadata = await reviewFileService.UploadAsync(
+								new FileUploadRequest(fileMetada.StoragePath, fileMetada.FileName, fileMetada.ContentType, fileMetada.FileSize), 
+								fileStream);
+
+						asset.CreateFile(fileMetadata, assetTypeDefinition);
 						//todo create assets & files, then download & upload files) 
 
 						assets.Add(asset);
@@ -85,8 +98,6 @@ public class ArticleSubmittedEventHandler(
 
 				var article = Article.AcceptSubmitted(articleDto, actors, assets);
 				journal.AddArticle(article);
-
-				//_dbContext.Articles.Add(article);
 
 				await _dbContext.SaveChangesAsync();
 		}

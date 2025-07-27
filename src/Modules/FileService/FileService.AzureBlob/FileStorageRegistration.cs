@@ -12,7 +12,6 @@ public static class FileStorageRegistration
 		public static IServiceCollection AddAzureFileStorage(this IServiceCollection services, IConfiguration config)
 		{
 				services.AddAndValidateOptions<AzureBlobFileStorageOptions>(config);
-				//services.ConfigureOptions<AzureBlobFileStorageOptions>(config);
 				var options = config.GetSectionByTypeName<AzureBlobFileStorageOptions>();
 
 				services.AddSingleton(_ =>
@@ -25,6 +24,7 @@ public static class FileStorageRegistration
 				});
 
 				services.AddSingleton<IFileService, FileService>();
+				services.AddScoped<FileService>();
 
 				return services;
 		}

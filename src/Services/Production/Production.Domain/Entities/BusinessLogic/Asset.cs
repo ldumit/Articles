@@ -64,7 +64,7 @@ public partial class Asset
 				AddAction(action);
 		}
 
-		public File CreateAndAddFile(UploadResponse uploadResponse, AssetTypeDefinition assetTypeDefinition)
+		public File CreateAndAddFile(FileMetadata uploadResponse, AssetTypeDefinition assetTypeDefinition)
 		{
 				var file = File.CreateFile(uploadResponse, this, assetTypeDefinition);
 

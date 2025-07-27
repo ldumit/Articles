@@ -7,31 +7,54 @@ using Microsoft.Extensions.Options;
 
 namespace FileStorage.MongoGridFS;
 
-public class FileService : IFileService
+public class FileService(GridFSBucket bucket, IOptions<MongoGridFsFileStorageOptions> options) 
+		: FileService<MongoGridFsFileStorageOptions>(bucket, options);
+
+public class FileService<TFileStorageOptions> : IFileService<TFileStorageOptions>
+		where TFileStorageOptions: MongoGridFsFileStorageOptions
 {
 		private readonly GridFSBucket _bucket;
-		private readonly MongoGridFsFileStorageOptions _options;
+		private readonly TFileStorageOptions _options;
 
-		private const string FilePathMetadataKey = "filePath";
-		private const string ContentTypeMetadataKey = "contentType";
 		private const string DefaultContentType = "application/octet-stream";
 
-		public FileService(GridFSBucket bucket, IOptions<MongoGridFsFileStorageOptions> options)
+		public FileService(GridFSBucket bucket, IOptions<TFileStorageOptions> options)
 				=> (_bucket, _options) = (bucket, options.Value);
 
-		public async Task<UploadResponse> UploadFileAsync(string filePath, IFormFile file, bool overwrite = false, Dictionary<string, string>? tags = null)
+		public async Task<FileMetadata> UploadAsync(string storagePath, IFormFile file, bool overwrite = false, Dictionary<string, string>? tags = null, CancellationToken ct = default)
 		{
-				if (file.Length > _options.FileSizeLimitInBytes)
+				using var stream = file.OpenReadStream();
+
+				var request = new FileUploadRequest(storagePath, file.FileName, file.ContentType, file.Length);
+
+				return await UploadInternalAsync(request, stream, overwrite, tags, ct);
+		}
+
+		public async Task<FileMetadata> UploadAsync(FileUploadRequest request, Stream stream, bool overwrite = false, Dictionary<string, string>? tags = null, CancellationToken ct = default)
+		{
+				try { request = request with { FileSize = stream.Length }; }
+				catch (NotSupportedException) 
+				{ 
+						if(request.FileSize <= 0) // it means we don't have the length here so we cannot continue
+								throw new InvalidOperationException("Stream does not support Length. Cannot validate file size."); 
+				}
+
+				return await UploadInternalAsync(request, stream, overwrite, tags, ct);
+		}
+
+		private async Task<FileMetadata> UploadInternalAsync(FileUploadRequest request, Stream stream, bool overwrite, Dictionary<string, string>? tags, CancellationToken ct)
+		{
+				if (request.FileSize > _options.FileSizeLimitInBytes)
 						throw new InvalidOperationException($"File exceeds maximum allowed size of {_options.FileSizeLimitInMB} MB.");
 
-				if (overwrite) // Delete existing if overwrite is true
-						await TryDeleteFileAsync(filePath);
+				if (overwrite)
+						await TryDeleteAsync(request.StoragePath);
 
-				// add filePath & ContentType to the tags
 				var metadata = new BsonDocument(tags ?? new Dictionary<string, string>())
 				{
-						{ FilePathMetadataKey, filePath },
-						{ ContentTypeMetadataKey, file.ContentType }
+						{ nameof(FileMetadata.StoragePath), request.StoragePath },
+						{ nameof(FileMetadata.FileName), request.FileName },
+						{ nameof(FileMetadata.ContentType), request.ContentType ?? DefaultContentType }
 				};
 
 				var uploadOptions = new GridFSUploadOptions
@@ -40,64 +63,62 @@ public class FileService : IFileService
 						ChunkSizeBytes = _options.ChunkSizeBytes
 				};
 
-				ObjectId fileId;
-				using (var stream = file.OpenReadStream())
-				{
-						fileId = await _bucket.UploadFromStreamAsync(file.FileName, stream, uploadOptions);
-				}
+				var fileId = await _bucket.UploadFromStreamAsync(request.FileName, stream, uploadOptions, ct);
 
-				return new UploadResponse(
-						FilePath: filePath,
-						FileName: file.FileName,
-						FileSize: file.Length,
+				return new FileMetadata(
+						StoragePath: request.StoragePath,
+						FileName: request.FileName,
+						ContentType: request.ContentType ?? DefaultContentType,
+						FileSize: request.FileSize,
 						FileId: fileId.ToString()
 				);
 		}
 
-		public async Task<IEnumerable<string>> FindFileIdsByTagAsync(string key, string value)
+
+		public async Task<IEnumerable<string>> FindFileIdsByTagAsync(string key, string value, CancellationToken ct = default)
 		{
 				var filter = Builders<GridFSFileInfo>.Filter.Eq($"metadata.{key}", value);
-				var fileInfos = await _bucket.Find(filter).ToListAsync();
+				var fileInfos = await _bucket.Find(filter, cancellationToken:ct).ToListAsync(ct);
 
 				return fileInfos.Select(f => f.Id.ToString());
 		}
 
-		public async Task<bool> TryDeleteFileByTagAsync(string key, string value)
+		public async Task<bool> TryDeleteByTagAsync(string key, string value, CancellationToken ct = default)
 		{
 				var filter = Builders<GridFSFileInfo>.Filter.Eq($"metadata.{key}", value);
-				var fileInfo = await _bucket.Find(filter).FirstOrDefaultAsync();
+				var fileInfo = await _bucket.Find(filter, cancellationToken: ct).FirstOrDefaultAsync(ct);
 				if (fileInfo == null)
 						return false;
 
-				await _bucket.DeleteAsync(fileInfo.Id);
+				await _bucket.DeleteAsync(fileInfo.Id, ct);
 				return true;
 		}
 
-		public async Task<bool> TryDeleteFileAsync(string fileId)
+		public async Task<bool> TryDeleteAsync(string fileId, CancellationToken ct = default)
 		{
 				if (!ObjectId.TryParse(fileId, out var objectId))
 						return false;
 
 				try
 				{
-						await _bucket.DeleteAsync(objectId);
+						await _bucket.DeleteAsync(objectId, ct);
 						return true;
 				}
 				catch (GridFSFileNotFoundException) { return false; }
 		}
 
-		public async Task<(Stream FileStream, string ContentType)> DownloadFileAsync(string fileId)
+		public async Task<(Stream FileStream, FileMetadata FileMetadata)> DownloadAsync(string fileId, CancellationToken ct = default)
 		{
 				if (!ObjectId.TryParse(fileId, out var objectId))
 						throw new FileNotFoundException($"Invalid file ID: {fileId}");
 
-				return await DownloadByIdAsync(objectId);
+				return await DownloadByIdAsync(objectId, ct);
 		}
 
-		public async Task<(Stream FileStream, string ContentType)> DownloadFileByTagAsync(string key, string value)
+		public async Task<(Stream FileStream, FileMetadata FileMetadata)> DownloadByTagAsync(string key, string value, CancellationToken ct = default)
 		{
 				var filter = Builders<GridFSFileInfo>.Filter.Eq($"metadata.{key}", value);
-				var fileInfo = await _bucket.Find(filter).FirstOrDefaultAsync();
+				var fileInfo = await _bucket.Find(filter, cancellationToken: ct).FirstOrDefaultAsync(ct);
 
 				if (fileInfo == null)
 						throw new FileNotFoundException($"No file found with tag [{key}={value}]");
@@ -105,16 +126,25 @@ public class FileService : IFileService
 				return await DownloadByIdAsync(fileInfo.Id);
 		}
 
-		private async Task<(Stream FileStream, string ContentType)> DownloadByIdAsync(ObjectId fileId)
+		private async Task<(Stream FileStream, FileMetadata FileMetadata)> DownloadByIdAsync(ObjectId fileId, CancellationToken ct = default)
 		{
-				var fileInfo = await _bucket.Find(Builders<GridFSFileInfo>.Filter.Eq("_id", fileId)).FirstOrDefaultAsync();
+				var fileInfo = await _bucket.Find(Builders<GridFSFileInfo>.Filter.Eq("_id", fileId), cancellationToken: ct).FirstOrDefaultAsync(ct);
 				if (fileInfo == null)
 						throw new FileNotFoundException($"No file found with ID: {fileId}");
 
-				var stream = await _bucket.OpenDownloadStreamAsync(fileId);
-				var contentType = fileInfo.Metadata?.GetValue(ContentTypeMetadataKey, DefaultContentType)?.AsString ?? DefaultContentType;
+				var stream = await _bucket.OpenDownloadStreamAsync(fileId, cancellationToken: ct);
 
-				return (stream, contentType);
+				var md = fileInfo.Metadata;
+
+				var fileMetadata = new FileMetadata(
+						StoragePath: md[nameof(FileMetadata.StoragePath)].AsString,
+						FileName: md[nameof(FileMetadata.FileName)].AsString,
+						ContentType: md[nameof(FileMetadata.ContentType)].AsString,
+						FileSize: fileInfo.Length,
+						FileId: fileId.ToString()
+						);
+
+				return (stream, fileMetadata);
 		}
 }
 

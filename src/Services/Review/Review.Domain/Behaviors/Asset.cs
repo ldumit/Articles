@@ -29,9 +29,9 @@ public partial class Asset
 		}
 
 
-		public File CreateFile(UploadResponse uploadResponse, AssetTypeDefinition assetType, IArticleAction<ArticleActionType> action)
+		public File CreateFile(FileMetadata fileMetadata, AssetTypeDefinition assetType)
 		{
-				File = File.CreateFile(uploadResponse, this, assetType);
+				File = File.CreateFile(fileMetadata, this, assetType);
 				State = AssetState.Uploaded;
 				return File;
 		}

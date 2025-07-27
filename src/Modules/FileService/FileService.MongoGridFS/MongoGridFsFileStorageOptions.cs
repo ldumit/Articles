@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FileStorage.Contracts;
+using System.ComponentModel.DataAnnotations;
 
 namespace FileStorage.MongoGridFS;
 
@@ -11,7 +12,7 @@ public class MongoGridFsFileStorageOptions : MongoDbOptions
 		public long FileSizeLimitInBytes => FileSizeLimitInMB * 1024 * 1024;
 }
 
-public class MongoDbOptions
+public class MongoDbOptions : IFileStorageOptions
 {
 		[Required]
 		public string ConnectionStringName { get; init; } = default!;

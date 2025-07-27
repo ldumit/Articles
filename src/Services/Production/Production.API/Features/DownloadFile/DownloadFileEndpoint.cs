@@ -11,8 +11,8 @@ public class DownloadFileEndpoint(FileRepository _fileRepository, IFileService _
 		{
 				var file = await _fileRepository.GetByIdAsync(command.ArticleId, command.FileId);
 
-				var (fileStream, contentType) = await _fileService.DownloadFileAsync(file.FileServerId);
+				var (fileStream, fileMetada) = await _fileService.DownloadAsync(file.FileServerId, ct);
 
-				await SendStreamAsync(fileStream, file.Name.Value, file.Size, contentType);				
+				await SendStreamAsync(fileStream, file.Name.Value, file.Size, fileMetada.ContentType);				
 		}
 }

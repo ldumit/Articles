@@ -16,18 +16,18 @@ public class UploadFileCommandHandler<TUploadCommand>
         var assetType = _assetTypeRepository.GetById(command.AssetType);
         var asset = GetOrCreateAsset(assetType, command);
 
-        var uploadResponse = await UploadFile(command, asset, assetType);
+        var fileMetada = await UploadFile(command, asset, assetType, ct);
 
         try
         {
-            asset.CreateFile(uploadResponse, assetType, command);
+            asset.CreateFile(fileMetada, assetType);
             _article.SetStage(NextStage, _stateMachineFactory, command);
 
             await _articleRepository.SaveChangesAsync();
         }
         catch (Exception)
         {
-            await _fileService.TryDeleteFileAsync(uploadResponse.FilePath); // delete the file if something is wrong
+            await _fileService.TryDeleteAsync(fileMetada.StoragePath); // delete the file if something is wrong
             throw;
         }
 
@@ -36,11 +36,11 @@ public class UploadFileCommandHandler<TUploadCommand>
 
     protected virtual ArticleStage NextStage => _article!.Stage;
 
-    protected async Task<UploadResponse> UploadFile(UploadFileCommand command, Asset asset, AssetTypeDefinition assetType)
+    protected async Task<FileMetadata> UploadFile(UploadFileCommand command, Asset asset, AssetTypeDefinition assetType, CancellationToken ct)
     {
         var filePath = asset.GenerateStorageFilePath(command.File.FileName);
         //talk about tags
-        return await _fileService.UploadFileAsync(
+        return await _fileService.UploadAsync(
                         filePath,
                         command.File,
                         //overwrite: !assetType.AllowsMultipleAssets, // if the asset type does not support multiple assets, we are overriding the file.
@@ -48,7 +48,7 @@ public class UploadFileCommandHandler<TUploadCommand>
                         tags: new Dictionary<string, string>{
                     {"entity", nameof(Asset)},
                     {"entityId", asset.Id.ToString()}
-                });
+                }, ct);
     }
 
     protected Asset GetOrCreateAsset(AssetTypeDefinition assetType, TUploadCommand command)

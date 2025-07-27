@@ -1,11 +1,12 @@
-﻿using Production.Persistence.Repositories;
-using Production.Domain.Entities;
-using FileStorage.Contracts;
-using Production.API.Features.Shared;
+﻿using FileStorage.Contracts;
 using Mapster;
-using Production.Application.StateMachines;
+using Production.API.Features.Shared;
 using Production.Application.Dtos;
+using Production.Application.StateMachines;
+using Production.Domain.Entities;
 using Production.Domain.Enums;
+using Production.Persistence.Repositories;
+using System.Threading;
 
 namespace Production.API.Features.UploadFiles.Shared;
 
@@ -31,10 +32,10 @@ public class UploadFileEndpoint<TUploadCommand>
 				CheckAndThrowStateTransition(asset, command.ActionType);
 				asset.SetState(AssetState.Uploaded, command);
 
-				var uploadResponse = await UploadFile(command, asset);
+				var fileMetadata = await UploadFile(command, asset, ct);
 				try
 				{
-						asset.CreateAndAddFile(uploadResponse, assetType);
+						asset.CreateAndAddFile(fileMetadata, assetType);
 
             _article.SetStage(NextStage, command);
 
@@ -42,21 +43,21 @@ public class UploadFileEndpoint<TUploadCommand>
 				}
 				catch (Exception)
 				{
-            await _fileService.TryDeleteFileAsync(uploadResponse.FilePath); // delete the file if something is wrong
+            await _fileService.TryDeleteAsync(fileMetadata.StoragePath); // delete the file if something is wrong
             throw;
 				}
 
 				await SendAsync(new AssetActionResponse(asset.Adapt<AssetMinimalDto>()));
 		}
 
-		private async Task<UploadResponse> UploadFile(UploadFileCommand command, Asset asset)
+		private async Task<FileMetadata> UploadFile(UploadFileCommand command, Asset asset, CancellationToken ct)
     {
         var filePath = asset.GenerateStorageFilePath(command.File.FileName);
         //talk about tags
-        return await _fileService.UploadFileAsync(filePath, command.File, overwrite:true,
+        return await _fileService.UploadAsync(filePath, command.File, overwrite:true,
                 new Dictionary<string, string>{ 
                     {"entity", nameof(Asset)},
                     {"entityId", asset.Id.ToString()}
-                });
+                }, ct);
     }    
 }

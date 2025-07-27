@@ -2,14 +2,15 @@
 using Blocks.AspNetCore;
 using Blocks.AspNetCore.Grpc;
 using Blocks.Core;
-using Blocks.EntityFrameworkCore;
 using Blocks.Messaging;
 using EmailService.Smtp;
-using FileStorage.AzureBlob;
+using FileStorage.MongoGridFS;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Json;
+using Review.API.FileStorage;
 using Review.Persistence.Repositories;
 using System.Text.Json.Serialization;
+using TransactionOptions = Blocks.EntityFrameworkCore.TransactionOptions;
 
 namespace Review.API;
 
@@ -27,7 +28,7 @@ public static class DependecyInjection
 						});
 		}
 
-		public static IServiceCollection AddApiServices(this IServiceCollection services, IConfiguration configuration)
+		public static IServiceCollection AddApiServices(this IServiceCollection services, IConfiguration config)
 		{
 				services
 						.AddMemoryCache()                       // Basic Caching 
@@ -35,7 +36,7 @@ public static class DependecyInjection
 						.AddHttpContextAccessor()								// For accessing HTTP context
 						.AddEndpointsApiExplorer()              // Minimal API docs (Swagger)
 						.AddSwaggerGen()                        // Swagger setup
-						.AddJwtAuthentication(configuration)    // JWT Authentication
+						.AddJwtAuthentication(config)    // JWT Authentication
 						.AddAuthorization();                    // Authorization configuration
 
 				// http
@@ -51,11 +52,15 @@ public static class DependecyInjection
 						.AddScoped<IArticleRoleChecker, ContributorRepository>();
 
 				// external services or modules
-				services.AddAzureFileStorage(configuration);
-				services.AddSmtpEmailService(configuration);
+				services.AddMongoFileStorageAsSingletone(config);
+				services.AddMongoFileStorageAsScoped<SubmissionFileStorageOptions>(config);
+				services.AddFileServiceFactory();
+
+
+				services.AddSmtpEmailService(config);
 
 				// grpc Services
-				var grpcOptions = configuration.GetSectionByTypeName<GrpcServicesOptions>();
+				var grpcOptions = config.GetSectionByTypeName<GrpcServicesOptions>();
 				services.AddCodeFirstGrpcClient<IPersonService>(grpcOptions, "Person");
 				// todo - add this service
 				//services.AddConfiguredGrpcClient<JournalService.JournalerviceClient>(grpcOptions);

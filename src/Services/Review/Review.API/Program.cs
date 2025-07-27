@@ -36,6 +36,7 @@ app
 		.UseAuthorization()
 		.UseMiddleware<GlobalExceptionMiddleware>();
 
+app.MapCarter();
 #endregion
 
 app.Run();

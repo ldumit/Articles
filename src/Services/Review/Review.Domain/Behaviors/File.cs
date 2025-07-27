@@ -7,9 +7,9 @@ public partial class File
 {
 		private File() {/* use factory method*/}
 
-		public static File CreateFile(UploadResponse uploadResponse, Asset asset, AssetTypeDefinition assetType)
+		public static File CreateFile(FileMetadata fileMetadata, Asset asset, AssetTypeDefinition assetType)
 		{
-				var fileName = Path.GetFileName(uploadResponse.FilePath);
+				var fileName = Path.GetFileName(fileMetadata.StoragePath);
 				var extension = FileExtension.FromFileName(fileName, assetType);
 
 				var file = new File()
@@ -17,8 +17,8 @@ public partial class File
 						Name = FileName.From(asset, extension),
 						Extension = extension,
 						OriginalName = fileName,
-						Size = uploadResponse.FileSize,
-						FileServerId = uploadResponse.FilePath
+						Size = fileMetadata.FileSize,
+						FileServerId = fileMetadata.FileId
 				};
 				return file;
 		}
