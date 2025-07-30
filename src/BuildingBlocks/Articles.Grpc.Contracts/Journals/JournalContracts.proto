@@ -15,10 +15,10 @@ message GetJournalByIdRequest
 }
 
 message GetJournalResponse {
-  JournalDto journal = 1;
+  JournalInfo journal = 1;
 }
 
-message JournalDto
+message JournalInfo
 {
   int32 id = 1;
   string name = 2;

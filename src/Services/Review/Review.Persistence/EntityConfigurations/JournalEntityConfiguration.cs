@@ -8,7 +8,7 @@ public class JournalEntityConfiguration : EntityConfiguration<Journal>
 		{
 				base.Configure(builder);
 
-				builder.Property(e => e.Abbreviation).HasMaxLength(MaxLength.C8).IsRequired();
+				builder.Property(e => e.Abbreviation).HasMaxLength(MaxLength.C16).IsRequired();
 				builder.Property(e => e.Name).HasMaxLength(MaxLength.C64).IsRequired();
 
 

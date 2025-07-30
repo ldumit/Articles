@@ -91,7 +91,7 @@ public class FileService : IFileService
 				var blob = _containerClient.GetBlobClient(storagePath);
 
 				if (!await blob.ExistsAsync(ct))
-						throw new FileNotFoundException($"File '{storagePath}' not found in container '{_options.Container}'.");
+						throw new FileNotFoundException($"File '{storagePath}' not found in container '{_options.ContainerName}'.");
 
 				var props = await blob.GetPropertiesAsync(cancellationToken: ct);
 				string fileName = props.Value.Metadata[nameof(FileMetadata.FileName).ToLowerInvariant()]; // you can use TryGet her, but the FileName metadata will aways exist

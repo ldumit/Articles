@@ -1,4 +1,5 @@
-﻿using Mapster;
+﻿using Journals.Grpc;
+using Mapster;
 
 namespace Submission.Domain.Entities;
 
@@ -24,5 +25,17 @@ public partial class Journal
 				var domainEvent = new ArticleCreated(article, action);
 				article.AddDomainEvent(domainEvent);
 				return article;
+		}
+
+		public static Journal Create(JournalInfo journalInfo, IArticleAction action)
+		{
+				var journal = new Journal
+				{
+						Id = journalInfo.Id,
+						Abbreviation = journalInfo.Abbreviation,
+						Name = journalInfo.Name
+				};
+
+				return journal;
 		}
 }

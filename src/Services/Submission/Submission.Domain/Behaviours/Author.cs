@@ -1,11 +1,10 @@
 ﻿using Auth.Grpc;
-using Honorific = Articles.Abstractions.Enums.Honorific;
 
 namespace Submission.Domain.Entities;
 
 public partial class Author
 {      
-		public static Author Create(PersonInfo personInfo, IArticleAction action)
+		public static new Author Create(PersonInfo personInfo, IArticleAction action)
 		{
 				var author = new Author
 				{
@@ -15,7 +14,7 @@ public partial class Author
 						FirstName = personInfo.FirstName,
 						LastName = personInfo.LastName,
 						Honorific = personInfo.Honorific,
-						Affiliation = personInfo.ProfessionalProfile.Affiliation,
+						Affiliation = personInfo.ProfessionalProfile!.Affiliation,
 						CreatedById = action.CreatedById,
 						CreatedOn = DateTime.UtcNow
 				};

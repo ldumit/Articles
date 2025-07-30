@@ -10,8 +10,7 @@ public partial class ReviewInvitation
 						throw new DomainException("Invitation is not open anymore.");
 
 				if(ExpiresOn <  DateTime.UtcNow)
-						throw new DomainException("Invitation expirred.");
-
+						throw new DomainException("Invitation expired.");
 
 				//todo consider adding an InvitationAccepted domain event
 				Status = InvitationStatus.Accepted;

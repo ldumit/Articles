@@ -31,16 +31,16 @@
     "Email": {"Value":"author.2@articles.com"},
     "Affiliation": "Centre for Sustainable Urban Technologies, Manchester"
   },
-  {
-    "Id": 5,
-    "UserId":5,
-    "TypeDiscriminator": "Author",
-    "FirstName": "CorAuthor",
-    "LastName": "1",
-    "Honorific": "Ms",
-    "Email": {"Value":"corauthor.1@articles.com"},
-    "Affiliation": "Foundation for Youth Innovation and Learning, Cape Town"
-  },
+  //{
+  //  "Id": 5,
+  //  "UserId":5,
+  //  "TypeDiscriminator": "Author",
+  //  "FirstName": "CorAuthor",
+  //  "LastName": "1",
+  //  "Honorific": "Ms",
+  //  "Email": {"Value":"corauthor.1@articles.com"},
+  //  "Affiliation": "Foundation for Youth Innovation and Learning, Cape Town"
+  //},
   {
     "Id": 6,
     "UserId": 6,

@@ -1,6 +1,6 @@
 ﻿using Review.Application.Features.Articles.GetArticle;
 
-namespace Review.API.Endpoints;
+namespace Review.API.Endpoints.Articles;
 
 public class GetArticleEndpoint : ICarterModule
 {

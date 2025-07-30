@@ -1,19 +1,19 @@
-﻿using Review.Application.Features.Invitations.InviteReviewer;
+﻿using Review.Application.Features.Articles.AcceptArticle;
 
-namespace Review.API.Endpoints;
+namespace Review.API.Endpoints.Articles;
 
-public class InviteReviewerEndpoint: ICarterModule
+public class AcceptArticleEndpoint : ICarterModule
 {
 		public void AddRoutes(IEndpointRouteBuilder app)
 		{
-				app.MapPost("api/articles/{articleId:int}/reviewers", async (int articleId, InviteReviewerCommand command, ISender sender) =>
+				app.MapPost("api/articles/{articleId:int}:accept", async (int articleId, AcceptArticleCommand command, ISender sender) =>
 				{
 						command.ArticleId = articleId;
 						var response = await sender.Send(command);
 						return Results.Ok(response);
 				})
-				.RequireRoleAuthorization(Role.REVED, Role.EOF)
-				.WithName("InviteReviewer")
+				.RequireRoleAuthorization(Role.EOF, Role.REVED)
+				.WithName("AcceptArticle")
 				.WithTags("Articles")
 				.Produces<IdResponse>(StatusCodes.Status200OK)
 				.ProducesProblem(StatusCodes.Status400BadRequest)

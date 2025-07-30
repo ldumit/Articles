@@ -101,23 +101,23 @@ public partial class Article
 				return CreateInvitation(reviewer.UserId, reviewer.Email.Value, reviewer.FullName, action: action);
 		}
 
-		public ReviewInvitation InviteReviewer(int? userId, string email, string fullName, IArticleAction action)
+		public ReviewInvitation InviteReviewer(string email, string fullName, IArticleAction action)
 		{
-				return CreateInvitation(userId, email, fullName, action);
+				return CreateInvitation(null, email, fullName, action);
 		}
 
 		private ReviewInvitation CreateInvitation(int? userId, string email, string fullName, IArticleAction action)
 		{
 				// check if there is an active invitation for this email
 				if (_invitations.Any(i =>
-								i.EmailAddress.Trim().ToUpperInvariant() == email.Trim().ToUpperInvariant()
+								i.Email.Value.Trim().ToUpperInvariant() == email.Trim().ToUpperInvariant()
 								&& !i.IsExpired)) 
 						throw new DomainException($"Reviewer {fullName} ({email}) was already invited");
 
 				var invitation = new ReviewInvitation
 				{
 						ArticleId = this.Id,
-						EmailAddress = email,
+						Email = email,
 						FullName = fullName,
 						SentById = action.CreatedById,
 						ExpiresOn = DateTime.UtcNow.AddDays(7),
@@ -140,6 +140,7 @@ public partial class Article
 		{
 				var article = new Article
 				{
+						Id = articleDto.Id,
 						JournalId = articleDto.Journal.Id,
 						Title = articleDto.Title,
 						Type = articleDto.Type,

@@ -1,6 +1,6 @@
 ﻿using Review.Application.Features.Articles.RejectArticle;
 
-namespace Review.API.Endpoints;
+namespace Review.API.Endpoints.Articles;
 
 public class RejectArticleEndpoint : ICarterModule
 {

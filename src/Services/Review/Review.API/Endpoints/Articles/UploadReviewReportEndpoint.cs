@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Review.Application.Features.Articles.UploadFiles.UploadReviewReport;
 
-namespace Review.API.Endpoints
+namespace Review.API.Endpoints.Articles
 {
     public class UploadReviewReportEndpoint : ICarterModule
 		{

@@ -1,22 +1,56 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Auth.Grpc;
+using Azure;
 using Blocks.Exceptions;
+using Grpc.Core;
+using MassTransit;
+using Microsoft.EntityFrameworkCore;
+using Review.Application.Features.Invitations.InviteReviewer;
+using Review.Persistence;
 
 namespace Review.Application.Features.Articles.CreateReviewer;
 
-public class CreateReviewerCommandHandler(Repository<Person> _personRepository)
+public class CreateReviewerCommandHandler(ReviewDbContext _dbContext, IPersonService _personClient)
         : IRequestHandler<CreateReviewerCommand, IdResponse>
 {
-    public async Task<IdResponse> Handle(CreateReviewerCommand command, CancellationToken cancellationToken)
-    {
-        var exists = await _personRepository.Entity.AnyAsync(p => p.Email.Value.EqualsIgnoreCase(command.Email) && nameof(Reviewer) == p.TypeDiscriminator);
+    public async Task<IdResponse> Handle(CreateReviewerCommand command, CancellationToken ct)
+		{
+				var exists = await _dbContext.Reviewers.AnyAsync(p => p.Email.Value.EqualsIgnoreCase(command.Email) && nameof(Reviewer) == p.TypeDiscriminator);
 				if (exists)
 						throw new BadRequestException("A reviewer with this email already exists.");
 
-        var reviewer = Reviewer.Create(command.Email, command.FirstName, command.LastName, command.Honorific.ToString(), command.Affiliation, command);
-        await _personRepository.AddAsync(reviewer);
+				PersonInfo? personInfo = default;
+				if (command.UserId is not null)
+						personInfo = await GetPersonByUserId(command.UserId.Value, ct);
+				else
+						personInfo = await CreatePersonAsync(command, ct);
 
-        await _personRepository.SaveChangesAsync();
+				var reviewer = await CreateReviewerFromPerson(personInfo, command.Specializations, command, ct);
 
-        return new IdResponse(reviewer.Id);
-    }
+				await _dbContext.Reviewers.AddAsync(reviewer);
+
+				await _dbContext.SaveChangesAsync();
+
+				return new IdResponse(reviewer.Id);
+		}
+
+		private async Task<PersonInfo> GetPersonByUserId(int userId, CancellationToken ct)
+		{
+				var response = await _personClient.GetPersonByUserIdAsync(new GetPersonByUserIdRequest { UserId = userId }, new CallOptions(cancellationToken: ct));
+				return response.PersonInfo;
+		}
+
+		private async Task<Reviewer> CreateReviewerFromPerson(PersonInfo personInfo, IEnumerable<int> journalIds, Domain.IArticleAction action, CancellationToken ct)
+		{
+				var reviewer = Reviewer.Create(personInfo, journalIds, action);
+				await _dbContext.Reviewers.AddAsync(reviewer, ct);
+
+				return reviewer;
+		}
+
+		private async Task<PersonInfo> CreatePersonAsync(CreateReviewerCommand command, CancellationToken ct)
+		{
+				var createPersonRequest = command.Adapt<CreatePersonRequest>();
+				var response = await _personClient.CreatePersonAsync(createPersonRequest, new CallOptions(cancellationToken: ct));
+				return response.PersonInfo;
+		}
 }

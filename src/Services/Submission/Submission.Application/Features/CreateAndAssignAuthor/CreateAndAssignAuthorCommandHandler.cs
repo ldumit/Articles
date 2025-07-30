@@ -2,7 +2,6 @@
 using Grpc.Core;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace Submission.Application.Features.CreateAndAssignAuthor;
 
 public class CreateAndAssignAuthorCommandHandler(ArticleRepository _articleRepository, IPersonService _personClient)
@@ -14,13 +13,16 @@ public class CreateAndAssignAuthorCommandHandler(ArticleRepository _articleRepos
 
 				Author? author;
 				if (command.PersonId == null) //new author, new person
-						author = Author.Create(await CreatePerson(command, ct), command);
+				{
+						var personInfo = await CreatePersonAsync(command, ct);
+						author = Author.Create(personInfo, command);
+				}
 				else
 				{
 						author = await _articleRepository.Context.Authors.SingleOrDefaultAsync(x => x.Id == command.PersonId, ct);
 						if (author is null)
 						{
-								var personInfo = await GetPerson(command, ct);
+								var personInfo = await GetPersonAsync(command, ct);
 								author = Author.Create(personInfo, command);
 						}
 				}
@@ -32,13 +34,13 @@ public class CreateAndAssignAuthorCommandHandler(ArticleRepository _articleRepos
 				return new IdResponse(article.Id);
 		}
 
-		private async Task<PersonInfo> GetPerson(CreateAndAssignAuthorCommand command, CancellationToken ct)
+		private async Task<PersonInfo> GetPersonAsync(CreateAndAssignAuthorCommand command, CancellationToken ct)
 		{
 				var response = await _personClient.GetPersonByIdAsync(new GetPersonRequest { PersonId = command.PersonId!.Value }, new CallOptions(cancellationToken: ct));
 				return response.PersonInfo;
 		}
 
-		private async Task<PersonInfo> CreatePerson(CreateAndAssignAuthorCommand command, CancellationToken ct)
+		private async Task<PersonInfo> CreatePersonAsync(CreateAndAssignAuthorCommand command, CancellationToken ct)
 		{
 				var createPersonRequest = command.Adapt<CreatePersonRequest>();
 				var response = await _personClient.CreatePersonAsync(createPersonRequest, new CallOptions(cancellationToken: ct));

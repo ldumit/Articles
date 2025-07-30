@@ -14,6 +14,6 @@
 
 				public IReadOnlyList<ArticleActor> ArticleActors { get; private set; } = new List<ArticleActor>();
 
-				public string TypeDiscriminator { get; init; } = null!; // EF discriminator
+				public virtual string TypeDiscriminator { get; init; } = null!; // EF discriminator
 		}
 }

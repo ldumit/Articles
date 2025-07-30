@@ -1,6 +1,6 @@
 ﻿using Review.Application.Features.Articles.AssignEditor;
 
-namespace Review.API.Endpoints;
+namespace Review.API.Endpoints.Articles;
 
 public class AssignEditorEndpoint : ICarterModule
 {

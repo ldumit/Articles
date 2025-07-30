@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Review.Application.Features.Articles.UploadFiles.UploadManuscriptFile;
 
-namespace Review.API.Endpoints
+namespace Review.API.Endpoints.Articles
 {
     public class UploadManuscriptFileEndpoint : ICarterModule
 		{

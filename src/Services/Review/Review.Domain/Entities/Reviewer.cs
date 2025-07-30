@@ -2,6 +2,8 @@
 
 public partial class Reviewer : Person
 {
-		private readonly HashSet<ReviewerSpecialization> _specializations = new();
+		private HashSet<ReviewerSpecialization> _specializations = new();
 		public IReadOnlyCollection<ReviewerSpecialization> Specializations => _specializations;
+
+		public override string TypeDiscriminator => nameof(Reviewer);
 }

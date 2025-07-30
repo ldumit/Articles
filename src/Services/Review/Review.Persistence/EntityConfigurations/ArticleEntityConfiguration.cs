@@ -1,7 +1,9 @@
 ﻿namespace Review.Persistence.EntityConfigurations;
 public class ArticleEntityConfiguration : AuditedEntityConfiguration<Article>
 {
-    public override void Configure(EntityTypeBuilder<Article> builder)
+		protected override bool HasGeneratedId => false;
+
+		public override void Configure(EntityTypeBuilder<Article> builder)
     {
         base.Configure(builder);
 

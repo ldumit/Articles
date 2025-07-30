@@ -1,6 +1,6 @@
 ﻿using Review.Application.Features.Articles.DownloadFile;
 
-namespace Review.API.Endpoints;
+namespace Review.API.Endpoints.Articles;
 
 public class DownloadFileEndpoint : ICarterModule
 {

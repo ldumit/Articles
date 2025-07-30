@@ -34,7 +34,7 @@ public class SendInvitationEmailOnReviewerInvitedHandler(ArticleRepository _arti
 								"Review Invitation",
 								new Content(ContentType.Html, string.Format(InvitationEmail, editor.FirstName + " " + editor.LastName, url, invitation.ExpiresOn, url)),
 								new EmailAddress("articles", emailOptions.Value.EmailFromAddress),
-								new List<EmailAddress> { new EmailAddress(invitation.FullName, invitation.EmailAddress) }
+								new List<EmailAddress> { new EmailAddress(invitation.FullName, invitation.Email) }
 								);
 		}
 }

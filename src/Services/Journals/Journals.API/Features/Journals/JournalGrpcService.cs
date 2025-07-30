@@ -12,7 +12,7 @@ public class JournalGrpcService(Repository<Journal> _journalRepository) : IJourn
 				var journal = await _journalRepository.GetByIdOrThrowAsync(request.JournalId); // talk - we don't send CT here because Redis.OM doesn't support them for the async methods
 				return new GetJournalResponse
 				{
-						Journal = journal.Adapt<JournalDto>()
+						Journal = journal.Adapt<JournalInfo>()
 				};
 		}
 

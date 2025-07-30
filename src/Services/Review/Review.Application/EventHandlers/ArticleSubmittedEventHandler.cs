@@ -8,9 +8,9 @@ using Review.Persistence;
 namespace Review.Application.Features.Articles.EventHandlers;
 
 public class ArticleSubmittedEventHandler(
+		ReviewDbContext _dbContext,
 		PersonRepository _personRepository, 
 		Repository<Journal> _journalRepository, 
-		ReviewDbContext _dbContext,
 		AssetTypeRepository _assetTypeRepository,
 		IFileService reviewFileService,
 		FileServiceFactory fileServiceFactory) 
@@ -26,46 +26,37 @@ public class ArticleSubmittedEventHandler(
 				{
 						var person = await _personRepository.GetByIdAsync(actorDto.Person.Id);
 						ArticleActor actor = default!;
-						//if (person is null)
+						if (actorDto.Role == UserRoleType.AUT || actorDto.Role == UserRoleType.CORAUT)
 						{
-								//var response = await _personService.GetPersonByIdAsync(new GetPersonRequest { PersonId = actorDto.Person.Id }, context.CancellationToken);
-								//var personInfo = response.PersonInfo;
-								if (actorDto.Role == UserRoleType.AUT || actorDto.Role == UserRoleType.CORAUT)
-								{
-										if(person is null)
-												person = actorDto.Person.Adapt<Author>();
+								if(person is null)
+										person = actorDto.Person.Adapt<Author>();
 
-										actor = new ArticleAuthor { 
-												PersonId = person.Id, 
-												Person = person,
-												Role = actorDto.Role, 
-												ContributionAreas = actorDto.ContributionAreas
-										};
-								}
-								else if(actorDto.Role == UserRoleType.REVED)
-								{
-										if (person is null)
-												person = actorDto.Person.Adapt<Editor>();
+								actor = new ArticleAuthor { 
+										PersonId = person.Id, 
+										Person = person,
+										Role = actorDto.Role, 
+										ContributionAreas = actorDto.ContributionAreas
+								};
+						}
+						else if(actorDto.Role == UserRoleType.REVED)
+						{
+								if (person is null)
+										person = actorDto.Person.Adapt<Editor>();
 
-										actor = new ArticleActor { 
-												PersonId = person.Id, 
-												Person = person,
-												Role = actorDto.Role 
-										};
-								}
-								else
-								{
-										// decide : or ignore, just log a warning
-										throw new DomainException($"Unknow role for {actorDto.Person.Email}");
-								}
+								actor = new ArticleActor { 
+										PersonId = person.Id, 
+										Person = person,
+										Role = actorDto.Role 
+								};
+						}
+						else
+						{
+								// decide : throw or ignore, just log a warning
+								throw new DomainException($"Unknow role for {actorDto.Person.Email}");
 						}
 						actors.Add(actor);
-						//await _personRepository.AddAsync(person);
-
-						//article.AssignActor(actor.Id, actorDto.Role);
 				}
 
-				//var submissionFileService = fileServiceFactory(FileStorageType.Submission);
 				var submissionFileService = fileServiceFactory(FileStorageType.Submission);
 
 				//create actors
@@ -83,7 +74,6 @@ public class ArticleSubmittedEventHandler(
 								fileStream);
 
 						asset.CreateFile(fileMetadata, assetTypeDefinition);
-						//todo create assets & files, then download & upload files) 
 
 						assets.Add(asset);
 				}
@@ -96,6 +86,7 @@ public class ArticleSubmittedEventHandler(
 						await _journalRepository.AddAsync(journal);
 				}
 
+				//create article
 				var article = Article.AcceptSubmitted(articleDto, actors, assets);
 				journal.AddArticle(article);
 

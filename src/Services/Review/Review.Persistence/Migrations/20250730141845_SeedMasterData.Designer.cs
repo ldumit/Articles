@@ -13,8 +13,8 @@ using Review.Persistence;
 namespace Review.Persistence.Migrations
 {
     [DbContext(typeof(ReviewDbContext))]
-    [Migration("20250724075706_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250730141845_SeedMasterData")]
+    partial class SeedMasterData
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,10 +29,8 @@ namespace Review.Persistence.Migrations
             modelBuilder.Entity("Review.Domain.Entities.Article", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("int")
+                        .HasColumnOrder(0);
 
                     b.Property<int>("CreatedById")
                         .HasColumnType("int");
@@ -196,7 +194,8 @@ namespace Review.Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnOrder(0);
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
@@ -354,8 +353,8 @@ namespace Review.Persistence.Migrations
 
                     b.Property<string>("Abbreviation")
                         .IsRequired()
-                        .HasMaxLength(8)
-                        .HasColumnType("nvarchar(8)");
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -458,7 +457,8 @@ namespace Review.Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnOrder(0);
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
@@ -471,16 +471,13 @@ namespace Review.Persistence.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("EmailAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("ExpiresOn")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FullName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<DateTime?>("LasModifiedOn")
                         .HasColumnType("datetime2");
@@ -499,10 +496,22 @@ namespace Review.Persistence.Migrations
 
                     b.Property<string>("Token")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
+
+                    b.ComplexProperty<Dictionary<string, object>>("Email", "Review.Domain.Entities.ReviewInvitation.Email#EmailAddress", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasMaxLength(64)
+                                .HasColumnType("nvarchar(64)")
+                                .HasColumnName("Email");
+                        });
 
                     b.HasKey("Id");
 
@@ -688,9 +697,6 @@ namespace Review.Persistence.Migrations
                 {
                     b.HasBaseType("Review.Domain.Entities.Person");
 
-                    b.Property<int?>("ArticleId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Degree")
                         .HasMaxLength(512)
                         .HasColumnType("nvarchar(512)")
@@ -700,8 +706,6 @@ namespace Review.Persistence.Migrations
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)")
                         .HasComment("The author's main field of study or research (e.g., Biology, Computer Science).");
-
-                    b.HasIndex("ArticleId");
 
                     b.ToTable("Person", (string)null);
 
@@ -869,13 +873,6 @@ namespace Review.Persistence.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Review.Domain.Entities.Author", b =>
-                {
-                    b.HasOne("Review.Domain.Entities.Article", null)
-                        .WithMany("Authors")
-                        .HasForeignKey("ArticleId");
-                });
-
             modelBuilder.Entity("Review.Domain.Entities.Article", b =>
                 {
                     b.Navigation("Actions");
@@ -883,8 +880,6 @@ namespace Review.Persistence.Migrations
                     b.Navigation("Actors");
 
                     b.Navigation("Assets");
-
-                    b.Navigation("Authors");
 
                     b.Navigation("Invitations");
 

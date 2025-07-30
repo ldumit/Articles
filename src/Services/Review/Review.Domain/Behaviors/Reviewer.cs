@@ -1,22 +1,32 @@
-﻿using Mapster;
+﻿using Auth.Grpc;
+using Blocks.Core;
+using Mapster;
 
 namespace Review.Domain.Entities;
 
 public partial class Reviewer
 {
-		public static Reviewer Create(string email, string firstName, string lastName, string? honorific, string affiliation, IArticleAction action)
+		public static Reviewer Create(PersonInfo personInfo, IEnumerable<int> journalIds, IArticleAction action)
 		{
+				if(journalIds.IsNullOrEmpty())
+						throw new ArgumentNullException("A reviewer must have at least one specialization");		
+
 				var reviewer = new Reviewer
 				{
-						Email = EmailAddress.Create(email),
-						FirstName = firstName,
-						LastName = lastName,
-						Honorific = honorific,
-						Affiliation = affiliation
+						Id = personInfo.Id,
+						UserId = personInfo.UserId,
+						Email = EmailAddress.Create(personInfo.Email),
+						FirstName = personInfo.FirstName,
+						LastName = personInfo.LastName,
+						Honorific = personInfo.Honorific,
+						Affiliation = personInfo.ProfessionalProfile!.Affiliation,
+						CreatedById = action.CreatedById,
+						CreatedOn = DateTime.UtcNow
 				};
 
-				//todo - "with" creates another instance of the object
-				var domainEvent = reviewer.Adapt<ReviewerCreated>() with { Action = action };
+				reviewer._specializations = [.. journalIds.Select(journalId => new ReviewerSpecialization { JournalId = journalId, ReviewerId = reviewer.Id })];
+
+				var domainEvent = new ReviewerCreated(reviewer, action);
 				reviewer.AddDomainEvent(domainEvent);
 
 				return reviewer;

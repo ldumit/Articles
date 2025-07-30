@@ -1,13 +1,11 @@
-﻿using System.Runtime;
-
-namespace Review.Domain.Entities;
+﻿namespace Review.Domain.Entities;
 
 public partial class ReviewInvitation : AggregateEntity
 {
     public required int ArticleId { get; init; }
 
 		public int? UserId { get; init; }
-		public required string EmailAddress { get; init; }
+		public required EmailAddress Email { get; init; }
 		public required string FullName { get; init; }
 
 		public DateTime SentOn { get; init; } = DateTime.UtcNow;

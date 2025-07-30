@@ -28,9 +28,6 @@
 
   <ItemGroup>
     <Folder Include="Features\Invitations\RejectInvitation\" />
-    <Folder Include="Features\Journals\AssignChiefEditorToJournal\" />
-    <Folder Include="Features\Journals\AssignEditorToJournal\" />
-    <Folder Include="Features\Journals\" />
   </ItemGroup>
 
 </Project>

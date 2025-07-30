@@ -1,13 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Journals.Grpc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Submission.Application.Features.CreateArticle;
 
-public class CreateArticleCommandHandler(Repository<Journal> _journalRepository)
+public class CreateArticleCommandHandler(Repository<Journal> _journalRepository, IJournalService _journalClient)
 		: IRequestHandler<CreateArticleCommand, IdResponse>
 {
 		public async Task<IdResponse> Handle(CreateArticleCommand command, CancellationToken ct)
 		{
-				var journal = await _journalRepository.FindByIdOrThrowAsync(command.JournalId);
+				var journal = await _journalRepository.FindByIdAsync(command.JournalId);
+				if (journal is null)
+						journal = await CreateJournal(command);
 
 				var article = journal.CreateArticle(command.Title, command.Type, command.Scope, command);
 
@@ -23,5 +26,16 @@ public class CreateArticleCommandHandler(Repository<Journal> _journalRepository)
 				var author = await _journalRepository.Context.Authors.SingleOrDefaultAsync(t => t.UserId == command.CreatedById);
 				if (author is not null)
 						article.AssignAuthor(author, [ContributionArea.OriginalDraft], isCorrespondingAuthor: true, command);
+		}
+
+		private async Task<Journal> CreateJournal(CreateArticleCommand command)
+		{
+				var response = await _journalClient.GetJournalByIdAsync(new GetJournalByIdRequest { JournalId = command.JournalId });
+
+				var journal = Journal.Create(response.Journal, command);
+
+				await _journalRepository.AddAsync(journal);
+
+				return journal;
 		}
 }

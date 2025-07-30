@@ -25,11 +25,11 @@ public class GetJournalByIdRequest
 public class GetJournalResponse
 {
 		[ProtoMember(1)]
-		public JournalDto Journal { get; set; } = default!;
+		public JournalInfo Journal { get; set; } = default!;
 }
 
 [ProtoContract]
-public class JournalDto
+public class JournalInfo
 {
 		[ProtoMember(1)]
 		public int Id { get; set; } = default!;
