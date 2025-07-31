@@ -3,7 +3,8 @@ using EmailService.Contracts;
 using Flurl;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
-using Review.Domain.Events;
+using Review.Domain.Articles;
+using Review.Domain.Invitations.Events;
 using EmailAddress = EmailService.Contracts.EmailAddress;
 
 namespace Review.Application.Features.Invitations.InviteReviewer;

@@ -1,4 +1,6 @@
-﻿namespace Review.Application.Dtos;
+﻿using Review.Domain.Articles.Enums;
+
+namespace Review.Application.Dtos;
 
 public record AssetDto(
 		int Id, 

@@ -1,7 +1,10 @@
-﻿namespace Review.Application.Features.Articles._Shared;
+﻿using Review.Domain.Shared;
+using Review.Domain.Articles.Enums;
 
-public abstract record ArticleCommand : ArticleCommandBase<ArticleActionType>, Domain.IArticleAction, ICommand<IdResponse>;
-public abstract record ArticleCommand<TResponse> : ArticleCommandBase<ArticleActionType>, Domain.IArticleAction, ICommand<TResponse>;
+namespace Review.Application.Features.Articles._Shared;
+
+public abstract record ArticleCommand : ArticleCommandBase<ArticleActionType>, Domain.Shared.IArticleAction, ICommand<IdResponse>;
+public abstract record ArticleCommand<TResponse> : ArticleCommandBase<ArticleActionType>, Domain.Shared.IArticleAction, ICommand<TResponse>;
 
 public abstract class ArticleCommandValidator<TFileActionCommand> : AbstractValidator<TFileActionCommand>
     where TFileActionCommand : IArticleAction

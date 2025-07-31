@@ -23,7 +23,7 @@ namespace Review.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Review.Domain.Entities.Article", b =>
+            modelBuilder.Entity("Review.Domain.Articles.Article", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int")
@@ -83,7 +83,7 @@ namespace Review.Persistence.Migrations
                     b.ToTable("Article", (string)null);
                 });
 
-            modelBuilder.Entity("Review.Domain.Entities.ArticleAction", b =>
+            modelBuilder.Entity("Review.Domain.Articles.ArticleAction", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -116,7 +116,7 @@ namespace Review.Persistence.Migrations
                     b.ToTable("ArticleAction", (string)null);
                 });
 
-            modelBuilder.Entity("Review.Domain.Entities.ArticleActor", b =>
+            modelBuilder.Entity("Review.Domain.Articles.ArticleActor", b =>
                 {
                     b.Property<int>("ArticleId")
                         .HasColumnType("int");
@@ -145,7 +145,7 @@ namespace Review.Persistence.Migrations
                     b.UseTphMappingStrategy();
                 });
 
-            modelBuilder.Entity("Review.Domain.Entities.ArticleStageTransition", b =>
+            modelBuilder.Entity("Review.Domain.Articles.ArticleStageTransition", b =>
                 {
                     b.Property<string>("CurrentStage")
                         .HasColumnType("nvarchar(450)");
@@ -187,7 +187,7 @@ namespace Review.Persistence.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Review.Domain.Entities.Asset", b =>
+            modelBuilder.Entity("Review.Domain.Articles.Asset", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -226,7 +226,7 @@ namespace Review.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(64)");
 
-                    b.ComplexProperty<Dictionary<string, object>>("File", "Review.Domain.Entities.Asset.File#File", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("File", "Review.Domain.Articles.Asset.File#File", b1 =>
                         {
                             b1.IsRequired();
 
@@ -245,7 +245,7 @@ namespace Review.Persistence.Migrations
                                 .HasColumnType("bigint")
                                 .HasComment("Size of the file in kilobytes");
 
-                            b1.ComplexProperty<Dictionary<string, object>>("Extension", "Review.Domain.Entities.Asset.File#File.Extension#FileExtension", b2 =>
+                            b1.ComplexProperty<Dictionary<string, object>>("Extension", "Review.Domain.Articles.Asset.File#File.Extension#FileExtension", b2 =>
                                 {
                                     b2.IsRequired();
 
@@ -256,7 +256,7 @@ namespace Review.Persistence.Migrations
                                         .HasColumnName("File_Extension");
                                 });
 
-                            b1.ComplexProperty<Dictionary<string, object>>("Name", "Review.Domain.Entities.Asset.File#File.Name#FileName", b2 =>
+                            b1.ComplexProperty<Dictionary<string, object>>("Name", "Review.Domain.Articles.Asset.File#File.Name#FileName", b2 =>
                                 {
                                     b2.IsRequired();
 
@@ -269,7 +269,7 @@ namespace Review.Persistence.Migrations
                                 });
                         });
 
-                    b.ComplexProperty<Dictionary<string, object>>("Name", "Review.Domain.Entities.Asset.Name#AssetName", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("Name", "Review.Domain.Articles.Asset.Name#AssetName", b1 =>
                         {
                             b1.IsRequired();
 
@@ -289,7 +289,7 @@ namespace Review.Persistence.Migrations
                     b.ToTable("Asset", (string)null);
                 });
 
-            modelBuilder.Entity("Review.Domain.Entities.AssetTypeDefinition", b =>
+            modelBuilder.Entity("Review.Domain.Articles.AssetTypeDefinition", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int");
@@ -324,7 +324,7 @@ namespace Review.Persistence.Migrations
                         .HasColumnType("nvarchar(64)")
                         .HasColumnOrder(1);
 
-                    b.ComplexProperty<Dictionary<string, object>>("AllowedFileExtensions", "Review.Domain.Entities.AssetTypeDefinition.AllowedFileExtensions#FileExtensions", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("AllowedFileExtensions", "Review.Domain.Articles.AssetTypeDefinition.AllowedFileExtensions#FileExtensions", b1 =>
                         {
                             b1.IsRequired();
 
@@ -342,115 +342,7 @@ namespace Review.Persistence.Migrations
                     b.ToTable("AssetTypeDefinition", (string)null);
                 });
 
-            modelBuilder.Entity("Review.Domain.Entities.Journal", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("int")
-                        .HasColumnOrder(0);
-
-                    b.Property<string>("Abbreviation")
-                        .IsRequired()
-                        .HasMaxLength(16)
-                        .HasColumnType("nvarchar(16)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Journal", (string)null);
-                });
-
-            modelBuilder.Entity("Review.Domain.Entities.JournalEditor", b =>
-                {
-                    b.Property<int>("JournalId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EditorId")
-                        .HasColumnType("int");
-
-                    b.HasKey("JournalId", "EditorId");
-
-                    b.HasIndex("EditorId");
-
-                    b.ToTable("JournalEditor", (string)null);
-                });
-
-            modelBuilder.Entity("Review.Domain.Entities.Person", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("int")
-                        .HasColumnOrder(0);
-
-                    b.Property<string>("Affiliation")
-                        .IsRequired()
-                        .HasMaxLength(512)
-                        .HasColumnType("nvarchar(512)")
-                        .HasComment("Institution or organization they are associated with when they conduct their research.");
-
-                    b.Property<int>("CreatedById")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<string>("Honorific")
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<DateTime?>("LasModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("LastModifiedById")
-                        .HasColumnType("int");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<string>("TypeDiscriminator")
-                        .IsRequired()
-                        .HasMaxLength(8)
-                        .HasColumnType("nvarchar(8)");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.ComplexProperty<Dictionary<string, object>>("Email", "Review.Domain.Entities.Person.Email#EmailAddress", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<string>("Value")
-                                .IsRequired()
-                                .HasMaxLength(64)
-                                .HasColumnType("nvarchar(64)")
-                                .HasColumnName("Email");
-                        });
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique()
-                        .HasFilter("[UserId] IS NOT NULL");
-
-                    b.ToTable("Person", (string)null);
-
-                    b.HasDiscriminator<string>("TypeDiscriminator").HasValue("Person");
-
-                    b
-                        .UseTphMappingStrategy()
-                        .HasAnnotation("RawSql:Index", "CREATE UNIQUE INDEX IX_Person_Email_TypeDiscriminator ON Person (Email, TypeDiscriminator)");
-                });
-
-            modelBuilder.Entity("Review.Domain.Entities.ReviewInvitation", b =>
+            modelBuilder.Entity("Review.Domain.Articles.ReviewInvitation", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -491,15 +383,10 @@ namespace Review.Persistence.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<string>("Token")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
 
-                    b.ComplexProperty<Dictionary<string, object>>("Email", "Review.Domain.Entities.ReviewInvitation.Email#EmailAddress", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("Email", "Review.Domain.Articles.ReviewInvitation.Email#EmailAddress", b1 =>
                         {
                             b1.IsRequired();
 
@@ -508,6 +395,17 @@ namespace Review.Persistence.Migrations
                                 .HasMaxLength(64)
                                 .HasColumnType("nvarchar(64)")
                                 .HasColumnName("Email");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("Token", "Review.Domain.Articles.ReviewInvitation.Token#InvitationToken", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasMaxLength(64)
+                                .HasColumnType("nvarchar(64)")
+                                .HasColumnName("Token");
                         });
 
                     b.HasKey("Id");
@@ -519,22 +417,7 @@ namespace Review.Persistence.Migrations
                     b.ToTable("ReviewInvitation", (string)null);
                 });
 
-            modelBuilder.Entity("Review.Domain.Entities.ReviewerSpecialization", b =>
-                {
-                    b.Property<int>("JournalId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ReviewerId")
-                        .HasColumnType("int");
-
-                    b.HasKey("JournalId", "ReviewerId");
-
-                    b.HasIndex("ReviewerId");
-
-                    b.ToTable("ReviewerSpecialization", (string)null);
-                });
-
-            modelBuilder.Entity("Review.Domain.Entities.Stage", b =>
+            modelBuilder.Entity("Review.Domain.Articles.Stage", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int");
@@ -650,7 +533,7 @@ namespace Review.Persistence.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Review.Domain.Entities.StageHistory", b =>
+            modelBuilder.Entity("Review.Domain.Articles.StageHistory", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -677,9 +560,117 @@ namespace Review.Persistence.Migrations
                     b.ToTable("StageHistory", (string)null);
                 });
 
-            modelBuilder.Entity("Review.Domain.Entities.ArticleAuthor", b =>
+            modelBuilder.Entity("Review.Domain.Reviewers.ReviewerSpecialization", b =>
                 {
-                    b.HasBaseType("Review.Domain.Entities.ArticleActor");
+                    b.Property<int>("JournalId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ReviewerId")
+                        .HasColumnType("int");
+
+                    b.HasKey("JournalId", "ReviewerId");
+
+                    b.HasIndex("ReviewerId");
+
+                    b.ToTable("ReviewerSpecialization", (string)null);
+                });
+
+            modelBuilder.Entity("Review.Domain.Shared.Journal", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int")
+                        .HasColumnOrder(0);
+
+                    b.Property<string>("Abbreviation")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Journal", (string)null);
+                });
+
+            modelBuilder.Entity("Review.Domain.Shared.Person", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int")
+                        .HasColumnOrder(0);
+
+                    b.Property<string>("Affiliation")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)")
+                        .HasComment("Institution or organization they are associated with when they conduct their research.");
+
+                    b.Property<int>("CreatedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("Honorific")
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<DateTime?>("LasModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("LastModifiedById")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("TypeDiscriminator")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.ComplexProperty<Dictionary<string, object>>("Email", "Review.Domain.Shared.Person.Email#EmailAddress", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasMaxLength(64)
+                                .HasColumnType("nvarchar(64)")
+                                .HasColumnName("Email");
+                        });
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
+
+                    b.ToTable("Person", (string)null);
+
+                    b.HasDiscriminator<string>("TypeDiscriminator").HasValue("Person");
+
+                    b
+                        .UseTphMappingStrategy()
+                        .HasAnnotation("RawSql:Index", "CREATE UNIQUE INDEX IX_Person_Email_TypeDiscriminator ON Person (Email, TypeDiscriminator)");
+                });
+
+            modelBuilder.Entity("Review.Domain.Articles.ArticleAuthor", b =>
+                {
+                    b.HasBaseType("Review.Domain.Articles.ArticleActor");
 
                     b.Property<string>("ContributionAreas")
                         .IsRequired()
@@ -690,9 +681,9 @@ namespace Review.Persistence.Migrations
                     b.HasDiscriminator().HasValue("ArticleAuthor");
                 });
 
-            modelBuilder.Entity("Review.Domain.Entities.Author", b =>
+            modelBuilder.Entity("Review.Domain.Articles.Author", b =>
                 {
-                    b.HasBaseType("Review.Domain.Entities.Person");
+                    b.HasBaseType("Review.Domain.Shared.Person");
 
                     b.Property<string>("Degree")
                         .HasMaxLength(512)
@@ -709,40 +700,40 @@ namespace Review.Persistence.Migrations
                     b.HasDiscriminator().HasValue("Author");
                 });
 
-            modelBuilder.Entity("Review.Domain.Entities.Reviewer", b =>
+            modelBuilder.Entity("Review.Domain.Reviewers.Reviewer", b =>
                 {
-                    b.HasBaseType("Review.Domain.Entities.Person");
+                    b.HasBaseType("Review.Domain.Shared.Person");
 
                     b.ToTable("Person", (string)null);
 
                     b.HasDiscriminator().HasValue("Reviewer");
                 });
 
-            modelBuilder.Entity("Review.Domain.Entities.Editor", b =>
+            modelBuilder.Entity("Review.Domain.Articles.Editor", b =>
                 {
-                    b.HasBaseType("Review.Domain.Entities.Reviewer");
+                    b.HasBaseType("Review.Domain.Reviewers.Reviewer");
 
                     b.ToTable("Person", (string)null);
 
                     b.HasDiscriminator().HasValue("Editor");
                 });
 
-            modelBuilder.Entity("Review.Domain.Entities.Article", b =>
+            modelBuilder.Entity("Review.Domain.Articles.Article", b =>
                 {
-                    b.HasOne("Review.Domain.Entities.Journal", "Journal")
+                    b.HasOne("Review.Domain.Shared.Journal", "Journal")
                         .WithMany("Articles")
                         .HasForeignKey("JournalId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Review.Domain.Entities.Stage", null)
+                    b.HasOne("Review.Domain.Articles.Stage", null)
                         .WithMany()
                         .HasForeignKey("Stage")
                         .HasPrincipalKey("Name")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Review.Domain.Entities.Person", "SubmittedBy")
+                    b.HasOne("Review.Domain.Shared.Person", "SubmittedBy")
                         .WithMany()
                         .HasForeignKey("SubmittedById")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -752,24 +743,24 @@ namespace Review.Persistence.Migrations
                     b.Navigation("SubmittedBy");
                 });
 
-            modelBuilder.Entity("Review.Domain.Entities.ArticleAction", b =>
+            modelBuilder.Entity("Review.Domain.Articles.ArticleAction", b =>
                 {
-                    b.HasOne("Review.Domain.Entities.Article", null)
+                    b.HasOne("Review.Domain.Articles.Article", null)
                         .WithMany("Actions")
                         .HasForeignKey("EntityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Review.Domain.Entities.ArticleActor", b =>
+            modelBuilder.Entity("Review.Domain.Articles.ArticleActor", b =>
                 {
-                    b.HasOne("Review.Domain.Entities.Article", "Article")
+                    b.HasOne("Review.Domain.Articles.Article", "Article")
                         .WithMany("Actors")
                         .HasForeignKey("ArticleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Review.Domain.Entities.Person", "Person")
+                    b.HasOne("Review.Domain.Shared.Person", "Person")
                         .WithMany("ArticleActors")
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -780,15 +771,15 @@ namespace Review.Persistence.Migrations
                     b.Navigation("Person");
                 });
 
-            modelBuilder.Entity("Review.Domain.Entities.Asset", b =>
+            modelBuilder.Entity("Review.Domain.Articles.Asset", b =>
                 {
-                    b.HasOne("Review.Domain.Entities.Article", "Article")
+                    b.HasOne("Review.Domain.Articles.Article", "Article")
                         .WithMany("Assets")
                         .HasForeignKey("ArticleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Review.Domain.Entities.AssetTypeDefinition", "TypeRef")
+                    b.HasOne("Review.Domain.Articles.AssetTypeDefinition", "TypeRef")
                         .WithMany()
                         .HasForeignKey("Type")
                         .HasPrincipalKey("Name")
@@ -800,34 +791,15 @@ namespace Review.Persistence.Migrations
                     b.Navigation("TypeRef");
                 });
 
-            modelBuilder.Entity("Review.Domain.Entities.JournalEditor", b =>
+            modelBuilder.Entity("Review.Domain.Articles.ReviewInvitation", b =>
                 {
-                    b.HasOne("Review.Domain.Entities.Editor", "Editor")
-                        .WithMany("JournalEditors")
-                        .HasForeignKey("EditorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Review.Domain.Entities.Journal", "Journal")
-                        .WithMany()
-                        .HasForeignKey("JournalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Editor");
-
-                    b.Navigation("Journal");
-                });
-
-            modelBuilder.Entity("Review.Domain.Entities.ReviewInvitation", b =>
-                {
-                    b.HasOne("Review.Domain.Entities.Article", null)
+                    b.HasOne("Review.Domain.Articles.Article", null)
                         .WithMany("Invitations")
                         .HasForeignKey("ArticleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Review.Domain.Entities.Person", "SentBy")
+                    b.HasOne("Review.Domain.Shared.Person", "SentBy")
                         .WithMany()
                         .HasForeignKey("SentById")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -836,15 +808,30 @@ namespace Review.Persistence.Migrations
                     b.Navigation("SentBy");
                 });
 
-            modelBuilder.Entity("Review.Domain.Entities.ReviewerSpecialization", b =>
+            modelBuilder.Entity("Review.Domain.Articles.StageHistory", b =>
                 {
-                    b.HasOne("Review.Domain.Entities.Journal", "Journal")
+                    b.HasOne("Review.Domain.Articles.Article", null)
+                        .WithMany("StageHistories")
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Review.Domain.Articles.Stage", null)
+                        .WithMany()
+                        .HasForeignKey("StageId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Review.Domain.Reviewers.ReviewerSpecialization", b =>
+                {
+                    b.HasOne("Review.Domain.Shared.Journal", "Journal")
                         .WithMany("Reviewers")
                         .HasForeignKey("JournalId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Review.Domain.Entities.Reviewer", "Reviewer")
+                    b.HasOne("Review.Domain.Reviewers.Reviewer", "Reviewer")
                         .WithMany("Specializations")
                         .HasForeignKey("ReviewerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -855,22 +842,7 @@ namespace Review.Persistence.Migrations
                     b.Navigation("Reviewer");
                 });
 
-            modelBuilder.Entity("Review.Domain.Entities.StageHistory", b =>
-                {
-                    b.HasOne("Review.Domain.Entities.Article", null)
-                        .WithMany("StageHistories")
-                        .HasForeignKey("ArticleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Review.Domain.Entities.Stage", null)
-                        .WithMany()
-                        .HasForeignKey("StageId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Review.Domain.Entities.Article", b =>
+            modelBuilder.Entity("Review.Domain.Articles.Article", b =>
                 {
                     b.Navigation("Actions");
 
@@ -883,26 +855,21 @@ namespace Review.Persistence.Migrations
                     b.Navigation("StageHistories");
                 });
 
-            modelBuilder.Entity("Review.Domain.Entities.Journal", b =>
+            modelBuilder.Entity("Review.Domain.Shared.Journal", b =>
                 {
                     b.Navigation("Articles");
 
                     b.Navigation("Reviewers");
                 });
 
-            modelBuilder.Entity("Review.Domain.Entities.Person", b =>
+            modelBuilder.Entity("Review.Domain.Shared.Person", b =>
                 {
                     b.Navigation("ArticleActors");
                 });
 
-            modelBuilder.Entity("Review.Domain.Entities.Reviewer", b =>
+            modelBuilder.Entity("Review.Domain.Reviewers.Reviewer", b =>
                 {
                     b.Navigation("Specializations");
-                });
-
-            modelBuilder.Entity("Review.Domain.Entities.Editor", b =>
-                {
-                    b.Navigation("JournalEditors");
                 });
 #pragma warning restore 612, 618
         }

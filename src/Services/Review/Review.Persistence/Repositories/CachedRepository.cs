@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
+using Review.Domain.Articles;
 
 namespace Review.Persistence.Repositories;
 

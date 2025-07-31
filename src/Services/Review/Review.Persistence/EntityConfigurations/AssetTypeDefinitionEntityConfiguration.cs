@@ -1,4 +1,6 @@
-﻿namespace Review.Persistence.EntityConfigurations;
+﻿using Review.Domain.Articles;
+
+namespace Review.Persistence.EntityConfigurations;
 
 public class AssetTypeDefinitionEntityConfiguration : EnumEntityConfiguration<AssetTypeDefinition, AssetType>
 {

@@ -5,6 +5,7 @@ using Blocks.AspNetCore;
 using ValidationResult = FluentValidation.Results.ValidationResult;
 using ValidationMessages = Review.Application.Features.Articles._Shared.ValidationMessages;
 using Review.Application.Features.Articles._Shared;
+using Review.Domain.Articles;
 
 namespace Review.Application.Features.Articles.UploadFiles._Shared;
 

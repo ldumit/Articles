@@ -1,4 +1,5 @@
 ﻿using Articles.Security;
+using Review.Domain.Articles;
 
 namespace Review.Persistence.EntityConfigurations;
 

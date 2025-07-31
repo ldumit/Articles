@@ -1,4 +1,6 @@
-﻿namespace Review.Application.Dtos;
+﻿using Review.Domain.Articles.ValueObjects;
+
+namespace Review.Application.Dtos;
 
 // todo - do I need this DTO?
 public record AssetTypeDto

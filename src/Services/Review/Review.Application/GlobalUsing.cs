@@ -20,10 +20,9 @@ global using Articles.Abstractions;
 global using Articles.Abstractions.Enums;
 
 // Domain
-global using Review.Domain.Entities;
-global using Review.Domain.Enums;
-global using Review.Domain.ValueObjects;
+global using Review.Domain.Articles;
 global using Review.Domain.StateMachines;
+global using IArticleAction = Review.Domain.Shared.IArticleAction;
 
 // Application
 

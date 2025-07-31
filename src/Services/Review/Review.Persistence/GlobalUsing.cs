@@ -8,7 +8,9 @@ global using Blocks.EntityFrameworkCore;
 global using Articles.Abstractions.Enums;
 
 // Domain
-global using Review.Domain.Entities;
+global using Review.Domain.Articles;
+global using Review.Domain.Invitations;
+global using Review.Domain.Reviewers;
 
 //Persistence
 global using Review.Persistence.Repositories;

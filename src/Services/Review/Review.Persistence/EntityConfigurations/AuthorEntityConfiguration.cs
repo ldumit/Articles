@@ -1,4 +1,6 @@
-﻿namespace Review.Persistence.EntityConfigurations;
+﻿using Review.Domain.Shared;
+
+namespace Review.Persistence.EntityConfigurations;
 
 public class AuthorEntityConfiguration : IEntityTypeConfiguration<Author>
 {

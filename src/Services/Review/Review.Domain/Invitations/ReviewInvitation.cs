@@ -1,0 +1,25 @@
+﻿using Review.Domain.Shared.ValueObjects;
+using Review.Domain.Invitations.Enums;
+using Review.Domain.Invitations.ValueObjects;
+
+namespace Review.Domain.Articles;
+
+public partial class ReviewInvitation : AggregateEntity
+{
+    public required int ArticleId { get; init; }
+
+		public int? UserId { get; init; }
+		public required EmailAddress Email { get; init; }
+		public required string FullName { get; init; }
+
+		public DateTime SentOn { get; init; } = DateTime.UtcNow;
+		public required int SentById { get; set; }
+		public Person SentBy { get; set; } = null!;
+
+		public required DateTime ExpiresOn { get; init; }
+		public bool IsExpired => ExpiresOn < DateTime.UtcNow;
+
+		public required InvitationToken Token { get; init; }
+
+    public InvitationStatus Status { get; set; } = InvitationStatus.Open;
+}

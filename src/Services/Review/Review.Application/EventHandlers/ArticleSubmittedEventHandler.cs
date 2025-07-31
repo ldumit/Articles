@@ -3,6 +3,7 @@ using Blocks.Domain;
 using FileStorage.Contracts;
 using MassTransit;
 using Review.Application.FileStorage;
+using Review.Domain.Shared;
 using Review.Persistence;
 
 namespace Review.Application.Features.Articles.EventHandlers;

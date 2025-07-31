@@ -1,4 +1,6 @@
-﻿namespace Review.Persistence.Repositories;
+﻿using Review.Domain.Shared;
+
+namespace Review.Persistence.Repositories;
 
 public class PersonRepository(ReviewDbContext dbContext) 
 		: Repository<Person>(dbContext)

@@ -1,4 +1,5 @@
 ﻿using Review.Application.Features.Articles.UploadFiles._Shared;
+using Review.Domain.Articles.Enums;
 
 namespace Review.Application.Features.Articles.UploadFiles.UploadReviewReport;
 

@@ -1,4 +1,5 @@
 ﻿using FileStorage.Contracts;
+using Review.Domain.Articles;
 
 namespace Review.Application.Features.Articles.UploadFiles._Shared;
 

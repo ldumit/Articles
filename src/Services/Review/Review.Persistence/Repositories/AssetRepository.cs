@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 using Blocks.Core.Cache;
-using AssetTypeDefinition = Review.Domain.Entities.AssetTypeDefinition;
+using AssetTypeDefinition = Review.Domain.Articles.AssetTypeDefinition;
 
 namespace Review.Persistence.Repositories;
 

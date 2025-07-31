@@ -1,7 +1,7 @@
 ﻿using Articles.Abstractions.Events;
 using Articles.Abstractions.Events.Dtos;
 using MassTransit;
-using Review.Domain.Events;
+using Review.Domain.Articles.Events;
 
 namespace Review.Application.Features.Articles.AcceptArticle;
 
