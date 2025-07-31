@@ -10,7 +10,10 @@ public partial class ReviewInvitation : AggregateEntity
 
 		public int? UserId { get; init; }
 		public required EmailAddress Email { get; init; }
-		public required string FullName { get; init; }
+		public required string FirstName { get; init; }
+		public required string LastName { get; init; }
+
+		public string FullName => FirstName + ' ' + LastName;
 
 		public DateTime SentOn { get; init; } = DateTime.UtcNow;
 		public required int SentById { get; set; }

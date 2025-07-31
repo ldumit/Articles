@@ -8,8 +8,9 @@ public class ReviewInvitationEntityConfiguration : EntityConfiguration<ReviewInv
 				base.Configure(builder);
 
 				builder.Property(e => e.UserId).IsRequired(false);
-				builder.Property(e => e.FullName).IsRequired().HasMaxLength(MaxLength.C128);
-				//builder.Property(e => e.Token).IsRequired().HasMaxLength(MaxLength.C64);
+				builder.Property(e => e.FirstName).IsRequired().HasMaxLength(MaxLength.C64);
+				builder.Property(e => e.LastName).IsRequired().HasMaxLength(MaxLength.C64);
+				builder.Property(e => e.Status).IsRequired().HasEnumConversionAsString(MaxLength.C8);
 
 				builder.ComplexProperty(
 					 o => o.Email, builder =>

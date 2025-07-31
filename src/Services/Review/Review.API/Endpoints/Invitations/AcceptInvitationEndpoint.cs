@@ -6,10 +6,9 @@ public class AcceptInvitationEndpoint : ICarterModule
 {
 		public void AddRoutes(IEndpointRouteBuilder app)
 		{
-				app.MapPost("api/articles/{articleId:int}/invitations/{token}:accept", async (int articleId, AcceptInvitationCommand command, ISender sender) =>
+				app.MapPost("api/articles/{articleId:int}/invitations/{token}:accept", async (int articleId, string token, AcceptInvitationCommand command, ISender sender) =>
 				{
-						command.ArticleId = articleId;
-						var response = await sender.Send(command);
+						var response = await sender.Send(command with { ArticleId = articleId, Token = token });
 						return Results.Ok(response);
 				})
 				//.RequireRoleAuthorization(Role.REV)

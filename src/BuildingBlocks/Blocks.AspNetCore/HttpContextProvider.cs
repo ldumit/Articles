@@ -9,6 +9,7 @@ public interface IClaimsProvider
 {
 		public string GetClaimValue(string claimName);
 		public int GetUserId();
+		public int? TryGetUserId();
 		public string GetUserEmail();
 		public string GetUserName();
 		public string GetUserRole();
@@ -29,6 +30,8 @@ public class HttpContextProvider(IHttpContextAccessor _httpContextAccessor)
 				=> _httpContextAccessor.GetClaimValue(claimName);
 		public int GetUserId() 
 				=> _httpContextAccessor.GetClaimValue(ClaimTypes.NameIdentifier).ToInt().Value;
+		public int? TryGetUserId()
+				=> _httpContextAccessor.GetClaimValue(ClaimTypes.NameIdentifier)?.ToInt();
 		public string GetUserName()
 				=> _httpContextAccessor.GetClaimValue(ClaimTypes.Name);		
 		public string GetUserEmail() 

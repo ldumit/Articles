@@ -7,5 +7,5 @@ public class ReviewInvitationRepositoryy(ReviewDbContext dbContext)
 {
 		public async Task<ReviewInvitation> GetByTokenOrThrow(string token)
 				=> await Query()
-						.SingleOrThrowAsync(i => token.Equals(i.Token) && i.Status == InvitationStatus.Open);
+						.SingleOrThrowAsync(i => i.Token == token && i.Status == InvitationStatus.Open);
 }

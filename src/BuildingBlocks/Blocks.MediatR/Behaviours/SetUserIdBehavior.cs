@@ -12,7 +12,11 @@ public class SetUserIdBehavior<TRequest, TResponse>
 		public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
 		{
 				if (request is IAuditableAction action)
-						action.CreatedById = _claimsProvider.GetUserId();
+				{
+						var userId = _claimsProvider.TryGetUserId();
+						if (userId is not null)
+								action.CreatedById = userId.Value;
+				}
 
 				return await next();
 		}

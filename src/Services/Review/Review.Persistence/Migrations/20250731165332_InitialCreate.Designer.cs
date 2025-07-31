@@ -13,7 +13,7 @@ using Review.Persistence;
 namespace Review.Persistence.Migrations
 {
     [DbContext(typeof(ReviewDbContext))]
-    [Migration("20250731135005_InitialCreate")]
+    [Migration("20250731165332_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -366,10 +366,10 @@ namespace Review.Persistence.Migrations
                     b.Property<DateTime>("ExpiresOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("FullName")
+                    b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.Property<DateTime?>("LasModifiedOn")
                         .HasColumnType("datetime2");
@@ -377,14 +377,21 @@ namespace Review.Persistence.Migrations
                     b.Property<int?>("LastModifiedById")
                         .HasColumnType("int");
 
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
                     b.Property<int>("SentById")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("SentOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
 
                     b.Property<int?>("UserId")
                         .HasColumnType("int");

@@ -16,6 +16,7 @@ public class AcceptInvitationCommandHandler(ReviewDbContext _dbContext, ArticleR
 				Reviewer? reviewer = default!;
 				if (invitation.UserId != null)
 				{
+						command.CreatedById = invitation.UserId.Value;
 						reviewer = await _dbContext.Reviewers.SingleOrDefaultAsync(r => r.UserId == invitation.UserId);
 						if (reviewer is null)
 								reviewer = await CreateReviewerByUserId(invitation.UserId.Value, article, command, ct);

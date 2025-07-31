@@ -102,28 +102,29 @@ public partial class Article
 				if (!reviewer.Specializations.Any(s => s.JournalId == this.JournalId))
 						throw new DomainException($"Reviewer {reviewer.FullName} is not specialized in article's journal");
 
-				return CreateInvitation(reviewer.UserId, reviewer.Email.Value, reviewer.FullName, action: action);
+				return CreateInvitation(reviewer.UserId, reviewer.Email.Value, reviewer.FirstName, reviewer.LastName, action: action);
 		}
 
-		public ReviewInvitation InviteReviewer(int? userId, string email, string fullName, IArticleAction action)
+		public ReviewInvitation InviteReviewer(int? userId, string email, string firstName, string lastName, IArticleAction action)
 		{
-				return CreateInvitation(userId, email, fullName, action);
+				return CreateInvitation(userId, email, firstName, lastName, action);
 		}
 
-		private ReviewInvitation CreateInvitation(int? userId, string email, string fullName, IArticleAction action)
+		private ReviewInvitation CreateInvitation(int? userId, string email, string firstName, string lastName, IArticleAction action)
 		{
 				// check if there is an active invitation for this email
 				if (_invitations.Any(i =>
 								i.Email.Value.Trim().ToUpperInvariant() == email.Trim().ToUpperInvariant()
 								&& !i.IsExpired)) 
-						throw new DomainException($"Reviewer {fullName} ({email}) was already invited");
+						throw new DomainException($"Reviewer {firstName} {lastName} ({email}) was already invited");
 
 				var invitation = new ReviewInvitation
 				{
 						ArticleId = this.Id,
 						UserId = userId,
 						Email = email,
-						FullName = fullName,
+						FirstName = firstName,
+						LastName = lastName,
 						SentById = action.CreatedById,
 						ExpiresOn = DateTime.UtcNow.AddDays(7),
 						Token = InvitationToken.CreateNew(),
