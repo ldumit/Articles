@@ -45,9 +45,7 @@ public static class DependecyInjection
 						.AddScoped<HttpContextProvider>();
 
 				// authorization
-				services
-						.AddScoped<IAuthorizationHandler, ArticleRoleAuthorizationHandler>()
-						.AddScoped<IArticleRoleChecker, ContributorRepository>();
+				services.AddScoped<IAuthorizationHandler, ArticleAccessAuthorizationHandler>();
 
 				// external services or modules
 				services.AddMongoFileStorageAsSingletone(config);

@@ -1,5 +1,5 @@
 ﻿using FileStorage.Contracts;
-using Review.Application.Features.Articles.UploadFiles._Shared;
+using Review.Application.Features.Articles.UploadFiles.Shared;
 
 namespace Review.Application.Features.Articles.UploadFiles.UploadManuscriptFile;
 

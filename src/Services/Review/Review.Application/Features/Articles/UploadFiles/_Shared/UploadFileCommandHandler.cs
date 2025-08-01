@@ -1,7 +1,7 @@
 ﻿using FileStorage.Contracts;
 using Review.Domain.Articles;
 
-namespace Review.Application.Features.Articles.UploadFiles._Shared;
+namespace Review.Application.Features.Articles.UploadFiles.Shared;
 
 public class UploadFileCommandHandler<TUploadCommand>
     (ArticleRepository _articleRepository, AssetTypeRepository _assetTypeRepository, IFileService _fileService, ArticleStateMachineFactory _stateMachineFactory)

@@ -29,6 +29,7 @@ global using Submission.Domain.StateMachines;
 global using Submission.Application.Features.Shared;
 
 //Persistence
+global using Submission.Persistence;
 global using Submission.Persistence.Repositories;
 
 global using CachedAssetRepo = Blocks.EntityFrameworkCore.CachedRepository<

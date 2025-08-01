@@ -13,6 +13,6 @@ public class DownloadFileCommandHandler(AssetRepository _assetRepository, IFileS
 
 				var (fileStream, fileMetadata) = await _fileService.DownloadAsync(asset!.File.FileServerId, ct);
 
-				return new DownloadFileResponse(asset.File.Name, fileMetadata.ContentType, fileStream);
+				return new DownloadFileResponse(asset.File.Name.Value, fileMetadata.ContentType, fileStream);
 		}
 }

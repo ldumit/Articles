@@ -48,8 +48,7 @@ public static class DependecyInjection
 				services.AddScoped<IClaimsProvider, HttpContextProvider>();
 				services.AddScoped<IRouteProvider, HttpContextProvider>();
 
-				services.AddScoped<IAuthorizationHandler, ArticleRoleAuthorizationHandler>();
-				services.AddScoped<IArticleRoleChecker, ContributorRepository>();
+				services.AddScoped<IAuthorizationHandler, ArticleAccessAuthorizationHandler>();
 
 				// monolith modules registration 
 				services.AddAzureFileStorage(configuration);

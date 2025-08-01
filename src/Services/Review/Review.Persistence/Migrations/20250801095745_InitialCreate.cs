@@ -17,9 +17,9 @@ namespace Review.Persistence.Migrations
                 name: "ArticleStageTransition",
                 columns: table => new
                 {
-                    CurrentStage = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ActionType = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    DestinationStage = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    CurrentStage = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    ActionType = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    DestinationStage = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -127,11 +127,11 @@ namespace Review.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     Scope = table.Column<string>(type: "nvarchar(2048)", maxLength: 2048, nullable: false),
                     SubmittedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     SubmittedById = table.Column<int>(type: "int", nullable: true),
-                    Stage = table.Column<string>(type: "nvarchar(64)", nullable: false),
+                    Stage = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     JournalId = table.Column<int>(type: "int", nullable: false),
                     CreatedById = table.Column<int>(type: "int", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
@@ -169,7 +169,7 @@ namespace Review.Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     EntityId = table.Column<int>(type: "int", nullable: false),
                     Comment = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TypeId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TypeId = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     CreatedById = table.Column<int>(type: "int", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -190,7 +190,7 @@ namespace Review.Persistence.Migrations
                 {
                     ArticleId = table.Column<int>(type: "int", nullable: false),
                     PersonId = table.Column<int>(type: "int", nullable: false),
-                    Role = table.Column<string>(type: "nvarchar(450)", nullable: false, defaultValue: "AUT"),
+                    Role = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false, defaultValue: "AUT"),
                     TypeDiscriminator = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
                     ContributionAreas = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -217,9 +217,9 @@ namespace Review.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    State = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    State = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
-                    Type = table.Column<string>(type: "nvarchar(64)", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     ArticleId = table.Column<int>(type: "int", nullable: false),
                     File_FileServerId = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     File_OriginalName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false, comment: "Original full file name, with extension"),

@@ -1,4 +1,4 @@
-﻿using Review.Application.Features.Articles.UploadFiles._Shared;
+﻿using Review.Application.Features.Articles.UploadFiles.Shared;
 using Review.Domain.Articles.Enums;
 
 namespace Review.Application.Features.Articles.UploadFiles.UploadManuscriptFile;

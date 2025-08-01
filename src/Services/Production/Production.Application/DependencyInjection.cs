@@ -37,6 +37,10 @@ public static class DependencyInjection
 				//		.WithScopedLifetime());
 
 				//services.AddScoped<ArticleStateMachine>(); 
+
+
+				services.AddScoped<IArticleRoleVerifier, ArticleRoleVerifier>();
+
 				services.AddScoped<ArticleStateMachineFactory>(provider => articleStage =>
 				{
 						var dbConntext = provider.GetRequiredService<ProductionDbContext>();

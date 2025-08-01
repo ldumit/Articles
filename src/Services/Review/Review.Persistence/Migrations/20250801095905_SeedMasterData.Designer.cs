@@ -13,7 +13,7 @@ using Review.Persistence;
 namespace Review.Persistence.Migrations
 {
     [DbContext(typeof(ReviewDbContext))]
-    [Migration("20250731173459_SeedMasterData")]
+    [Migration("20250801095905_SeedMasterData")]
     partial class SeedMasterData
     {
         /// <inheritdoc />
@@ -56,6 +56,7 @@ namespace Review.Persistence.Migrations
 
                     b.Property<string>("Stage")
                         .IsRequired()
+                        .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
                     b.Property<int?>("SubmittedById")
@@ -71,7 +72,8 @@ namespace Review.Persistence.Migrations
 
                     b.Property<string>("Type")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.HasKey("Id");
 
@@ -110,7 +112,8 @@ namespace Review.Persistence.Migrations
 
                     b.Property<string>("TypeId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.HasKey("Id");
 
@@ -129,7 +132,8 @@ namespace Review.Persistence.Migrations
 
                     b.Property<string>("Role")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)")
                         .HasDefaultValue("AUT");
 
                     b.Property<string>("TypeDiscriminator")
@@ -151,13 +155,16 @@ namespace Review.Persistence.Migrations
             modelBuilder.Entity("Review.Domain.Articles.ArticleStageTransition", b =>
                 {
                     b.Property<string>("CurrentStage")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("ActionType")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("DestinationStage")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.HasKey("CurrentStage", "ActionType", "DestinationStage");
 
@@ -223,10 +230,12 @@ namespace Review.Persistence.Migrations
 
                     b.Property<string>("State")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("Type")
                         .IsRequired()
+                        .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
                     b.ComplexProperty<Dictionary<string, object>>("File", "Review.Domain.Articles.Asset.File#File", b1 =>

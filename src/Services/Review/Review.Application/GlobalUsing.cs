@@ -27,6 +27,7 @@ global using IArticleAction = Review.Domain.Shared.IArticleAction;
 // Application
 
 //Persistence
+global using Review.Persistence;
 global using Review.Persistence.Repositories;
 
 

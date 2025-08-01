@@ -8,7 +8,6 @@ using FileStorage.MongoGridFS;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Json;
 using Review.API.FileStorage;
-using Review.Persistence.Repositories;
 using System.Text.Json.Serialization;
 using TransactionOptions = Blocks.EntityFrameworkCore.TransactionOptions;
 
@@ -47,10 +46,8 @@ public static class DependecyInjection
 						.AddScoped<HttpContextProvider>();
 
 				// authorization
-				services
-						.AddScoped<IAuthorizationHandler, ArticleRoleAuthorizationHandler>()
-						.AddScoped<IArticleRoleChecker, ContributorRepository>();
-
+				services.AddScoped<IAuthorizationHandler, ArticleAccessAuthorizationHandler>();
+						
 				// external services or modules
 				services.AddMongoFileStorageAsSingletone(config);
 				services.AddMongoFileStorageAsScoped<SubmissionFileStorageOptions>(config);

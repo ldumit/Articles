@@ -10,5 +10,5 @@ public abstract class StringValueObject : IValueObject, IEquatable<StringValueOb
 		public override int GetHashCode() => Value.GetHashCode();
 		public override string ToString() => Value.ToString();
 		
-		public static implicit operator string(StringValueObject @object) => @object.Value;
+		//public static implicit operator string(StringValueObject @object) => @object.Value;
 }

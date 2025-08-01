@@ -50,7 +50,7 @@ public class InviteReviewerCommandHandler(
         // todo - decide if it is necessary here a domain event or not
         await _emailService.SendEmailAsync(BuildEmailMessage(invitation, editor));
 
-        return new InviteReviewerResponse(article.Id, invitation.Id, invitation.Token);
+        return new InviteReviewerResponse(article.Id, invitation.Id, invitation.Token.Value);
     }
 
     private EmailMessage BuildEmailMessage(ReviewInvitation invitation, Editor editor)

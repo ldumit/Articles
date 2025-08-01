@@ -1,8 +1,8 @@
 ﻿namespace Review.Domain.Invitations.Enums;
 
-public enum InvitationStatus
+public enum InvitationStatus : int
 {
-		Open,
+		Open = 1,
 		Accepted,
 		Denied,
 		Expired

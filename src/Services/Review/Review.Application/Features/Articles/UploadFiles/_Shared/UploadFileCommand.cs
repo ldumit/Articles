@@ -7,7 +7,7 @@ using ValidationMessages = Review.Application.Features.Articles._Shared.Validati
 using Review.Application.Features.Articles._Shared;
 using Review.Domain.Articles;
 
-namespace Review.Application.Features.Articles.UploadFiles._Shared;
+namespace Review.Application.Features.Articles.UploadFiles.Shared;
 
 public abstract record UploadFileCommand : ArticleCommand
 {

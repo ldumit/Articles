@@ -8,7 +8,7 @@ public partial class SubmissionDbContext(DbContextOptions<SubmissionDbContext> o
 {
     #region Entities
     public virtual DbSet<Article> Articles { get; set; }
-		public virtual DbSet<ArticleActor> ArticleContributors { get; set; }
+		public virtual DbSet<ArticleActor> ArticleActors { get; set; }
 		public virtual DbSet<Asset> Assets { get; set; }
     public virtual DbSet<AssetTypeDefinition> AssetTypes { get; set; }
     public virtual DbSet<Journal> Journals { get; set; }

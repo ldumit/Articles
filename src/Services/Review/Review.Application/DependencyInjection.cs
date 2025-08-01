@@ -1,13 +1,14 @@
-﻿using Blocks.MediatR.Behaviours;
+﻿using Articles.Security;
 using Blocks.Mapster;
+using Blocks.MediatR.Behaviours;
+using Blocks.Messaging.MassTransit;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Review.Application.Features.Invitations.InviteReviewer;
+using Review.Application.Mappings;
 using Review.Application.StateMachines;
 using System.Reflection;
-using Microsoft.Extensions.Caching.Memory;
-using Blocks.Messaging.MassTransit;
-using Review.Application.Mappings;
-using Review.Application.Features.Invitations.InviteReviewer;
 
 namespace Review.Application;
 public static class DependencyInjection
@@ -29,6 +30,8 @@ public static class DependencyInjection
 						})
 						.AddMassTransit(configuration, Assembly.GetExecutingAssembly()); ;
 				
+				services.AddScoped<IArticleRoleVerifier, ArticleRoleVerifier>();
+
 				services.AddScoped<ArticleStateMachineFactory>(provider => articleStage =>
 				{
 						//var dbConntext = provider.GetRequiredService<SubmissionDbContext>();

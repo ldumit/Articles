@@ -1,5 +1,4 @@
-﻿
-namespace Review.Persistence.EntityConfigurations;
+﻿namespace Review.Persistence.EntityConfigurations;
 
 public class ReviewInvitationEntityConfiguration : EntityConfiguration<ReviewInvitation>
 {
@@ -9,8 +8,8 @@ public class ReviewInvitationEntityConfiguration : EntityConfiguration<ReviewInv
 
 				builder.Property(e => e.UserId).IsRequired(false);
 				builder.Property(e => e.FirstName).IsRequired().HasMaxLength(MaxLength.C64);
-				builder.Property(e => e.LastName).IsRequired().HasMaxLength(MaxLength.C64);
-				builder.Property(e => e.Status).IsRequired().HasEnumConversionAsString(MaxLength.C8);
+				builder.Property(e => e.LastName).IsRequired().HasMaxLength(MaxLength.C64);				
+				builder.Property(e => e.Status).IsRequired().HasEnumToStringConversion(MaxLength.C8);
 
 				builder.ComplexProperty(
 					 o => o.Email, builder =>

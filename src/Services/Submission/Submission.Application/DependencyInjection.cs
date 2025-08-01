@@ -1,13 +1,14 @@
-﻿using Blocks.MediatR.Behaviours;
+﻿using Articles.Security;
 using Blocks.Mapster;
+using Blocks.MediatR.Behaviours;
+using Blocks.Messaging.MassTransit;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Submission.Application.Features.CreateArticle;
+using Submission.Application.Mappings;
 using Submission.Application.StateMachines;
 using System.Reflection;
-using Microsoft.Extensions.Caching.Memory;
-using Blocks.Messaging.MassTransit;
-using Submission.Application.Mappings;
 
 namespace Submission.Application;
 public static class DependencyInjection
@@ -30,6 +31,7 @@ public static class DependencyInjection
 						})
 						.AddMassTransit(configuration, Assembly.GetExecutingAssembly()); ;
 
+				services.AddScoped<IArticleRoleVerifier, ArticleRoleVerifier>();
 
 				services.AddScoped<ArticleStateMachineFactory>(provider => articleStage =>
 				{

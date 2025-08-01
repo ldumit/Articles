@@ -7,17 +7,27 @@ namespace Blocks.EntityFrameworkCore
 {
 		public static class BuilderExtensions
     {
-				public static PropertyBuilder<TEnum> HasEnumConversion<TEnum>(this PropertyBuilder<TEnum> builder)
+				public static PropertyBuilder<TEnum> HasEnumConversion<TEnum>(this PropertyBuilder<TEnum> builder, int maxLength = 64)
             where TEnum : Enum
         {
-            return builder.HasConversion(
-                e => e.ToString(),
-                value => (TEnum)Enum.Parse(typeof(TEnum), value));
+            return builder
+								.HasConversion(
+										e => e.ToString(),
+										value => (TEnum)Enum.Parse(typeof(TEnum), value))
+								.HasMaxLength(maxLength);
         }
-				public static PropertyBuilder<TEnum> HasEnumConversionAsString<TEnum>(this PropertyBuilder<TEnum> builder, int maxLength = 64)
+				public static PropertyBuilder<TEnum> HasEnumAsStringConversion<TEnum>(this PropertyBuilder<TEnum> builder, int maxLength = 64)
 						where TEnum : Enum
 				{
 						return builder.HasConversion<string>().HasMaxLength(maxLength);
+				}
+
+				public static PropertyBuilder<TEnum> HasEnumToStringConversion<TEnum>(this PropertyBuilder<TEnum> builder, int maxLength = 64)
+						where TEnum : struct, Enum
+				{
+						return builder
+								.HasConversion(new EnumToStringConverter<TEnum>())
+								.HasMaxLength(maxLength);
 				}
 
 				public static PropertyBuilder<IReadOnlyList<string>> HasCsvListConversion(this PropertyBuilder<IReadOnlyList<string>> builder)
