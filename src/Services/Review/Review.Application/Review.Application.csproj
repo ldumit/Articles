@@ -26,8 +26,4 @@
     <ProjectReference Include="..\Review.Persistence\Review.Persistence.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\Invitations\RejectInvitation\" />
-  </ItemGroup>
-
 </Project>

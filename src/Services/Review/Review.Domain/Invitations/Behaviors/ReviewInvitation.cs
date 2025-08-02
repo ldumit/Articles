@@ -16,4 +16,13 @@ public partial class ReviewInvitation
 				//todo consider adding an InvitationAccepted domain event
 				Status = InvitationStatus.Accepted;
 		}
+
+		public void Decline()
+		{
+				if (Status != InvitationStatus.Open)
+						throw new DomainException("Invitation is not open anymore.");
+
+				//todo consider adding an InvitationDeclined domain event
+				Status = InvitationStatus.Declined;
+		}
 }

@@ -5,6 +5,8 @@ public enum ArticleActionType
 		AssignEditor,
 		CreateReviewer,
 		InviteReviewer,
+		AcceptInvitation,
+		DeclineInvitation,
 		UploadManuscript,
 		UploadReviewReport,
 		AcceptArticle,

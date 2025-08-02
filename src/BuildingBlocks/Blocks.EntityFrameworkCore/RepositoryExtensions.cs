@@ -48,13 +48,21 @@ namespace Blocks.EntityFrameworkCore
 						return entity!;
 				}
 
-				public static async Task<T> SingleOrThrowAsync<T>(this IQueryable<T> source, Expression<Func<T, bool>> predicate, string? notFoundMessage = null)
+				public static async Task<T> SingleOrThrowAsync<T>(this IQueryable<T> source, Expression<Func<T, bool>> predicate, CancellationToken ct = default)
 				{
-						var result = await source.SingleOrDefaultAsync(predicate);
+						var result = await source.SingleOrDefaultAsync(predicate, ct);
 						if (result == null)
-								throw new NotFoundException(notFoundMessage ?? $"{typeof(T).Name} not found.");
+								throw new NotFoundException($"{typeof(T).Name} not found.");
 
 						return result;
+				}
+
+				public static async Task ExistsOrThrowAsync<TEntity, TContext>(this RepositoryBase<TContext, TEntity> repository, int id, CancellationToken ct = default)
+						where TContext : DbContext
+						where TEntity : class, IEntity<int>
+				{
+						if(!await repository.ExistsAsync(id, ct))
+								throw new NotFoundException($"{typeof(TEntity).Name} not found");
 				}
 		}
 }

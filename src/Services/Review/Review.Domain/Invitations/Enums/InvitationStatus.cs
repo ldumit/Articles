@@ -1,9 +1,9 @@
 ﻿namespace Review.Domain.Invitations.Enums;
 
-public enum InvitationStatus : int
+public enum InvitationStatus
 {
-		Open = 1,
+		Open,
 		Accepted,
-		Denied,
-		Expired
+		Declined,
+		Expired //todo - create a job to set the status for the expired invitations
 }

@@ -7,7 +7,7 @@ namespace Review.API.Endpoints.Articles
 		{
 				public void AddRoutes(IEndpointRouteBuilder app)
 				{
-						app.MapPost("api/articles/{articleId:int}/assets/review-report:upload",
+						app.MapPost("api/articles/{articleId:int}/assets/review-reports:upload",
 								async ([FromRoute] int articleId, [FromForm] UploadReviewReportCommand command, ISender sender) =>
 						{
 								command.ArticleId = articleId;

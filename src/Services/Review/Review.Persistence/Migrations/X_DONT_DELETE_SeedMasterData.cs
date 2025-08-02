@@ -14,8 +14,8 @@ namespace Review.Persistence.Migrations
             INSERT INTO [AssetTypeDefinition] 
             (id, name, description, defaultCategoryId, maxAssetCount, allowedFileExtensions, defaultFileExtension, MaxFileSizeInMB)
             VALUES
-            (1, 'Manuscript', 'Manuscript', 1, 0, '[""pdf""]', 'pdf', 50),
-            (2, 'ReviewReport', 'Reviewer Report', 3, 0, '[""pdf""]', 'pdf', 50),
+            (1, 'Manuscript', 'Manuscript', 1, 1, '[""pdf""]', 'pdf', 50),
+            (2, 'ReviewReport', 'Reviewer Report', 3, 2, '[""pdf""]', 'pdf', 50),
             (3, 'DraftPdf', 'Draft PDF', 3, 0, '[""pdf""]', 'pdf', 50),
             (4, 'FinalPdf', 'Final PDF', 3, 0, '[""pdf""]', 'pdf', 50),
             (5, 'FinalHtml', 'Final HTML Zip', 3, 0, '[""zip""]', 'zip', 100),

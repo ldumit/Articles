@@ -110,9 +110,9 @@ public abstract class RepositoryBase<TContext, TEntity, TKey> : IRepository<TEnt
 				return ReturnOrThrow(entity, throwNotFound);
 		}
 
-		public virtual async Task<bool> ExistsAsync(TKey id)
+		public virtual async Task<bool> ExistsAsync(TKey id, CancellationToken ct = default)
 		{
-				return await Entity.AnyAsync(e => e.Id.Equals(id));
+				return await Entity.AnyAsync(e => e.Id.Equals(id), ct);
 		}
 
     //public TEntity? GetOrDefault(TKey id) => Query().SingleOrDefault(e => e.Id == id);

@@ -3,7 +3,7 @@ using Review.Domain.Reviewers;
 
 namespace Review.Application.Features.Invitations.AcceptInvitation;
 
-public class AcceptInvitationCommandHandler(ArticleRepository _articleRepository, ReviewerRepository _reviewerRepository, ReviewInvitationRepositoryy _reviewInivtiationRepository, IPersonService _personClient)
+public class AcceptInvitationCommandHandler(ArticleRepository _articleRepository, ReviewerRepository _reviewerRepository, ReviewInvitationRepository _reviewInivtiationRepository, IPersonService _personClient)
     : IRequestHandler<AcceptInvitationCommand, AcceptInvitationResponse>
 {
     public async Task<AcceptInvitationResponse> Handle(AcceptInvitationCommand command, CancellationToken ct)

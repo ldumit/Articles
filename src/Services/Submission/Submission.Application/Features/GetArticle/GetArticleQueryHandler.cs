@@ -1,5 +1,4 @@
-﻿using Blocks.Core;
-using Submission.Application.Dtos;
+﻿using Submission.Application.Dtos;
 
 namespace Submission.Application.Features.GetArticle;
 
@@ -8,7 +7,8 @@ public class GetArticleQueryHandler(ArticleRepository _articleRepository)
 {
 		public async Task<GetArticleResonse> Handle(GetArticleQuery command, CancellationToken ct)
 		{
-				var article = Guard.NotFound(await _articleRepository.GetFullArticleById(command.ArticleId));
+				var article = Guard.NotFound(
+						await _articleRepository.GetFullArticleById(command.ArticleId));
 
 				return new GetArticleResonse(article.Adapt<ArticleDto>());
 		}
