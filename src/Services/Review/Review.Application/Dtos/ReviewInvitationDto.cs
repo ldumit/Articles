@@ -5,6 +5,7 @@ namespace Review.Application.Dtos;
 public record ReviewInvitationDto(
 		int Id,
 		int ArticleId,
+		int? UserId,
 		string Email,
 		string FirstName,
 		string LastName,

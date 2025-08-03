@@ -18,15 +18,5 @@ public class ArticleRepository(ReviewDbContext dbContext)
 						.Include(e => e.SubmittedBy)
 						.SingleOrDefaultAsync(e => e.Id == id);
 		}
-
-		public async Task<Article?> GetArticleByIdWithInvitations(int id)
-		{
-				return await Query()
-						.Include(e => e.Journal)
-						.Include(e => e.Invitations)
-								//.ThenInclude(e => e.)
-						.SingleOrDefaultAsync(e => e.Id == id);
-
-		}
 }
 

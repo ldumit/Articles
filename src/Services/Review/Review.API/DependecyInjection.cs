@@ -4,6 +4,7 @@ using Blocks.AspNetCore.Grpc;
 using Blocks.Core;
 using Blocks.Messaging;
 using EmailService.Smtp;
+using EmailService.Empty;
 using FileStorage.MongoGridFS;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Json;
@@ -53,8 +54,8 @@ public static class DependecyInjection
 				services.AddMongoFileStorageAsScoped<SubmissionFileStorageOptions>(config);
 				services.AddFileServiceFactory();
 
-
-				services.AddSmtpEmailService(config);
+				services.AddEmptyEmailService(config); //todo replace it with a real implementation
+				//services.AddSmtpEmailService(config);
 
 				// grpc Services
 				var grpcOptions = config.GetSectionByTypeName<GrpcServicesOptions>();

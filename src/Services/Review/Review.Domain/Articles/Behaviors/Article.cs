@@ -47,17 +47,17 @@ public partial class Article
 				AddAction(action);
 		}
 
-		public void AssignReviewer(Reviewer actor, IArticleAction action)
+		public void AssignReviewer(Reviewer reviewer, IArticleAction action)
 		{
-				if (_actors.Exists(a => a.PersonId == actor.Id && a.Role == UserRoleType.REV))
-						throw new DomainException($"Reviewer {actor.Email} is already assigned to the article");
+				if (_actors.Exists(a => a.PersonId == reviewer.Id && a.Role == UserRoleType.REV))
+						throw new DomainException($"Reviewer {reviewer.Email} is already assigned to the article");
 
-				actor.AddSpecialization(new ReviewerSpecialization() { JournalId = this.JournalId, ReviewerId = actor.Id});
+				reviewer.AddSpecialization(new ReviewerSpecialization() { JournalId = this.JournalId, ReviewerId = reviewer.Id});
 
-				_actors.Add(new ArticleActor() { PersonId = actor.Id, Role = UserRoleType.REV });
+				_actors.Add(new ArticleActor() { PersonId = reviewer.Id, Role = UserRoleType.REV });		
 
 				AddDomainEvent(
-						new ReviewerAssigned(actor.Id, actor.UserId!.Value, action));
+						new ReviewerAssigned(this, reviewer, action));
 
 				AddAction(action);
 		}

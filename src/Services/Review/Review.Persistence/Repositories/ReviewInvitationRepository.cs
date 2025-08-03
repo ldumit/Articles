@@ -13,4 +13,17 @@ public class ReviewInvitationRepository(ReviewDbContext dbContext)
 				=> await Query()
 						.Where(x => x.ArticleId == articleId)
 						.ToListAsync(ct);
+
+		public async Task<bool> OpenInvitationExistsAsync(int articleId, int? userId, string? email, CancellationToken ct)
+		{
+				return await _dbContext.ReviewInvitations
+						.AnyAsync(x =>
+								x.ArticleId == articleId &&
+								x.Status == InvitationStatus.Open &&
+								(
+										(userId != null && x.UserId == userId) ||
+										(userId == null && x.Email == email!)
+								),
+								ct);
+		}
 }
