@@ -1,5 +1,4 @@
 ﻿using FileStorage.Contracts;
-using Review.Domain.Articles;
 
 namespace Review.Application.Features.Articles.UploadFiles.Shared;
 
@@ -21,8 +20,8 @@ public class UploadFileCommandHandler<TUploadCommand>
 
         try
         {
-            asset.CreateFile(fileMetada, assetType);
-            _article.SetStage(NextStage, _stateMachineFactory, command);
+            asset.CreateFile(fileMetada, assetType, command);
+						_article.SetStage(NextStage, _stateMachineFactory, command);
 
             await _articleRepository.SaveChangesAsync();
         }
@@ -35,7 +34,7 @@ public class UploadFileCommandHandler<TUploadCommand>
         return new IdResponse(asset.Id);
     }
 
-    protected virtual ArticleStage NextStage => _article!.Stage;
+		protected virtual ArticleStage NextStage => _article!.Stage;
 
     protected async Task<FileMetadata> UploadFile(UploadFileCommand command, Asset asset, AssetTypeDefinition assetType, CancellationToken ct)
     {

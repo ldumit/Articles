@@ -1,5 +1,5 @@
 ﻿namespace Review.Domain.Articles.Events;
 
 
-public record ReviewReportUploaded(Asset asset, IArticleAction action)
+public record FileUploaded(Asset asset, IArticleAction action)
 		: DomainEvent(action);

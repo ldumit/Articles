@@ -1,6 +1,7 @@
 ﻿using Articles.Abstractions.Events.Dtos;
 using FileStorage.Contracts;
 using Review.Domain.Articles.Enums;
+using Review.Domain.Articles.Events;
 using Review.Domain.Articles.ValueObjects;
 
 namespace Review.Domain.Articles;
@@ -31,10 +32,13 @@ public partial class Asset
 		}
 
 
-		public File CreateFile(FileMetadata fileMetadata, AssetTypeDefinition assetType)
+		public File CreateFile(FileMetadata fileMetadata, AssetTypeDefinition assetType, IArticleAction action)
 		{
 				File = File.CreateFile(fileMetadata, this, assetType);
+
 				State = AssetState.Uploaded;
+
+				this.AddDomainEvent(new FileUploaded(this, action));
 				return File;
 		}
 

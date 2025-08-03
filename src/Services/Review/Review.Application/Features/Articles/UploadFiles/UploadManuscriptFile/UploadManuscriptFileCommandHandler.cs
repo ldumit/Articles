@@ -10,5 +10,4 @@ public class UploadManuscriptFileCommandHandler(
         ArticleStateMachineFactory stateMachineFactory)
         : UploadFileCommandHandler<UploadManuscriptFileCommand>(articleRepository, assetTypeRepository, fileService, stateMachineFactory)
 {
-    protected override ArticleStage NextStage => ArticleStage.ManuscriptUploaded;
 }
