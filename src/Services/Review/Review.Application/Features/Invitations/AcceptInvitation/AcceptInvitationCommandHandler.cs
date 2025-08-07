@@ -29,7 +29,7 @@ public class AcceptInvitationCommandHandler(ArticleRepository _articleRepository
 						if (reviewer is null)
 						{
 								//todo we need to create an user not a person
-								var response = await _personClient.CreateUserAsync(invitation.Adapt<CreatePersonRequest>());
+								var response = await _personClient.CreatePersonAsync(invitation.Adapt<CreatePersonRequest>());
 								reviewer = await CreateReviewerFromPerson(response.PersonInfo, article, command, ct);
 						}
 						command.CreatedById = reviewer.UserId!.Value;

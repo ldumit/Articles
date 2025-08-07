@@ -2,7 +2,7 @@
 
 public class FileEntityConfiguration
 {
-		public void Configure(ComplexPropertyBuilder<Domain.Articles.File> builder)
+		public void Configure(ComplexPropertyBuilder<Domain.Assets.File> builder)
 		{
 				builder.Property(e => e.FileServerId).HasMaxLength(MaxLength.C64);
 				builder.Property(e => e.OriginalName).HasMaxLength(MaxLength.C256).HasComment("Original full file name, with extension");

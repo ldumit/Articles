@@ -1,4 +1,6 @@
-﻿namespace Review.Persistence.EntityConfigurations;
+﻿using Review.Domain.Assets;
+
+namespace Review.Persistence.EntityConfigurations;
 
 internal class AssetEntityConfiguration : AuditedEntityConfiguration<Asset>
 {

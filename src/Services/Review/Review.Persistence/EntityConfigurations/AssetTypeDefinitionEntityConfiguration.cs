@@ -1,4 +1,4 @@
-﻿using Review.Domain.Articles;
+﻿using Review.Domain.Assets;
 
 namespace Review.Persistence.EntityConfigurations;
 

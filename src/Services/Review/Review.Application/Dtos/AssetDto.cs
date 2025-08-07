@@ -1,4 +1,4 @@
-﻿using Review.Domain.Articles.Enums;
+﻿using Review.Domain.Assets.Enums;
 
 namespace Review.Application.Dtos;
 

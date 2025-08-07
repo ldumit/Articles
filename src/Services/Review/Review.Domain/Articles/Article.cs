@@ -1,4 +1,6 @@
-﻿namespace Review.Domain.Articles;
+﻿using Review.Domain.Assets;
+
+namespace Review.Domain.Articles;
 
 public partial class Article : AggregateEntity
 {

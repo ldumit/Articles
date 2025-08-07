@@ -1,4 +1,4 @@
-﻿using Review.Domain.Articles.ValueObjects;
+﻿using Review.Domain.Assets.ValueObjects;
 
 namespace Review.Application.Dtos;
 

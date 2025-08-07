@@ -2,6 +2,7 @@
 using Blocks.Domain;
 using Mapster;
 using Review.Domain.Articles.Events;
+using Review.Domain.Assets;
 using Review.Domain.Invitations.Events;
 using Review.Domain.Invitations.ValueObjects;
 using Review.Domain.Reviewers;

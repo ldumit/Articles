@@ -4,6 +4,7 @@ using Blocks.Domain;
 using FileStorage.Contracts;
 using MassTransit;
 using Review.Application.FileStorage;
+using Review.Domain.Assets;
 using Review.Domain.Shared;
 
 namespace Review.Application.Features.Articles.EventHandlers;
