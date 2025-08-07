@@ -42,6 +42,15 @@ public partial class Asset
 				return File;
 		}
 
+		public File CreateFile(FileMetadata fileMetadata, AssetTypeDefinition assetType)
+		{
+				File = File.CreateFile(fileMetadata, this, assetType);
+
+				State = AssetState.Uploaded;
+
+				return File;
+		}
+
 		public static Asset CreateFromSubmission(AssetDto assetDto, AssetTypeDefinition type, int articleId)
 		{
 				//talk - value objects for AssetName & AssetNumber, encapsulate validation						

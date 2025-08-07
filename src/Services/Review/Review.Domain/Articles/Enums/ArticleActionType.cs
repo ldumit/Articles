@@ -9,6 +9,7 @@ public enum ArticleActionType
 		DeclineInvitation,
 		UploadManuscript,
 		UploadReviewReport,
+		RevisionRequested,
 		AcceptArticle,
 		RejectArticle,
 }

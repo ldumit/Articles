@@ -7,9 +7,9 @@ using Blocks.Core;
 namespace Submission.Application.Features.ApproveArticle;
 
 public class PublishArticleApprovedEventHandler(ArticleRepository _articleRepository, IPublishEndpoint _publishEndpoint) 
-		: INotificationHandler<ArticleApproved>
+		: INotificationHandler<ArticleApprovedForReview>
 {
-		public async Task Handle(ArticleApproved notification, CancellationToken ct)
+		public async Task Handle(ArticleApprovedForReview notification, CancellationToken ct)
 		{
 				var article = Guard.NotFound(await _articleRepository.GetFullArticleById(notification.Article.Id));
 

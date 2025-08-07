@@ -15,16 +15,29 @@ public class AcceptInvitationCommandHandler(ArticleRepository _articleRepository
 				Reviewer? reviewer = default!;
 				if (invitation.UserId != null)
 				{
-						command.CreatedById = invitation.UserId.Value;
 						reviewer = await _reviewerRepository.GetByUserIdAsync(invitation.UserId.Value);
 						if (reviewer is null)
-								reviewer = await CreateReviewerByUserId(invitation.UserId.Value, article, command, ct);
+						{
+								var response = await _personClient.GetPersonByUserIdAsync(new GetPersonByUserIdRequest { UserId = invitation.UserId.Value });
+								reviewer = await CreateReviewerFromPerson(response.PersonInfo, article, command, ct);
+						}
+						command.CreatedById = invitation.UserId.Value;
 				}
 				else
-						throw new NotImplementedException("The reviewer doesn't exist as a user, create an account first.");
+				{
+						reviewer = await _reviewerRepository.GetByEmailAsync(invitation.Email, ct);
+						if (reviewer is null)
+						{
+								//todo we need to create an user not a person
+								var response = await _personClient.CreateUserAsync(invitation.Adapt<CreatePersonRequest>());
+								reviewer = await CreateReviewerFromPerson(response.PersonInfo, article, command, ct);
+						}
+						command.CreatedById = reviewer.UserId!.Value;
+						//throw new NotImplementedException("The reviewer doesn't exist as a user, create an account first.");
+				}
 
-        //keeping those 2 methods separatly, allows us to assign reviewers directly without an invitation
-        invitation.Accept();
+				//keeping those 2 methods separatly, allows us to assign reviewers directly without an invitation
+				invitation.Accept();
 				article.AssignReviewer(reviewer, command);
 
         await _articleRepository.SaveChangesAsync();
@@ -32,12 +45,10 @@ public class AcceptInvitationCommandHandler(ArticleRepository _articleRepository
         return new AcceptInvitationResponse(article.Id, invitation.Id, reviewer.Id);
     }
 
-		private async Task<Reviewer> CreateReviewerByUserId(int userId, Article article, IArticleAction command, CancellationToken ct)
+		private async Task<Reviewer> CreateReviewerFromPerson(PersonInfo personInfo, Article article, IArticleAction command, CancellationToken ct)
 		{
-				var response = await _personClient.GetPersonByUserIdAsync(new GetPersonByUserIdRequest { UserId = userId });
-				var reviewer = Reviewer.Create(response.PersonInfo, new HashSet<int> { article.JournalId }, command);
+				var reviewer = Reviewer.Create(personInfo, new HashSet<int> { article.JournalId }, command);
 				await _reviewerRepository.AddAsync(reviewer, ct);
-
 				return reviewer;
 		}
 }
