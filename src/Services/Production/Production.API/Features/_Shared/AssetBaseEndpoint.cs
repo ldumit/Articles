@@ -1,15 +1,17 @@
-﻿using Blocks.Exceptions;
-using Articles.Abstractions.Enums;
-using Production.Domain.Entities;
+﻿using Articles.Abstractions.Enums;
+using Blocks.Exceptions;
 using Production.Application.StateMachines;
-using Production.Domain.Enums;
+using Production.Domain.Articles;
+using Production.Domain.Assets;
+using Production.Domain.Assets.Enums;
+using Production.Domain.Shared;
 using Production.Persistence.Repositories;
 
 namespace Production.API.Features.Shared;
 
 public abstract class AssetBaseEndpoint<TCommand, TResponse>(AssetTypeRepository assetTypeRepository, AssetStateMachineFactory stateMachineFactory)
 		: Endpoint<TCommand, TResponse>
-		where TCommand : IArticleAction
+		where TCommand : IAssetAction
 {
 		protected readonly AssetTypeRepository _assetTypeRepository = assetTypeRepository;
 		protected readonly AssetStateMachineFactory _stateMachineFactory = stateMachineFactory;

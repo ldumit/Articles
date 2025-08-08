@@ -1,6 +1,6 @@
 ﻿using Blocks.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Ordering.Domain.Models;
+using Production.Domain.Orders;
 using System.Text.Json;
 
 namespace Ordering.Database.EntityConfigurations.Orders;

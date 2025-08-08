@@ -1,4 +1,6 @@
-﻿namespace Production.Persistence.EntityConfigurations;
+﻿using Production.Domain.Assets;
+
+namespace Production.Persistence.EntityConfigurations;
 
 internal class AssetEntityConfiguration : AuditedEntityConfiguration<Asset>
 {

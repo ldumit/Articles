@@ -27,4 +27,9 @@
     <ProjectReference Include="..\..\..\Modules\FileService\FileService.Contracts\FileStorage.Contracts.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Assets\Enums\" />
+    <Folder Include="NewFolder\" />
+  </ItemGroup>
+
 </Project>

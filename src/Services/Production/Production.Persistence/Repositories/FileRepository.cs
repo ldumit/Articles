@@ -1,8 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-using File = Production.Domain.Entities.File;
-
-namespace Production.Persistence.Repositories;
+﻿namespace Production.Persistence.Repositories;
 
 public class FileRepository(ProductionDbContext _dbContext) 
     : Repository<File>(_dbContext)

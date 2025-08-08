@@ -1,8 +1,7 @@
 ﻿using Stateless;
 using Blocks.Core.Cache;
 using Microsoft.Extensions.Caching.Memory;
-using Review.Domain.Articles;
-using Review.Domain.Articles.Enums;
+using Review.Domain.Shared.Enums;
 
 namespace Review.Application.StateMachines;
 

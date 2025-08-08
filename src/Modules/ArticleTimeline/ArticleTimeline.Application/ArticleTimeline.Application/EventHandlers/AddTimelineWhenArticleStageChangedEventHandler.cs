@@ -1,15 +1,16 @@
-﻿using ArticleTimeline.Application.VariableResolvers;
+﻿using Articles.Abstractions;
+using ArticleTimeline.Application.VariableResolvers;
 using ArticleTimeline.Domain.Enums;
 using ArticleTimeline.Persistence.Repositories;
-using Production.Domain.Events;
 using Blocks.EntityFrameworkCore;
-using Articles.Abstractions;
+using Production.Domain.Articles.Events;
+using Production.Domain.Shared.Enums;
 
 namespace ArticleTimeline.Application.EventHandlers;
 
 public class AddTimelineWhenArticleStageChangedEventHandler(TransactionProvider transactionProvider, TimelineRepository timelineRepository, VariableResolverFactory variableResolverFactory)
-		: AddTimelineEventHandler<ArticleStageChanged, IArticleAction>(transactionProvider, timelineRepository, variableResolverFactory)
+		: AddTimelineEventHandler<ArticleStageChanged<ArticleActionType>, IArticleAction<ArticleActionType>>(transactionProvider, timelineRepository, variableResolverFactory)
 {
 		protected override SourceType GetSourceType() => SourceType.StageTransition;
-		protected override string GetSourceId(ArticleStageChanged eventModel) => $"{eventModel.CurrentStage}->{eventModel.NewStage}";
+		protected override string GetSourceId(ArticleStageChanged<ArticleActionType> eventModel) => $"{eventModel.CurrentStage}->{eventModel.NewStage}";
 }

@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Features\UploadFiles\UploadFinalFile\UploadFinalFileEndpoint.cs~RF9a543d.TMP" />
+    <None Remove="Features\Assets\UploadFiles\UploadFinalFile\UploadFinalFileEndpoint.cs~RF9a543d.TMP" />
   </ItemGroup>
 
   <ItemGroup>
@@ -46,7 +46,7 @@
 
   <ItemGroup>
     <Folder Include="Features\Publish\" />
-    <Folder Include="Features\RequestAssets\Draft\" />
+    <Folder Include="Features\Assets\RequestAssets\Draft\" />
   </ItemGroup>
 
 </Project>

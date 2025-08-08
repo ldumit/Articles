@@ -1,7 +1,7 @@
 ﻿using Articles.Abstractions.Enums;
 using Microsoft.EntityFrameworkCore;
-using Production.Domain.Entities;
-using Production.Domain.Enums;
+using Production.Domain.Assets.Enums;
+using Production.Domain.Assets;
 using Production.Persistence;
 using Stateless;
 

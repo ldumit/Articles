@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Production.Domain.Entities;
+﻿using Production.Domain.Assets;
 
 namespace Production.Persistence.Repositories;
 

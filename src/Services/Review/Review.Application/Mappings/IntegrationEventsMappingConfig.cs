@@ -1,7 +1,7 @@
 ﻿using Articles.Abstractions.Events.Dtos;
 using Review.Domain.Shared;
 using Review.Domain.Articles;
-using Review.Domain.Articles.Enums;
+using Review.Domain.Shared.Enums;
 
 namespace Review.Application.Mappings;
 

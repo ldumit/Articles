@@ -21,7 +21,7 @@ internal class ArticleContributorEntityConfiguration : IEntityTypeConfiguration<
 						.OnDelete(DeleteBehavior.Cascade);
 
 				builder.HasOne(aa => aa.Person)
-						.WithMany(a => a.ArticleActors)
+						.WithMany()
 						.HasForeignKey(aa => aa.PersonId)
 						.OnDelete(DeleteBehavior.Restrict);
 		}

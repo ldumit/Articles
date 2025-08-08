@@ -1,4 +1,4 @@
-﻿using Review.Domain.Articles.Enums;
+﻿using Review.Domain.Shared.Enums;
 
 namespace Review.Domain.Shared;
 

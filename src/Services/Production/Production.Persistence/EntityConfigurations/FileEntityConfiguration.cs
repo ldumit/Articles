@@ -1,12 +1,8 @@
-﻿using Blocks.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿namespace Production.Persistence.EntityConfigurations;
 
-namespace Production.Persistence.EntityConfigurations;
-
-public class FileEntityConfiguration : AuditedEntityConfiguration<Domain.Entities.File>
+public class FileEntityConfiguration : AuditedEntityConfiguration<File>
 {
-    public override void Configure(EntityTypeBuilder<Domain.Entities.File> builder)
+    public override void Configure(EntityTypeBuilder<File> builder)
     {
         base.Configure(builder);
 

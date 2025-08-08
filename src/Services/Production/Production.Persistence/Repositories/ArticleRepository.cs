@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Production.Domain.Entities;
-
-namespace Production.Persistence.Repositories;
+﻿namespace Production.Persistence.Repositories;
 
 public class ArticleRepository(ProductionDbContext dbContext) 
 		: Repository<Article>(dbContext)

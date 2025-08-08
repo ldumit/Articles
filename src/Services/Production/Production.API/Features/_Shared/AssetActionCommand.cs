@@ -1,6 +1,6 @@
 ﻿using Articles.Abstractions;
 using Production.Application.Dtos;
-using Production.Domain.Enums;
+using Production.Domain.Assets.Enums;
 using System.Text.Json.Serialization;
 
 namespace Production.API.Features.Shared;

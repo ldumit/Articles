@@ -1,5 +1,7 @@
 ﻿using Production.Persistence.EntityConfigurations;
 using Microsoft.Extensions.Caching.Memory;
+using Production.Domain.Assets;
+using Production.Domain.Shared;
 
 namespace Production.Persistence;
 

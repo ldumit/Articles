@@ -1,7 +1,5 @@
-﻿using Articles.Abstractions.Enums;
-using Production.Domain.Entities;
-using Production.Domain.Enums;
-using Production.Persistence;
+﻿using Production.Domain.Articles;
+using Production.Domain.Shared.Enums;
 using Stateless;
 
 namespace Production.Application.StateMachines;

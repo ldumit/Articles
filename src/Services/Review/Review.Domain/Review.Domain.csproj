@@ -30,5 +30,8 @@
     <ProjectReference Include="..\..\..\BuildingBlocks\Blocks.Core\Blocks.Core.csproj" />
     <ProjectReference Include="..\..\..\Modules\FileService\FileService.Contracts\FileStorage.Contracts.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Articles\Enums\" />
+  </ItemGroup>
 
 </Project>

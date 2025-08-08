@@ -1,15 +1,17 @@
 ﻿using FluentValidation;
 using Blocks.Core;
-using Production.Domain.Enums;
+using Production.Domain.Assets.Enums;
+using Production.Domain.Shared.Enums;
+using Production.Domain.Shared;
 
 namespace Production.API.Features.Shared;
 
-public abstract record ArticleCommand : ArticleCommandBase<ArticleActionType>, ICommand<IdResponse>;
-public abstract record ArticleCommand<TResponse> : ArticleCommandBase<ArticleActionType>, ICommand<TResponse>;
-public abstract record AssetCommand<TResponse> : ArticleCommandBase<AssetActionType>, ICommand<TResponse>;
+public abstract record ArticleCommand : ArticleCommandBase<ArticleActionType>, IArticleAction, ICommand<IdResponse>;
+public abstract record ArticleCommand<TResponse> : ArticleCommandBase<ArticleActionType>, IArticleAction, ICommand<TResponse>;
+public abstract record AssetCommand<TResponse> : ArticleCommandBase<AssetActionType>, IAssetAction, ICommand<TResponse>;
 
-public abstract class ArticleCommandValidator<TFileActionCommand> : BaseValidator<TFileActionCommand>
-    where TFileActionCommand : IArticleAction
+public abstract class ArticleCommandValidator<TCommand> : BaseValidator<TCommand>
+    where TCommand : global::Articles.Abstractions.IArticleAction
 {
     public ArticleCommandValidator()
     {

@@ -1,7 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Production.Domain.Entities;
-using Blocks.EntityFrameworkCore;
+using Production.Domain.Assets;
+using Production.Domain.Shared;
+using Production.Domain.Articles;
 
 namespace Production.Application;
 

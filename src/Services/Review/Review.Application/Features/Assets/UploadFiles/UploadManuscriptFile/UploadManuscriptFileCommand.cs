@@ -1,5 +1,5 @@
 ﻿using Review.Application.Features.Assets.UploadFiles.Shared;
-using Review.Domain.Articles.Enums;
+using Review.Domain.Shared.Enums;
 using Review.Domain.Assets.Enums;
 
 namespace Review.Application.Features.Assets.UploadFiles.UploadManuscriptFile;

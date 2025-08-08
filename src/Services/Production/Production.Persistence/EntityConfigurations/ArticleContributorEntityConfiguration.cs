@@ -1,10 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore;
-using Production.Domain.Entities;
-using Blocks.EntityFrameworkCore;
-using Articles.Security;
-
-namespace Production.Persistence.EntityConfigurations;
+﻿namespace Production.Persistence.EntityConfigurations;
 
 internal class ArticleContributorEntityConfiguration : IEntityTypeConfiguration<ArticleContributor>
 {
@@ -20,7 +14,7 @@ internal class ArticleContributorEntityConfiguration : IEntityTypeConfiguration<
 						.OnDelete(DeleteBehavior.Cascade);
 
 				entity.HasOne(aa => aa.Person)
-						.WithMany(a => a.ArticleContributors)
+						.WithMany()
 						.HasForeignKey(aa => aa.PersonId)
 						.OnDelete(DeleteBehavior.Restrict);
 		}

@@ -1,13 +1,11 @@
-﻿using FastEndpoints;
-using Articles.Abstractions;
-using Articles.Abstractions.Enums;
+﻿using Articles.Abstractions.Enums;
 using Production.Persistence.Repositories;
-using Production.Domain.Entities;
+using Production.Domain.Articles;
 
 namespace Production.API.Features.Shared;
 
 public abstract class BaseEndpoint<TCommand, TResponse> : Endpoint<TCommand, TResponse>
-        where TCommand : IArticleAction
+        where TCommand : global::Articles.Abstractions.IArticleAction
 {
     protected readonly ArticleRepository _articleRepository;
 		protected Article _article;

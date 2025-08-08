@@ -1,5 +1,5 @@
 ﻿using Review.Application.Features.Articles._Shared;
-using Review.Domain.Articles.Enums;
+using Review.Domain.Shared.Enums;
 
 namespace Review.Application.Features.Articles.AssignEditor;
 

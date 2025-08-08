@@ -1,7 +1,7 @@
 ﻿using Articles.Abstractions.Enums;
 using Blocks.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
-using Production.Domain.Entities;
+using Production.Domain.Assets;
 
 namespace Production.Persistence.Repositories;
 
