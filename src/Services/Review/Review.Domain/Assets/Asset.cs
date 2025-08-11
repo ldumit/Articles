@@ -12,7 +12,7 @@ public partial class Asset : AggregateEntity
     public AssetCategory CategoryId { get; private set; }
 
     public AssetType Type { get; private set; }
-    public virtual AssetTypeDefinition TypeRef { get; private set; } = null!;
+    public virtual AssetTypeDefinition TypeDefinition { get; private set; } = null!;
 		
     public int ArticleId { get; private set; }
 		public virtual Article Article { get; private set; } = null!;

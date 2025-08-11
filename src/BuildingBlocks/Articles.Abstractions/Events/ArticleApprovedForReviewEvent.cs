@@ -2,4 +2,4 @@
 
 namespace Articles.Abstractions.Events;
 
-public record ArticleSubmittedEvent(ArticleDto Article);
+public record ArticleApprovedForReviewEvent(ArticleDto Article);

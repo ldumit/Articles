@@ -24,7 +24,7 @@ public partial class Asset
 						Article = article,
 						Name = AssetName.FromAssetType(type),
 						Type = type.Name,
-						TypeRef = type,
+						TypeDefinition = type,
 						CategoryId = type.DefaultCategoryId,
 						State = AssetState.None,
 						//CreatedById = action.CreatedById,

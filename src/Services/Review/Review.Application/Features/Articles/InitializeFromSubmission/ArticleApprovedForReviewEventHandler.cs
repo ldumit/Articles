@@ -7,21 +7,25 @@ using Review.Application.FileStorage;
 using Review.Domain.Assets;
 using Review.Domain.Shared;
 
-namespace Review.Application.Features.Articles.EventHandlers;
+namespace Review.Application.Features.Articles.InitializeFromSubmission;
 
-public class ArticleSubmittedEventHandler(
+public class ArticleApprovedForReviewEventHandler(
 		ReviewDbContext _dbContext,
+		ArticleRepository _articleRepository,
 		PersonRepository _personRepository, 
 		Repository<Journal> _journalRepository, 
 		AssetTypeRepository _assetTypeRepository,
 		IFileService reviewFileService,
 		FileServiceFactory fileServiceFactory) 
-		: IConsumer<ArticleSubmittedEvent>
+		: IConsumer<ArticleApprovedForReviewEvent>
 {
-		public async Task Consume(ConsumeContext<ArticleSubmittedEvent> context)
+		public async Task Consume(ConsumeContext<ArticleApprovedForReviewEvent> context)
 		{
 				var articleDto = context.Message.Article;
 
+				//talk - inbox pattern vs simple business rules(chek if the artile already exists)
+				await _articleRepository.ExistsOrThrowAsync(articleDto.Id, context.CancellationToken);
+				
 				var actors = await CreateActors(articleDto);
 
 				var assets = await CreateAssets(articleDto, context.CancellationToken);

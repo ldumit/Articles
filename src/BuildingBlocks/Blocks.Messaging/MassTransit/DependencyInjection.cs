@@ -9,7 +9,7 @@ namespace Blocks.Messaging.MassTransit;
 
 public static class DependencyInjection
 {
-		public static IServiceCollection AddMassTransit
+		public static IServiceCollection AddMassTransitWithRabbitMQ
 				(this IServiceCollection services, IConfiguration configuration, Assembly assembly)
 		{
 				var rabbitMqOptions = configuration.GetSectionByTypeName<RabbitMqOptions>();

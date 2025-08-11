@@ -1,11 +1,10 @@
 ﻿using Review.Application.Dtos;
 using Review.Domain.Shared;
-using Review.Domain.Articles;
 using Review.Domain.Shared.Enums;
 
 namespace Review.Application.Mappings;
 
-public class ApplicationMappingConfig : IRegister
+public class RestEndpointMappings : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {

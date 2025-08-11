@@ -1,9 +1,6 @@
 ﻿using Articles.Abstractions.Events.Dtos;
-using Review.Domain.Shared;
-using Review.Domain.Articles;
-using Review.Domain.Shared.Enums;
 
-namespace Review.Application.Mappings;
+namespace Submission.Application.Features.ApproveArticle;
 
 public class IntegrationEventsMappingConfig : IRegister
 {

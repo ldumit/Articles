@@ -12,8 +12,8 @@ public static class DependencyInjection
 		{
 				services
 						.AddMemoryCache()
-						.AddMapster()
-						.AddMassTransit(configuration, assembly ?? Assembly.GetExecutingAssembly());
+						.AddMapsterConfigsFromCurrentAssembly()
+						.AddMassTransitWithRabbitMQ(configuration, assembly ?? Assembly.GetExecutingAssembly());
 				
 				return services;
 		}

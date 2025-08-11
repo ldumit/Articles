@@ -1,8 +1,8 @@
-﻿using Articles.Abstractions.Events.Dtos;
+﻿using Submission.Application.Dtos;
 
 namespace Submission.Application.Mappings;
 
-public class IntegrationEventsMappingConfig : IRegister
+public class RestEndpointMappings : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
@@ -14,5 +14,8 @@ public class IntegrationEventsMappingConfig : IRegister
 
         config.NewConfig<IArticleAction<ArticleActionType>, ArticleAction>()
                 .Map(dest => dest.TypeId, src => src.ActionType);
-    }
+
+				config.ForType<string, EmailAddress>()
+						.MapWith(src => EmailAddress.Create(src));
+		}
 }

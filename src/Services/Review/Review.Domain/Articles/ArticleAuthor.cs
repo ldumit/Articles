@@ -1,6 +1,9 @@
-﻿namespace Review.Domain.Articles;
+﻿using Review.Domain.Reviewers;
+
+namespace Review.Domain.Articles;
 
 public class ArticleAuthor : ArticleActor
 {
-		public HashSet<ContributionArea> ContributionAreas { get; init; } = null!;
+		internal HashSet<ContributionArea> _contributionAreas = new();
+		public IReadOnlyCollection<ContributionArea> ContributionAreas => _contributionAreas;
 }

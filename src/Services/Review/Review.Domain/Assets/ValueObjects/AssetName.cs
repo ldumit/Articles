@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Review.Domain.Assets;
 
 namespace Review.Domain.Assets.ValueObjects;
 

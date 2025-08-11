@@ -6,7 +6,6 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Review.Application.Features.Invitations.InviteReviewer;
-using Review.Application.Mappings;
 using Review.Application.StateMachines;
 using System.Reflection;
 
@@ -17,8 +16,8 @@ public static class DependencyInjection
     {
 				//talk - fluid vs normal
 				services
-						.AddMapster()                           // Scanning for mapping registration
-						.AddMapsterFromAssemblyContaining<ApplicationMappingConfig>()                      // Register Mapster mappings
+						.AddMapsterConfigsFromCurrentAssembly()																	// Scanning for mapping registration
+						//.AddMapsterConfigsFromAssemblyContaining<ApplicationMappingConfig>()    // Scanning for mapping registration
 						.AddValidatorsFromAssemblyContaining<CreateArticleCommandValidator>()		// Register Fluent validators as transient
 						.AddMediatR(config =>
 						{
@@ -28,7 +27,7 @@ public static class DependencyInjection
 								config.AddOpenBehavior(typeof(ValidationBehavior<,>));
 								config.AddOpenBehavior(typeof(LoggingBehavior<,>));
 						})
-						.AddMassTransit(configuration, Assembly.GetExecutingAssembly()); ;
+						.AddMassTransitWithRabbitMQ(configuration, Assembly.GetExecutingAssembly()); ;
 				
 				services.AddScoped<IArticleRoleVerifier, ArticleRoleVerifier>();
 

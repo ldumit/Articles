@@ -1,11 +1,13 @@
 ﻿using Mapster;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace Blocks.Mapster;
 public static class MapsterConfiguration
 {
-		public static IServiceCollection AddMapster(this IServiceCollection services, Assembly? assembly = null)
+		[MethodImpl(MethodImplOptions.NoInlining)]
+		public static IServiceCollection AddMapsterConfigsFromCurrentAssembly(this IServiceCollection services, Assembly? assembly = null)
 		{
 				if (assembly is null)
 						assembly = Assembly.GetCallingAssembly()!;
@@ -13,7 +15,8 @@ public static class MapsterConfiguration
 				TypeAdapterConfig.GlobalSettings.Scan(assembly);
 				return services;
 		}
-		public static IServiceCollection AddMapsterFromAssemblyContaining<T>(this IServiceCollection services)
+
+		public static IServiceCollection AddMapsterConfigsFromAssemblyContaining<T>(this IServiceCollection services)
 		{
 				TypeAdapterConfig.GlobalSettings.Scan(typeof(T).Assembly);
 				return services;

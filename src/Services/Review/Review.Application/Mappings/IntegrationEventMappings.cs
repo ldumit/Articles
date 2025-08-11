@@ -1,9 +1,10 @@
-﻿using Auth.Grpc;
-using Submission.Application.Dtos;
+﻿using Articles.Abstractions.Events.Dtos;
+using Review.Domain.Shared;
+using Review.Domain.Shared.Enums;
 
-namespace Submission.Application.Mappings;
+namespace Review.Application.Mappings;
 
-public class ApplicationMappingConfig : IRegister
+public class IntegrationEventMappings : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
@@ -15,12 +16,5 @@ public class ApplicationMappingConfig : IRegister
 
         config.NewConfig<IArticleAction<ArticleActionType>, ArticleAction>()
                 .Map(dest => dest.TypeId, src => src.ActionType);
-
-				config.ForType<string, EmailAddress>()
-						.MapWith(src => EmailAddress.Create(src));
-
-				config.ForType<PersonInfo, Author>()
-						.Map(dest => dest.UserId, src => src.Id)
-						.Ignore(dest => dest.Id); 
-		}
+    }
 }

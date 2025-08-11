@@ -8,9 +8,9 @@ using ArticleHub.Domain.Entities;
 
 namespace ArticleHub.Application.Features.Articles.EventHandlers;
 
-public class ArticleSubmittedEventHandler(ArticleHubDbContext _dbContext) : IConsumer<ArticleSubmittedEvent>
+public class ArticleSubmittedEventHandler(ArticleHubDbContext _dbContext) : IConsumer<ArticleApprovedForReviewEvent>
 {
-		public async Task Consume(ConsumeContext<ArticleSubmittedEvent> context)
+		public async Task Consume(ConsumeContext<ArticleApprovedForReviewEvent> context)
 		{
 				var articleDto = context.Message.Article;
 

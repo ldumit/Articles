@@ -11,12 +11,12 @@ public class ArticleRepository(SubmissionDbContext dbContext)
 						.Include(e => e.Assets);
 		}
 
-		public async Task<Article?> GetFullArticleById(int id)
+		public async Task<Article?> GetFullArticleByIdAsync(int id, CancellationToken ct = default)
 		{
 				return await Query()
 						.Include(e => e.Journal)
 						.Include(e => e.SubmittedBy)
-						.SingleOrDefaultAsync(e => e.Id == id);
+						.SingleOrDefaultAsync(e => e.Id == id, ct);
 		}
 }
 

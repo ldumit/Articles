@@ -18,8 +18,8 @@ public static class DependencyInjection
 				//todo - remove all commented code after testing Submission
 				//talk - fluid vs normal
 				services
-						.AddMapster()																														// Scanning for mapping registration
-						.AddMapsterFromAssemblyContaining<ApplicationMappingConfig>()						// Register Mapster mappings
+						.AddMapsterConfigsFromCurrentAssembly()																	// Scanning for mapping registration
+						//.AddMapsterConfigsFromAssemblyContaining<ApplicationMappingConfig>()    // Scanning for mapping registration
 						.AddValidatorsFromAssemblyContaining<CreateArticleCommandValidator>()		// Register Fluent validators as transient
 						.AddMediatR(config =>
 						{
@@ -29,7 +29,7 @@ public static class DependencyInjection
 								config.AddOpenBehavior(typeof(ValidationBehavior<,>));
 								config.AddOpenBehavior(typeof(LoggingBehavior<,>));
 						})
-						.AddMassTransit(configuration, Assembly.GetExecutingAssembly()); ;
+						.AddMassTransitWithRabbitMQ(configuration, Assembly.GetExecutingAssembly());
 
 				services.AddScoped<IArticleRoleVerifier, ArticleRoleVerifier>();
 

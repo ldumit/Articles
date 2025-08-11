@@ -1,7 +1,7 @@
-﻿using Submission.Domain.StateMachines;
+﻿namespace Submission.Application.Features.Shared;
 
-namespace Submission.Application.Features.Shared;
 
+//todo - delete it if not needed
 public abstract class ArticleActionCommandHandler<TCommand>
 		: IRequestHandler<TCommand, IdResponse>
 		where TCommand : ArticleCommand

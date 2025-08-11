@@ -53,7 +53,7 @@ public partial class Article
 
 				SetStage(ArticleStage.InitialApproved, action, _stateMachineFactory);
 				
-				AddDomainEvent(new ArticleApprovedForReview(this, action));
+				AddDomainEvent(new ArticleApproved(this, action));
 		}
 
 		public void Reject(IArticleAction<ArticleActionType> action, ArticleStateMachineFactory _stateMachineFactory)
