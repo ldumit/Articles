@@ -2,7 +2,7 @@
 
 // NOTE: This is a Value Object but kept in Entities namespace to avoid System.IO.File name ambiguity
 
-public partial class File : IDomainObject, IValueObject
+public partial class File : IValueObject
 {
     //talk - difference between required, null!, default!
     public required string OriginalName { get; init; } = default!;    

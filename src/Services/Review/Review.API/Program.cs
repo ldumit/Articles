@@ -1,9 +1,9 @@
-using Blocks.EntityFrameworkCore;
 using Blocks.AspNetCore;
 using Review.API;
 using Review.Application;
 using Review.Persistence;
 using Review.Persistence.Data.Test;
+using Blocks.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 

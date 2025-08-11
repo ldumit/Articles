@@ -1,30 +1,22 @@
 ﻿using Blocks.Domain;
+using Blocks.Domain.Entities;
 
 namespace Blocks.Entitities;
 
-public interface IAggregateEntity : IAggregateEntity<int>
-{
-}
+public interface IAggregateRoot : IAggregateRoot<int>;
 
-public interface IAggregateEntity<TPrimaryKey> : IEntity<TPrimaryKey>
+public abstract class AggregateRoot : AggregateRoot<int>, IAggregateRoot, IAuditedEntity;
+
+
+public interface IAggregateRoot<TPrimaryKey> : IAuditedEntity<TPrimaryKey>
 		where TPrimaryKey : struct
 {
 		public IReadOnlyList<IDomainEvent> DomainEvents { get; }
 		public void AddDomainEvent(IDomainEvent eventItem);
 		public void ClearDomainEvents();
-
-		public TPrimaryKey CreatedById { get; set; }
-		public DateTime CreatedOn { get; set; }
-		public TPrimaryKey? LastModifiedById { get; set; }
-		public DateTime? LasModifiedOn { get; set; }
 }
 
-public abstract class AggregateEntity : AggregateEntity<int>, IEntity, IAggregateEntity
-{
-
-}
-
-public abstract class AggregateEntity<TPrimaryKey> : Entity<TPrimaryKey>, IAggregateEntity<TPrimaryKey>
+public abstract class AggregateRoot<TPrimaryKey> : Entity<TPrimaryKey>, IAggregateRoot<TPrimaryKey>
 		where TPrimaryKey : struct
 {
 		//talk - audited properties are required only in the aggregates because when we are saving the other entities they are going to be part of an aggregate
@@ -32,11 +24,10 @@ public abstract class AggregateEntity<TPrimaryKey> : Entity<TPrimaryKey>, IAggre
 		public TPrimaryKey CreatedById { get; set; }
 		public DateTime CreatedOn { get; set; }
 		public TPrimaryKey? LastModifiedById { get; set; }
-		public DateTime? LasModifiedOn { get; set; }
+		public DateTime? LastModifiedOn { get; set; }
 
 		#region Domain Events
-		// talk if you want your colletions to be trully imutable we need to use ImmutableList, the others can be cast back to its original class
-		//private ImmutableList<IDomainEvent> _domainEvents = ImmutableList<IDomainEvent>.Empty;
+		// talk if you want your collections to be trully imutable we need to use ImmutableList, the others can be cast back to its original class
 		private List<IDomainEvent> _domainEvents = new();
 		public IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents;
 		public void AddDomainEvent(IDomainEvent eventItem) => _domainEvents.Add(eventItem);		

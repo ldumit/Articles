@@ -4,7 +4,7 @@ using Production.Domain.Assets.ValueObjects;
 
 namespace Production.Domain.Assets;
 
-public partial class Asset : AggregateEntity
+public partial class Asset : AggregateRoot
 {
 		public AssetName Name { get; private set; } = null!;
     public AssetNumber Number { get; private set; } = null!;    

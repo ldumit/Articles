@@ -1,6 +1,8 @@
 ﻿namespace Blocks.Entitities;
 
-public abstract class ValueObject : IEquatable<ValueObject>, IDomainObject
+public interface IValueObject : IDomainObject;
+
+public abstract class ValueObject : IEquatable<ValueObject>, IValueObject
 {
 		protected abstract IEnumerable<object?> GetEqualityComponents();
 		
@@ -28,13 +30,6 @@ public abstract class ValueObject : IEquatable<ValueObject>, IDomainObject
 						&& GetEqualityComponents().SequenceEqual(other.GetEqualityComponents());
 		}
 
-		public static bool operator ==(ValueObject? a, ValueObject? b)
-		{
-				return Equals(a, b);
-		}
-
-		public static bool operator !=(ValueObject? a, ValueObject? b)
-		{
-				return !Equals(a, b);
-		}
+		public static bool operator ==(ValueObject? a, ValueObject? b) => Equals(a, b);
+		public static bool operator !=(ValueObject? a, ValueObject? b) => !Equals(a, b);
 }

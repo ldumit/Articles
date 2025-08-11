@@ -2,7 +2,7 @@
 
 namespace Production.Domain.Assets;
 
-public partial class AssetAction : AggregateEntity //talk - modification never happens for an action
+public partial class AssetAction : AggregateRoot //talk - modification never happens for an action
 {
     public int AssetId { get; set; }
 

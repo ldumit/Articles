@@ -1,5 +1,4 @@
 ﻿using ArticleHub.Domain.Entities;
-using Blocks.EntityFrameworkCore;
 
 namespace ArticleHub.Persistence
 {

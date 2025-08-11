@@ -1,15 +1,12 @@
 ﻿using Blocks.Core;
-using Blocks.Core.Cache;
 using Blocks.Core.Json;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
 namespace Blocks.EntityFrameworkCore;
 
-public static class DbContextExtensions
+public static partial class DbContextExtensions
 {
 		public static readonly JsonSerializerSettings DefaultSettings;
 
@@ -59,26 +56,6 @@ public static class DbContextExtensions
 						Console.WriteLine(ex.Message);
 						throw;
 				}
-		}
-
-		public static void UnTrackCacheableEntities(this DbContext context)
-		{
-				foreach (var entry in context.ChangeTracker.Entries())
-				{
-						if (entry.Entity is ICacheable)
-								entry.State = EntityState.Unchanged; // Mark as Unchanged to prevent modifications
-				}
-		}
-
-		public static WebApplication Migrate<TDbContext>(this WebApplication app)
-				where TDbContext : DbContext
-		{
-				using var scope = app.Services.CreateScope();
-
-				var context = scope.ServiceProvider.GetRequiredService<TDbContext>();
-
-				context.Database.Migrate();
-				return app;
 		}
 
 		//todo - use this generic method in all microservices

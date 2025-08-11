@@ -1,6 +1,5 @@
 using Production.API;
 using Production.Application;
-using Blocks.EntityFrameworkCore;
 using Production.Persistence;
 using System.Text.Json.Serialization;
 using FastEndpoints.Swagger;
@@ -9,6 +8,7 @@ using ArticleTimeline.Persistence;
 using ArticleTimeline.Application;
 using FileStorage.AzureBlob;
 using Blocks.AspNetCore;
+using Blocks.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 

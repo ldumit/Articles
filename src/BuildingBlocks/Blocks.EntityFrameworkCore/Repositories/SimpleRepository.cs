@@ -1,7 +1,4 @@
-﻿using Blocks.Entitities;
-using Microsoft.EntityFrameworkCore;
-
-namespace Blocks.EntityFrameworkCore;
+﻿namespace Blocks.EntityFrameworkCore;
 
 public abstract class SimpleRepository<TContext, TEntity> : ISimpleRepository<TEntity>
 		where TContext : DbContext

@@ -4,7 +4,7 @@ using Review.Domain.Assets.ValueObjects;
 
 namespace Review.Domain.Assets;
 
-public partial class Asset : AggregateEntity
+public partial class Asset : AggregateRoot
 {
 		public AssetName Name { get; private set; } = null!;
     //talk - keep the following properties as enums because they change quite rarely

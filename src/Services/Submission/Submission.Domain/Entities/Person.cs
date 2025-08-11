@@ -1,6 +1,6 @@
 ﻿namespace Submission.Domain.Entities;
 
-public partial class Person : AggregateEntity
+public partial class Person : AggregateRoot
 {
 		public required string FirstName { get; init; }
 		public required string LastName { get; init; }

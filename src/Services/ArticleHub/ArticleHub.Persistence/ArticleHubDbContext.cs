@@ -1,6 +1,5 @@
 ﻿using ArticleHub.Domain.Entities;
 using ArticleHub.Persistence.EntityConfigurations;
-using Blocks.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 

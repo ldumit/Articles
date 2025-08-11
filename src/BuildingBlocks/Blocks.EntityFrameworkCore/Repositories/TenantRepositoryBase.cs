@@ -1,6 +1,4 @@
-﻿using Blocks.Entitities;
-using Blocks.Exceptions;
-using Microsoft.EntityFrameworkCore;
+﻿using Blocks.Exceptions;
 using System.Net;
 
 namespace Blocks.EntityFrameworkCore;

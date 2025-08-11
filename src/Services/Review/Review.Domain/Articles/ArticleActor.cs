@@ -2,7 +2,7 @@
 
 namespace Review.Domain.Articles;
 
-public class ArticleActor : IChildEntity
+public class ArticleActor : IAssociationEntity
 {
     public int ArticleId { get; init; }
 		public Article Article { get; init; } = null!;

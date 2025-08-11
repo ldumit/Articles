@@ -4,7 +4,7 @@ using Auth.Domain.Users;
 
 namespace Auth.Domain.Persons;
 
-public partial class Person : AggregateEntity
+public partial class Person : AggregateRoot
 {
 		public required string FirstName { get; set; }
 		public required string LastName { get; set; }

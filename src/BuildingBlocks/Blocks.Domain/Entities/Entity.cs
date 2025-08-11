@@ -4,20 +4,14 @@ namespace Blocks.Entitities;
 
 //todo: rename Blocks.Entitities to Blocks.Domain.Entities or Blocks.Domain(to keep the same namespace for all)
 
-public interface IEntity : IEntity<int>
-{
-} 
+public interface IEntity : IEntity<int>;
+public abstract class Entity : Entity<int>, IEntity;
 
 public interface IEntity<TPrimaryKey> : IDomainObject
     where TPrimaryKey : struct
 {
     TPrimaryKey Id { get; }
 }
-
-public abstract class Entity : Entity<int>, IEntity
-{
-}
-
 public abstract class Entity<TPrimaryKey> : IEntity<TPrimaryKey>, IEquatable<Entity<TPrimaryKey>>
 		where TPrimaryKey : struct
 {

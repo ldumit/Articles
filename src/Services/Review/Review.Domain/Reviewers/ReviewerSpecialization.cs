@@ -1,6 +1,6 @@
 ﻿namespace Review.Domain.Reviewers;
 
-public class ReviewerSpecialization : IChildEntity
+public class ReviewerSpecialization : IAssociationEntity
 {
 		public required int JournalId { get; init; }
 		public Journal Journal { get; init; } = null!;

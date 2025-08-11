@@ -4,7 +4,7 @@ using Review.Domain.Invitations.ValueObjects;
 
 namespace Review.Domain.Articles;
 
-public partial class ReviewInvitation : AggregateEntity
+public partial class ReviewInvitation : AggregateRoot
 {
     public required int ArticleId { get; init; }
 

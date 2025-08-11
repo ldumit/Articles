@@ -1,11 +1,11 @@
 using Submission.Application;
-using Blocks.EntityFrameworkCore;
 using Submission.Persistence;
 using Blocks.AspNetCore;
 using Submission.API.Endpoints;
 using Submission.API;
 using Submission.Persistence.Data.Test;
 using Blocks.AspNetCore.Middlewares;
+using Blocks.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 

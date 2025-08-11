@@ -2,7 +2,7 @@
 
 namespace Review.Domain.Shared;
 
-public class Person : AggregateEntity
+public class Person : AggregateRoot
 {
 		public required string FirstName { get; init; }
 		public required string LastName { get; init; }

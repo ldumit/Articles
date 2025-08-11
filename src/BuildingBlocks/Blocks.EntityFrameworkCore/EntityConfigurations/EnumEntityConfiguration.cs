@@ -1,7 +1,4 @@
 ﻿using Blocks.Core;
-using Blocks.Entitities;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Blocks.EntityFrameworkCore;
 
@@ -15,7 +12,9 @@ public abstract class EnumEntityConfiguration<T, TEnum> : EntityConfiguration<T,
 
         builder.HasIndex(e => e.Name).IsUnique();
 
-        builder.Property(e => e.Name).HasEnumConversion().HasMaxLength(MaxLength.C64).IsRequired().HasColumnOrder(1);
-        builder.Property(e => e.Description).HasMaxLength(MaxLength.C64).IsRequired().HasColumnOrder(2);
+        builder.Property(e => e.Name).HasEnumConversion()
+            .IsRequired().HasMaxLength(MaxLength.C64).HasColumnOrder(1);
+        builder.Property(e => e.Description)
+            .IsRequired().HasMaxLength(MaxLength.C64).HasColumnOrder(2);
     }
 }

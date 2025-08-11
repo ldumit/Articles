@@ -2,7 +2,7 @@
 
 namespace Review.Domain.Articles;
 
-public partial class Article : AggregateEntity
+public partial class Article : AggregateRoot
 {
 		public required string Title { get; init; }
 		public ArticleType Type { get; init; }

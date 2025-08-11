@@ -1,8 +1,5 @@
-﻿using Blocks.Entitities;
-using Blocks.Core;
-using Blocks.Core.Cache;
+﻿using Blocks.Core.Cache;
 using Mapster;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace Blocks.EntityFrameworkCore;

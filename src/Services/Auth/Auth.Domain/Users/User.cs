@@ -4,7 +4,7 @@ using Auth.Domain.Persons;
 
 namespace Auth.Domain.Users;
 
-public partial class User : IdentityUser<int>, IAggregateEntity<int>
+public partial class User : IdentityUser<int>, IAggregateRoot
 {
 		public DateTime RegistrationDate { get; init; } = DateTime.UtcNow;
 		public DateTime? LastLogin { get; set; }
@@ -23,7 +23,7 @@ public partial class User : IdentityUser<int>, IAggregateEntity<int>
 		public int CreatedById { get; set; } = default!;
 		public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
 		public int? LastModifiedById { get; set; } = 0;
-		public DateTime? LasModifiedOn { get; set; } = DateTime.UtcNow;
+		public DateTime? LastModifiedOn { get; set; } = DateTime.UtcNow;
 
 		//Aggregate
 		private List<IDomainEvent> _domainEvents = new();

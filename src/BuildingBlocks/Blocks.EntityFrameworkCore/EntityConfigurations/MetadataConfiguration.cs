@@ -1,8 +1,4 @@
-﻿using Blocks.Entitities;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-namespace Blocks.EntityFrameworkCore;
+﻿namespace Blocks.EntityFrameworkCore;
 
 public abstract class MetadataConfiguration<T> : IEntityTypeConfiguration<T>
 		where T : class, IMetadataEntity

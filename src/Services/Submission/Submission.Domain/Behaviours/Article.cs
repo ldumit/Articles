@@ -15,7 +15,7 @@ public partial class Article
 
 				var currentStage = Stage;
 				Stage = newStage;
-        LasModifiedOn = action.CreatedOn;
+        LastModifiedOn = action.CreatedOn;
 				LastModifiedById = action.CreatedById;
 
 				_stageHistories.Add(

@@ -1,13 +1,11 @@
 ﻿namespace Blocks.Entitities;
 
-public interface IValueObject;
-
 public abstract class SingleValueObject<T> : IValueObject, IEquatable<SingleValueObject<T>>, IEquatable<T>
-		//where T : struct
+		where T : struct
 {
     public T Value { get; protected set; } = default!;
 
-		public override string ToString()  => Value.ToString();
+		public override string ToString()  => Value.ToString()!;
 		public override int GetHashCode()  => Value.GetHashCode();
 
 		public virtual bool Equals(SingleValueObject<T>? other)

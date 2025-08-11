@@ -4,7 +4,7 @@ using ArticleTimeline.Domain.Enums;
 
 namespace ArticleTimeline.Domain;
 
-public class Timeline : AggregateEntity
+public class Timeline : AggregateRoot
 {
     public int ArticleId { get; init; }
     public ArticleStage NewStage { get; init; }

@@ -2,7 +2,7 @@
 
 namespace Production.Domain.Assets;
 
-public partial class File : AggregateEntity
+public partial class File : AggregateRoot
 {
     //talk - difference between required, null!, default!
     public string OriginalName { get; init; } = default!;

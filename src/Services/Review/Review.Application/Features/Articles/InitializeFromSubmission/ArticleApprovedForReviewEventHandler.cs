@@ -90,12 +90,11 @@ public class ArticleApprovedForReviewEventHandler(
 								if (person is null)
 										person = actorDto.Person.Adapt<Author>();
 
-								actor = new ArticleAuthor
+								actor = new ArticleAuthor(actorDto.ContributionAreas)
 								{
 										PersonId = person.Id,
 										Person = person,
 										Role = actorDto.Role,
-										ContributionAreas = actorDto.ContributionAreas
 								};
 						}
 						else if (actorDto.Role == UserRoleType.REVED)

@@ -1,6 +1,6 @@
 ﻿namespace Production.Domain.Assets;
 
-public class AssetCurrentFileLink : IChildEntity
+public class AssetCurrentFileLink : IAssociationEntity
 {
     public int AssetId { get; set; }
     public Asset Asset { get; set; } = null!;

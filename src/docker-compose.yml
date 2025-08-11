@@ -16,15 +16,15 @@ services:
       context: .
       dockerfile: Services/Journals/Journals.API/Dockerfile
 
-  articleHub-api:
-    image: ${DOCKER_REGISTRY-}articlehub-api
-    depends_on:
-      - postgres
-      - articlehub-hasura
-      - rabbitmq
-    build:
-      context: .
-      dockerfile: Services/ArticleHub/ArticleHub.API/Dockerfile
+  # articleHub-api:
+  #   image: ${DOCKER_REGISTRY-}articlehub-api
+  #   depends_on:
+  #     - postgres
+  #     - articlehub-hasura
+  #     - rabbitmq
+  #   build:
+  #     context: .
+  #     dockerfile: Services/ArticleHub/ArticleHub.API/Dockerfile
 
   submission-api:
     image: ${DOCKER_REGISTRY-}submission-api
@@ -45,13 +45,13 @@ services:
       context: .
       dockerfile: Services/Review/Review.API/Dockerfile
 
-  production-api:
-    image: ${DOCKER_REGISTRY-}production-api
-    depends_on:
-      - sqlserver
-    build:
-      context: .
-      dockerfile: Services/Production/Production.API/Dockerfile
+  # production-api:
+  #   image: ${DOCKER_REGISTRY-}production-api
+  #   depends_on:
+  #     - sqlserver
+  #   build:
+  #     context: .
+  #     dockerfile: Services/Production/Production.API/Dockerfile
 
   sqlserver:
     image: mcr.microsoft.com/mssql/server

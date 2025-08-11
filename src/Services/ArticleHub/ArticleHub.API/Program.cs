@@ -1,10 +1,10 @@
 using Carter;
 using Blocks.AspNetCore;
-using Blocks.EntityFrameworkCore;
 using Blocks.AspNetCore.Middlewares;
 using ArticleHub.Persistence;
 using ArticleHub.Application;
 using ArticleHub.API;
+using Blocks.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 

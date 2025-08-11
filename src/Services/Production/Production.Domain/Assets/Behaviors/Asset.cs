@@ -48,7 +48,7 @@ public partial class Asset
 		public void SetState(AssetState newState, IArticleAction<AssetActionType> action)
 		{
 				this.State = newState;
-				this.LasModifiedOn = DateTime.UtcNow;
+				this.LastModifiedOn = DateTime.UtcNow;
 				this.LastModifiedById = action.CreatedById;
 				AddAction(action);
 		}
@@ -59,7 +59,7 @@ public partial class Asset
 						throw new DomainException("Wrong status");
 
 				//this.Status = newStatus;
-				this.LasModifiedOn = DateTime.UtcNow;
+				this.LastModifiedOn = DateTime.UtcNow;
 				this.LastModifiedById = action.CreatedById;
 				AddAction(action);
 		}

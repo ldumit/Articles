@@ -1,6 +1,4 @@
-﻿using Blocks.Entitities;
-using Blocks.Core.Cache;
-using Microsoft.EntityFrameworkCore;
+﻿using Blocks.Core.Cache;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace Blocks.EntityFrameworkCore;
