@@ -3,7 +3,7 @@
 public class PersonRepository(AuthDBContext dbContext) 
 		: RepositoryBase<AuthDBContext, Person>(dbContext)
 {
-		protected override IQueryable<Person> Query()
+		public override IQueryable<Person> Query()
 				=> base.Query().Include(p => p.User);
 
 		public async Task<Person?> GetByEmailAsync(string email, CancellationToken ct = default)

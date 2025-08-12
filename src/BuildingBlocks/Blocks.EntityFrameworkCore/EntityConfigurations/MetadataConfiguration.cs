@@ -7,6 +7,6 @@ public abstract class MetadataConfiguration<T> : IEntityTypeConfiguration<T>
 		{
 				builder.ToTable(typeof(T).Name);
 
-				builder.SeedFromFile();
+				builder.SeedFromJsonFile();
 		}
 }

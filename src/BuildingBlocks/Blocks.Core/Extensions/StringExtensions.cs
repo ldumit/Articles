@@ -79,14 +79,12 @@ public static class StringExtensions
 				return char.ToLower(input[0]) + input.Substring(1);
 		}
 
-		public static string ToLowerCamelCase(this string me)
+		public static string ToCamelCase(this string value)
 		{
-				if (!string.IsNullOrEmpty(me))
-				{
-						return char.ToLowerInvariant(me[0]) + me.Substring(1);
-				}
+				if (string.IsNullOrEmpty(value))
+						return value;
 
-				return me;
+				return char.ToLowerInvariant(value[0]) + value.Substring(1);
 		}
 
 		public static string FirstCharToUpper(this string input)

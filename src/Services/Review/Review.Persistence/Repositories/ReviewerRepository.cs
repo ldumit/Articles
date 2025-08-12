@@ -3,7 +3,7 @@
 public class ReviewerRepository(ReviewDbContext dbContext) 
 		: Repository<Reviewer>(dbContext)
 {
-		protected override IQueryable<Reviewer> Query()
+		public override IQueryable<Reviewer> Query()
 		{
 				return base.Entity
 						.Include(e => e.Specializations);

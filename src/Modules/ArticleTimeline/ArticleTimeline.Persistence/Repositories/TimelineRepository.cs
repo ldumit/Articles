@@ -1,8 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ArticleTimeline.Domain;
-using Articles.Security;
-using ArticleTimeline.Domain.Enums;
-using Articles.Abstractions;
+﻿using ArticleTimeline.Domain.Enums;
 
 namespace ArticleTimeline.Persistence.Repositories;
 
@@ -38,12 +34,12 @@ public class TimelineRepository(ArticleTimelineDbContext dbContext)
             .FirstOrDefault(x => x.SourceType == sourceType && x.SourceId == sourceId);
     }
 
-    public async Task<List<Domain.Timeline>> GetAllArticleHistoriesByArticleIdAsync(int articleId)
+    public async Task<List<Timeline>> GetAllArticleHistoriesByArticleIdAsync(int articleId)
     {
         return this.Entity.Where(x => x.ArticleId == articleId).ToList();
     }
 
-    public async Task DeleteArticleHistoriesAsync(List<Domain.Timeline> articleHistories)
+    public async Task DeleteArticleHistoriesAsync(List<Timeline> articleHistories)
     {
         if(articleHistories.Any())
         {

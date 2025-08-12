@@ -5,7 +5,7 @@ namespace Production.Persistence.Repositories;
 public class AssetRepository(ProductionDbContext _dbContext) 
     : Repository<Asset>(_dbContext)
 {
-    protected override IQueryable<Asset> Query()
+    public override IQueryable<Asset> Query()
     {
         return base.Entity
 						.Include(x => x.Article)
@@ -14,9 +14,6 @@ public class AssetRepository(ProductionDbContext _dbContext)
     }
 
 		public async Task<Asset> GetByIdAsync(int articleId, int assetId, bool throwNotFound = true)
-		{
-				var entity = await Query()
-						.SingleOrDefaultAsync(e => e.ArticleId == articleId && e.Id == assetId);
-				return ReturnOrThrow(entity, throwNotFound);
-		}
+				=> await Query()
+						.SingleOrThrowAsync(e => e.ArticleId == articleId && e.Id == assetId);
 }

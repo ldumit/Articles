@@ -13,7 +13,7 @@ using Articles.Abstractions;
 
 namespace ArticleTimeline.Application.EventHandlers;
 
-public abstract class AddTimelineEventHandler<TDomainEvent, TAction>(TransactionProvider _transactionProvider, TimelineRepository _timelineRepository, VariableResolverFactory _variableResolverFactory)
+public abstract class AddTimelineEventHandler<TDomainEvent, TAction>(TransactionProvider _transactionProvider, TimelineRepository _timelineRepository, DbContext _dbContext, VariableResolverFactory _variableResolverFactory)
 		//: IEventHandler<ArticleStageChangedDomainEvent>
 		: INotificationHandler<TDomainEvent>
 		where TDomainEvent : DomainEvent<TAction>
@@ -21,7 +21,7 @@ public abstract class AddTimelineEventHandler<TDomainEvent, TAction>(Transaction
 {
 		public async Task Handle(TDomainEvent eventModel, CancellationToken ct)
 		{
-				_timelineRepository.Context.Database
+				_dbContext.Database
 						.UseTransaction(await _transactionProvider.GetCurrentTransaction(ct));
 				
 				var sourceId = GetSourceId(eventModel);

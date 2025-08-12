@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Submission.Application.Features.CreateArticle;
 
-public class CreateArticleCommandHandler(Repository<Journal> _journalRepository, IJournalService _journalClient)
+public class CreateArticleCommandHandler(SubmissionDbContext _dbContext, Repository<Journal> _journalRepository, IJournalService _journalClient)
 		: IRequestHandler<CreateArticleCommand, IdResponse>
 {
 		public async Task<IdResponse> Handle(CreateArticleCommand command, CancellationToken ct)
@@ -23,7 +23,7 @@ public class CreateArticleCommandHandler(Repository<Journal> _journalRepository,
 
 		private async Task AssignCurrentUserAsAuthor(Article article, CreateArticleCommand command)
 		{
-				var author = await _journalRepository.Context.Authors.SingleOrDefaultAsync(t => t.UserId == command.CreatedById);
+				var author = await _dbContext.Authors.SingleOrDefaultAsync(t => t.UserId == command.CreatedById);
 				if (author is not null)
 						article.AssignAuthor(author, [ContributionArea.OriginalDraft], isCorrespondingAuthor: true, command);
 		}

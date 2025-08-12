@@ -4,15 +4,15 @@ using Production.API.Features.Shared;
 using Production.Application.StateMachines;
 using Blocks.EntityFrameworkCore;
 using Blocks.Exceptions;
-using Production.Domain.Assets.Enums;
 using Production.Domain.Shared.Enums;
+using Production.Persistence;
 
 namespace Production.API.Features.Articles.AssignTypesetter;
 
 [Authorize(Roles = Role.POF)]
 [HttpPut("articles/{articleId:int}/typesetter/{typesetterId:int}")]
 [Tags("Articles")]
-public class AssignTypesetterEndpoint(ArticleRepository articleRepository, ArticleStateMachineFactory _stateMachineFactory) 
+public class AssignTypesetterEndpoint(ArticleRepository articleRepository, ArticleStateMachineFactory _stateMachineFactory, ProductionDbContext _dbContext) 
     : BaseEndpoint<AssignTypesetterCommand, IdResponse>(articleRepository)
 {
 		public override async Task HandleAsync(AssignTypesetterCommand command, CancellationToken ct)
@@ -22,7 +22,7 @@ public class AssignTypesetterEndpoint(ArticleRepository articleRepository, Artic
 				// todo move transisiton check to the domain ?!?
 				CheckAndThrowStageTransition(command.ActionType);
 
-				var typesetter = await _articleRepository.Context.Typesetters.FindByIdOrThrowAsync(command.TypesetterId);						
+				var typesetter = await _dbContext.Typesetters.FindByIdOrThrowAsync(command.TypesetterId);						
 
 				_article.AssignTypesetter(typesetter, command);
 

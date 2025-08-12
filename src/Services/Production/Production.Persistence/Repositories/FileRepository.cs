@@ -3,16 +3,13 @@
 public class FileRepository(ProductionDbContext _dbContext) 
     : Repository<File>(_dbContext)
 {
-    protected override IQueryable<File> Query()
+    public override IQueryable<File> Query()
     {
 				return base.Entity
 						.Include(x => x.Asset);
     }
 
 		public async Task<File> GetByIdAsync(int articleId, int fileId, bool throwNotFound = true)
-		{
-				var entity = await Query()
-						.SingleOrDefaultAsync(e => e.Id == fileId && e.Asset!.ArticleId == articleId);
-				return ReturnOrThrow(entity, throwNotFound);
-		}
+				=> await Query()
+						.SingleOrThrowAsync(e => e.Id == fileId && e.Asset!.ArticleId == articleId);
 }

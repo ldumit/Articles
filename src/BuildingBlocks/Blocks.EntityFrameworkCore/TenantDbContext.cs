@@ -1,6 +1,4 @@
-﻿using Blocks.Entitities;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 
 namespace Blocks.EntityFrameworkCore;
 

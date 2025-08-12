@@ -22,7 +22,7 @@ public abstract class EntityConfiguration<T, TKey> : IEntityTypeConfiguration<T>
     public virtual void Configure(EntityTypeBuilder<T> builder)
     {
         builder.HasKey(e => e.Id);
-        builder.SeedFromFile();
+        builder.SeedFromJsonFile();
     }
 
     protected virtual string EntityName => typeof(T).Name;

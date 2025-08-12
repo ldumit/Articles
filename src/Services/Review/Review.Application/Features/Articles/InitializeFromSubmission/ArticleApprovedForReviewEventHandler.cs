@@ -12,7 +12,7 @@ namespace Review.Application.Features.Articles.InitializeFromSubmission;
 public class ArticleApprovedForReviewEventHandler(
 		ReviewDbContext _dbContext,
 		ArticleRepository _articleRepository,
-		PersonRepository _personRepository, 
+		Repository<Person> _personRepository, 
 		Repository<Journal> _journalRepository, 
 		AssetTypeRepository _assetTypeRepository,
 		IFileService reviewFileService,

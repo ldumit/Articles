@@ -1,7 +1,6 @@
-﻿using Auth.Grpc;
+﻿using Grpc.Core;
 using Blocks.Exceptions;
-using Grpc.Core;
-using Microsoft.EntityFrameworkCore;
+using Auth.Grpc;
 
 namespace Submission.Application.Features.CreateAuthor;
 
@@ -10,7 +9,7 @@ public class CreateAuthorCommandHandler(Repository<Person> _personRepository, IP
 {
 		public async Task<IdResponse> Handle(CreateAuthorCommand command, CancellationToken ct)
 		{
-				if (await _personRepository.Entity.AnyAsync(p => p.Email.Value.ToLower() == command.Email.ToLower(), ct))
+				if (await _personRepository.ExistsAsync(p => p.Email.Value.ToLower() == command.Email.ToLower(), ct))
 						throw new BadRequestException("Author with this email already exists.");
 
 				var personInfo = await CreatePerson(command, ct);

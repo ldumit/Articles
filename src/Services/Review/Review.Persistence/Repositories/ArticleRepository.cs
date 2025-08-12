@@ -3,7 +3,7 @@
 public class ArticleRepository(ReviewDbContext dbContext) 
 		: Repository<Article>(dbContext)
 {
-		protected override IQueryable<Article> Query()
+		public override IQueryable<Article> Query()
 		{
 				return base.Entity
 						.Include(e => e.Actors)

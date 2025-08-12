@@ -1,5 +1,4 @@
-﻿using Blocks.Entitities;
-using Microsoft.EntityFrameworkCore;
+﻿using Blocks.Core;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Blocks.EntityFrameworkCore
@@ -33,7 +32,7 @@ namespace Blocks.EntityFrameworkCore
 								foreach (IMutableProperty property in entity.GetProperties()
 										.Where(p => p.PropertyInfo != null && p.PropertyInfo.DeclaringType != null))
 								{
-										property.SetColumnName(property.PropertyInfo.Name.ToCamelCase());
+										property.SetColumnName(property.PropertyInfo!.Name.ToCamelCase());
 								}
 						}
 				}

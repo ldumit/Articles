@@ -3,34 +3,22 @@ using System.Linq.Expressions;
 using Blocks.Core;
 
 namespace Blocks.EntityFrameworkCore;
+
 public static class EntityTypeBuilderExtensions
 {
-		public static void Seed<T>(this EntityTypeBuilder<T> entity, string folder)
-        where T : class
-		{
-				try
-				{
-						var stagesData = JsonExtensions.DeserializeCaseInsensitive<List<T>>(File.ReadAllText($@"../Production.Persistence/MasterData/{typeof(T).Name}.json"));
-						if (stagesData != null)
-								entity.HasData(stagesData);
-
-				}
-				catch (Exception ex)
-				{
-						Console.WriteLine("EX:---->" + ex.ToString());
-				}
-		}
-
-		public static bool SeedFromFile<T>(this EntityTypeBuilder<T> builder, string folder = "Data/Master")
+		/// <summary>
+		/// Seeds the entity from a JSON file named after the entity, located in the given folder (default: "Data/Master").
+		/// Returns true if data was seeded, false if the file was not found.
+		/// Use it to seed your master data like catalogs or configurations.
+		/// <returns></returns>
+		public static bool SeedFromJsonFile<T>(this EntityTypeBuilder<T> builder, string folder = "Data/Master")
 				where T : class
 		{
-				Console.WriteLine(AppContext.BaseDirectory);
 				var filePath = $"{AppContext.BaseDirectory}{folder}/{typeof(T).Name}.json";
 				if (!File.Exists(filePath))
 						return false;
 				var data = JsonExtensions.DeserializeCaseInsensitive<List<T>>(File.ReadAllText(filePath));				
 				Console.WriteLine($"Seeding {data.Count} records for {typeof(T).Name}");
-				//Console.WriteLine(JsonConvert.SerializeObject(data, Formatting.Indented));
 
 				if (data != null)
 						builder.HasData(data);
@@ -55,12 +43,4 @@ public static class EntityTypeBuilderExtensions
         var lambdaExpression = Expression.Lambda(expressionFilter, parameterType);
         entityTypeBuilder.HasQueryFilter(lambdaExpression);
     }
-
-    public static string ToCamelCase(this string propetyName)
-    {
-        if (string.IsNullOrEmpty(propetyName))
-            return propetyName;
-
-        return char.ToLowerInvariant(propetyName[0]) + propetyName.Substring(1);
-		}
 }

@@ -7,7 +7,7 @@ namespace Submission.Persistence.Repositories;
 public class AssetRepository(SubmissionDbContext _dbContext, IMemoryCache _cache) 
     : Repository<Asset>(_dbContext)
 {
-    protected override IQueryable<Asset> Query()
+    public override IQueryable<Asset> Query()
     {
 				return base.Entity
 						.Include(x => x.Article);

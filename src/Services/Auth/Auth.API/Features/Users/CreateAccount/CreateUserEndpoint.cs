@@ -1,15 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Blocks.Exceptions;
-using Auth.Domain.Persons;
 using Auth.Domain.Users.Events;
 using Auth.Persistence.Repositories;
+using Auth.Persistence;
 
 namespace Auth.API.Features.Users.CreateAccount;
 
 [Authorize(Roles = Articles.Security.Role.ADMIN)]
 [HttpPost("users")]
-public class CreateUserEndpoint(UserManager<User> _userManager, PersonRepository _personRepository) 
+public class CreateUserEndpoint(UserManager<User> _userManager, PersonRepository _personRepository, AuthDBContext _dbContext) 
 		: Endpoint<CreateUserCommand, CreateUserResponse>
 {
 		public override async Task HandleAsync(CreateUserCommand command, CancellationToken ct)
@@ -22,7 +22,7 @@ public class CreateUserEndpoint(UserManager<User> _userManager, PersonRepository
 						person = await CreatePersonAsync(command, ct);
 
 				//start transaction to ensure atomic creation 
-				await using var transaction = await _personRepository.BeginTransactionAsync(ct);
+				await using var transaction = await _dbContext.Database.BeginTransactionAsync(ct);
 
 				var user = Domain.Users.User.Create(command, person);
 

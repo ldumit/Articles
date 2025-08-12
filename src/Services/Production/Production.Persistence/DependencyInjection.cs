@@ -12,7 +12,7 @@ public static class DependencyInjection
 		{
 				var connectionString = configuration.GetConnectionString("Database");
 
-				services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
+				services.AddScoped<ISaveChangesInterceptor, TransactionalDispatchDomainEventsInterceptor>();
 
 				// decide if we need the same DBConnection/Transaction when we are saving the Timeline
 				services.AddScoped<DbConnection>(provider =>

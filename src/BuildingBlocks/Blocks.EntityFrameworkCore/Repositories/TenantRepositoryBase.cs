@@ -20,7 +20,7 @@ public abstract class TenantRepositoryBase<TContext, TEntity, TKey> : Repository
     {
         var entity = Entity.Find(_multitenancy.TenantId, id);
         if (throwNotFound == true && entity == null)
-            throw new HttpException(HttpStatusCode.NotFound, NotFoundMessage);
+            throw new HttpException(HttpStatusCode.NotFound, "Not found");
         return entity;
     }
 

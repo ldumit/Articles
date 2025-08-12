@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Submission.Application.Features.CreateAndAssignAuthor;
 
-public class CreateAndAssignAuthorCommandHandler(ArticleRepository _articleRepository, IPersonService _personClient)
+public class CreateAndAssignAuthorCommandHandler(ArticleRepository _articleRepository, IPersonService _personClient, SubmissionDbContext _dbContext)
 		: IRequestHandler<CreateAndAssignAuthorCommand, IdResponse>
 {
 		public async Task<IdResponse> Handle(CreateAndAssignAuthorCommand command, CancellationToken ct)
@@ -19,7 +19,7 @@ public class CreateAndAssignAuthorCommandHandler(ArticleRepository _articleRepos
 				}
 				else
 				{
-						author = await _articleRepository.Context.Authors.SingleOrDefaultAsync(x => x.Id == command.PersonId, ct);
+						author = await _dbContext.Authors.SingleOrDefaultAsync(x => x.Id == command.PersonId, ct);
 						if (author is null)
 						{
 								var personInfo = await GetPersonAsync(command, ct);
