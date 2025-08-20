@@ -1,9 +1,6 @@
-﻿using Articles.Security;
-using Review.Domain.Articles;
+﻿namespace Review.Persistence.EntityConfigurations;
 
-namespace Review.Persistence.EntityConfigurations;
-
-internal class ArticleContributorEntityConfiguration : IEntityTypeConfiguration<ArticleActor>
+internal class ArticleActorEntityConfiguration : IEntityTypeConfiguration<ArticleActor>
 {
 		public void Configure(EntityTypeBuilder<ArticleActor> builder)
 		{

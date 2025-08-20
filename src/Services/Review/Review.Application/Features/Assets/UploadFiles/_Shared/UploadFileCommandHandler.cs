@@ -4,7 +4,7 @@ using Review.Domain.Assets;
 namespace Review.Application.Features.Assets.UploadFiles.Shared;
 
 public class UploadFileCommandHandler<TUploadCommand>
-    (ArticleRepository _articleRepository, AssetTypeRepository _assetTypeRepository, IFileService _fileService, ArticleStateMachineFactory _stateMachineFactory)
+    (ArticleRepository _articleRepository, AssetTypeDefinitionRepository _assetTypeRepository, IFileService _fileService, ArticleStateMachineFactory _stateMachineFactory)
     : IRequestHandler<TUploadCommand, IdResponse>
         where TUploadCommand : UploadFileCommand
 {

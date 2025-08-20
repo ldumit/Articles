@@ -1,4 +1,5 @@
 ﻿using Articles.Abstractions.Events.Dtos;
+using Auth.Grpc;
 using Blocks.Domain;
 using Mapster;
 using Review.Domain.Articles.Events;
@@ -111,6 +112,11 @@ public partial class Article
 				return CreateInvitation(userId, email, firstName, lastName, action);
 		}
 
+		public ReviewInvitation InviteReviewer(PersonInfo personInfo, IArticleAction action)
+		{
+				return CreateInvitation(personInfo.UserId, personInfo.Email, personInfo.FirstName, personInfo.LastName, action);
+		}
+
 		private ReviewInvitation CreateInvitation(int? userId, string email, string firstName, string lastName, IArticleAction action)
 		{
 				// check if there is an active invitation for this email
@@ -143,7 +149,7 @@ public partial class Article
 				AddDomainEvent(new ArticleActionExecuted(this, action));
 		}
 
-		public static Article AcceptSubmitted(ArticleDto articleDto, List<ArticleActor> actors, List<Asset> assets)
+		public static Article AcceptSubmitted(ArticleDto articleDto, IEnumerable<ArticleActor> actors, IEnumerable<Asset> assets)
 		{
 				var article = new Article
 				{

@@ -3,7 +3,6 @@ using System.Reflection;
 
 namespace Blocks.Core;
 
-
 public static class ServiceCollectionExtensions
 {
 		public static IServiceCollection AddImplementationsOf<T>(
@@ -65,10 +64,10 @@ public static class ServiceCollectionExtensions
 		}
 
 		public static IServiceCollection AddConcreteImplementationsOfGeneric(
-		this IServiceCollection services,
-		Type genericBaseType,
-		Assembly[]? assemblies = null,
-		ServiceLifetime lifetime = ServiceLifetime.Scoped)
+				this IServiceCollection services,
+				Type genericBaseType,
+				Assembly[]? assemblies = null,
+				ServiceLifetime lifetime = ServiceLifetime.Scoped)
 		{
 				assemblies ??= new[] { Assembly.GetCallingAssembly() };
 

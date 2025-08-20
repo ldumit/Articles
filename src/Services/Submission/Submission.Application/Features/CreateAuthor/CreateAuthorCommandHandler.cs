@@ -9,7 +9,7 @@ public class CreateAuthorCommandHandler(Repository<Person> _personRepository, IP
 {
 		public async Task<IdResponse> Handle(CreateAuthorCommand command, CancellationToken ct)
 		{
-				if (await _personRepository.ExistsAsync(p => p.Email.Value.ToLower() == command.Email.ToLower(), ct))
+				if (await _personRepository.ExistsAsync(p => p.Email.Value == command.Email, ct))
 						throw new BadRequestException("Author with this email already exists.");
 
 				var personInfo = await CreatePerson(command, ct);

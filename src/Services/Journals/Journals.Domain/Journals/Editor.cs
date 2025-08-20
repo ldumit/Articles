@@ -4,7 +4,7 @@ using Redis.OM.Modeling;
 namespace Journals.Domain.Journals;
 
 [Document(StorageType = StorageType.Hash)]
-public class Editor : Entity
+public partial class Editor : Entity
 {
 		// Editor.Id = Editor.UserId. Editors are Users therefore they don't need their own IDs
 

@@ -15,7 +15,7 @@ public static class FileServiceFactoryRegistration
 						{
 								FileStorageType.Submission => serviceProvider.GetRequiredService<IFileService<SubmissionFileStorageOptions>>(),
 								FileStorageType.Review => serviceProvider.GetRequiredService<IFileService<MongoGridFsFileStorageOptions>>(),
-								_ => throw new ApplicationException(),
+								_ => throw new ApplicationException()
 						};
 				});
 				return services;

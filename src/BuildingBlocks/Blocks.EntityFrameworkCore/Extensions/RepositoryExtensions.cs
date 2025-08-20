@@ -31,6 +31,6 @@ public static class RepositoryExtensions
 				where TEntity : class, IEntity<int>
 		{
 				if(!await repository.ExistsAsync(id, ct))
-						throw new NotFoundException($"{typeof(TEntity).Name} not found");
+						throw new BadRequestException($"{typeof(TEntity).Name}({id}) already exists");
 		}
 }

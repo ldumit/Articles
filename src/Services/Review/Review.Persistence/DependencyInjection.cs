@@ -7,7 +7,7 @@ using System.Data.Common;
 
 namespace Review.Persistence;
 
-public static class DependencyInjectionG
+public static class DependencyInjection
 {
     public static IServiceCollection AddPersistenceServices (this IServiceCollection services, IConfiguration configuration)
     {
@@ -31,7 +31,7 @@ public static class DependencyInjectionG
 
 				services.AddScoped(typeof(Repository<>));
 				services.AddConcreteImplementationsOfGeneric(typeof(Repository<>)); // inherits from Repository<>
-				services.AddScoped<AssetTypeRepository>();
+				services.AddScoped<AssetTypeDefinitionRepository>();
 
 
 				//services.AddScoped<ArticleRepository>();

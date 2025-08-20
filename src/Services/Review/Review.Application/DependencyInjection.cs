@@ -18,7 +18,7 @@ public static class DependencyInjection
 				services
 						.AddMapsterConfigsFromCurrentAssembly()																	// Scanning for mapping registration
 						//.AddMapsterConfigsFromAssemblyContaining<ApplicationMappingConfig>()    // Scanning for mapping registration
-						.AddValidatorsFromAssemblyContaining<CreateArticleCommandValidator>()		// Register Fluent validators as transient
+						.AddValidatorsFromAssemblyContaining<InviteReviewerCommandValidator>()		// Register Fluent validators as transient
 						.AddMediatR(config =>
 						{
 								config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());

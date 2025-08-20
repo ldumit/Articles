@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 
 namespace Blocks.Mapster;
-public static class MapsterConfiguration
+public static class DependencyInjection
 {
 		[MethodImpl(MethodImplOptions.NoInlining)]
 		public static IServiceCollection AddMapsterConfigsFromCurrentAssembly(this IServiceCollection services, Assembly? assembly = null)

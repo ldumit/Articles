@@ -27,7 +27,8 @@ public class PersonEntityConfiguration : EntityConfiguration<Person>
 					 {
 							 builder.Property(n => n.Value)
 									 .HasColumnName(builder.Metadata.PropertyInfo!.Name)
-									 .HasMaxLength(MaxLength.C64);
+									 .HasMaxLength(MaxLength.C64)
+									 .UseCollation("SQL_Latin1_General_CP1_CI_AS"); // case insensitive for comparation
 					 });
 		}
 }

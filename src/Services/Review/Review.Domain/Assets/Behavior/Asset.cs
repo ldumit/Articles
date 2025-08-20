@@ -65,7 +65,7 @@ public partial class Asset
 						State = AssetState.Uploaded,
 				};
 
-				asset.File = File.CreateFile(assetDto.File, type);
+				//asset.File = File.CreateFile(assetDto.File, type);
 
 				return asset;
 		}

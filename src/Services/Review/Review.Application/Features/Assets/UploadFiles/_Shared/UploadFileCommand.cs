@@ -29,10 +29,10 @@ public abstract record UploadFileCommand : ArticleCommand
 public abstract class UploadFileValidator<TUploadFileCommand> : ArticleCommandValidator<TUploadFileCommand>
                 where TUploadFileCommand : UploadFileCommand
 {
-    private readonly AssetTypeRepository _assetTypeRepository;
+    private readonly AssetTypeDefinitionRepository _assetTypeRepository;
     private AssetTypeDefinition _assetTypeDefinition = null!;
 
-    public UploadFileValidator(AssetTypeRepository assetTypeRepository)
+    public UploadFileValidator(AssetTypeDefinitionRepository assetTypeRepository)
     {
         _assetTypeRepository = assetTypeRepository;
 

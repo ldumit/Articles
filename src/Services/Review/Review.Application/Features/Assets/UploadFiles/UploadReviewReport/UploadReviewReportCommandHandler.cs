@@ -5,7 +5,7 @@ namespace Review.Application.Features.Assets.UploadFiles.UploadReviewReport;
 
 public class UploadReviewReportCommandHandler(
         ArticleRepository articleRepository,
-        AssetTypeRepository assetTypeRepository,
+        AssetTypeDefinitionRepository assetTypeRepository,
         IFileService fileService,
         ArticleStateMachineFactory stateMachineFactory)
     : UploadFileCommandHandler<UploadReviewReportCommand>(articleRepository, assetTypeRepository, fileService, stateMachineFactory)

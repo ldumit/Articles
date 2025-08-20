@@ -5,7 +5,7 @@ using Blocks.Redis;
 using Articles.Security;
 using Auth.Grpc;
 using Journals.API.Features.Shared;
-using Journals.Persistence;
+using Journals.Domain.Journals.Events;
 
 namespace Journals.API.Features.Journals.Create;
 
@@ -28,6 +28,8 @@ public class CreateJournalEndpoint(Repository<Journal> _journalRepository, Repos
 
         await _journalRepository.AddAsync(journal);
 
+        await PublishAsync(new JournalCreated(journal));
+
         await SendAsync(new IdResponse(journal.Id));
     }
 
@@ -35,15 +37,8 @@ public class CreateJournalEndpoint(Repository<Journal> _journalRepository, Repos
 		{
 				var response = await _personClient.GetPersonByUserIdAsync( new GetPersonByUserIdRequest { UserId = userId }, new CallOptions(cancellationToken: ct));
         var personInfo = response.PersonInfo;
-				var editor = new Editor
-				{
-						Id = personInfo.UserId!.Value,
-						PersonId = personInfo.Id,
-						Email = personInfo.Email,
-						Affiliation = personInfo.ProfessionalProfile!.Affiliation,
-						FullName = personInfo.FirstName + " " + personInfo.LastName,
-				};
 
+				var editor = Editor.Create(personInfo); 
 				await _editorRepository.AddAsync(editor);
 
 				return editor;

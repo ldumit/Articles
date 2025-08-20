@@ -14,7 +14,7 @@ public class ArticleApprovedForReviewEventHandler(
 		ArticleRepository _articleRepository,
 		Repository<Person> _personRepository, 
 		Repository<Journal> _journalRepository, 
-		AssetTypeRepository _assetTypeRepository,
+		AssetTypeDefinitionRepository _assetTypeRepository,
 		IFileService reviewFileService,
 		FileServiceFactory fileServiceFactory) 
 		: IConsumer<ArticleApprovedForReviewEvent>
@@ -51,7 +51,7 @@ public class ArticleApprovedForReviewEventHandler(
 				return journal;
 		}
 
-		private async Task<List<Asset>> CreateAssets(ArticleDto articleDto, CancellationToken ct = default)
+		private async Task<IEnumerable<Asset>> CreateAssets(ArticleDto articleDto, CancellationToken ct = default)
 		{
 				var submissionFileService = fileServiceFactory(FileStorageType.Submission);
 
@@ -63,10 +63,10 @@ public class ArticleApprovedForReviewEventHandler(
 
 						var asset = Asset.CreateFromSubmission(assetDto, assetTypeDefinition, articleDto.Id);
 
-						var (fileStream, fileMetada) = await submissionFileService.DownloadAsync(asset.File.FileServerId, ct);
+						var (fileStream, fileMetadata) = await submissionFileService.DownloadAsync(asset.File.FileServerId, ct);
 
-						var fileMetadata = await reviewFileService.UploadAsync(
-								new FileUploadRequest(fileMetada.StoragePath, fileMetada.FileName, fileMetada.ContentType, fileMetada.FileSize),
+						fileMetadata = await reviewFileService.UploadAsync(
+								new FileUploadRequest(fileMetadata.StoragePath, fileMetadata.FileName, fileMetadata.ContentType, fileMetadata.FileSize),
 								fileStream);
 
 						asset.CreateFile(fileMetadata, assetTypeDefinition);
@@ -77,7 +77,7 @@ public class ArticleApprovedForReviewEventHandler(
 				return assets;
 		}
 
-		private async Task<List<ArticleActor>> CreateActors(ArticleDto articleDto)
+		private async Task<IEnumerable<ArticleActor>> CreateActors(ArticleDto articleDto)
 		{
 				//create actors
 				var actors = new List<ArticleActor>();

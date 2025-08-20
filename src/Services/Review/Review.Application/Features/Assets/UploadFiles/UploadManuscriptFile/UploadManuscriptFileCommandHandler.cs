@@ -5,7 +5,7 @@ namespace Review.Application.Features.Assets.UploadFiles.UploadManuscriptFile;
 
 public class UploadManuscriptFileCommandHandler(
         ArticleRepository articleRepository,
-        AssetTypeRepository assetTypeRepository,
+        AssetTypeDefinitionRepository assetTypeRepository,
         IFileService fileService,
         ArticleStateMachineFactory stateMachineFactory)
         : UploadFileCommandHandler<UploadManuscriptFileCommand>(articleRepository, assetTypeRepository, fileService, stateMachineFactory)

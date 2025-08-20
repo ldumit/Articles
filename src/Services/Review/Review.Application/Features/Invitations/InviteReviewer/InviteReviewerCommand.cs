@@ -11,9 +11,9 @@ public record InviteReviewerCommand(int? UserId, string FirstName, string LastNa
 
 public record InviteReviewerResponse(int ArticleId, int InvitationId, string Token);
 
-public class CreateArticleCommandValidator : AbstractValidator<InviteReviewerCommand>
+public class InviteReviewerCommandValidator : AbstractValidator<InviteReviewerCommand>
 {
-    public CreateArticleCommandValidator()
+    public InviteReviewerCommandValidator()
     {
 				When(c => c.UserId == null, () =>
 				{ 
