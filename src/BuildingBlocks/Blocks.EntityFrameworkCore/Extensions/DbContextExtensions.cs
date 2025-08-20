@@ -1,6 +1,6 @@
 ﻿using Blocks.Core.Cache;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Blocks.EntityFrameworkCore;
 
@@ -15,7 +15,7 @@ public static partial class DbContextExtensions
 				}
 		}
 
-		public static WebApplication Migrate<TDbContext>(this WebApplication app)
+		public static IHost Migrate<TDbContext>(this IHost app)
 				where TDbContext : DbContext
 		{
 				using var scope = app.Services.CreateScope();
