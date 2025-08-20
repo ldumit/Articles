@@ -10,6 +10,7 @@ using Auth.Grpc;
 using Blocks.AspNetCore.Grpc;
 using FileStorage.MongoGridFS;
 using Journals.Grpc;
+using Blocks.Core.Security;
 
 namespace Submission.API;
 

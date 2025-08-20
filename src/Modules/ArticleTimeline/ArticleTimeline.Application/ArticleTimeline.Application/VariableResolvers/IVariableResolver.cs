@@ -1,5 +1,6 @@
 ﻿using Blocks.AspNetCore;
 using Blocks.Core;
+using Blocks.Core.Security;
 
 namespace ArticleTimeline.Application.VariableResolvers;
 

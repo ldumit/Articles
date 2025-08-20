@@ -14,6 +14,7 @@ public class ArticlesGraphQLEndpoint : ICarterModule
 
 						return Results.Json(response.Items);
 				})
+				.RequireAuthorization() // allows all authenticated users
 				.WithName("GetArticles")
 				.WithTags("Articles")
 				.Produces<List<Article>>(StatusCodes.Status200OK)

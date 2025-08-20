@@ -1,6 +1,6 @@
-﻿using Blocks.Domain;
-using Blocks.AspNetCore;
-using MediatR;
+﻿using MediatR;
+using Blocks.Core.Security;
+using Blocks.Domain;
 
 namespace Blocks.MediatR.Behaviours;
 

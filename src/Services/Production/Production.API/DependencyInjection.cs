@@ -8,6 +8,7 @@ using FastEndpoints.Swagger;
 using Blocks.AspNetCore;
 using FileStorage.AzureBlob;
 using Production.Persistence.Repositories;
+using Blocks.Core.Security;
 
 namespace Production.API;
 

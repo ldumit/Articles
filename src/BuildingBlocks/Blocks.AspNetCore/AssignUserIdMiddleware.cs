@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Blocks.Core.Security;
+using Microsoft.AspNetCore.Http;
 
 namespace Blocks.AspNetCore;
 

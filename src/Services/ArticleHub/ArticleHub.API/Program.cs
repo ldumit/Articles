@@ -21,6 +21,7 @@ builder.Services
 
 var app = builder.Build();
 
+#region Use
 app.MapCarter();
 
 app
@@ -32,12 +33,15 @@ app
 		.UseMiddleware<GlobalExceptionMiddleware>()
 		.UseMiddleware<CorrelationIdMiddleware>();
 
+#endregion
+
+#region InitData
 app.Migrate<ArticleHubDbContext>();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
 		//app.SeedTestData();
 }
+#endregion
 
 app.Run();

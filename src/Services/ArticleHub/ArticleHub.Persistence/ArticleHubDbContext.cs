@@ -1,7 +1,4 @@
-﻿using ArticleHub.Domain.Entities;
-using ArticleHub.Persistence.EntityConfigurations;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
+﻿using Microsoft.Extensions.Caching.Memory;
 
 namespace ArticleHub.Persistence;
 
@@ -17,16 +14,10 @@ public partial class ArticleHubDbContext(DbContextOptions<ArticleHubDbContext> o
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-				//todo use the following line:
-				//modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
+				modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
 
-				modelBuilder.ApplyConfiguration(new ArticleEntityConfiguration());
-				modelBuilder.ApplyConfiguration(new ArticleContributorEntityConfiguration());
-				modelBuilder.ApplyConfiguration(new JournalEntityConfiguration());
-				modelBuilder.ApplyConfiguration(new PersonEntityConfiguration());
-
-				modelBuilder.UseClrTypeNamesForTables();
-				modelBuilder.UseLowerCaseNamingConvention();
+				//modelBuilder.UseClrTypeNamesForTables();
+				modelBuilder.UseLowerCaseNamingConvention(); //postgress standard
 
 				base.OnModelCreating(modelBuilder);
 		}

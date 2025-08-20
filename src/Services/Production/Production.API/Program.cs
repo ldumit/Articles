@@ -1,14 +1,15 @@
+using ArticleTimeline.Application;
+using ArticleTimeline.Persistence;
+using Blocks.AspNetCore;
+using Blocks.AspNetCore.Filters;
+using Blocks.EntityFrameworkCore;
+using Blocks.FastEnpoints;
+using FastEndpoints.Swagger;
+using FileStorage.AzureBlob;
 using Production.API;
 using Production.Application;
 using Production.Persistence;
 using System.Text.Json.Serialization;
-using FastEndpoints.Swagger;
-using Blocks.FastEnpoints;
-using ArticleTimeline.Persistence;
-using ArticleTimeline.Application;
-using FileStorage.AzureBlob;
-using Blocks.AspNetCore;
-using Blocks.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -69,6 +70,8 @@ app
     })
 		.UseSwaggerGen();
 
+
+var api = app.MapGroup("/api").AddEndpointFilter<StampUserFilter>();
 #endregion
 
 app.Run();

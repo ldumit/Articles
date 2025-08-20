@@ -8,7 +8,7 @@ namespace EmailService.SendGrid;
 public class SendGridEmailService(ISendGridClient sendGridClient, IOptions<SendGridAccountOptions> sendGridOptions, IOptions<EmailOptions> emailOptions, ILogger<SendGridEmailService> logger) 
     : IEmailService
 {
-    public SendGridAccountOptions Options { get; } //set only via Secret Manager
+    public SendGridAccountOptions Options { get; }
 
     public EmailOptions EmailOptions { get; }
 

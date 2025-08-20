@@ -3,7 +3,6 @@ using Blocks.AspNetCore;
 using Blocks.AspNetCore.Grpc;
 using Blocks.Core;
 using Blocks.Messaging;
-using EmailService.Smtp;
 using EmailService.Empty;
 using FileStorage.MongoGridFS;
 using Microsoft.AspNetCore.Authorization;
@@ -11,6 +10,8 @@ using Microsoft.AspNetCore.Http.Json;
 using Review.API.FileStorage;
 using System.Text.Json.Serialization;
 using TransactionOptions = Blocks.EntityFrameworkCore.TransactionOptions;
+using Review.Application.Options;
+using Blocks.Core.Security;
 
 namespace Review.API;
 
@@ -19,6 +20,7 @@ public static class DependecyInjection
 		public static void ConfigureApiOptions(this IServiceCollection services, IConfiguration configuration)
 		{
 				services
+						.AddAndValidateOptions<AppUrlsOptions>(configuration)
 						.AddAndValidateOptions<RabbitMqOptions>(configuration)
 						.AddAndValidateOptions<TransactionOptions>(configuration)
 						.Configure<JsonOptions>(opt =>

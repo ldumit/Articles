@@ -1,11 +1,10 @@
 ﻿using Auth.Grpc;
-using Blocks.AspNetCore;
 using Blocks.Domain;
 using EmailService.Contracts;
 using Flurl;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Review.Application.Options;
 using EmailAddress = EmailService.Contracts.EmailAddress;
 
 namespace Review.Application.Features.Invitations.InviteReviewer;
@@ -17,8 +16,8 @@ public class InviteReviewerCommandHandler(
     ReviewInvitationRepository _reviewInvitationRepository,
 		IPersonService _personClient, 
     IEmailService _emailService,
-		IHttpContextAccessor _httpContextAccessor, 
-    IOptions<EmailOptions> emailOptions)
+    IOptions<EmailOptions> emailOptions, 
+    IOptions<AppUrlsOptions> appUrlsOptions)
     : IRequestHandler<InviteReviewerCommand, InviteReviewerResponse>
 {
     public async Task<InviteReviewerResponse> Handle(InviteReviewerCommand command, CancellationToken ct)
@@ -49,7 +48,7 @@ public class InviteReviewerCommandHandler(
         }
 
 
-				await _articleRepository.SaveChangesAsync();
+				await _dbContext.SaveChangesAsync();
 
         // todo - decide if it is necessary here a domain event or not
         await _emailService.SendEmailAsync(BuildEmailMessage(invitation, editor));
@@ -66,8 +65,8 @@ public class InviteReviewerCommandHandler(
 						If you don't have an account please create one using the following URL: {3}";
 
         var url =
-                _httpContextAccessor.HttpContext?.Request.BaseUrl()
-                .AppendPathSegment($"articles/{invitation.ArticleId}/invitations/{invitation.Token}");
+								appUrlsOptions.Value.ReviewBaseUrl
+								.AppendPathSegment($"articles/{invitation.ArticleId}/invitations/{invitation.Token}");
 
         return new EmailMessage(
                 "Review Invitation",

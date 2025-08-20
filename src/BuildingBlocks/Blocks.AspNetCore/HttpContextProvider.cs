@@ -1,19 +1,10 @@
 ﻿using Blocks.Core;
+using Blocks.Core.Security;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using System.Security.Claims;
 
 namespace Blocks.AspNetCore;
-
-public interface IClaimsProvider
-{
-		public string GetClaimValue(string claimName);
-		public int GetUserId();
-		public int? TryGetUserId();
-		public string GetUserEmail();
-		public string GetUserName();
-		public string GetUserRole();
-}
 
 public interface IRouteProvider
 {

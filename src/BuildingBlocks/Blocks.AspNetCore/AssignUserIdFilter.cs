@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 using System.Reflection;
 using Blocks.Domain;
+using Blocks.Core.Security;
 
 namespace Blocks.AspNetCore;
 
