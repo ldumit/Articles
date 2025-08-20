@@ -1,0 +1,79 @@
+@startuml
+skinparam DefaultFontSize 24
+skinparam participant {
+  FontSize 26
+  BackgroundColor White
+  BorderColor Black
+}
+skinparam ParticipantPadding 30
+skinparam BoxPadding 10
+skinparam BboxBorderThickness 1
+skinparam ParticipantBackgroundColor<<Service>> #F2F2F2
+
+title Invite Reviewer – Sequence Diagram (C4-L4)
+caption This diagram illustrates the flow for handling an "Invite Reviewer" request in the Review Service, covering entity loading, validation, reviewer resolution, persistence, and notification via email.
+
+actor Client as "Editor"
+
+box " Application Layer " #E6F0FF
+  participant Handler as "InviteReviewerHandler\n(MediatR)"
+  participant Validator as "InviteReviewerValidator\n(FluentValidation)"
+end box
+
+box " Domain Layer " #FFF0E0
+  participant Article as "Article\n(Aggregate)"
+  participant Invitation as "ReviewInvitation\n(Aggregate)"
+end box
+
+box " Persistence Layer " #FFE0E0
+  participant Repository as "Repository\n(EF Core)"
+  participant DbContext as "ReviewDbContext\n(EF Core)"
+end box
+
+box " External & Infra " #E0F7FF
+  participant PersonSvc as "Auth.PersonService\n(gRPC)"
+  participant EmailSvc as "EmailService\n(Module)"
+  participant UrlHelper as "UrlHelper\n(Utility)"
+end box
+
+Client -> Handler : InviteReviewerCommand\n(ArticleId, UserId?, Email?, EditorId)
+activate Handler
+
+Handler -> Validator : ValidateOrThrow(command)
+
+== Load Article & Editor ==
+Handler -> Repository : GetArticleByIdOrThrow(articleId)
+Handler -> Repository : GetEditorByUserIdOrThrow(editorId)
+
+== Guard: Existing Open Invitation ==
+Handler -> Repository : OpenInvitationExistsAsync
+alt Guard fails: open invitation already exists
+  Handler --> Client : Error: open invitation exists
+end
+
+== Resolve Reviewer ==
+opt Reviewer is User (UserId exists)
+  Handler -> Repository : GetReviewerByUserIdAsync(userId)
+  alt Reviewer exists
+    Handler -> Article : InviteReviewer(reviewer)
+  else Reviewer not found
+    Handler -> PersonSvc : GetPersonByUserIdAsync(userId) → personInfo
+    Handler -> Article : InviteReviewer(personInfo)
+  end
+else Reviewer is not User
+  Handler -> Article : InviteReviewer(email) 
+end
+
+== Notify Reviewer ==
+Handler -> UrlHelper : BuildConfirmationUrl(invitation.Token) → confirmationUrl
+Handler -> EmailSvc : SendEmailAsync(EmailMessage(confirmationUrl))
+
+== Persist ==
+Handler -> DbContext : SaveChangesAsync()
+
+
+== Response ==
+Handler --> Client : InviteReviewerResponse\n(ArticleId, InvitationId, Token)
+deactivate Handler
+
+@enduml
