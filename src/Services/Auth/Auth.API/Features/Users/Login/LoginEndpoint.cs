@@ -17,6 +17,7 @@ public class LoginEndpoint(UserManager<User> _userManager, SignInManager<User> _
 				var person = Guard.NotFound(
 						await _personRepository.GetByEmailAsync(command.Email, ct)
 				);
+
 				var user = Guard.NotFound(person.User);
 
 				var result = await _signInManager.CheckPasswordSignInAsync(user, command.Password, lockoutOnFailure: false); // turn lockoutOnFailure to true if you want to block the account after a few tries
@@ -31,6 +32,6 @@ public class LoginEndpoint(UserManager<User> _userManager, SignInManager<User> _
 				user.AssignRefreshToken(refreshToken);
 				await _userManager.UpdateAsync(user);
 
-				await SendAsync(new LoginResponse(command.Email, jwtToken, refreshToken.Token));
+				await Send.OkAsync(new LoginResponse(command.Email, jwtToken, refreshToken.Token));
 		}
 }

@@ -20,6 +20,6 @@ public class ResetPasswordEndpoint(UserManager<User> _userManager)
 				if (!result.Succeeded)
 						throw new BadRequestException($"Unable to change password for {command.Email}");
 
-				await SendAsync(new SetPasswordResponse(command.Email));
+				await Send.OkAsync(new SetPasswordResponse(command.Email));
 		}
 }

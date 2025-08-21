@@ -28,7 +28,7 @@ public class ApproveDraftAssetEndpoint(AssetRepository _assetRepository, AssetTy
 				_article.SetStage(NextStage, command);
 
         await _assetRepository.SaveChangesAsync();
-        await SendAsync(new AssetActionResponse(asset.Adapt<AssetMinimalDto>()));
+        await Send.OkAsync(new AssetActionResponse(asset.Adapt<AssetMinimalDto>()));
     }
 
 		protected override ArticleStage NextStage => ArticleStage.FinalProduction;

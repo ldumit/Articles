@@ -25,6 +25,6 @@ public class CreateSectionEndpoint(Repository<Journal> _repository)
 
 				await _repository.UpdateAsync(journal);
 
-				await SendAsync(new IdResponse(section.Id));
+				await Send.OkAsync(new IdResponse(section.Id));
     }
 }

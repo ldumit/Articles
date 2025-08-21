@@ -30,7 +30,7 @@ public class CreateJournalEndpoint(Repository<Journal> _journalRepository, Repos
 
         await PublishAsync(new JournalCreated(journal));
 
-        await SendAsync(new IdResponse(journal.Id));
+        await Send.OkAsync(new IdResponse(journal.Id));
     }
 
 		private async Task<Editor> CreateEditor(int userId, CancellationToken ct)

@@ -27,6 +27,6 @@ public class GetEditorsBySectionIdEndpoint(JournalDbContext _dbContext)
             editors.Add(editor.Adapt<EditorDto>());
         }
 
-        await SendAsync(new GetEditorsBySectionIdResponse(editors));
+        await Send.OkAsync(new GetEditorsBySectionIdResponse(editors));
     }
 }

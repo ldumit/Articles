@@ -46,7 +46,7 @@ public class UploadFileEndpoint<TUploadCommand>
             throw;
 				}
 
-				await SendAsync(new AssetActionResponse(asset.Adapt<AssetMinimalDto>()));
+				await Send.OkAsync(new AssetActionResponse(asset.Adapt<AssetMinimalDto>()));
 		}
 
 		private async Task<FileMetadata> UploadFile(UploadFileCommand command, Asset asset, CancellationToken ct)

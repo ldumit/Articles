@@ -12,7 +12,7 @@ public class GetArticleSummaryEndpointEndpoint(ArticleRepository _articleReposit
 		{
 				var article = await _articleRepository.GetArticleSummaryById(command.ArticleId);
 
-				await SendAsync(new GetArticleSummaryResonse(article.Adapt<ArticleSummaryDto>()));
+				await Send.OkAsync(new GetArticleSummaryResonse(article.Adapt<ArticleSummaryDto>()));
 		}
 }
 

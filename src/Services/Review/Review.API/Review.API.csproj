@@ -17,7 +17,6 @@
 		
     <ItemGroup>
 		    <ProjectReference Include="..\..\..\BuildingBlocks\Blocks.AspNetCore\Blocks.AspNetCore.csproj" />
-		    <ProjectReference Include="..\..\..\BuildingBlocks\Blocks.EntityFrameworkCore\Blocks.EntityFrameworkCore.csproj" />
 		    <ProjectReference Include="..\..\..\BuildingBlocks\Blocks.Messaging\Blocks.Messaging.csproj" />
 		    <ProjectReference Include="..\..\..\Modules\EmailService\EmailService.Empty\EmailService.Empty.csproj" />
 		    <ProjectReference Include="..\..\..\Modules\FileService\FileService.MongoGridFS\FileStorage.MongoGridFS.csproj" />

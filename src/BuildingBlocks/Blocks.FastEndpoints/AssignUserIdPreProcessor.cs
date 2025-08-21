@@ -1,5 +1,4 @@
-﻿using Blocks.AspNetCore;
-using Blocks.Core.Security;
+﻿using Blocks.Core.Security;
 using Blocks.Domain;
 using FastEndpoints;
 

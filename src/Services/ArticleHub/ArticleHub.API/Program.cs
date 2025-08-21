@@ -1,10 +1,10 @@
-using Carter;
+using ArticleHub.API;
+using ArticleHub.Application;
+using ArticleHub.Persistence;
 using Blocks.AspNetCore;
 using Blocks.AspNetCore.Middlewares;
-using ArticleHub.Persistence;
-using ArticleHub.Application;
-using ArticleHub.API;
 using Blocks.EntityFrameworkCore;
+using Carter;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,7 +31,7 @@ app
 		.UseAuthentication()
 		.UseAuthorization()
 		.UseMiddleware<GlobalExceptionMiddleware>()
-		.UseMiddleware<CorrelationIdMiddleware>();
+		.UseMiddleware<RequestContextMiddleware>();
 
 #endregion
 

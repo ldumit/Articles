@@ -12,6 +12,6 @@ public class GetArticleAssetsEndpointEndpoint(ArticleRepository _articleReposito
 		{
 				var article = await _articleRepository.GetArticleAssetsById(command.ArticleId);
 
-				await SendAsync(new GetArticleAssetsResponse(article.Assets.Adapt<IReadOnlyList<AssetDto>>()));
+				await Send.OkAsync(new GetArticleAssetsResponse(article.Assets.Adapt<IReadOnlyList<AssetDto>>()));
 		}
 }

@@ -38,6 +38,6 @@ public class RequestAssetsEndpointBase<TCommand>(ArticleRepository _articleRepos
         {
             Assets = assetsResponse.Select(a => a.Adapt<AssetMinimalDto>())
         };				
-				await SendAsync(response);
+				await Send.OkAsync(response);
     }
 }

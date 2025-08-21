@@ -1,11 +1,12 @@
-using Submission.Application;
-using Submission.Persistence;
 using Blocks.AspNetCore;
-using Submission.API.Endpoints;
-using Submission.API;
-using Submission.Persistence.Data.Test;
+using Blocks.AspNetCore.Middleware;
 using Blocks.AspNetCore.Middlewares;
 using Blocks.EntityFrameworkCore;
+using Submission.API;
+using Submission.API.Endpoints;
+using Submission.Application;
+using Submission.Persistence;
+using Submission.Persistence.Data.Test;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +38,7 @@ app
 		.UseRouting()                                       // match the HTTP request to an endpoint (route) based on the URL
 		.UseMiddleware<GlobalExceptionMiddleware>()
 		.UseMiddleware<CorrelationIdMiddleware>()
+		.UseMiddleware<RequestLoggingMiddleware>()
 		.UseAuthentication()
 		.UseAuthorization();
 

@@ -18,6 +18,6 @@ public class GetJournalEndpoint(JournalDbContext _dbContext)
         var chiefEditor = await _dbContext.Editors.GetByIdAsync(journal.ChiefEditorId);
         journalDto.ChiefEditor = chiefEditor.Adapt<EditorDto>();
 
-        await SendAsync(new GetJournalResponse(journalDto));
+        await Send.OkAsync(new GetJournalResponse(journalDto));
     }
 }

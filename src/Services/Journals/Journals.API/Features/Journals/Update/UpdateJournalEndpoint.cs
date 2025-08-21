@@ -24,6 +24,6 @@ public class UpdateJournalEndpoint(Repository<Journal> _journalRepository)
 
 				await PublishAsync(journal.Adapt<UpdateJournalEvent>());
 
-				await SendAsync(new IdResponse(journal.Id));
+				await Send.OkAsync(new IdResponse(journal.Id));
     }
 }

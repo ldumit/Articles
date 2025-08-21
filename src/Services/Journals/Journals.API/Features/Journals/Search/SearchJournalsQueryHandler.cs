@@ -46,6 +46,6 @@ public class SearchJournalsQueryHandler(Repository<Journal> _repository, Reposit
 					  })
 				);
 
-				await SendAsync(response, cancellation: ct);
+				await Send.OkAsync(response, cancellation: ct);
 		}
 }

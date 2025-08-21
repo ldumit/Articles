@@ -13,6 +13,6 @@ public class DownloadFileEndpoint(FileRepository _fileRepository, IFileService _
 
 				var (fileStream, fileMetada) = await _fileService.DownloadAsync(file.FileServerId, ct);
 
-				await SendStreamAsync(fileStream, file.Name.Value, file.Size, fileMetada.ContentType);				
+				await Send.StreamAsync(fileStream, file.Name.Value, file.Size, fileMetada.ContentType);				
 		}
 }

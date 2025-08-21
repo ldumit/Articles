@@ -43,7 +43,7 @@ public class CreateUserEndpoint(UserManager<User> _userManager, PersonRepository
 
 				await transaction.CommitAsync(ct);
 
-				await SendAsync(new CreateUserResponse(command.Email, user.Id, resetPasswordToken));
+				await Send.OkAsync(new CreateUserResponse(command.Email, user.Id, resetPasswordToken));
     }
 
 		private async Task<Person> CreatePersonAsync(CreateUserCommand command, CancellationToken ct)

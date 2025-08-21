@@ -24,7 +24,7 @@ public class SendChangePasswordLinkEndpoint(UserManager<User> _userManager, IEma
 				var emailMessage = BuildEmailMessage(user, ressetPasswordToken);
 				await _emailService.SendEmailAsync(emailMessage);
 
-				await SendAsync(new SendChangePasswordLinkResponse(command.Email, ressetPasswordToken));
+				await Send.OkAsync(new SendChangePasswordLinkResponse(command.Email, ressetPasswordToken));
 		}
 
 		private EmailMessage BuildEmailMessage(User user, string token)

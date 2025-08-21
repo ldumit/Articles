@@ -30,7 +30,7 @@ public class AssignTypesetterEndpoint(ArticleRepository articleRepository, Artic
 
 				await _articleRepository.SaveChangesAsync();
 
-        await SendAsync( new IdResponse(command.ArticleId));
+        await Send.OkAsync( new IdResponse(command.ArticleId));
     }
 
 

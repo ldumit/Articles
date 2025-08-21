@@ -34,7 +34,7 @@ public class CancelRequestFinalAssetsEndpoint(ArticleRepository articleRepositor
         _article.SetStage(NextStage, command);
 				await _assetRepository.SaveChangesAsync();
 
-        await SendAsync(new RequestAssetsResponse
+        await Send.OkAsync(new RequestAssetsResponse
         {
 						Assets = assets.Select(a => a.Adapt<AssetMinimalDto>())
 				});
