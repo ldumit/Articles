@@ -65,7 +65,7 @@ public class InviteReviewerCommandHandler(
 						If you don't have an account please create one using the following URL: {3}";
 
         var url =
-								appUrlsOptions.Value.ReviewBaseUrl
+								appUrlsOptions.Value.ReviewUIBaseUrl
 								.AppendPathSegment($"articles/{invitation.ArticleId}/invitations/{invitation.Token}");
 
         return new EmailMessage(

@@ -2,5 +2,5 @@
 
 public sealed class AppUrlsOptions
 {
-		public required string ReviewBaseUrl { get; set; }
+		public required string ReviewUIBaseUrl { get; set; }
 }
