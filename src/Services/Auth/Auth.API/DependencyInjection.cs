@@ -1,16 +1,16 @@
-﻿using Articles.Security;
-using Auth.API;
-using Auth.API.Features.Users.CreateAccount;
-using Auth.API.Mappings;
-using Auth.Persistence;
-using EmailService.Smtp;
-using FastEndpoints.Swagger;
-using Microsoft.AspNetCore.Http.Json;
-using Microsoft.AspNetCore.Identity;
-using ProtoBuf.Grpc.Server;
-using System.IO.Compression;
+﻿using System.IO.Compression;
 using System.Security.Claims;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Http.Json;
+using Microsoft.AspNetCore.Identity;
+using FastEndpoints.Swagger;
+using ProtoBuf.Grpc.Server;
+using Blocks.Core.Security;
+using EmailService.Smtp;
+using Articles.Security;
+using Auth.API;
+using Auth.API.Mappings;
+using Auth.Persistence;
 
 namespace Auth.Api;
 

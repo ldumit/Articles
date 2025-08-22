@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Blocks.Http.Abstractions\Blocks.Http.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

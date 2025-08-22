@@ -2,9 +2,10 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 using System.Text;
 using Blocks.Core;
-using System.Security.Claims;
+using Blocks.Core.Security;
 
 namespace Articles.Security;
 

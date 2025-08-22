@@ -1,4 +1,5 @@
-﻿using Submission.Application.Features.ApproveArticle;
+﻿using Articles.Security;
+using Submission.Application.Features.ApproveArticle;
 
 namespace Submission.API.Endpoints;
 

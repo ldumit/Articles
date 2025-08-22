@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
-using Blocks.Core;
-using Blocks.AspNetCore;
-using ValidationResult = FluentValidation.Results.ValidationResult;
-using ValidationMessages = Review.Application.Features.Articles._Shared.ValidationMessages;
-using Review.Application.Features.Articles._Shared;
+using Blocks.Http.Abstractions;
+using Review.Application.Features.Articles.Shared;
 using Review.Domain.Assets;
+using ValidationResult = FluentValidation.Results.ValidationResult;
+using ValidationMessages = Review.Application.Features.Articles.Shared.ValidationMessages;
 
 namespace Review.Application.Features.Assets.UploadFiles.Shared;
 

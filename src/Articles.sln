@@ -129,6 +129,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileStorage.MinIO", "Module
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailService.Empty", "Modules\EmailService\EmailService.Empty\EmailService.Empty.csproj", "{AB5FCABF-0864-5EE4-47A2-B366E0C724F2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blocks.Http.Abstractions", "BuildingBlocks\Blocks.Http.Abstractions\Blocks.Http.Abstractions.csproj", "{F7CE5E7C-A70C-4375-9784-21440767B749}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -331,6 +333,10 @@ Global
 		{AB5FCABF-0864-5EE4-47A2-B366E0C724F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB5FCABF-0864-5EE4-47A2-B366E0C724F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB5FCABF-0864-5EE4-47A2-B366E0C724F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7CE5E7C-A70C-4375-9784-21440767B749}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7CE5E7C-A70C-4375-9784-21440767B749}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7CE5E7C-A70C-4375-9784-21440767B749}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7CE5E7C-A70C-4375-9784-21440767B749}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -393,6 +399,7 @@ Global
 		{CF20E575-831D-4254-850D-75AADAA6B005} = {119E4BB2-4239-487F-B5F7-3BCED9AFF33C}
 		{AFFA31D6-4405-5729-B092-3CA85114C781} = {6DEF661D-9291-4D7A-A88D-A4046055CBE1}
 		{AB5FCABF-0864-5EE4-47A2-B366E0C724F2} = {6EC4AB69-944E-4EEF-AC42-52A4C8DF1CAA}
+		{F7CE5E7C-A70C-4375-9784-21440767B749} = {119E4BB2-4239-487F-B5F7-3BCED9AFF33C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DB8333BC-C32E-4759-8E3B-CC033665D9E0}

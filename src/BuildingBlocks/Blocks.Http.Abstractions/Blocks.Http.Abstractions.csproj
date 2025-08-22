@@ -7,8 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FastEndpoints.Messaging.Core" Version="7.0.1" ExcludeAssets="runtime"/>
-    <PackageReference Include="MediatR.Contracts" Version="2.0.1" ExcludeAssets="runtime"/>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" ExcludeAssets="runtime" />
   </ItemGroup>
 
 </Project>

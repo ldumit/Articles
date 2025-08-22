@@ -12,14 +12,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.Grpc.Contracts\Articles.Grpc.Contracts.csproj" />
-    <ProjectReference Include="..\..\..\BuildingBlocks\Blocks.AspNetCore\Blocks.AspNetCore.csproj" />
+		<ProjectReference Include="..\..\..\BuildingBlocks\Articles.Grpc.Contracts\Articles.Grpc.Contracts.csproj" />
     <ProjectReference Include="..\..\..\BuildingBlocks\Blocks.MediatR\Blocks.MediatR.csproj" />
     <ProjectReference Include="..\..\..\BuildingBlocks\Blocks.Messaging\Blocks.Messaging.csproj" />
-    <ProjectReference Include="..\..\..\Modules\ArticleTimeline\ArticleTimeline.Application\ArticleTimeline.Application\ArticleTimeline.Application.csproj" />
-    <ProjectReference Include="..\..\..\Modules\FileService\FileService.AzureBlob\FileStorage.AzureBlob.csproj" />
-    <ProjectReference Include="..\..\..\Modules\FileService\FileService.Contracts\FileStorage.Contracts.csproj" />
-    <ProjectReference Include="..\Submission.Persistence\Submission.Persistence.csproj" />
+		<ProjectReference Include="..\..\..\BuildingBlocks\Blocks.Http.Abstractions\Blocks.Http.Abstractions.csproj" />
+		<ProjectReference Include="..\..\..\Modules\FileService\FileService.Contracts\FileStorage.Contracts.csproj" />
+		<ProjectReference Include="..\Submission.Persistence\Submission.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

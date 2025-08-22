@@ -1,4 +1,4 @@
-﻿namespace Review.Application.Features.Articles._Shared;
+﻿namespace Review.Application.Features.Articles.Shared;
 
 public static class ValidationMessages
 {

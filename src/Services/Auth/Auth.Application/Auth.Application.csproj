@@ -13,9 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BuildingBlocks\Articles.Security\Articles.Security.csproj" />
     <ProjectReference Include="..\..\..\Modules\EmailService\EmailService.Contracts\EmailService.Contracts.csproj" />
-    <ProjectReference Include="..\..\..\Modules\EmailService\EmailService.Smtp\EmailService.Smtp.csproj" />
     <ProjectReference Include="..\Auth.Persistence\Auth.Persistence.csproj" />
     <ProjectReference Include="..\Auth.Domain\Auth.Domain.csproj" />
   </ItemGroup>

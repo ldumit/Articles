@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
-using Blocks.Core;
-using Blocks.AspNetCore;
+using Blocks.Http.Abstractions;
 using ValidationResult = FluentValidation.Results.ValidationResult;
 using ValidationMessages = Submission.Application.Features.Shared.ValidationMessages;
 

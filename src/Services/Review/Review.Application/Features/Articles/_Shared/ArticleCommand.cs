@@ -1,6 +1,6 @@
 ﻿using Review.Domain.Shared.Enums;
 
-namespace Review.Application.Features.Articles._Shared;
+namespace Review.Application.Features.Articles.Shared;
 
 public abstract record ArticleCommand : ArticleCommandBase<ArticleActionType>, IArticleAction, ICommand<IdResponse>;
 public abstract record ArticleCommand<TResponse> : ArticleCommandBase<ArticleActionType>, IArticleAction, ICommand<TResponse>;

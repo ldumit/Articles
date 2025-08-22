@@ -7,7 +7,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using Auth.Domain.Users;
-using Articles.Security;
+using Blocks.Core.Security;
 
 namespace Auth.Application;
 

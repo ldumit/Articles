@@ -2,6 +2,7 @@
 using ProtoBuf.Grpc.Server;
 using System.IO.Compression;
 using System.Text.Json.Serialization;
+using Blocks.Core.Security;
 using Blocks.AspNetCore.Grpc;
 using Blocks.Mapster;
 using Articles.Security;

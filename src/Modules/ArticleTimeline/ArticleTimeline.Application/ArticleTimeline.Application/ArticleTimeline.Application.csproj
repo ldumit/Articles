@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="FastEndpoints.Messaging.Core" Version="7.0.1" />
+    <PackageReference Include="MediatR" Version="13.0.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -5,34 +5,21 @@ namespace Blocks.AspNetCore;
 
 public static class FormFileExtensions
 {
-    public const string DefaultFileContentType = "application/octet-stream";
+		public const string DefaultFileContentType = "application/octet-stream";
+		private static readonly FileExtensionContentTypeProvider _provider = new();
 
-    public static string GetContentType(this IFormFile file)
-    {
-        if (!string.IsNullOrEmpty(file.ContentType) && file.ContentType != DefaultFileContentType)
-            return file.ContentType;
+		public static string GetContentType(this IFormFile file, bool preferHeader = true, string fallback = DefaultFileContentType)
+		{
+				if (file is null) throw new ArgumentNullException(nameof(file));
 
-        new FileExtensionContentTypeProvider().TryGetContentType(file.FileName, out var contentType);
-        return contentType ?? DefaultFileContentType;
-    }
+				if (preferHeader && !string.IsNullOrWhiteSpace(file.ContentType) && file.ContentType != DefaultFileContentType)
+						return file.ContentType;
 
-    public static string GetExtension(this IFormFile file)
-    {
-        if (string.IsNullOrEmpty(file.FileName))
-            return string.Empty; //todo default extension
+				if (!string.IsNullOrWhiteSpace(file.FileName) &&
+						_provider.TryGetContentType(file.FileName, out var fromExt) &&
+						!string.IsNullOrWhiteSpace(fromExt))
+						return fromExt;
 
-        return Path.GetExtension(file.FileName).Replace(".", "").ToLower();
-    }
-
-    public static string GetFileContentType(this IFormFile file)
-    {
-        new FileExtensionContentTypeProvider().TryGetContentType(file.FileName, out var contentType);
-        return contentType ?? DefaultFileContentType;
-    }
-
-    public static string ToFormatterNumber(this int number, int formattedNumber)
-    {
-        return number.ToString().PadLeft(formattedNumber, '0');
-    }
-
+				return fallback;
+		}
 }

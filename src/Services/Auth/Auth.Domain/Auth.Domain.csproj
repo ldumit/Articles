@@ -13,6 +13,5 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\BuildingBlocks\Articles.Abstractions\Articles.Abstractions.csproj" />
     <ProjectReference Include="..\..\..\BuildingBlocks\Blocks.Domain\Blocks.Domain.csproj" />
-    <ProjectReference Include="..\..\..\Modules\EmailService\EmailService.Contracts\EmailService.Contracts.csproj" />
   </ItemGroup>
 </Project>

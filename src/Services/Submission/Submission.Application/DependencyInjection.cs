@@ -6,7 +6,6 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Submission.Application.Features.CreateArticle;
-using Submission.Application.Mappings;
 using Submission.Application.StateMachines;
 using System.Reflection;
 

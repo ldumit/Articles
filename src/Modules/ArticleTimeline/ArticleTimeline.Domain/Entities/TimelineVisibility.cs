@@ -1,6 +1,4 @@
-﻿using Blocks.Entitities;
-using Blocks.Core.Cache;
-using Articles.Security;
+﻿using Blocks.Core.Cache;
 using ArticleTimeline.Domain.Enums;
 
 namespace ArticleTimeline.Domain;

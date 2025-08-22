@@ -18,8 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BuildingBlocks\Blocks.Messaging\Blocks.Messaging.csproj" />
-    <ProjectReference Include="..\ArticleHub.Application\ArticleHub.Application.csproj" />
+		<ProjectReference Include="..\..\..\BuildingBlocks\Blocks.AspNetCore\Blocks.AspNetCore.csproj" />
+		<ProjectReference Include="..\..\..\BuildingBlocks\Blocks.Messaging\Blocks.Messaging.csproj" />
+		<ProjectReference Include="..\..\..\BuildingBlocks\Articles.Security\Articles.Security.csproj" />
+		<ProjectReference Include="..\ArticleHub.Application\ArticleHub.Application.csproj" />
     <ProjectReference Include="..\ArticleHub.Persistence\ArticleHub.Persistence.csproj" />
   </ItemGroup>
 

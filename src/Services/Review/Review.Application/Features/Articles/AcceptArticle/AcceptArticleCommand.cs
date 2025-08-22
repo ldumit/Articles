@@ -1,4 +1,4 @@
-﻿using Review.Application.Features.Articles._Shared;
+﻿using Review.Application.Features.Articles.Shared;
 using Review.Domain.Shared.Enums;
 
 namespace Review.Application.Features.Articles.AcceptArticle;
