@@ -5,12 +5,12 @@ skinparam participant {
   BackgroundColor White
   BorderColor Black
 }
-skinparam ParticipantPadding 30
-skinparam BoxPadding 10
+skinparam ParticipantPadding 31
+skinparam BoxPadding 11
 skinparam BboxBorderThickness 1
 skinparam ParticipantBackgroundColor<<Service>> #F2F2F2
 
-title Accept Invitation – Sequence Diagram (C4-L4)
+title Accept Invitation – Sequence Diagram (C4-L3)
 caption Handles an "Accept Invitation" request, validate command, load article & invitation by token, resolve/create reviewer via Auth gRPC if needed, accept invitation, assign reviewer, and persist.
 
 actor Client

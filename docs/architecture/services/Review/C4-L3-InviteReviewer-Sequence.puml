@@ -5,12 +5,12 @@ skinparam participant {
   BackgroundColor White
   BorderColor Black
 }
-skinparam ParticipantPadding 30
-skinparam BoxPadding 10
+skinparam ParticipantPadding 29
+skinparam BoxPadding 9
 skinparam BboxBorderThickness 1
 skinparam ParticipantBackgroundColor<<Service>> #F2F2F2
 
-title Invite Reviewer – Sequence Diagram (C4-L4)
+title Invite Reviewer – Sequence Diagram (C4-L3)
 caption This diagram illustrates the flow for handling an "Invite Reviewer" request in the Review Service, covering entity loading, validation, reviewer resolution, persistence, and notification via email.
 
 actor Client as "Editor"
