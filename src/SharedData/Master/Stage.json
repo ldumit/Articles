@@ -30,7 +30,7 @@
 		"info": "Your article has been checked. Our editorial specialists will start soon revieing it."
 	},
 	{
-		"name": "InReview",
+		"name": "UnderReview",
 		"id": 201,
 		"description": "Article approved",
 		"info": "Our editorial specialist is reviewing your article."

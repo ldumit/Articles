@@ -1,4 +1,5 @@
 ﻿using Articles.Security;
+using Blocks.Domain;
 using Blocks.Mapster;
 using Blocks.MediatR.Behaviours;
 using Blocks.Messaging.MassTransit;
@@ -28,7 +29,8 @@ public static class DependencyInjection
 								config.AddOpenBehavior(typeof(LoggingBehavior<,>));
 						})
 						.AddMassTransitWithRabbitMQ(configuration, Assembly.GetExecutingAssembly()); ;
-				
+
+				services.AddScoped<IDomainEventPublisher, DomainEventPublisher>();
 				services.AddScoped<IArticleRoleVerifier, ArticleRoleVerifier>();
 
 				services.AddScoped<ArticleStateMachineFactory>(provider => articleStage =>

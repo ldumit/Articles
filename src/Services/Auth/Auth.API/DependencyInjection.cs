@@ -1,16 +1,18 @@
-﻿using System.IO.Compression;
-using System.Security.Claims;
-using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Http.Json;
-using Microsoft.AspNetCore.Identity;
-using FastEndpoints.Swagger;
-using ProtoBuf.Grpc.Server;
-using Blocks.Core.Security;
-using EmailService.Smtp;
-using Articles.Security;
+﻿using Articles.Security;
 using Auth.API;
 using Auth.API.Mappings;
 using Auth.Persistence;
+using Blocks.Core.Security;
+using Blocks.Domain;
+using Blocks.FastEndpoints;
+using EmailService.Smtp;
+using FastEndpoints.Swagger;
+using Microsoft.AspNetCore.Http.Json;
+using Microsoft.AspNetCore.Identity;
+using ProtoBuf.Grpc.Server;
+using System.IO.Compression;
+using System.Security.Claims;
+using System.Text.Json.Serialization;
 
 namespace Auth.Api;
 
@@ -41,6 +43,8 @@ public static class DependenciesConfiguration
 						.AddJwtIdentity(config)
 						.AddJwtAuthentication(config)										// JWT Authentication
 						.AddAuthorization();                            // Authorization configuration
+
+				services.AddScoped<IDomainEventPublisher, DomainEventPublisher>();
 
 				services.AddSingleton<GrpcTypeAdapterConfig>();			//mapster mappings for grpc contracts
 

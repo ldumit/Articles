@@ -1,14 +1,16 @@
-﻿using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Http.Json;
+﻿using Blocks.AspNetCore;
 using Blocks.Core;
-using Blocks.EntityFrameworkCore;
-using System.Reflection;
-using Production.Application;
-using FastEndpoints.Swagger;
-using Blocks.AspNetCore;
-using FileStorage.AzureBlob;
-using Production.Persistence.Repositories;
 using Blocks.Core.Security;
+using Blocks.Domain;
+using Blocks.EntityFrameworkCore;
+using Blocks.FastEndpoints;
+using FastEndpoints.Swagger;
+using FileStorage.AzureBlob;
+using Microsoft.AspNetCore.Http.Json;
+using Production.Application;
+using Production.Persistence.Repositories;
+using System.Reflection;
+using System.Text.Json.Serialization;
 
 namespace Production.API;
 
@@ -43,6 +45,7 @@ public static class DependecyInjection
 						.AddJwtAuthentication(configuration)
 						.AddAuthorization();
 
+				services.AddScoped<IDomainEventPublisher, DomainEventPublisher>();
 
 				//talk - SOLID principle interface segragation, injecting multiple interfaces using the same class
 				services.AddScoped<HttpContextProvider>();

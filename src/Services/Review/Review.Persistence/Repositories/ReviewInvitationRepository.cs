@@ -5,7 +5,7 @@ namespace Review.Persistence.Repositories;
 public class ReviewInvitationRepository(ReviewDbContext dbContext)
 		: Repository<ReviewInvitation>(dbContext)
 {
-		public async Task<ReviewInvitation> GetByTokenOrThrow(string token, CancellationToken ct = default)
+		public async Task<ReviewInvitation> GetByTokenOrThrowAsync(string token, CancellationToken ct = default)
 				=> await Query()
 						.SingleOrThrowAsync(i => i.Token.Value == token && i.Status == InvitationStatus.Open, ct);
 

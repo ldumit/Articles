@@ -10,7 +10,7 @@ public class PersonGrpcService(PersonRepository _personRepository, GrpcTypeAdapt
 {
 		public async ValueTask<CreatePersonResponse> CreatePersonAsync(CreatePersonRequest request, CallContext context = default)
 		{
-				//todo - validate CreatePersonRequest, create a HTTP endpoint and use the same handler and validator
+				//todo - validate CreatePersonRequest, create an HTTP endpoint and use the same handler and validator
 				var person = Person.Create(request);
 
 				await _personRepository.AddAsync(person, context.CancellationToken);

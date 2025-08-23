@@ -10,7 +10,7 @@ public class AcceptInvitationCommandHandler(ArticleRepository _articleRepository
     {
         var article = await _articleRepository.GetByIdOrThrowAsync(command.ArticleId);
 
-				var invitation = await _reviewInivtiationRepository.GetByTokenOrThrow(command.Token);
+				var invitation = await _reviewInivtiationRepository.GetByTokenOrThrowAsync(command.Token);
 
 				Reviewer? reviewer = default!;
 				if (invitation.UserId != null)
