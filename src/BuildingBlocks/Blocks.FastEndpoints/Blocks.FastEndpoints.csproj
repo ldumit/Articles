@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FastEndpoints" Version="7.0.1" />
-		<PackageReference Include="FastEndpoints.Swagger" Version="7.0.1" />
+    <PackageReference Include="FastEndpoints"/>
+		<PackageReference Include="FastEndpoints.Swagger"/>
 	</ItemGroup>
 
   <ItemGroup>

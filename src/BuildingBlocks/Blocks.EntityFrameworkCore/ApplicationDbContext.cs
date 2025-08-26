@@ -4,7 +4,8 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace Blocks.EntityFrameworkCore;
 
-public class ApplicationDbContext<TDbContext>(DbContextOptions<TDbContext> _options, IMemoryCache _cache) : DbContext(_options)
+public class ApplicationDbContext<TDbContext>(DbContextOptions<TDbContext> _options, IMemoryCache _cache) 
+		: DbContext(_options)
 		where TDbContext : DbContext
 {
 		public virtual IEnumerable<TEntity> GetAllCached<TEntity>()

@@ -22,7 +22,7 @@ builder.Services
 var app = builder.Build();
 
 #region InitData
-app.Migrate<AuthDBContext>();
+app.Migrate<AuthDbContext>();
 if (app.Environment.IsDevelopment())
 {
 		app.SeedTestData();

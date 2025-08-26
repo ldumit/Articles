@@ -39,7 +39,7 @@ public static class DependecyInjection
 						.AddMapster()
 						.SwaggerDocument()
 						.AddEndpointsApiExplorer()
-						.AddAutoMapper(new Assembly[] { typeof(Production.API.Features.Shared.FileResponseMappingProfile).Assembly })
+						//.AddAutoMapper(new Assembly[] { typeof(Production.API.Features.Shared.FileResponseMappingProfile).Assembly })
 						.AddDistributedMemoryCache() //.AddMemoryCache()
 						.AddSwaggerGen()
 						.AddJwtAuthentication(configuration)

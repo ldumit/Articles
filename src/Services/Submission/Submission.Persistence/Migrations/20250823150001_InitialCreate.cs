@@ -17,9 +17,9 @@ namespace Submission.Persistence.Migrations
                 name: "ArticleStageTransition",
                 columns: table => new
                 {
-                    CurrentStage = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ActionType = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    DestinationStage = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    CurrentStage = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    ActionType = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    DestinationStage = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -51,7 +51,7 @@ namespace Submission.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    Abbreviation = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false)
+                    Abbreviation = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -65,17 +65,17 @@ namespace Submission.Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-										Honorific = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
+                    Honorific = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: true),
                     Affiliation = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false, comment: "Institution or organization they are associated with when they conduct their research."),
                     UserId = table.Column<int>(type: "int", nullable: true),
                     TypeDiscriminator = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false, collation: "SQL_Latin1_General_CP1_CI_AS"),
                     Degree = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true, comment: "The author's highest academic qualification (e.g., PhD in Mathematics, MSc in Chemistry)."),
                     Discipline = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true, comment: "The author's main field of study or research (e.g., Biology, Computer Science)."),
                     CreatedById = table.Column<int>(type: "int", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastModifiedById = table.Column<int>(type: "int", nullable: true),
-                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    LastModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -104,16 +104,16 @@ namespace Submission.Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     Scope = table.Column<string>(type: "nvarchar(2048)", maxLength: 2048, nullable: false),
                     SubmittedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     SubmittedById = table.Column<int>(type: "int", nullable: true),
-                    Stage = table.Column<string>(type: "nvarchar(64)", nullable: false),
+                    Stage = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     JournalId = table.Column<int>(type: "int", nullable: false),
                     CreatedById = table.Column<int>(type: "int", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
                     LastModifiedById = table.Column<int>(type: "int", nullable: true),
-                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    LastModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -146,7 +146,7 @@ namespace Submission.Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     EntityId = table.Column<int>(type: "int", nullable: false),
                     Comment = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TypeId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TypeId = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     CreatedById = table.Column<int>(type: "int", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -167,7 +167,7 @@ namespace Submission.Persistence.Migrations
                 {
                     ArticleId = table.Column<int>(type: "int", nullable: false),
                     PersonId = table.Column<int>(type: "int", nullable: false),
-                    Role = table.Column<string>(type: "nvarchar(450)", nullable: false, defaultValue: "AUT"),
+                    Role = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false, defaultValue: "AUT"),
                     TypeDiscriminator = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
                     ContributionAreas = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -194,9 +194,9 @@ namespace Submission.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    State = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    State = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
-                    Type = table.Column<string>(type: "nvarchar(64)", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     ArticleId = table.Column<int>(type: "int", nullable: false),
                     File_FileServerId = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     File_OriginalName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false, comment: "Original full file name, with extension"),
@@ -207,7 +207,7 @@ namespace Submission.Persistence.Migrations
                     CreatedById = table.Column<int>(type: "int", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
                     LastModifiedById = table.Column<int>(type: "int", nullable: true),
-                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    LastModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -276,7 +276,7 @@ namespace Submission.Persistence.Migrations
                     { 103, "Author uploaded the Manuscript", "The manuscript was uploaded, you can now submit the article.", "Submitted" },
                     { 104, "Article was rejected by the editorial specialist", "The manuscript does not reach the required quality standard of this journal.", "InitialRejected" },
                     { 105, "Article approved", "Your article has been checked. Our editorial specialists will start soon revieing it.", "InitialApproved" },
-                    { 201, "Article approved", "Our editorial specialist is reviewing your article.", "InReview" },
+                    { 201, "Article approved", "Our editorial specialist is reviewing your article.", "UnderReview" },
                     { 204, "Article accepted", "Your article has been reviewed and accepted. The production of the article will start soon.", "Accepted" },
                     { 300, "Typesetter assigned", "The typesetter is preparing your Author’s Proof. We will contact you if we need any further files or information.", "InProduction" },
                     { 301, "Author's proof approved", "The Author's Proof is available for you to check and provide corrections. This status is also displayed if we are preparing a further Author's Proof at your request.", "DraftProduction" },

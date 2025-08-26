@@ -31,7 +31,8 @@ app
 		.UseAuthentication()
 		.UseAuthorization()
 		.UseMiddleware<GlobalExceptionMiddleware>()
-		.UseMiddleware<RequestContextMiddleware>();
+		.UseMiddleware<RequestContextMiddleware>()
+		.UseMiddleware<ResponseTimingMiddleware>();
 
 #endregion
 

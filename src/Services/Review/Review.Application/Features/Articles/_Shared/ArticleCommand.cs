@@ -1,4 +1,5 @@
-﻿using Review.Domain.Shared.Enums;
+﻿using Articles.Abstractions;
+using Review.Domain.Shared.Enums;
 
 namespace Review.Application.Features.Articles.Shared;
 

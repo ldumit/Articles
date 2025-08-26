@@ -9,7 +9,7 @@ namespace Auth.API.Features.Users.CreateAccount;
 
 [Authorize(Roles = Articles.Security.Role.ADMIN)]
 [HttpPost("users")]
-public class CreateUserEndpoint(UserManager<User> _userManager, PersonRepository _personRepository, AuthDBContext _dbContext) 
+public class CreateUserEndpoint(UserManager<User> _userManager, PersonRepository _personRepository, AuthDbContext _dbContext) 
 		: Endpoint<CreateUserCommand, CreateUserResponse>
 {
 		public override async Task HandleAsync(CreateUserCommand command, CancellationToken ct)

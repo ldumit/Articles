@@ -8,7 +8,7 @@ public static class DependencyInjection
     public static IServiceCollection AddPersistenceServices (this IServiceCollection services, IConfiguration config)
     {
         var connectionString = config.GetConnectionString("Database");
-				services.AddDbContext<AuthDBContext>(opts => opts.UseSqlServer(connectionString));
+				services.AddDbContext<AuthDbContext>(opts => opts.UseSqlServer(connectionString));
 
         services.AddScoped<PersonRepository>();
 

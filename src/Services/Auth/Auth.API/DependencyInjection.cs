@@ -76,7 +76,7 @@ public static class DependenciesConfiguration
 						//options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+/ ";
 				})
 			  .AddRoles<Auth.Domain.Roles.Role>()
-				.AddEntityFrameworkStores<AuthDBContext>()
+				.AddEntityFrameworkStores<AuthDbContext>()
 				.AddSignInManager<SignInManager<User>>()
 				.AddDefaultTokenProviders();
 

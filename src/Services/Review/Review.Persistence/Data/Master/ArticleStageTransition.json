@@ -1,6 +1,6 @@
 [
 		{"CurrentStage": "UnderReview", "ActionType": "UploadReviewReport", "DestinationStage": "ReadyForDecision"},
-		{"CurrentStage": "ReadyForDecision", "ActionType": "RevisionRequested", "DestinationStage": "AwaitingDecision"},
+		{"CurrentStage": "ReadyForDecision", "ActionType": "RevisionRequested", "DestinationStage": "AwaitingRevision"},
 		{"CurrentStage": "AwaitingRevision", "ActionType": "UploadManuscript", "DestinationStage": "ReadyForDecision"},
 		{"CurrentStage": "ReadyForDecision", "ActionType": "AcceptArticle", "DestinationStage": "Accepted"},
 		{"CurrentStage": "ReadyForDecision", "ActionType": "RejectArticle", "DestinationStage": "Rejected"}

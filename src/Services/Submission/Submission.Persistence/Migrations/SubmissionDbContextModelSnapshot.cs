@@ -18,7 +18,7 @@ namespace Submission.Persistence.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.10")
+                .HasAnnotation("ProductVersion", "9.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -27,7 +27,8 @@ namespace Submission.Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnOrder(0);
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
@@ -42,11 +43,11 @@ namespace Submission.Persistence.Migrations
                     b.Property<int>("JournalId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("LasModifiedOn")
-                        .HasColumnType("datetime2");
-
                     b.Property<int?>("LastModifiedById")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("LastModifiedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Scope")
                         .IsRequired()
@@ -55,6 +56,7 @@ namespace Submission.Persistence.Migrations
 
                     b.Property<string>("Stage")
                         .IsRequired()
+                        .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
                     b.Property<int?>("SubmittedById")
@@ -70,7 +72,8 @@ namespace Submission.Persistence.Migrations
 
                     b.Property<string>("Type")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.HasKey("Id");
 
@@ -109,7 +112,8 @@ namespace Submission.Persistence.Migrations
 
                     b.Property<string>("TypeId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.HasKey("Id");
 
@@ -128,7 +132,8 @@ namespace Submission.Persistence.Migrations
 
                     b.Property<string>("Role")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)")
                         .HasDefaultValue("AUT");
 
                     b.Property<string>("TypeDiscriminator")
@@ -150,13 +155,16 @@ namespace Submission.Persistence.Migrations
             modelBuilder.Entity("Submission.Domain.Entities.ArticleStageTransition", b =>
                 {
                     b.Property<string>("CurrentStage")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("ActionType")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("DestinationStage")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.HasKey("CurrentStage", "ActionType", "DestinationStage");
 
@@ -205,7 +213,8 @@ namespace Submission.Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnOrder(0);
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
@@ -225,18 +234,20 @@ namespace Submission.Persistence.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETUTCDATE()");
 
-                    b.Property<DateTime?>("LasModifiedOn")
-                        .HasColumnType("datetime2");
-
                     b.Property<int?>("LastModifiedById")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("LastModifiedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("State")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("Type")
                         .IsRequired()
+                        .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
                     b.ComplexProperty<Dictionary<string, object>>("File", "Submission.Domain.Entities.Asset.File#File", b1 =>
@@ -363,8 +374,8 @@ namespace Submission.Persistence.Migrations
 
                     b.Property<string>("Abbreviation")
                         .IsRequired()
-                        .HasMaxLength(8)
-                        .HasColumnType("nvarchar(8)");
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -399,15 +410,15 @@ namespace Submission.Persistence.Migrations
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
-                    b.Property<int?>("Honorific")
-                        .HasMaxLength(64)
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("LasModifiedOn")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Honorific")
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
 
                     b.Property<int?>("LastModifiedById")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("LastModifiedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -430,7 +441,8 @@ namespace Submission.Persistence.Migrations
                                 .IsRequired()
                                 .HasMaxLength(64)
                                 .HasColumnType("nvarchar(64)")
-                                .HasColumnName("Email");
+                                .HasColumnName("Email")
+                                .UseCollation("SQL_Latin1_General_CP1_CI_AS");
                         });
 
                     b.HasKey("Id");
@@ -516,7 +528,7 @@ namespace Submission.Persistence.Migrations
                             Id = 201,
                             Description = "Article approved",
                             Info = "Our editorial specialist is reviewing your article.",
-                            Name = "InReview"
+                            Name = "UnderReview"
                         },
                         new
                         {

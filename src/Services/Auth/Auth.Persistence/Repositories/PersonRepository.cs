@@ -1,7 +1,7 @@
 ﻿namespace Auth.Persistence.Repositories;
 
-public class PersonRepository(AuthDBContext dbContext) 
-		: RepositoryBase<AuthDBContext, Person>(dbContext)
+public class PersonRepository(AuthDbContext dbContext) 
+		: RepositoryBase<AuthDbContext, Person>(dbContext)
 {
 		public override IQueryable<Person> Query()
 				=> base.Query().Include(p => p.User);

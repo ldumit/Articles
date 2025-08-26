@@ -2,7 +2,7 @@
 
 namespace Auth.Persistence;
 
-public class AuthDBContext(DbContextOptions<AuthDBContext> options) :
+public class AuthDbContext(DbContextOptions<AuthDbContext> options) :
 				IdentityDbContext<User, Role, int>(options)
 		{
 
