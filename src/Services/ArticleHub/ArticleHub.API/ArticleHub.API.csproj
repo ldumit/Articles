@@ -14,7 +14,12 @@
     <PackageReference Include="GraphQL.Client" />
 		<PackageReference Include="Microsoft.AspNetCore.OpenApi" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" />
-  </ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design">
+				<PrivateAssets>all</PrivateAssets>
+				<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" />
+	</ItemGroup>
 
   <ItemGroup>
 		<ProjectReference Include="..\..\..\BuildingBlocks\Blocks.AspNetCore\Blocks.AspNetCore.csproj" />
@@ -25,7 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Articles\GetTimeline\" />
     <Folder Include="Journals\Consumers\" />
     <Folder Include="Persons\Consumers\" />
   </ItemGroup>

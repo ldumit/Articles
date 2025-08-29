@@ -20,8 +20,6 @@ builder.Services
 var app = builder.Build();
 
 #region Use
-app.MapCarter();
-
 app
 		.UseSwagger()
 		.UseSwaggerUI()
@@ -32,6 +30,8 @@ app
 		.UseMiddleware<RequestContextMiddleware>()
 		.UseMiddleware<ResponseTimingMiddleware>();
 
+var api = app.MapGroup("/api");
+api.MapCarter();
 #endregion
 
 #region InitData

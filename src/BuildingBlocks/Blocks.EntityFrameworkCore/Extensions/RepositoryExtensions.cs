@@ -17,7 +17,7 @@ public static class RepositoryExtensions
 				=> Guard.NotFound(await dbSet.FindAsync(id));
 
 		//talk about the difference between FindByIdAsync and GetByIdAsync
-		public static async Task<TEntity> GetByIdOrThrowAsync<TEntity, TContext>(this RepositoryBase<TContext, TEntity> repository, int id)
+		public static async Task<TEntity> GetByIdOrThrowAsync<TEntity, TContext>(this RepositoryBase<TContext, TEntity> repository, int id, CancellationToken ct = default)
 				where TContext : DbContext
 				where TEntity : class, IEntity<int>
 				=> Guard.NotFound(await repository.GetByIdAsync(id));

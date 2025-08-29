@@ -16,15 +16,15 @@ services:
       context: .
       dockerfile: Services/Journals/Journals.API/Dockerfile
 
-  # articleHub-api:
-  #   image: ${DOCKER_REGISTRY-}articlehub-api
-  #   depends_on:
-  #     - postgres
-  #     - articlehub-hasura
-  #     - rabbitmq
-  #   build:
-  #     context: .
-  #     dockerfile: Services/ArticleHub/ArticleHub.API/Dockerfile
+  articleHub-api:
+    image: ${DOCKER_REGISTRY-}articlehub-api
+    depends_on:
+      - postgres
+      - articlehub-hasura
+      - rabbitmq
+    build:
+      context: .
+      dockerfile: Services/ArticleHub/ArticleHub.API/Dockerfile
 
   submission-api:
     image: ${DOCKER_REGISTRY-}submission-api
