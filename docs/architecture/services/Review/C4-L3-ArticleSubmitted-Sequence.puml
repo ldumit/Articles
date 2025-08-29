@@ -1,82 +1,75 @@
 @startuml
-skinparam DefaultFontSize 14
+
+!define MUTED(x) <color:#888888>x</color>
+!define GRAY(x) <color:#38363b>x</color>
+
+skinparam DefaultFontSize 20
 skinparam participant {
-  FontSize 15
+  FontSize 20
   BackgroundColor White
   BorderColor Black
 }
-'skinparam boxPadding 5
 
-skinparam ParticipantPadding 20
-'skinparam ParticipantMargin 30
-skinparam BoxPadding 5
+
+'skinparam padding 0
+skinparam ParticipantPadding 9
+skinparam BoxPadding 2
 skinparam BboxBorderThickness 1
 'skinparam BoxMargin 30
 
-'actor SubmissionService
-'participant SubmissionService as "SubmissionService\n(Microservice)"
 skinparam ParticipantBackgroundColor<<Service>> #F2F2F2
 participant SubmissionService as "SubmissionService" <<Service>>
 
 box " Application Layer " #E6F0FF
-  participant Handler as "ArticleSubmittedEventHandler\n(MassTransit Consumer)"
+  participant Handler as "ArticleSubmittedEventHandler\nGRAY((MassTransit Consumer))"
 end box
 
 box " Domain Layer " #FFF0E0
-  participant Journal as "Journal\n(Entity)"
-  participant Article as "Article\n(Aggreagate)"
-  participant Asset as "Asset\n(Aggregate)"
-  participant Person as "Person\n(Entity)"
-  participant Actor as "Actor\n(Entity)"
+  participant Journal as "Journal\nGRAY((Entity))"
+  participant Article as "Article\nGRAY((Aggreagate))"
+  participant Asset as "Asset\nGRAY((Aggregate))"
+  participant Person as "Person\nGRAY((Entity))"
+  participant Actor as "Actor\nGRAY((Entity))"
 end box
 
 box " Persistence Layer " #FFE0E0
-  participant Repositories as "Repositories\n(EF Core + Cached)"
-  participant DbContext as "ReviewDbContext\n(EF Core)"
+  participant Repositories as "Repositories\nGRAY((EF Core + Cached))"
+  participant DbContext as "ReviewDbContext\nGRAY((EF Core))"
 end box
 
 box " File Storage Modules " #E0FFE0
-  participant SubmissionFS as "IFileService\n(Submission)"
-  participant ReviewFS as "IFileService\n(Review)"
+  participant SubmissionFS as "IFileService\nGRAY((Submission))"
+  participant ReviewFS as "IFileService\nGRAY((Review))"
 end box
 
-SubmissionService -> Handler : ArticleSubmittedAndApprovedEvent
+SubmissionService -> Handler : ArticleSubmittedAndApprovedEvent\n               (ArticleDto)
 activate Handler
 
 == Create Journal ==
-Handler -> Repositories : GetJournal(journalId)
-activate Repositories
-Repositories --> Handler : return Journal if Exists
-deactivate Repositories
+Handler -> Repositories : GetJournal(journalId) MUTED(→ journal)
 
-alt Not Exists
+group if new [Journal]
   Handler -> Journal : Create(journalDto)
   Handler -> Repositories : AddJournal(journal)
 end
 
+
 == Create Actors ==
-loop for each actor
-  Handler -> Repositories : GetPerson(personId)
-  activate Repositories
-  Repositories --> Handler : return Person if Exists
-  deactivate Repositories
-  alt Not Exists
+group for each [Actor]
+  Handler -> Repositories : GetPerson(personId) MUTED(→ person)
+  group if new [Person]
     Handler -> Person : Create(personDto)
   end
+  
+  
   Handler -> Actor : Create(actorDto)  
 end
 
 == Create Assets ==
-loop for each asset
-  Handler -> Repositories : GetAssetType(type)
-  Handler -> SubmissionFS : DownloadFile(fileId)
-  activate SubmissionFS
-  SubmissionFS --> Handler : fileStream, metadata
-  deactivate SubmissionFS
-  Handler -> ReviewFS : UploadFile(metadata, stream)
-  activate ReviewFS
-  ReviewFS --> Handler : newFileMetadata
-  deactivate ReviewFS
+group for each [Asset]
+  Handler -> SubmissionFS : DownloadFile(fileId) <color:#888>→ (fileStream, metadata)</color>
+  Handler -> ReviewFS : UploadFile(metadata, stream) <color:#888>→ newFileMetadata</color>
+  Handler -> Repositories : GetAssetType(type) <color:#888>→ assetType</color>
   Handler -> Asset : Create(assetType, newFileMetadata)
 end
 
