@@ -6,7 +6,7 @@ public class GetArticleEndpoint : ICarterModule
 {
 		public void AddRoutes(IEndpointRouteBuilder app)
 		{
-				app.MapGet("api/articles/{articleId:int}", async ([AsParameters] GetArticleQuery query, ISender sender) =>
+				app.MapGet("/articles/{articleId:int}", async ([AsParameters] GetArticleQuery query, ISender sender) =>
 				{
 						var article = await sender.Send(query);
 						return Results.Ok(article);

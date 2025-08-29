@@ -36,7 +36,8 @@ app
 		.UseAuthorization()
 		.UseMiddleware<GlobalExceptionMiddleware>();
 
-app.MapCarter();
+var api = app.MapGroup("/api");
+api.MapCarter();
 #endregion
 
 app.Run();

@@ -25,7 +25,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Articles\GetArticle\" />
     <Folder Include="Articles\GetTimeline\" />
     <Folder Include="Journals\Consumers\" />
     <Folder Include="Persons\Consumers\" />

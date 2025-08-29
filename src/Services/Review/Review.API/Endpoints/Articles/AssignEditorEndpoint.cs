@@ -6,7 +6,7 @@ public class AssignEditorEndpoint : ICarterModule
 {
 		public void AddRoutes(IEndpointRouteBuilder app)
 		{
-				app.MapPost("api/articles/{articleId:int}/editor/{editorId:int}", async (int articleId, int editorId, AssignEditorCommand command, ISender sender) =>
+				app.MapPost("/articles/{articleId:int}/editor/{editorId:int}", async (int articleId, int editorId, AssignEditorCommand command, ISender sender) =>
 				{
 						var response = await sender.Send(command with { ArticleId = articleId, EditorId = editorId});
 						return Results.Ok(response);

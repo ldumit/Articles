@@ -7,7 +7,7 @@ public static class UploadSupplimentaryMaterialFileEndpoint
 {
 		public static void Map(this IEndpointRouteBuilder app)
 		{
-				app.MapPost("api/articles/{articleId:int}/assets/supplimentary-materials:upload",
+				app.MapPost("/articles/{articleId:int}/assets/supplimentary-materials:upload",
 				async ([FromRoute] int articleId, [FromForm] UploadSupplementaryFileCommand command, ISender sender) =>
 				{
 						var response = await sender.Send(command with { ArticleId = articleId });

@@ -10,6 +10,7 @@ public static class Extensions
 		{
 				app.UseFastEndpoints(c =>
 				{
+						c.Endpoints.RoutePrefix = "api";
 						c.Serializer.Options.Converters.Add(new JsonStringEnumConverter());
 						c.Errors.ResponseBuilder = (failures, ctx, statusCode) =>
 						{

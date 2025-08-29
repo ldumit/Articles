@@ -6,7 +6,7 @@ public static class CreateArticleEndpoint
 {
 		public static void Map(this IEndpointRouteBuilder app)
 		{
-				app.MapPost("api/articles", async (CreateArticleCommand command, ISender sender) =>
+				app.MapPost("/articles", async (CreateArticleCommand command, ISender sender) =>
 				{
 						var response = await sender.Send(command);
 						return Results.Created($"/api/articles/{response.Id}", response);

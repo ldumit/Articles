@@ -7,7 +7,7 @@ public static class UploadManuscriptFileEndpoint
 {
 		public static void Map(this IEndpointRouteBuilder app)
 		{
-				app.MapPost("api/articles/{articleId:int}/assets/manuscript:upload",
+				app.MapPost("/articles/{articleId:int}/assets/manuscript:upload",
 						async ([FromRoute] int articleId, [FromForm] UploadManuscriptFileCommand command, ISender sender) =>
 				{
 						var response = await sender.Send(command with { ArticleId = articleId });

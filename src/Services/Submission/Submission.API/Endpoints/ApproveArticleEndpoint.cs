@@ -7,7 +7,7 @@ public static class ApproveArticleEndpoint
 {
 		public static void Map(this IEndpointRouteBuilder app)
 		{
-				app.MapPost("api/articles/{articleId:int}:approve", async (int articleId, ApproveArticleCommand command, ISender sender) =>
+				app.MapPost("/articles/{articleId:int}:approve", async (int articleId, ApproveArticleCommand command, ISender sender) =>
 				{
 						var response = await sender.Send(command with { ArticleId = articleId });
 						return Results.Ok(response);

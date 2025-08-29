@@ -6,7 +6,7 @@ public class DeclineInvitationEndpoint : ICarterModule
 {
 		public void AddRoutes(IEndpointRouteBuilder app)
 		{
-				app.MapPost("api/articles/{articleId:int}/invitations/{token}:decline", async (int articleId, string token, DeclineInvitationCommand command, ISender sender) =>
+				app.MapPost("/articles/{articleId:int}/invitations/{token}:decline", async (int articleId, string token, DeclineInvitationCommand command, ISender sender) =>
 				{
 						var response = await sender.Send(command with { ArticleId = articleId, Token = token });
 						return Results.Ok(response);

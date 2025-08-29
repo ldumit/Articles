@@ -4,11 +4,11 @@ using Carter;
 
 namespace ArticleHub.API.Articles.SearchArticles;
 
-public class ArticlesGraphQLEndpoint : ICarterModule
+public class GetArticleEndpoint : ICarterModule
 {
 		public void AddRoutes(IEndpointRouteBuilder app)
 		{
-				app.MapPost("/articles/graphql", async (GraphQLFilterQuery graphQLFilter, ArticleGraphQLQuery graphQLQuery) =>
+				app.MapPost("/articles/{articleId:int}", async (GraphQLFilterQuery graphQLFilter, ArticleGraphQLQuery graphQLQuery) =>
 				{
 						var response = await graphQLQuery.GetArticlesAsync(graphQLFilter.Filter);
 

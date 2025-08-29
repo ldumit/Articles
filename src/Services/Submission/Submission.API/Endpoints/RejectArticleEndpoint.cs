@@ -6,7 +6,7 @@ public static class RejectArticleEndpoint
 {
 		public static void Map(this IEndpointRouteBuilder app)
 		{
-				app.MapPost("api/articles/{articleId:int}:reject", async (int articleId, RejectArticleCommand command, ISender sender) =>
+				app.MapPost("/articles/{articleId:int}:reject", async (int articleId, RejectArticleCommand command, ISender sender) =>
 				{
 						var response = await sender.Send(command with { ArticleId = articleId });
 						return Results.Ok(response);

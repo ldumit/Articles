@@ -6,7 +6,7 @@ public static class CreateAndAssignAuthorEndpoint
 {
 		public static void Map(this IEndpointRouteBuilder app)
 		{
-				app.MapPost("api/articles/{articleId:int}/authors", async (int articleId, CreateAndAssignAuthorCommand command, ISender sender) =>
+				app.MapPost("/articles/{articleId:int}/authors", async (int articleId, CreateAndAssignAuthorCommand command, ISender sender) =>
 				{
 						var response = await sender.Send(command with { ArticleId = articleId });
 						return Results.Ok(response);

@@ -6,7 +6,7 @@ public class AcceptArticleEndpoint : ICarterModule
 {
 		public void AddRoutes(IEndpointRouteBuilder app)
 		{
-				app.MapPost("api/articles/{articleId:int}:accept", async (int articleId, AcceptArticleCommand command, ISender sender) =>
+				app.MapPost("/articles/{articleId:int}:accept", async (int articleId, AcceptArticleCommand command, ISender sender) =>
 				{
 						command.ArticleId = articleId;
 						var response = await sender.Send(command);
