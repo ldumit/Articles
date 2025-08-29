@@ -1,10 +1,13 @@
-﻿using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Http.Json;
-using Blocks.Core;
-using Blocks.Messaging;
+﻿using ArticleHub.Persistence;
 using Articles.Security;
-using ArticleHub.Persistence;
+using Blocks.Core;
+using Blocks.Mapster;
+using Blocks.Messaging;
 using Carter;
+using Microsoft.AspNetCore.Http.Json;
+using System.Reflection;
+using System.Text.Json.Serialization;
+using Blocks.Messaging.MassTransit;
 
 namespace ArticleHub.API;
 
@@ -22,8 +25,9 @@ public static class DependecyInjection
 						});
 		}
 
-		public static IServiceCollection AddApiServices(this IServiceCollection services, IConfiguration configuration)
+		public static IServiceCollection AddApiAndApplicationServices(this IServiceCollection services, IConfiguration configuration)
 		{
+				// API + Infra
 				services
 						.AddCarter()
 						.AddHttpContextAccessor()                // For accessing HTTP context
@@ -31,6 +35,12 @@ public static class DependecyInjection
 						.AddSwaggerGen()                         // Swagger setup
 						.AddJwtAuthentication(configuration)     // JWT Authentication
 						.AddAuthorization();                     // Authorization configuration
+
+				// Application
+				services
+						.AddMemoryCache()
+						.AddMapsterConfigsFromCurrentAssembly()
+						.AddMassTransitWithRabbitMQ(configuration, Assembly.GetExecutingAssembly());
 
 				//// http
 				//services

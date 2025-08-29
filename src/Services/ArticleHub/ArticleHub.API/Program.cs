@@ -1,5 +1,4 @@
 using ArticleHub.API;
-using ArticleHub.Application;
 using ArticleHub.Persistence;
 using Blocks.AspNetCore;
 using Blocks.AspNetCore.Middlewares;
@@ -13,9 +12,8 @@ builder.Services
 		.ConfigureOptions(builder.Configuration);        // Configure Options
 
 builder.Services
-		.AddApiServices(builder.Configuration)              // Register API/Infra-specific services
-		.AddApplicationServices(builder.Configuration)      // Register Application-specific services
-		.AddPersistenceServices(builder.Configuration);     // Register Persistence-specific services
+		.AddApiAndApplicationServices(builder.Configuration)    // Register API/Infra/Application-specific services
+		.AddPersistenceServices(builder.Configuration);					// Register Persistence-specific services
 #endregion
 
 

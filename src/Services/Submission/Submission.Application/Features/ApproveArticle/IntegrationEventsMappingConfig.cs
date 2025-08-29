@@ -1,4 +1,4 @@
-﻿using Articles.Abstractions.Events.Dtos;
+﻿using Articles.IntegrationEvents.Contracts.Articles.Dtos;
 
 namespace Submission.Application.Features.ApproveArticle;
 

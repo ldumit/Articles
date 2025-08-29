@@ -1,6 +1,6 @@
 ﻿using MassTransit;
-using Articles.Abstractions.Events;
-using Articles.Abstractions.Events.Dtos;
+using Articles.IntegrationEvents.Contracts.Articles;
+using Articles.IntegrationEvents.Contracts.Articles.Dtos;
 using Submission.Domain.Events;
 
 namespace Submission.Application.Features.ApproveArticle;

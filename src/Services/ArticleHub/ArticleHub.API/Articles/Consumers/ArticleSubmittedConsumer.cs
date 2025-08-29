@@ -3,12 +3,12 @@ using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Blocks.Mapster;
 using ArticleHub.Persistence;
-using Articles.Abstractions.Events;
+using Articles.IntegrationEvents.Contracts.Articles;
 using ArticleHub.Domain.Entities;
 
-namespace ArticleHub.Application.Features.Articles.EventHandlers;
+namespace ArticleHub.API.Articles.Consumers;
 
-public class ArticleSubmittedEventHandler(ArticleHubDbContext _dbContext) : IConsumer<ArticleApprovedForReviewEvent>
+public class ArticleSubmittedConsumer(ArticleHubDbContext _dbContext) : IConsumer<ArticleApprovedForReviewEvent>
 {
 		public async Task Consume(ConsumeContext<ArticleApprovedForReviewEvent> context)
 		{

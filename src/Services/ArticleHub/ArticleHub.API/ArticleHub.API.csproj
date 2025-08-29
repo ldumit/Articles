@@ -11,17 +11,24 @@
 
   <ItemGroup>
     <PackageReference Include="Carter" />
-    <PackageReference Include="GraphQL.Client"/>
-		<PackageReference Include="Microsoft.AspNetCore.OpenApi"/>
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets"/>
+    <PackageReference Include="GraphQL.Client" />
+		<PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" />
   </ItemGroup>
 
   <ItemGroup>
 		<ProjectReference Include="..\..\..\BuildingBlocks\Blocks.AspNetCore\Blocks.AspNetCore.csproj" />
 		<ProjectReference Include="..\..\..\BuildingBlocks\Blocks.Messaging\Blocks.Messaging.csproj" />
 		<ProjectReference Include="..\..\..\BuildingBlocks\Articles.Security\Articles.Security.csproj" />
-		<ProjectReference Include="..\ArticleHub.Application\ArticleHub.Application.csproj" />
-    <ProjectReference Include="..\ArticleHub.Persistence\ArticleHub.Persistence.csproj" />
+		<ProjectReference Include="..\..\..\BuildingBlocks\Articles.Integration.Contracts\Articles.IntegrationEvents.Contracts.csproj" />
+		<ProjectReference Include="..\ArticleHub.Persistence\ArticleHub.Persistence.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Articles\GetArticle\" />
+    <Folder Include="Articles\GetTimeline\" />
+    <Folder Include="Journals\Consumers\" />
+    <Folder Include="Persons\Consumers\" />
   </ItemGroup>
 
 </Project>

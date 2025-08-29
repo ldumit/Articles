@@ -2,7 +2,7 @@
 using ArticleHub.Persistence;
 using Carter;
 
-namespace ArticleHub.API.Endpoints;
+namespace ArticleHub.API.Articles.SearchArticles;
 
 public class ArticlesGraphQLEndpoint : ICarterModule
 {

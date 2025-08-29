@@ -1,9 +1,9 @@
 ﻿using ArticleHub.Domain.Entities;
 using Articles.Abstractions;
-using Articles.Abstractions.Events.Dtos;
+using Articles.IntegrationEvents.Contracts.Articles.Dtos;
 using Mapster;
 
-namespace Submission.Application.Mappings;
+namespace ArticleHub.API.Articles.Consumers;
 
 public class IntegrationEventsMappingConfig : IRegister
 {

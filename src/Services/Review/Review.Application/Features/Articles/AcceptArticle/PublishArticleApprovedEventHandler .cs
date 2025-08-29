@@ -1,5 +1,5 @@
-﻿using Articles.Abstractions.Events;
-using Articles.Abstractions.Events.Dtos;
+﻿using Articles.IntegrationEvents.Contracts.Articles;
+using Articles.IntegrationEvents.Contracts.Articles.Dtos;
 using MassTransit;
 using Review.Domain.Articles.Events;
 

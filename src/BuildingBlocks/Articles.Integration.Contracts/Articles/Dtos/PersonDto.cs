@@ -1,4 +1,4 @@
-﻿namespace Articles.Abstractions.Events.Dtos;
+﻿namespace Articles.IntegrationEvents.Contracts.Articles.Dtos;
 
 public record PersonDto(
 		int Id, 

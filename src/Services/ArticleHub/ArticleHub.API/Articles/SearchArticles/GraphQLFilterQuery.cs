@@ -1,4 +1,4 @@
-﻿namespace ArticleHub.API.Endpoints;
+﻿namespace ArticleHub.API.Articles.SearchArticles;
 
 public class GraphQLFilterQuery
 {

@@ -1,4 +1,4 @@
-﻿using Articles.Abstractions.Events.Dtos;
+﻿using Articles.IntegrationEvents.Contracts.Articles.Dtos;
 using FileStorage.Contracts;
 using Review.Domain.Articles;
 using Review.Domain.Assets.Enums;
