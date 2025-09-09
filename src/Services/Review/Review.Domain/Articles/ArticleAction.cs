@@ -4,11 +4,12 @@ namespace Review.Domain.Articles;
 
 //talk - modification never happens for an action
 
-public partial class ArticleAction : Entity
+public partial class ArticleAction : Entity, IArticleAction
 {
-    public int EntityId { get; set; }
-    public string? Comment { get; set; } = default;
-    public ArticleActionType TypeId { get; set; }
+		public int ArticleId { get; init; }
+		//public int EntityId { get; init; }
+    public string? Comment { get; init; } = default;
+    public ArticleActionType ActionType { get; init; }
 		public int CreatedById { get; set; }
-		public DateTime CreatedOn { get; set; }
+		public DateTime CreatedOn { get; init; }
 }

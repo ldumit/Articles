@@ -15,20 +15,21 @@ public partial class Asset
 				=> $"Articles/{ArticleId}/{Name}/{fileName}";
 
 		//talk - use internal factory method so that the Asset can be created only in the Domain
-		internal static Asset Create(Article article, AssetTypeDefinition type)
+		internal static Asset Create(Article article, AssetTypeDefinition type, byte assetCount, IArticleAction action)
 		{
 				//talk - value objects for AssetName & AssetNumber, encapsulate validation						
 				return new Asset()
 				{
 						ArticleId = article.Id,
 						Article = article,
-						Name = AssetName.FromAssetType(type),
+						Name = AssetName.Create(type, assetCount),
+						Number = AssetNumber.Create(type, assetCount),
 						Type = type.Name,
 						TypeDefinition = type,
 						CategoryId = type.DefaultCategoryId,
 						State = AssetState.None,
-						//CreatedById = action.CreatedById,
-						//CreatedOn = action.CreatedOn
+						CreatedById = action.CreatedById,
+						CreatedOn = action.CreatedOn
 				};
 		}
 
@@ -52,20 +53,16 @@ public partial class Asset
 				return File;
 		}
 
-		public static Asset CreateFromSubmission(AssetDto assetDto, AssetTypeDefinition type, int articleId)
+		public static Asset CreateFromSubmission(AssetDto assetDto, AssetTypeDefinition type, int articleId, int assetCount)
 		{
 				//talk - value objects for AssetName & AssetNumber, encapsulate validation						
 				var asset = new Asset()
 				{
 						ArticleId = articleId,
-						//Article = article,
-						Name = AssetName.FromAssetType(type),
+						Name = AssetName.FromSubmission(assetDto.Name),
 						Type = type.Id,
-						//CategoryId = type.DefaultCategoryId,
 						State = AssetState.Uploaded,
 				};
-
-				//asset.File = File.CreateFile(assetDto.File, type);
 
 				return asset;
 		}

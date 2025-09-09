@@ -19,12 +19,14 @@ global using Blocks.FluentValidation;
 global using Articles.Abstractions;
 global using Articles.Abstractions.Enums;
 
-// Domain
+// Domain Aggregates
 global using Review.Domain.Articles;
+global using Review.Domain.Invitations;
+
+//Domain
 global using Review.Domain.StateMachines;
 global using IArticleAction = Review.Domain.Shared.IArticleAction;
 
-// Application
 
 //Persistence
 global using Review.Persistence;

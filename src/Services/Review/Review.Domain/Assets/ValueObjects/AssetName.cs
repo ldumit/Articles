@@ -7,6 +7,19 @@ public class AssetName: StringValueObject
 		[JsonConstructor]
 		private AssetName(string value) => Value = value;
 
-		public static AssetName FromAssetType(AssetTypeDefinition assetType)
-				=> new AssetName(assetType.Name.ToString());
+		internal static AssetName FromSubmission(string name)
+		{
+				if (string.IsNullOrWhiteSpace(name))
+						throw new ArgumentException("Asset name is required.", nameof(name));
+
+				return new AssetName(name.Trim());
+		}
+
+		public static AssetName Create(AssetTypeDefinition assetType, byte assetCount)
+		{
+				if (assetType.AllowsMultipleAssets)
+						return new AssetName($"{assetType.Name.ToString()}_{assetCount + 1}");
+				else
+						return new AssetName(assetType.Name.ToString());
+		}
 }

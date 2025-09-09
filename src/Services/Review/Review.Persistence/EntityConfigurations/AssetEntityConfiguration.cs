@@ -1,6 +1,4 @@
-﻿using Review.Domain.Assets;
-
-namespace Review.Persistence.EntityConfigurations;
+﻿namespace Review.Persistence.EntityConfigurations;
 
 internal class AssetEntityConfiguration : AuditedEntityConfiguration<Asset>
 {
@@ -8,24 +6,33 @@ internal class AssetEntityConfiguration : AuditedEntityConfiguration<Asset>
     {
         base.Configure(builder);
 
-        //talk - simple vs composite indexes
-        // we don't need the following indexes because we are always taking the assets based on the articleId
-        //entity.HasIndex(e => e.StatusId);
-        //entity.HasIndex(e => e.TypeId);
+				builder.Property(e => e.State).HasEnumConversion().IsRequired();
+				builder.Property(e => e.CategoryId).HasConversion<int>().HasDefaultValue(AssetCategory.Core).IsRequired();
+				builder.Property(e => e.Type).HasEnumConversion().IsRequired();
 
 				builder.ComplexProperty(
-	         o => o.Name, builder =>
+	         e => e.Name, builder =>
 	         {
-			         builder.Property(n => n.Value)
+			         builder.Property(vo => vo.Value)
 					         .HasColumnName(builder.Metadata.PropertyInfo!.Name)
 					         .HasMaxLength(MaxLength.C64).IsRequired();
 	         });
 
-				builder.Property(e => e.State).HasEnumConversion().IsRequired();
-        builder.Property(e => e.CategoryId).HasConversion<int>().HasDefaultValue(AssetCategory.Core).IsRequired();
-        builder.Property(e => e.Type).HasEnumConversion().IsRequired();
+				builder.ComplexProperty(
+					 e => e.Number, builder =>
+					 {
+							 builder.Property(vo => vo.Value)
+									 .HasColumnName(builder.Metadata.PropertyInfo!.Name)
+									 .IsRequired();
+					 });
 
-        builder.HasOne(d => d.Article).WithMany(p => p.Assets)
+
+				builder.ComplexProperty(e => e.File, fileBuilder =>
+				{
+						new FileEntityConfiguration().Configure(fileBuilder);
+				});
+
+				builder.HasOne(d => d.Article).WithMany(p => p.Assets)
             .HasForeignKey(d => d.ArticleId)
             .OnDelete(DeleteBehavior.Cascade);
 
@@ -33,10 +40,5 @@ internal class AssetEntityConfiguration : AuditedEntityConfiguration<Asset>
             .HasForeignKey(e => e.Type)
             .HasPrincipalKey(e => e.Name)
             .IsRequired();
-
-				builder.ComplexProperty(e => e.File, fileBuilder =>
-				{
-						new FileEntityConfiguration().Configure(fileBuilder);
-				});
 		}
 }

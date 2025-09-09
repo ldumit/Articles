@@ -3,8 +3,9 @@
 public partial class Asset : AggregateRoot
 {
 		public AssetName Name { get; private set; } = null!;
-    //talk - keep the following properties as enums because they change quite rarely
-    public AssetState State { get; private set; }
+		public AssetNumber Number { get; private set; } = null!;
+		//talk - keep the following properties as enums because they change quite rarely
+		public AssetState State { get; private set; }
     public AssetCategory CategoryId { get; private set; }
 
     public AssetType Type { get; private set; }

@@ -25,6 +25,7 @@ public class CreateAuthorCommandHandler(Repository<Person> _personRepository, IP
 
 		private async Task<PersonInfo> CreatePerson(CreateAuthorCommand command, CancellationToken ct)
 		{
+				//todo - here we nee GetOrCreatePersonByEmail, because we need first if the person exists and if not create it.
 				var createPersonRequest = command.Adapt<CreatePersonRequest>();
 				var response = await _personClient.CreatePersonAsync(createPersonRequest, new CallOptions(cancellationToken: ct));
 				return response.PersonInfo;

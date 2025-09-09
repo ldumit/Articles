@@ -27,6 +27,7 @@ public partial class Article
 
 		public void AssignAuthor(Author author, HashSet<ContributionArea> contributionAreas, bool isCorrespondingAuthor, IArticleAction<ArticleActionType> action)
 		{
+				// todo - the actions which don't generate stage transition needs to be restricted on the stage. For instance we can only assign author in Created and ManuscriptUploaded stages
 				var role = isCorrespondingAuthor ? UserRoleType.CORAUT : UserRoleType.AUT;				
 				
 				if (_actors.Exists(a => a.PersonId == author.Id && a.Role == role))
@@ -74,14 +75,14 @@ public partial class Article
 
 		public Asset CreateAsset(AssetTypeDefinition type, IArticleAction<ArticleActionType> action)
 		{
-				var assetCount = _assets
+				var assetCount = (byte)_assets
 						.Where(a => a.Type == type.Id)
 						.Count();
 
 				if (assetCount >= type.MaxAssetCount)
 						throw new DomainException($"The maximum number of files, {type.MaxAssetCount}, allowed for {type.Name.ToString()} was already reached");
 
-				var asset = Asset.Create(this, type);
+				var asset = Asset.Create(this, type, assetCount, action);
 				_assets.Add(asset);
 
 				AddAction(action);
@@ -90,7 +91,7 @@ public partial class Article
 
 		public Asset GetOrCreateAsset(AssetTypeDefinition assetType, IArticleAction<ArticleActionType> action)
 		{
-				Asset asset = default!;
+				Asset? asset = default;
 
 				if (!assetType.AllowsMultipleAssets) // if the asset type doesn't support multiple assets, we are overriding the single one.
 						asset = this.Assets.SingleOrDefault(a => a.Type == assetType.Id);

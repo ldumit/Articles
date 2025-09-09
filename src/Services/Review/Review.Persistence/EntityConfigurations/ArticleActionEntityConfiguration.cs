@@ -1,6 +1,4 @@
-﻿using Review.Domain.Articles;
-
-namespace Review.Persistence.EntityConfigurations;
+﻿namespace Review.Persistence.EntityConfigurations;
 
 public class ArticleActionEntityConfiguration : EntityConfiguration<ArticleAction>
 {
@@ -8,8 +6,9 @@ public class ArticleActionEntityConfiguration : EntityConfiguration<ArticleActio
     {
         base.Configure(builder);
 
-        builder.HasIndex(e => e.EntityId);
+				builder.HasIndex(e => e.ArticleId);
+				//builder.HasIndex(e => e.EntityId);
 
-        builder.Property(e => e.TypeId).HasEnumConversion();
+        builder.Property(e => e.ActionType).HasEnumConversion();
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Blocks.Domain;
 using Review.Domain.Invitations.Enums;
 
-namespace Review.Domain.Articles;
+namespace Review.Domain.Invitations;
 
 public partial class ReviewInvitation
 {

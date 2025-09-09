@@ -1,6 +1,4 @@
-﻿using Review.Domain.Shared;
-
-namespace Review.Persistence.EntityConfigurations;
+﻿namespace Review.Persistence.EntityConfigurations;
 
 public class ReviewerEntityConfiguration : IEntityTypeConfiguration<Reviewer>
 {

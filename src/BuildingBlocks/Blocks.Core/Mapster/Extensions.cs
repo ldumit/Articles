@@ -21,4 +21,9 @@ public static class Extensions
 
 				return destination;
 		}
+
+		public static object? AdaptTo(this object source, Type destinationType)
+		{
+				return source.Adapt(source.GetType(), destinationType);
+		}
 }

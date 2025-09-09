@@ -1,6 +1,4 @@
-﻿using Review.Domain.Articles;
-
-namespace Review.Persistence.EntityConfigurations;
+﻿namespace Review.Persistence.EntityConfigurations;
 
 internal class ArticleStageTransitionConfiguration : MetadataConfiguration<ArticleStageTransition>
 {

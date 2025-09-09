@@ -1,3 +1,3 @@
 ﻿namespace Submission.Application.Dtos;
 
-public record JournalDto(string Name, string Abbreviation);
+public record JournalDto(int Id, string Name, string Abbreviation);

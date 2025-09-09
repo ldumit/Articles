@@ -6,25 +6,28 @@ using MassTransit;
 using Review.Application.FileStorage;
 using Review.Domain.Assets;
 using Review.Domain.Shared;
+using Review.Domain.Shared.Enums;
 
 namespace Review.Application.Features.Articles.InitializeFromSubmission;
 
-public class ArticleApprovedForReviewEventHandler(
+public class ArticleApprovedForReviewConsumer(
 		ReviewDbContext _dbContext,
 		ArticleRepository _articleRepository,
 		Repository<Person> _personRepository, 
 		Repository<Journal> _journalRepository, 
 		AssetTypeDefinitionRepository _assetTypeRepository,
-		IFileService reviewFileService,
-		FileServiceFactory fileServiceFactory) 
+		IFileService _reviewFileService,
+		FileServiceFactory _fileServiceFactory,
+		ArticleStateMachineFactory _stateMachineFactory
+		) 
 		: IConsumer<ArticleApprovedForReviewEvent>
 {
 		public async Task Consume(ConsumeContext<ArticleApprovedForReviewEvent> context)
 		{
 				var articleDto = context.Message.Article;
 
-				//talk - inbox pattern vs simple business rules(chek if the artile already exists)
-				await _articleRepository.ExistsOrThrowAsync(articleDto.Id, context.CancellationToken);
+				//talk - inbox pattern vs simple business rules(chek if the article already exists)
+				await _articleRepository.EnsureNotExistsOrThrowAsync(articleDto.Id, context.CancellationToken);
 				
 				var actors = await CreateActors(articleDto);
 
@@ -32,11 +35,19 @@ public class ArticleApprovedForReviewEventHandler(
 
 				var journal = await GetOrCreateJournal(articleDto);
 
-				//create article
-				var article = Article.AcceptSubmitted(articleDto, actors, assets);
-				journal.AddArticle(article);
 
-				await _dbContext.SaveChangesAsync();
+				var action = new ArticleAction
+				{
+						ArticleId = articleDto.Id,
+						ActionType = ArticleActionType.ApproveForReview,
+						CreatedById = actors.Single(a => a.Role == UserRoleType.REVED).Person.UserId!.Value, // the editor who approved the article is the creator of the action
+				};
+
+				var article = Article.AcceptSubmitted(articleDto, actors, assets, _stateMachineFactory, action);
+				await _articleRepository.AddAsync(article);
+
+
+				await _dbContext.SaveChangesAsync(context.CancellationToken);
 		}
 
 		private async Task<Journal> GetOrCreateJournal(ArticleDto articleDto)
@@ -53,19 +64,18 @@ public class ArticleApprovedForReviewEventHandler(
 
 		private async Task<IEnumerable<Asset>> CreateAssets(ArticleDto articleDto, CancellationToken ct = default)
 		{
-				var submissionFileService = fileServiceFactory(FileStorageType.Submission);
+				var submissionFileService = _fileServiceFactory(FileStorageType.Submission);
 
-				//create actors
 				var assets = new List<Asset>();
 				foreach (var assetDto in articleDto.Assets)
 				{
 						var assetTypeDefinition = _assetTypeRepository.GetById(assetDto.Type);
 
-						var asset = Asset.CreateFromSubmission(assetDto, assetTypeDefinition, articleDto.Id);
+						var asset = Asset.CreateFromSubmission(assetDto, assetTypeDefinition, articleDto.Id, articleDto.Assets.Count);
 
-						var (fileStream, fileMetadata) = await submissionFileService.DownloadAsync(asset.File.FileServerId, ct);
+						var (fileStream, fileMetadata) = await submissionFileService.DownloadAsync(assetDto.File.FileServerId, ct);
 
-						fileMetadata = await reviewFileService.UploadAsync(
+						fileMetadata = await _reviewFileService.UploadAsync(
 								new FileUploadRequest(fileMetadata.StoragePath, fileMetadata.FileName, fileMetadata.ContentType, fileMetadata.FileSize),
 								fileStream);
 
@@ -79,42 +89,49 @@ public class ArticleApprovedForReviewEventHandler(
 
 		private async Task<IEnumerable<ArticleActor>> CreateActors(ArticleDto articleDto)
 		{
-				//create actors
 				var actors = new List<ArticleActor>();
 				foreach (var actorDto in articleDto.Actors)
 				{
 						var person = await _personRepository.GetByIdAsync(actorDto.Person.Id);
-						ArticleActor actor = default!;
+
 						if (actorDto.Role == UserRoleType.AUT || actorDto.Role == UserRoleType.CORAUT)
 						{
 								if (person is null)
+								{
 										person = actorDto.Person.Adapt<Author>();
+										await _personRepository.AddAsync(person);
+								}
 
-								actor = new ArticleAuthor(actorDto.ContributionAreas)
+								actors.Add(new ArticleAuthor
 								{
 										PersonId = person.Id,
+										ArticleId = articleDto.Id,
 										Person = person,
 										Role = actorDto.Role,
-								};
+										ContributionAreas = actorDto.ContributionAreas
+								});
 						}
 						else if (actorDto.Role == UserRoleType.REVED)
 						{
 								if (person is null)
+								{
 										person = actorDto.Person.Adapt<Editor>();
+										await _personRepository.AddAsync(person);
+								}
 
-								actor = new ArticleActor
+								actors.Add(new ArticleActor
 								{
 										PersonId = person.Id,
+										ArticleId = articleDto.Id,
 										Person = person,
 										Role = actorDto.Role
-								};
+								});
 						}
 						else
 						{
-								// decide : throw or ignore, just log a warning
+								// decide : throw or just log a warning
 								throw new DomainException($"Unknow role for {actorDto.Person.Email}");
 						}
-						actors.Add(actor);
 				}
 
 				return actors;

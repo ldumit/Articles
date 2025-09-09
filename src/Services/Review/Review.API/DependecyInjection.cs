@@ -12,6 +12,7 @@ using System.Text.Json.Serialization;
 using TransactionOptions = Blocks.EntityFrameworkCore.TransactionOptions;
 using Review.Application.Options;
 using Blocks.Core.Security;
+using Blocks.Core.Context;
 
 namespace Review.API;
 
@@ -47,6 +48,9 @@ public static class DependecyInjection
 						.AddScoped<IClaimsProvider, HttpContextProvider>()
 						.AddScoped<IRouteProvider, HttpContextProvider>()
 						.AddScoped<HttpContextProvider>();
+
+
+				services.AddScoped<RequestContext>();
 
 				// authorization
 				services.AddScoped<IAuthorizationHandler, ArticleAccessAuthorizationHandler>();

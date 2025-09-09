@@ -1,7 +1,4 @@
-﻿using Review.Domain.Shared;
-using Review.Domain.Articles;
-
-namespace Review.Persistence.EntityConfigurations;
+﻿namespace Review.Persistence.EntityConfigurations;
 
 public class PersonEntityConfiguration : EntityConfiguration<Person>
 {

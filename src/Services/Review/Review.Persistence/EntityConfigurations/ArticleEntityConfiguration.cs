@@ -1,6 +1,5 @@
-﻿using Review.Domain.Articles;
+﻿namespace Review.Persistence.EntityConfigurations;
 
-namespace Review.Persistence.EntityConfigurations;
 public class ArticleEntityConfiguration : AuditedEntityConfiguration<Article>
 {
 		protected override bool HasGeneratedId => false;
@@ -45,7 +44,7 @@ public class ArticleEntityConfiguration : AuditedEntityConfiguration<Article>
             .OnDelete(DeleteBehavior.Cascade);
 
 				builder.HasMany(e => e.Actions).WithOne()
-		        .HasForeignKey(e => e.EntityId)
+		        .HasForeignKey(e => e.ArticleId)
 		        .IsRequired()
 		        .OnDelete(DeleteBehavior.Cascade);
 		}

@@ -1,4 +1,5 @@
 ﻿using Review.Domain.Assets;
+using Review.Domain.Invitations;
 
 namespace Review.Domain.Articles;
 
@@ -25,7 +26,6 @@ public partial class Article : AggregateRoot
 		public IReadOnlyList<ArticleActor> Actors => _actors.AsReadOnly();
 
 		public Editor Editor => (Editor)_actors.Single(a => a.Role == UserRoleType.REVED).Person;
-		//public IEnumerable<Author> Authors => _actors.Where(aa => aa.Person is Author).Select(aa => aa.Person as Author);
 		
 		private readonly List<StageHistory> _stageHistories = new();
     public IReadOnlyList<StageHistory> StageHistories => _stageHistories.AsReadOnly();

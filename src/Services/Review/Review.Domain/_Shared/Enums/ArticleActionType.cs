@@ -2,6 +2,7 @@
 
 public enum ArticleActionType
 {
+		ApproveForReview,
 		AssignEditor,
 		CreateReviewer,
 		InviteReviewer,

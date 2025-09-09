@@ -42,6 +42,9 @@ public class CreateAndAssignAuthorCommandHandler(ArticleRepository _articleRepos
 
 		private async Task<PersonInfo> CreatePersonAsync(CreateAndAssignAuthorCommand command, CancellationToken ct)
 		{
+				//var response = await _personClient.GetPersonByEmailAsync(new GetPersonByEmailRequest{ Email = command.Email!}, new CallOptions(cancellationToken: ct));
+
+				//return response.PersonInfo;
 				var createPersonRequest = command.Adapt<CreatePersonRequest>();
 				var response = await _personClient.CreatePersonAsync(createPersonRequest, new CallOptions(cancellationToken: ct));
 				return response.PersonInfo;

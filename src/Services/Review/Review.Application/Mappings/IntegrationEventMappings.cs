@@ -14,7 +14,6 @@ public class IntegrationEventMappings : IRegister
         config.NewConfig<Person, PersonDto>()
                 .Include<Author, PersonDto>();
 
-        config.NewConfig<IArticleAction<ArticleActionType>, ArticleAction>()
-                .Map(dest => dest.TypeId, src => src.ActionType);
+        config.NewConfig<IArticleAction<ArticleActionType>, ArticleAction>();                
     }
 }

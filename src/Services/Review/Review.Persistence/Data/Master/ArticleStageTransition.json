@@ -1,4 +1,5 @@
 [
+		{"CurrentStage": "InitialApproved", "ActionType": "ApproveForReview", "DestinationStage": "UnderReview"},
 		{"CurrentStage": "UnderReview", "ActionType": "UploadReviewReport", "DestinationStage": "ReadyForDecision"},
 		{"CurrentStage": "ReadyForDecision", "ActionType": "RevisionRequested", "DestinationStage": "AwaitingRevision"},
 		{"CurrentStage": "AwaitingRevision", "ActionType": "UploadManuscript", "DestinationStage": "ReadyForDecision"},

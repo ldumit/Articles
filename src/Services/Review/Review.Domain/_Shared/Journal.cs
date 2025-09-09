@@ -5,6 +5,7 @@ namespace Review.Domain.Shared;
 
 public partial class Journal : Entity
 {
+		//todo - add ChiefEditor and sync it togheter with the Name and Abbreviation
     public required string Name { get; set; }
     public required string Abbreviation { get; set; }
 

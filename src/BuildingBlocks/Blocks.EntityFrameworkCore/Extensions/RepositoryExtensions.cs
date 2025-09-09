@@ -31,6 +31,14 @@ public static class RepositoryExtensions
 				where TEntity : class, IEntity<int>
 		{
 				if(!await repository.ExistsAsync(id, ct))
+						throw new NotFoundException($"{typeof(TEntity).Name}({id}) doesn't exist");
+		}
+
+		public static async Task EnsureNotExistsOrThrowAsync<TEntity, TContext>(this RepositoryBase<TContext, TEntity> repository, int id, CancellationToken ct = default)
+				where TContext : DbContext
+				where TEntity : class, IEntity<int>
+		{
+				if (await repository.ExistsAsync(id, ct))
 						throw new BadRequestException($"{typeof(TEntity).Name}({id}) already exists");
 		}
 }

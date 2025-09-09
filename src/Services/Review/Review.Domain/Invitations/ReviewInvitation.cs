@@ -2,7 +2,7 @@
 using Review.Domain.Invitations.Enums;
 using Review.Domain.Invitations.ValueObjects;
 
-namespace Review.Domain.Articles;
+namespace Review.Domain.Invitations;
 
 public partial class ReviewInvitation : AggregateRoot
 {

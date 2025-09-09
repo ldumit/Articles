@@ -5,12 +5,12 @@ using Blocks.Core;
 using Blocks.AspNetCore;
 using Blocks.EntityFrameworkCore;
 using Blocks.Messaging;
-using Submission.Persistence.Repositories;
 using Auth.Grpc;
 using Blocks.AspNetCore.Grpc;
 using FileStorage.MongoGridFS;
 using Journals.Grpc;
 using Blocks.Core.Security;
+using Blocks.Core.Context;
 
 namespace Submission.API;
 
@@ -44,6 +44,9 @@ public static class DependecyInjection
 						.AddScoped<IClaimsProvider, HttpContextProvider>()
 						.AddScoped<IRouteProvider, HttpContextProvider>()
 						.AddScoped<HttpContextProvider>();
+
+				services.AddScoped<RequestContext>();
+
 
 				// authorization
 				services.AddScoped<IAuthorizationHandler, ArticleAccessAuthorizationHandler>();

@@ -4,6 +4,7 @@ using Blocks.Domain;
 using Mapster;
 using Review.Domain.Articles.Events;
 using Review.Domain.Assets;
+using Review.Domain.Invitations;
 using Review.Domain.Invitations.Events;
 using Review.Domain.Invitations.ValueObjects;
 using Review.Domain.Reviewers;
@@ -85,14 +86,14 @@ public partial class Article
 
 		public Asset CreateAsset(AssetTypeDefinition type, IArticleAction action)
 		{
-				var assetCount = _assets
+				var assetCount = (byte) _assets
 						.Where(a => a.Type == type.Id)
 						.Count();
 
 				if (assetCount >= type.MaxAssetCount)
 						throw new DomainException($"The maximum number of files, {type.MaxAssetCount}, allowed for {type.Name.ToString()} was already reached");
 
-				var asset = Asset.Create(this, type);
+				var asset = Asset.Create(this, type, assetCount, action);
 				_assets.Add(asset);
 
 				AddAction(action);
@@ -149,7 +150,7 @@ public partial class Article
 				AddDomainEvent(new ArticleActionExecuted(this, action));
 		}
 
-		public static Article AcceptSubmitted(ArticleDto articleDto, IEnumerable<ArticleActor> actors, IEnumerable<Asset> assets)
+		public static Article AcceptSubmitted(ArticleDto articleDto, IEnumerable<ArticleActor> actors, IEnumerable<Asset> assets, ArticleStateMachineFactory stateMachineFactory, IArticleAction action)
 		{
 				var article = new Article
 				{
@@ -164,6 +165,8 @@ public partial class Article
 				};
 				article._actors.AddRange(actors);
 				article._assets.AddRange(assets);
+
+				article.SetStage(ArticleStage.UnderReview, stateMachineFactory, action);
 
 				return article;
 		}

@@ -8,7 +8,7 @@ public class AssetNumber : SingleValueObject<byte>
 		[JsonConstructor]
 		private AssetNumber(byte value) => Value = value;
 
-		public static AssetNumber FromNumber(byte number,  AssetTypeDefinition assetType)
+		public static AssetNumber Create(AssetTypeDefinition assetType, byte number)
 		{
 				ArgumentOutOfRangeException.ThrowIfGreaterThan(number, assetType.MaxAssetCount, "Asset type max number already reached");
 				return new AssetNumber(number);
@@ -17,3 +17,4 @@ public class AssetNumber : SingleValueObject<byte>
 		// added for Link queries
 		public static implicit operator byte(AssetNumber assetNumber) => assetNumber.Value;
 }
+

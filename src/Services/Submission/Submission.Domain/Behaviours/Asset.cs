@@ -10,18 +10,21 @@ public partial class Asset
 				=> $"Articles/{ArticleId}/{Name}/{fileName}";
 
 		//talk - use internal factory method so that the Asset can be created only in the Domain
-		internal static Asset Create(Article article, AssetTypeDefinition type)
+		internal static Asset Create(Article article, AssetTypeDefinition type, byte assetCount, IArticleAction action)
 		{
 				//talk - value objects for AssetName & AssetNumber, encapsulate validation						
 				return new Asset()
 				{
 						ArticleId = article.Id,
 						Article = article,
-						Name = AssetName.FromAssetType(type),
+						Name = AssetName.Create(type, assetCount),
+						Number = AssetNumber.Create(type, assetCount),
 						Type = type.Name,
 						TypeRef = type,
 						CategoryId = type.DefaultCategoryId,
-						State = AssetState.None
+						State = AssetState.None,
+						CreatedById = action.CreatedById,
+						CreatedOn = action.CreatedOn
 				};
 		}
 

@@ -12,4 +12,7 @@ public interface IAuditableAction<TActionType> : IAuditableAction
 		where TActionType : Enum
 {
 		TActionType ActionType { get; }
+
+		//talk - default implementation in interfaces
+		string IAuditableAction.Action => ActionType.ToString();
 }

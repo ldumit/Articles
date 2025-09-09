@@ -1,6 +1,4 @@
-﻿using Review.Domain.Reviewers;
-
-namespace Review.Persistence.EntityConfigurations;
+﻿namespace Review.Persistence.EntityConfigurations;
 
 public class ReviewerSpecializationEntityConfiguration : IEntityTypeConfiguration<ReviewerSpecialization>
 {
