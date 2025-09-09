@@ -9,7 +9,7 @@ public sealed class RequestContextMiddleware(RequestDelegate _next, ILogger<Requ
 {
 		private const string CorrelationIDHeader = "X-Correlation-ID";
 
-		public async Task Invoke(HttpContext ctx, RequestContext rc)
+		public async Task InvokeAsync(HttpContext ctx, RequestContext rc)
 		{
 				var correlationId = ResolveCorrelationId(ctx);	
 

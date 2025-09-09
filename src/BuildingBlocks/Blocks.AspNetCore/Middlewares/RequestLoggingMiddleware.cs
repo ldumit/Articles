@@ -6,7 +6,7 @@ namespace Blocks.AspNetCore.Middleware;
 
 public sealed class RequestLoggingMiddleware(RequestDelegate _next, ILogger<RequestLoggingMiddleware> _logger)
 {		
-		public async Task Invoke(HttpContext ctx)
+		public async Task InvokeAsync(HttpContext ctx)
 		{
 				// Correlation
 				var correlationId = ctx.Items["X-Correlation-ID"] as string ?? ctx.TraceIdentifier;

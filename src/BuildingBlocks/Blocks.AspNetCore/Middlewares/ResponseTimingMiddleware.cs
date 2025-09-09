@@ -7,7 +7,7 @@ namespace Blocks.AspNetCore.Middlewares;
 
 public sealed class ResponseTimingMiddleware(RequestDelegate next, ILogger<ResponseTimingMiddleware> logger)
 {
-		public async Task Invoke(HttpContext ctx)
+		public async Task InvokeAsync(HttpContext ctx)
 		{
 				var sw = Stopwatch.StartNew();
 

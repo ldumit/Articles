@@ -1,48 +1,57 @@
-﻿using Microsoft.AspNetCore.Http;
-using System.Net;
-using Newtonsoft.Json;
-using FluentValidation;
-using Blocks.Domain;
+﻿using Blocks.Domain;
 using Blocks.Exceptions;
+using FluentValidation;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using System.Net;
+using System.Text.Json;
 
 namespace Blocks.AspNetCore;
 
-public class GlobalExceptionMiddleware(RequestDelegate _next)
+public sealed class GlobalExceptionMiddleware(RequestDelegate _next, ILogger<GlobalExceptionMiddleware> _logger, IWebHostEnvironment _env)
 {
+		private static HttpStatusCode MapStatusCode(Exception ex) => ex switch
+		{
+				ValidationException => HttpStatusCode.BadRequest,
+				ArgumentException => HttpStatusCode.BadRequest,
+				BadRequestException => HttpStatusCode.BadRequest,
+				NotFoundException => HttpStatusCode.NotFound,
+				DomainException => HttpStatusCode.BadRequest,
+				_ => HttpStatusCode.InternalServerError
+		};
+
 		public async Task InvokeAsync(HttpContext context)
 		{
 				try
 				{
 						await _next(context);
 				}
-				catch (NotFoundException ex)
-				{
-						await HandleExceptionAsync(context, ex, HttpStatusCode.NotFound);
-				}
-				catch (BadRequestException ex)
-				{
-						await HandleExceptionAsync(context, ex, HttpStatusCode.BadRequest);
-				}
 				catch (ValidationException ex)
 				{
-						await HandleExceptionAsync(context, ex, HttpStatusCode.BadRequest);
+						await HandleValidationExceptionAsync(context, ex);
 				}
-				catch (DomainException ex)
-				{
-						await HandleExceptionAsync(context, ex, HttpStatusCode.BadRequest);
-				}
-				catch (ArgumentException ex)
-				{
-						await HandleExceptionAsync(context, ex, HttpStatusCode.BadRequest);
+				catch (OperationCanceledException) //response is likely abandoned by client
+				{						
+						if (!context.Response.HasStarted)
+								context.Response.StatusCode = 499;
 				}
 				catch (Exception ex)
 				{
-						await HandleExceptionAsync(context, ex, HttpStatusCode.InternalServerError);
+						await HandleExceptionAsync(context, ex);
 				}
 		}
 
-		private static Task HandleExceptionAsync(HttpContext context, Exception exception, HttpStatusCode statusCode)
+		private Task HandleExceptionAsync(HttpContext context, Exception exception)
 		{
+				var statusCode = MapStatusCode(exception);
+
+				if (statusCode > HttpStatusCode.InternalServerError)
+				{
+						_logger.LogError(exception, "Unhandled exception. TraceId={TraceId}", context.TraceIdentifier);
+				}
+
 				context.Response.StatusCode = (int)statusCode;
 				context.Response.ContentType = "application/json";
 
@@ -50,10 +59,36 @@ public class GlobalExceptionMiddleware(RequestDelegate _next)
 				{
 						context.Response.StatusCode,
 						exception.Message,
-						Details = exception.StackTrace // todo - in production we shouldn't expose the stack trace
+						TraceId = context.TraceIdentifier,
+						// Only expose the stack trace in development
+						Details = _env.IsDevelopment() ? exception.StackTrace : null
 				};
 
-				var responseJson = JsonConvert.SerializeObject(response);
+				var responseJson = JsonSerializer.Serialize(response);
+				return context.Response.WriteAsync(responseJson);
+		}
+
+		private Task HandleValidationExceptionAsync(HttpContext context, ValidationException exception)
+		{
+				context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+				context.Response.ContentType = "application/json";
+
+				var validationErrors = exception.Errors.Select(e => new
+				{
+						e.PropertyName,
+						e.ErrorMessage
+				});
+
+				var response = new
+				{
+						context.Response.StatusCode,
+						Message = "One or more validation errors occurred.",
+						TraceId = context.TraceIdentifier,
+						Details = _env.IsDevelopment() ? exception.StackTrace : null,
+						Errors = validationErrors
+				};
+
+				var responseJson = JsonSerializer.Serialize(response);
 				return context.Response.WriteAsync(responseJson);
 		}
 }

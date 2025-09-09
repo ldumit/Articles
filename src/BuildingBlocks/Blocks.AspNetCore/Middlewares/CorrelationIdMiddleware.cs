@@ -3,17 +3,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Blocks.AspNetCore.Middlewares;
 
-public class CorrelationIdMiddleware
+public class CorrelationIdMiddleware(RequestDelegate _next, ILogger<CorrelationIdMiddleware> _logger)
 {
 		private const string Header = "X-Correlation-ID";
-		private readonly RequestDelegate _next;
-		private readonly ILogger<CorrelationIdMiddleware> _logger;
-
-		public CorrelationIdMiddleware(RequestDelegate next, ILogger<CorrelationIdMiddleware> logger)
-		{
-				_next = next;
-				_logger = logger;
-		}
 
 		public async Task InvokeAsync(HttpContext context)
 		{
