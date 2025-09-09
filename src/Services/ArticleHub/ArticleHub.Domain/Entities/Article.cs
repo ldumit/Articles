@@ -20,5 +20,5 @@ public class Article : IEntity
     public required int JournalId { get; set; }
     public Journal Journal { get; set; } = null!;
 
-    public List<ArticleContributor> Contributors { get; set; } = new();
+    public List<ArticleActor> Actors { get; set; } = new();
 }

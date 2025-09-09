@@ -1,12 +1,10 @@
-﻿using System.Net.Http.Headers;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text.Json.Serialization;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using GraphQL.Client.Http;
 using GraphQL.Client.Serializer.SystemTextJson;
-using Blocks.Core;
+using ArticleHub.Persistence.Repositories;
 
 namespace ArticleHub.Persistence;
 
@@ -42,7 +40,8 @@ public static class DependencyInjection
 						return graphQLHttpClient;
 				});
 
-				services.AddScoped<ArticleGraphQLQuery>();
+				services.AddScoped<ArticleGraphQLReadStore>();
+				services.AddScoped(typeof(Repository<>));
 				services.AddScoped<ArticleRepository>();
 
 				return services;

@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Http.Json;
 using System.Reflection;
 using System.Text.Json.Serialization;
 using Blocks.Messaging.MassTransit;
+using Blocks.Core.Security;
+using Blocks.AspNetCore;
+using Blocks.Core.Context;
 
 namespace ArticleHub.API;
 
@@ -16,8 +19,8 @@ public static class DependecyInjection
 		public static void ConfigureOptions(this IServiceCollection services, IConfiguration configuration)
 		{
 				services
-						.ConfigureOptionsFromSection<RabbitMqOptions>(configuration)
-						.ConfigureOptionsFromSection<HasuraOptions>(configuration)
+						.AddAndValidateOptions<RabbitMqOptions>(configuration)
+						.AddAndValidateOptions<HasuraOptions>(configuration)
 						.Configure<JsonOptions>(opt =>
 						{
 								opt.SerializerOptions.PropertyNameCaseInsensitive = true;
@@ -42,11 +45,15 @@ public static class DependecyInjection
 						.AddMapsterConfigsFromCurrentAssembly()
 						.AddMassTransitWithRabbitMQ(configuration, Assembly.GetExecutingAssembly());
 
+
+
 				//// http
-				//services
-				//		.AddScoped<IClaimsProvider, HttpContextProvider>()
-				//		.AddScoped<IRouteProvider, HttpContextProvider>()
-				//		.AddScoped<HttpContextProvider>();
+				services
+						.AddScoped<IClaimsProvider, HttpContextProvider>()
+						.AddScoped<IRouteProvider, HttpContextProvider>()
+						.AddScoped<HttpContextProvider>();
+
+				services.AddScoped<RequestContext>();
 
 				//// authorization
 				//services

@@ -2,4 +2,4 @@
 
 namespace Articles.IntegrationEvents.Contracts.Articles;
 
-public record ArticleAcceptedEvent(ArticleDto Article);
+public record ArticleAcceptedForProductionEvent(ArticleDto Article);

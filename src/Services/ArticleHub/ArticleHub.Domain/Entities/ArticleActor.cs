@@ -1,12 +1,11 @@
 ﻿using Articles.Abstractions.Enums;
-using Articles.Security;
 
 namespace ArticleHub.Domain.Entities;
 
-public class ArticleContributor
+public class ArticleActor
 {
     public UserRoleType Role { get; init; }
     public int ArticleId { get; init; }
-    public required int PersonId { get; init; }
+    public int PersonId { get; init; }
     public Person Person { get; init; } = null!;
 }

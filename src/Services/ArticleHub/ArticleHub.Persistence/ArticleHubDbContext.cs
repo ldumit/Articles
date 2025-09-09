@@ -7,17 +7,22 @@ public partial class ArticleHubDbContext(DbContextOptions<ArticleHubDbContext> o
 {
 		#region Entities
 		public virtual DbSet<Article> Articles { get; set; }
-		public virtual DbSet<ArticleContributor> ArticleContributors { get; set; }
+		public virtual DbSet<ArticleActor> ArticleContributors { get; set; }
 		public virtual DbSet<Journal> Journals { get; set; }
 		public virtual DbSet<Person> Persons { get; set; }
 		#endregion
+
+		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+		{
+				optionsBuilder
+						.UseSnakeCaseNamingConvention();
+		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 				modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
 
-				//modelBuilder.UseClrTypeNamesForTables();
-				modelBuilder.UseLowerCaseNamingConvention(); //postgress standard
+				//modelBuilder.UseLowerCaseNamingConvention(); //postgress standard
 
 				base.OnModelCreating(modelBuilder);
 		}

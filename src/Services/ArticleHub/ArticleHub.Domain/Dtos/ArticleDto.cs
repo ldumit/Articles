@@ -2,16 +2,15 @@
 
 namespace ArticleHub.Domain.Dtos;
 
-public class ArticleDto
-{
-		public int Id { get; init; }
-		public string Title { get; init; }
-		public string Doi { get; init; }
-		public string Stage { get; init; }
-		public DateTime SubmittedOn { get; init; }
-		public DateTime? PublishedOn { get; init; }
-		public DateTime? AcceptedOn { get; init; }
-		public JournalDto Journal { get; init; }
-		public PersonDto SubmittedBy { get; init; }
-}
+public record ArticleDto(
+		int Id,
+		string Title,
+		string Doi,
+		string Stage,
+		DateTime SubmittedOn,
+		DateTime? PublishedOn,
+		DateTime? AcceptedOn,
+		JournalDto Journal,
+		PersonDto SubmittedBy
+);
 
