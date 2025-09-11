@@ -13,7 +13,7 @@ using Submission.Persistence;
 namespace Submission.Persistence.Migrations
 {
     [DbContext(typeof(SubmissionDbContext))]
-    [Migration("20250823150043_SeedMasterData")]
+    [Migration("20250911155435_SeedMasterData")]
     partial class SeedMasterData
     {
         /// <inheritdoc />
@@ -224,11 +224,6 @@ namespace Submission.Persistence.Migrations
                     b.Property<int>("ArticleId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CategoryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(1);
-
                     b.Property<int>("CreatedById")
                         .HasColumnType("int");
 
@@ -307,6 +302,15 @@ namespace Submission.Persistence.Migrations
                                 .HasColumnName("Name");
                         });
 
+                    b.ComplexProperty<Dictionary<string, object>>("Number", "Submission.Domain.Entities.Asset.Number#AssetNumber", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<byte>("Value")
+                                .HasColumnType("tinyint")
+                                .HasColumnName("Number");
+                        });
+
                     b.HasKey("Id");
 
                     b.HasIndex("ArticleId");
@@ -319,9 +323,6 @@ namespace Submission.Persistence.Migrations
             modelBuilder.Entity("Submission.Domain.Entities.AssetTypeDefinition", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DefaultCategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("DefaultFileExtension")

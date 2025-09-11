@@ -33,7 +33,6 @@ namespace Submission.Persistence.Migrations
                     Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     Id = table.Column<int>(type: "int", nullable: false),
-                    DefaultCategoryId = table.Column<int>(type: "int", nullable: false),
                     DefaultFileExtension = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false, defaultValue: "pdf"),
                     MaxAssetCount = table.Column<byte>(type: "tinyint", nullable: false, defaultValue: (byte)0),
                     MaxFileSizeInMB = table.Column<byte>(type: "tinyint", nullable: false),
@@ -195,7 +194,6 @@ namespace Submission.Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     State = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
                     Type = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     ArticleId = table.Column<int>(type: "int", nullable: false),
                     File_FileServerId = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
@@ -204,6 +202,7 @@ namespace Submission.Persistence.Migrations
                     File_Extension = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
                     File_Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false, comment: "Final name of the file after renaming"),
                     Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    Number = table.Column<byte>(type: "tinyint", nullable: false),
                     CreatedById = table.Column<int>(type: "int", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
                     LastModifiedById = table.Column<int>(type: "int", nullable: true),

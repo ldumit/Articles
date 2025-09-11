@@ -8,5 +8,4 @@ public record AssetDto(
 		byte Number, 
 		AssetState State,
 		AssetType Type,
-		AssetCategory CategoryId,
 		FileDto File);

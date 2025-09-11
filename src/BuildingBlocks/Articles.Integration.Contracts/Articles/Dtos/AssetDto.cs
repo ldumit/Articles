@@ -5,7 +5,6 @@ namespace Articles.IntegrationEvents.Contracts.Articles.Dtos;
 public record class AssetDto(
 		int Id,
 		string Name,
-		AssetCategory CategoryId,
 		AssetType Type,
 		FileDto File
 		);

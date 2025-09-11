@@ -21,7 +21,6 @@ public partial class Asset
 						Number = AssetNumber.Create(type, assetCount),
 						Type = type.Name,
 						TypeRef = type,
-						CategoryId = type.DefaultCategoryId,
 						State = AssetState.None,
 						CreatedById = action.CreatedById,
 						CreatedOn = action.CreatedOn

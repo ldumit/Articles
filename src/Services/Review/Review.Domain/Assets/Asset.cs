@@ -11,7 +11,6 @@ public partial class Asset : AggregateRoot
 
 		//talk - keep the following properties as enums because they change quite rarely
 		public AssetState State { get; private set; }
-    public AssetCategory CategoryId { get; private set; } //todo - remove this if you don't need it
 
     public AssetType Type { get; private set; }
     public virtual AssetTypeDefinition TypeDefinition { get; private set; } = null!;

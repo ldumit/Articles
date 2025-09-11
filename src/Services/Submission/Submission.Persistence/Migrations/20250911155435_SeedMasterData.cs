@@ -12,12 +12,12 @@ namespace Submission.Persistence.Migrations
 				{
 						migrationBuilder.Sql(@"
             INSERT INTO [AssetTypeDefinition] 
-            (id, name, description, defaultCategoryId, maxAssetCount, allowedFileExtensions, defaultFileExtension, MaxFileSizeInMB)
+            (id, name, description, maxAssetCount, allowedFileExtensions, defaultFileExtension, MaxFileSizeInMB)
             VALUES
-            (1, 'Manuscript', 'Manuscript', 1, 1, '[""pdf""]', 'pdf', 50),
-            (10, 'SupplementaryFile', 'Supplementary File', 2, 12, '[]', 'pdf', 10),
-            (11, 'Figure', 'HTML Figure', 2, 12, '[""jpg"",""png"",""tif"",""tiff"",""eps""]', 'tif', 10),
-            (12, 'DataSheet', 'Data Sheet', 2, 12, '[""csv"",""xls""]', 'csv', 1);
+            (1, 'Manuscript', 'Manuscript', 1, '[""pdf""]', 'pdf', 50),
+            (10, 'SupplementaryFile', 'Supplementary File', 12, '[]', 'pdf', 10),
+            (11, 'Figure', 'HTML Figure', 12, '[""jpg"",""png"",""tif"",""tiff"",""eps""]', 'tif', 10),
+            (12, 'DataSheet', 'Data Sheet', 12, '[""csv"",""xls""]', 'csv', 1);
         ");
 				}
 

@@ -5,11 +5,11 @@
 namespace Review.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class X_DONT_DELETE_SeedMasterData : Migration
+    public partial class SeedMasterData : Migration
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
+				/// <inheritdoc />
+				protected override void Up(MigrationBuilder migrationBuilder)
+				{
 						migrationBuilder.Sql(@"
             INSERT INTO [AssetTypeDefinition] 
             (id, name, description, maxAssetCount, allowedFileExtensions, defaultFileExtension, MaxFileSizeInMB)
@@ -26,10 +26,10 @@ namespace Review.Persistence.Migrations
         ");
 				}
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
+				/// <inheritdoc />
+				protected override void Down(MigrationBuilder migrationBuilder)
+				{
 						migrationBuilder.Sql("DELETE FROM [AssetTypeDefinition]");
 				}
-    }
+		}
 }

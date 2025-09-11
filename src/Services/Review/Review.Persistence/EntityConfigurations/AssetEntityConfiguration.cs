@@ -7,7 +7,6 @@ internal class AssetEntityConfiguration : AuditedEntityConfiguration<Asset>
         base.Configure(builder);
 
 				builder.Property(e => e.State).HasEnumConversion().IsRequired();
-				builder.Property(e => e.CategoryId).HasConversion<int>().HasDefaultValue(AssetCategory.Core).IsRequired();
 				builder.Property(e => e.Type).HasEnumConversion().IsRequired();
 
 				builder.ComplexProperty(

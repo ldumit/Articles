@@ -11,7 +11,7 @@ public class AssetNumber : SingleValueObject<byte>
 		public static AssetNumber Create(AssetTypeDefinition assetType, byte number)
 		{
 				ArgumentOutOfRangeException.ThrowIfGreaterThan(number, assetType.MaxAssetCount, "Asset type max number already reached");
-				return new AssetNumber(number);
+				return new AssetNumber(++number);
 		}
 
 		// added for Link queries

@@ -6,7 +6,6 @@ public class AssetTypeDefinitionEntityConfiguration : EnumEntityConfiguration<As
     {
         base.Configure(builder);
 
-        builder.Property(e => e.DefaultCategoryId);
 				builder.Property(e => e.MaxAssetCount).HasDefaultValue(0);
 
         builder.Property(e => e.DefaultFileExtension).HasDefaultValue("pdf").IsRequired().HasMaxLength(MaxLength.C8);
