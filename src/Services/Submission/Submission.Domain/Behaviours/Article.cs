@@ -75,7 +75,7 @@ public partial class Article
 
 		public Asset CreateAsset(AssetTypeDefinition type, IArticleAction<ArticleActionType> action)
 		{
-				var assetCount = (byte)_assets
+				var assetCount = _assets
 						.Where(a => a.Type == type.Id)
 						.Count();
 

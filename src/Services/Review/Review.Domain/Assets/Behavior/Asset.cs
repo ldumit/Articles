@@ -1,4 +1,5 @@
 ﻿using Articles.IntegrationEvents.Contracts.Articles.Dtos;
+using Blocks.Core;
 using FileStorage.Contracts;
 using Review.Domain.Articles;
 using Review.Domain.Assets.Enums;
@@ -15,7 +16,7 @@ public partial class Asset
 				=> $"Articles/{ArticleId}/{Name}/{fileName}";
 
 		//talk - use internal factory method so that the Asset can be created only in the Domain
-		internal static Asset Create(Article article, AssetTypeDefinition type, byte assetCount, IArticleAction action)
+		internal static Asset Create(Article article, AssetTypeDefinition type, int assetCount, IArticleAction action)
 		{
 				//talk - value objects for AssetName & AssetNumber, encapsulate validation						
 				return new Asset()
@@ -52,15 +53,18 @@ public partial class Asset
 				return File;
 		}
 
-		public static Asset CreateFromSubmission(AssetDto assetDto, AssetTypeDefinition type, int articleId, int assetCount)
+		public static Asset CreateFromSubmission(AssetDto assetDto, ArticleDto articleDto)
 		{
 				//talk - value objects for AssetName & AssetNumber, encapsulate validation						
 				var asset = new Asset()
 				{
-						ArticleId = articleId,
+						ArticleId = articleDto.Id,
 						Name = AssetName.FromSubmission(assetDto.Name),
-						Type = type.Id,
+						Number = AssetNumber.FrmSubmission(assetDto.Number),
+						Type = assetDto.Type,
 						State = AssetState.Uploaded,
+						CreatedOn = articleDto.SubmittedOn,
+						CreatedById = articleDto.SubmittedBy.Id
 				};
 
 				return asset;

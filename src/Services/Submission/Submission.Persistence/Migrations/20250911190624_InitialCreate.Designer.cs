@@ -13,8 +13,8 @@ using Submission.Persistence;
 namespace Submission.Persistence.Migrations
 {
     [DbContext(typeof(SubmissionDbContext))]
-    [Migration("20250911155435_SeedMasterData")]
-    partial class SeedMasterData
+    [Migration("20250911190624_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -306,8 +306,8 @@ namespace Submission.Persistence.Migrations
                         {
                             b1.IsRequired();
 
-                            b1.Property<byte>("Value")
-                                .HasColumnType("tinyint")
+                            b1.Property<int>("Value")
+                                .HasColumnType("int")
                                 .HasColumnName("Number");
                         });
 

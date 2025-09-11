@@ -86,7 +86,7 @@ public partial class Article
 
 		public Asset CreateAsset(AssetTypeDefinition type, IArticleAction action)
 		{
-				var assetCount = (byte) _assets
+				var assetCount = _assets
 						.Where(a => a.Type == type.Id)
 						.Count();
 
@@ -150,7 +150,7 @@ public partial class Article
 				AddDomainEvent(new ArticleActionExecuted(this, action));
 		}
 
-		public static Article AcceptSubmitted(ArticleDto articleDto, IEnumerable<ArticleActor> actors, IEnumerable<Asset> assets, ArticleStateMachineFactory stateMachineFactory, IArticleAction action)
+		public static Article FromSubmission(ArticleDto articleDto, IEnumerable<ArticleActor> actors, IEnumerable<Asset> assets, ArticleStateMachineFactory stateMachineFactory, IArticleAction action)
 		{
 				var article = new Article
 				{

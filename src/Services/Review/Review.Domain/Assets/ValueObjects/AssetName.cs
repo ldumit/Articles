@@ -15,7 +15,7 @@ public class AssetName: StringValueObject
 				return new AssetName(name.Trim());
 		}
 
-		public static AssetName Create(AssetTypeDefinition assetType, byte assetCount)
+		public static AssetName Create(AssetTypeDefinition assetType, int assetCount)
 		{
 				if (assetType.AllowsMultipleAssets)
 						return new AssetName($"{assetType.Name.ToString()}_{assetCount + 1}");

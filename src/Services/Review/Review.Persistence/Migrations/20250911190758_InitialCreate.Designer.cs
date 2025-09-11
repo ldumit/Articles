@@ -13,7 +13,7 @@ using Review.Persistence;
 namespace Review.Persistence.Migrations
 {
     [DbContext(typeof(ReviewDbContext))]
-    [Migration("20250911154959_InitialCreate")]
+    [Migration("20250911190758_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -445,8 +445,8 @@ namespace Review.Persistence.Migrations
                         {
                             b1.IsRequired();
 
-                            b1.Property<byte>("Value")
-                                .HasColumnType("tinyint")
+                            b1.Property<int>("Value")
+                                .HasColumnType("int")
                                 .HasColumnName("Number");
                         });
 

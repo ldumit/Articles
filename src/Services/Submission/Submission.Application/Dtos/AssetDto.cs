@@ -3,7 +3,7 @@
 public record AssetDto(
 		int Id, 
 		string Name, 
-		byte Number, 
+		int Number, 
 		AssetState State,
 		AssetType Type,
 		FileDto File);

@@ -43,7 +43,7 @@ public class ArticleApprovedForReviewConsumer(
 						CreatedById = actors.Single(a => a.Role == UserRoleType.REVED).Person.UserId!.Value, // the editor who approved the article is the creator of the action
 				};
 
-				var article = Article.AcceptSubmitted(articleDto, actors, assets, _stateMachineFactory, action);
+				var article = Article.FromSubmission(articleDto, actors, assets, _stateMachineFactory, action);
 				await _articleRepository.AddAsync(article);
 
 
@@ -71,7 +71,7 @@ public class ArticleApprovedForReviewConsumer(
 				{
 						var assetTypeDefinition = _assetTypeRepository.GetById(assetDto.Type);
 
-						var asset = Asset.CreateFromSubmission(assetDto, assetTypeDefinition, articleDto.Id, articleDto.Assets.Count);
+						var asset = Asset.CreateFromSubmission(assetDto, articleDto);
 
 						var (fileStream, fileMetadata) = await submissionFileService.DownloadAsync(assetDto.File.FileServerId, ct);
 
