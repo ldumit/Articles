@@ -20,7 +20,7 @@ public class HttpContextProvider(IHttpContextAccessor _httpContextAccessor)
 		public string GetClaimValue(string claimName)
 				=> _httpContextAccessor.GetClaimValue(claimName);
 		public int GetUserId() 
-				=> _httpContextAccessor.GetClaimValue(ClaimTypes.NameIdentifier).ToInt().Value;
+				=> _httpContextAccessor.GetClaimValue(ClaimTypes.NameIdentifier).ToInt()!.Value;
 		public int? TryGetUserId()
 				=> _httpContextAccessor.GetClaimValue(ClaimTypes.NameIdentifier)?.ToInt();
 		public string GetUserName()

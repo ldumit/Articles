@@ -4,7 +4,7 @@ using Blocks.Domain;
 
 namespace Blocks.MediatR.Behaviours;
 
-public class SetUserIdBehavior<TRequest, TResponse>
+public class AssignUserIdBehavior<TRequest, TResponse>
 		(IClaimsProvider _claimsProvider) 
 		: IPipelineBehavior<TRequest, TResponse>
 		where TRequest : IAuditableAction

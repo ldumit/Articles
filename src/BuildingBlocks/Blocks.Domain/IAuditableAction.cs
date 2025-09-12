@@ -3,6 +3,7 @@
 public interface IAuditableAction
 {
 		int CreatedById { get; set; }
+		public bool IsAuthenticated => CreatedById != default;
 		DateTime CreatedOn { get; }
 		public string Action { get; }
 		string? Comment { get; }

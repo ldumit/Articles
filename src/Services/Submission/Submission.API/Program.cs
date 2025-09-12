@@ -37,8 +37,8 @@ app
 		.UseSwaggerUI()
 		.UseRouting()                                       // match the HTTP request to an endpoint (route) based on the URL
 		.UseMiddleware<GlobalExceptionMiddleware>()
-		.UseMiddleware<CorrelationIdMiddleware>()
-		.UseMiddleware<RequestLoggingMiddleware>()
+		.UseMiddleware<RequestContextMiddleware>()
+		.UseMiddleware<RequestDiagnosticsMiddleware>()
 		.UseAuthentication()
 		.UseAuthorization();
 

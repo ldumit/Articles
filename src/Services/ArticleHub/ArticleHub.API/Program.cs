@@ -1,6 +1,7 @@
 using ArticleHub.API;
 using ArticleHub.Persistence;
 using Blocks.AspNetCore;
+using Blocks.AspNetCore.Middleware;
 using Blocks.AspNetCore.Middlewares;
 using Blocks.EntityFrameworkCore;
 using Carter;
@@ -28,7 +29,7 @@ app
 		.UseAuthorization()
 		.UseMiddleware<GlobalExceptionMiddleware>()
 		.UseMiddleware<RequestContextMiddleware>()
-		.UseMiddleware<ResponseTimingMiddleware>();
+		.UseMiddleware<RequestDiagnosticsMiddleware>();
 
 var api = app.MapGroup("/api");
 api.MapCarter();

@@ -2,9 +2,9 @@
 using Blocks.Domain;
 using Microsoft.AspNetCore.Http;
 
-namespace Blocks.AspNetCore.Filters;
+namespace Blocks.AspNetCore;
 
-public sealed class StampUserFilter(IClaimsProvider _claimsProvider) : IEndpointFilter
+public sealed class AssignUserIdFilter(IClaimsProvider _claimsProvider) : IEndpointFilter
 {
 		public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext ctx, EndpointFilterDelegate next)
 		{
