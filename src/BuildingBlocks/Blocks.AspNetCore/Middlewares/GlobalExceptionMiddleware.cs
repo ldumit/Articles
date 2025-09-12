@@ -1,12 +1,12 @@
-﻿using Blocks.Domain;
-using Blocks.Exceptions;
-using FluentValidation;
+﻿using System.Net;
+using System.Text.Json;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System.Net;
-using System.Text.Json;
+using FluentValidation;
+using Blocks.Domain;
+using Blocks.Exceptions;
 
 namespace Blocks.AspNetCore;
 
@@ -46,33 +46,24 @@ public sealed class GlobalExceptionMiddleware(RequestDelegate _next, ILogger<Glo
 		private Task HandleExceptionAsync(HttpContext context, Exception exception)
 		{
 				var statusCode = MapStatusCode(exception);
-
-				if (statusCode > HttpStatusCode.InternalServerError)
+				if (statusCode >= HttpStatusCode.InternalServerError) // biger than 500
 				{
 						_logger.LogError(exception, "Unhandled exception. TraceId={TraceId}", context.TraceIdentifier);
 				}
 
-				context.Response.StatusCode = (int)statusCode;
-				context.Response.ContentType = "application/json";
-
 				var response = new
 				{
-						context.Response.StatusCode,
+						StatusCode = (int)statusCode,
 						exception.Message,
 						TraceId = context.TraceIdentifier,
-						// Only expose the stack trace in development
 						Details = _env.IsDevelopment() ? exception.StackTrace : null
 				};
 
-				var responseJson = JsonSerializer.Serialize(response);
-				return context.Response.WriteAsync(responseJson);
+				return WriteResponseAsync(context, statusCode, response);
 		}
 
 		private Task HandleValidationExceptionAsync(HttpContext context, ValidationException exception)
 		{
-				context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-				context.Response.ContentType = "application/json";
-
 				var validationErrors = exception.Errors.Select(e => new
 				{
 						e.PropertyName,
@@ -81,12 +72,20 @@ public sealed class GlobalExceptionMiddleware(RequestDelegate _next, ILogger<Glo
 
 				var response = new
 				{
-						context.Response.StatusCode,
+						StatusCode = (int)HttpStatusCode.BadRequest,
 						Message = "One or more validation errors occurred.",
 						TraceId = context.TraceIdentifier,
 						Details = _env.IsDevelopment() ? exception.StackTrace : null,
 						Errors = validationErrors
 				};
+
+				return WriteResponseAsync(context, HttpStatusCode.BadRequest, response);
+		}
+
+		private static Task WriteResponseAsync(HttpContext context, HttpStatusCode statusCode, object response)
+		{
+				context.Response.StatusCode = (int)statusCode;
+				context.Response.ContentType = "application/json";
 
 				var responseJson = JsonSerializer.Serialize(response);
 				return context.Response.WriteAsync(responseJson);

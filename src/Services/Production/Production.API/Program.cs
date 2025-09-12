@@ -1,7 +1,6 @@
 using ArticleTimeline.Application;
 using ArticleTimeline.Persistence;
 using Blocks.AspNetCore;
-using Blocks.AspNetCore.Filters;
 using Blocks.EntityFrameworkCore;
 using Blocks.FastEnpoints;
 using FastEndpoints.Swagger;
@@ -71,7 +70,7 @@ app
 		.UseSwaggerGen();
 
 
-var api = app.MapGroup("/api").AddEndpointFilter<StampUserFilter>();
+var api = app.MapGroup("/api").AddEndpointFilter<AssignUserIdFilter>();
 #endregion
 
 app.Run();

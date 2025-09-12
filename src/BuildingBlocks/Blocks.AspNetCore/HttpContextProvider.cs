@@ -17,18 +17,21 @@ public interface IRouteProvider
 public class HttpContextProvider(IHttpContextAccessor _httpContextAccessor)
 		: IClaimsProvider, IRouteProvider
 {
-		public string GetClaimValue(string claimName)
-				=> _httpContextAccessor.GetClaimValue(claimName);
+		public string GetClaimValue(string claimName) =>
+				TryGetClaimValue(claimName) ?? throw new InvalidOperationException($"Missing claim: {claimName}");
+		public string? TryGetClaimValue(string claimName) =>
+				_httpContextAccessor.GetClaimValue(claimName);
+
 		public int GetUserId() 
-				=> _httpContextAccessor.GetClaimValue(ClaimTypes.NameIdentifier).ToInt().Value;
+				=> TryGetUserId() ?? throw new UnauthorizedAccessException($"Missing claim: {ClaimTypes.NameIdentifier}.");
 		public int? TryGetUserId()
-				=> _httpContextAccessor.GetClaimValue(ClaimTypes.NameIdentifier)?.ToInt();
+				=> GetClaimValue(ClaimTypes.NameIdentifier)?.ToInt();
 		public string GetUserName()
-				=> _httpContextAccessor.GetClaimValue(ClaimTypes.Name);		
+				=> GetClaimValue(ClaimTypes.Name);		
 		public string GetUserEmail() 
-				=> _httpContextAccessor.GetClaimValue(ClaimTypes.Email);
+				=> GetClaimValue(ClaimTypes.Email);
 		public string GetUserRole()
-				=> _httpContextAccessor.GetClaimValue(ClaimTypes.Role);
+				=> GetClaimValue(ClaimTypes.Role);
 
 		public string GetRouteValue(string key)
 				=> _httpContextAccessor.GetRouteValue(key);
@@ -39,15 +42,15 @@ public class HttpContextProvider(IHttpContextAccessor _httpContextAccessor)
 
 public static class HttpContextExtensions
 {
-		public static string GetRouteValue(this IHttpContextAccessor httpContextAccessor, string key)
+		public static string? GetRouteValue(this IHttpContextAccessor httpContextAccessor, string key)
 		{
 				var routeData = httpContextAccessor.HttpContext?.GetRouteData();
 				return routeData?.Values[key]?.ToString();
 		}
 
-		public static string GetClaimValue(this IHttpContextAccessor httpContextAccessor, string claimType)
+		public static string? GetClaimValue(this IHttpContextAccessor httpContextAccessor, string claimType)
 		{
 				var user = httpContextAccessor.HttpContext?.User;
-				return user?.FindFirst(claimType)?.Value;
+				return user?.FindFirstValue(claimType);
 		}
 }

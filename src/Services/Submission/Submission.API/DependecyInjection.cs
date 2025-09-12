@@ -47,7 +47,6 @@ public static class DependecyInjection
 
 				services.AddScoped<RequestContext>();
 
-
 				// authorization
 				services.AddScoped<IAuthorizationHandler, ArticleAccessAuthorizationHandler>();
 
