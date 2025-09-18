@@ -1,4 +1,5 @@
-﻿using Submission.Application.Features.GetArticle;
+﻿using Articles.Abstractions.Enums;
+using Submission.Application.Features.GetArticle;
 
 namespace Submission.API.Endpoints;
 
@@ -11,7 +12,7 @@ public static class GetArticleEndpoint
 						var article = await sender.Send(query);
 						return Results.Ok(article);
 				})
-				.RequireRoleAuthorization(Role.CORAUT, Role.EOF)
+				.RequireRoleAuthorization(UserRoleType.CORAUT, UserRoleType.EOF)
 				.WithName("GetArticle")
 				.WithTags("Articles")
 				.Produces<GetArticleResonse>(StatusCodes.Status200OK)

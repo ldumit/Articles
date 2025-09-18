@@ -1,4 +1,5 @@
-﻿using Blocks.Core;
+﻿using Articles.Abstractions.Enums;
+using Blocks.Core;
 using Blocks.Core.Security;
 
 namespace ArticleTimeline.Application.VariableResolvers;
@@ -10,14 +11,16 @@ public interface IVariableResolver
 
 public class CurrentUserRoleResolver(IClaimsProvider _claimsProvider) : IVariableResolver
 {
-    public async Task<string> GetValue(TimelineResolverModel resolverCommand) => 
-        _claimsProvider.GetUserRole();
+    public async Task<string> GetValue(TimelineResolverModel resolverCommand) =>
+        _claimsProvider.GetUserRoles().First();
 }
+
 public class CurrentUserNameResolver(IClaimsProvider _claimsProvider) : IVariableResolver
 {
 		public async Task<string> GetValue(TimelineResolverModel resolverCommand) =>
 				_claimsProvider.GetUserName();
 }
+
 public class UploadedFileResolver : IVariableResolver
 {
     public Task<string> GetValue(TimelineResolverModel resolverCommand)

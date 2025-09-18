@@ -12,5 +12,5 @@
 // - we don't need to share anything with any other service
 public interface IEmailService
 {
-    Task<bool> SendEmailAsync(EmailMessage emailMessage);
+    Task<bool> SendEmailAsync(EmailMessage emailMessage, CancellationToken ct = default);
 }

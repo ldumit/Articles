@@ -236,14 +236,14 @@ namespace Auth.Persistence.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Description", "Name", "NormalizedName", "Type" },
                 values: new object[,]
                 {
-                    { 1, null, "Editorial Office", "EOF", null, "EOF" },
-                    { 11, null, "Author", "AUT", null, "AUT" },
-                    { 12, null, "Corresponding Author", "CORAUT", null, "CORAUT" },
-                    { 21, null, "Review Editor", "REVED", null, "REVED" },
-                    { 22, null, "Reviewer", "REV", null, "REV" },
-                    { 31, null, "Production Office Admin", "POF", null, "POF" },
-                    { 32, null, "Typesetter", "TSOF", null, "TSOF" },
-                    { 91, null, "user Admin", "USERADMIN", null, "USERADMIN" }
+                    { 1, null, "Editorial Office", "EOF", "EOF", "EOF" },
+                    { 11, null, "Author", "AUT", "AUT", "AUT" },
+                    { 12, null, "Corresponding Author", "CORAUT", "CORAUT", "CORAUT" },
+                    { 21, null, "Review Editor", "REVED", "REVED", "REVED" },
+                    { 22, null, "Reviewer", "REV", "REV", "REV" },
+                    { 31, null, "Production Office Admin", "POF", "POF", "POF" },
+                    { 32, null, "Typesetter", "TSOF", "TSOF", "TSOF" },
+                    { 91, null, "User Admin", "USERADMIN", "USERADMIN", "USERADMIN" }
                 });
 
             migrationBuilder.CreateIndex(

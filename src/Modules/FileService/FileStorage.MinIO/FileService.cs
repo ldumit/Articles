@@ -7,7 +7,7 @@ using Minio.DataModel.Tags;
 
 namespace FileStorage.MinIO;
 
-// todo - not finished, not tested, just a prototype
+// todo - not finished, not tested, just a prototype to show how it can be done with MinIO
 public class FileService : IFileService
 {
 		private readonly IMinioClient _minioClient;
@@ -16,6 +16,8 @@ public class FileService : IFileService
 
 		public FileService(IMinioClient minioClient, IOptions<MinioFileStorageOptions> options)
 			=> (_minioClient, _options) = (minioClient, options.Value);
+
+		public string GenerateId() => Guid.NewGuid().ToString();
 
 		public async Task<FileMetadata> UploadAsync(string storagePath, IFormFile file, bool overwrite = false, Dictionary<string, string>? tags = null, CancellationToken ct = default)
 		{

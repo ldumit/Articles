@@ -2,6 +2,7 @@
 using Auth.API;
 using Auth.API.Mappings;
 using Auth.Persistence;
+using Blocks.AspNetCore;
 using Blocks.Core.Security;
 using Blocks.Domain;
 using Blocks.FastEndpoints;
@@ -43,6 +44,11 @@ public static class DependenciesConfiguration
 						.AddJwtIdentity(config)
 						.AddJwtAuthentication(config)										// JWT Authentication
 						.AddAuthorization();                            // Authorization configuration
+
+				services
+						.AddScoped<IClaimsProvider, HttpContextProvider>()
+						.AddScoped<IRouteProvider, HttpContextProvider>()
+						.AddScoped<HttpContextProvider>();
 
 				services.AddScoped<IDomainEventPublisher, DomainEventPublisher>();
 

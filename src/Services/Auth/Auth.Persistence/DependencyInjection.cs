@@ -11,6 +11,7 @@ public static class DependencyInjection
 				services.AddDbContext<AuthDbContext>(opts => opts.UseSqlServer(connectionString));
 
         services.AddScoped<PersonRepository>();
+				services.AddScoped<UserRepository>();
 
 				return services;
     }

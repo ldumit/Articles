@@ -5,15 +5,10 @@ using SendGrid;
 
 namespace EmailService.SendGrid;
 
-public class SendGridEmailService(ISendGridClient sendGridClient, IOptions<SendGridAccountOptions> sendGridOptions, IOptions<EmailOptions> emailOptions, ILogger<SendGridEmailService> logger) 
+public class SendGridEmailService(ISendGridClient sendGridClient, IOptions<SendGridAccountOptions> _sendGridOptions, IOptions<EmailOptions> _emailOptions, ILogger<SendGridEmailService> logger) 
     : IEmailService
 {
-    public SendGridAccountOptions Options { get; }
-
-    public EmailOptions EmailOptions { get; }
-
-
-		public async Task<bool> SendEmailAsync(EmailMessage emailMessage)
+		public async Task<bool> SendEmailAsync(EmailMessage emailMessage, CancellationToken ct = default)
 		{
         var msg = emailMessage.ToSendGridMessage();
 				msg.SetClickTracking(false, false);

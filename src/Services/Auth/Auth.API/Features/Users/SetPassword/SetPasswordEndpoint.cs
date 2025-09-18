@@ -1,13 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Blocks.Exceptions;
 using Microsoft.AspNetCore.Identity;
-using Auth.Domain.Users;
-using Blocks.Exceptions;
 
 namespace Auth.API.Features.Users.SetPassword;
 
-[AllowAnonymous]
-[HttpPost("set-first-password", "reset-password")]
-public class ResetPasswordEndpoint(UserManager<User> _userManager) 
+public partial class SetPasswordEndpoint(UserManager<User> _userManager) 
 		: Endpoint<SetPasswordCommand, SetPasswordResponse>
 {
 		public override async Task HandleAsync(SetPasswordCommand command, CancellationToken ct)

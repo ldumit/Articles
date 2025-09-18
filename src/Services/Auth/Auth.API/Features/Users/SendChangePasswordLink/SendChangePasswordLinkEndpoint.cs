@@ -5,26 +5,31 @@ using Blocks.Exceptions;
 using EmailService.Contracts;
 using Blocks.AspNetCore;
 using Flurl;
+using Auth.Persistence.Repositories;
 
 namespace Auth.API.Features.Users.SendChangePasswordLink;
 
 [AllowAnonymous]
-[HttpPost("send-change-password-link")]
-public class SendChangePasswordLinkEndpoint(UserManager<User> _userManager, IEmailService _emailService, IHttpContextAccessor _httpContextAccessor, IOptions<EmailOptions> _emailOptions)
+[HttpPost("/password/forgot")]
+[Tags("Password")]
+public class SendChangePasswordLinkEndpoint(UserRepository _userRepository, UserManager<User> _userManager, IEmailService _emailService, IHttpContextAccessor _httpContextAccessor, IOptions<EmailOptions> _emailOptions, IWebHostEnvironment _env)
 		: Endpoint<SendChangePasswordLinkCommand, SendChangePasswordLinkResponse>
 {
 		public override async Task HandleAsync(SendChangePasswordLinkCommand command, CancellationToken ct)
 		{
-				var user = await _userManager.FindByNameAsync(command.Email);
+				var user = await _userRepository.GetByEmailAsync(command.Email);
 				if (user == null)
 						throw new BadRequestException($"User doesn't exist");
 
 				var ressetPasswordToken = await _userManager.GeneratePasswordResetTokenAsync(user);
 
 				var emailMessage = BuildEmailMessage(user, ressetPasswordToken);
-				await _emailService.SendEmailAsync(emailMessage);
+				await _emailService.SendEmailAsync(emailMessage, ct);
 
-				await Send.OkAsync(new SendChangePasswordLinkResponse(command.Email, ressetPasswordToken));
+				if (_env.IsDevelopment())
+						await Send.OkAsync(new SendChangePasswordLinkResponse(command.Email, ressetPasswordToken));
+				else
+						await Send.ResponseAsync(null, StatusCodes.Status202Accepted, ct);
 		}
 
 		private EmailMessage BuildEmailMessage(User user, string token)
@@ -42,7 +47,7 @@ public class SendChangePasswordLinkEndpoint(UserManager<User> _userManager, IEma
 						"Confirmation",
 						new Content(ContentType.Html, string.Format(SetPasswordEmail, user.FullName, url)),
 						new EmailAddress("articles", _emailOptions.Value.EmailFromAddress),
-						new List<EmailAddress> { new EmailAddress(user.FullName, user.Email) }
+						new List<EmailAddress> { new EmailAddress(user.FullName, user.Email!) }
 						);
 		}
 }

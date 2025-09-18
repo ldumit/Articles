@@ -2,7 +2,7 @@
 using MailKit.Net.Smtp;
 using Microsoft.Extensions.Options;
 
-//talk about the namespaces: controacts, smtp, sendgrid and the name of the classes
+//talk about the namespaces: contracts, smtp, sendgrid and the name of the classes
 namespace EmailService.Smtp;
 
 public class SmtpEmailService : IEmailService
@@ -14,7 +14,7 @@ public class SmtpEmailService : IEmailService
 				_emailOptions = emailOptions.Value;
 		}
 
-		public async Task<bool> SendEmailAsync(EmailMessage emailMessage)
+		public async Task<bool> SendEmailAsync(EmailMessage emailMessage, CancellationToken ct = default)
 		{
 				var message = emailMessage.ToMailKitMessage();
 

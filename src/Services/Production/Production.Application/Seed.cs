@@ -19,13 +19,13 @@ public static class Seed
     {
         using var transaction = context.Database.BeginTransaction();
 
-				context.SeedFromJson<Person>();
+				context.SeedFromJsonFile<Person>();
 
-				context.SeedFromJson<Journal>();
+				context.SeedFromJsonFile<Journal>();
 
-				context.SeedFromJson<Article>();
+				context.SeedFromJsonFile<Article>();
 				
-        context.SeedFromJson<AssetCurrentFileLink>(); // this is a link between an asset and a file, which couldn't be included in Article seeding
+        context.SeedFromJsonFile<AssetCurrentFileLink>(); // this is a link between an asset and a file, which couldn't be included in Article seeding
 
 				transaction.Commit();
 		}

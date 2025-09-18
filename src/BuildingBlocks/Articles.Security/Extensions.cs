@@ -15,5 +15,9 @@ public static class Extensions
 
 		public static TBuilder RequireRoleAuthorization<TBuilder>(this TBuilder builder, params UserRoleType[] roles)
 				where TBuilder : IEndpointConventionBuilder
-				=> builder.RequireAuthorization(policy => policy.RequireRole(string.Join(",", roles)));
+				=> builder.RequireAuthorization(policy =>
+				{
+						policy.RequireRole(roles.Select(r => r.ToString()));
+						policy.Requirements.Add(new ArticleRoleRequirement(roles));
+				});
 }

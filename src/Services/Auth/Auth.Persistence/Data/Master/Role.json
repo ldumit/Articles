@@ -3,48 +3,56 @@
     "type": "EOF",
     "id": 1,
     "name": "EOF",
+    "normalizedName": "EOF",
     "description": "Editorial Office"
   },
   {
     "type": "AUT",
     "id": 11,
     "name": "AUT",
+    "normalizedName": "AUT",
     "description": "Author"
   },
   {
     "type": "CORAUT",
     "id": 12,
     "name": "CORAUT",
+    "normalizedName": "CORAUT",
     "description": "Corresponding Author"
   },
   {
     "type": "REVED",
     "id": 21,
     "name": "REVED",
+    "normalizedName": "REVED",
     "description": "Review Editor"
   },
   {
     "type": "REV",
     "id": 22,
     "name": "REV",
+    "normalizedName": "REV",
     "description": "Reviewer"
   },  
   {
     "type": "POF",
     "id": 31,
     "name": "POF",
+    "normalizedName": "POF",
     "description": "Production Office Admin"
   },
   {
     "type": "TSOF",
     "id": 32,
     "name": "TSOF",
+    "normalizedName": "TSOF",
     "description": "Typesetter"
   },
   {
     "type": "USERADMIN",
     "id": 91,
     "name": "USERADMIN",
-    "description": "user Admin"
+    "normalizedName": "USERADMIN",
+    "description": "User Admin"
   }
 ]

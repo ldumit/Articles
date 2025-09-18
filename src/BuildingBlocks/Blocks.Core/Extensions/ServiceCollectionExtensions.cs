@@ -5,78 +5,21 @@ namespace Blocks.Core;
 
 public static class ServiceCollectionExtensions
 {
-		public static IServiceCollection AddImplementationsOf<T>(
+		public static IServiceCollection AddDerivedTypesOf(
 				this IServiceCollection services,
+				Type baseType,
 				Assembly[]? assemblies = null,
 				ServiceLifetime lifetime = ServiceLifetime.Scoped)
 		{
-				assemblies ??= new[] { Assembly.GetCallingAssembly() };
-
-				var type = typeof(T);
-
-				var implementations = assemblies
-						.SelectMany(a => a.GetTypes())
-						.Where(t => type.IsAssignableFrom(t) && t is { IsClass: true, IsAbstract: false });
-
-				foreach (var impl in implementations)
-				{
-						services.Add(new ServiceDescriptor(type, impl, lifetime));
-				}
-
-				return services;
-		}
-
-		public static IServiceCollection AddImplementationsOfGeneric(
-				this IServiceCollection services,
-				Type genericBaseType,
-				Assembly[]? assemblies = null,
-				ServiceLifetime lifetime = ServiceLifetime.Scoped)
-		{
-				assemblies ??= new[] { Assembly.GetCallingAssembly() };
-
-				var types = assemblies
-						.SelectMany(a => a.GetTypes())
-						.Where(t =>
-								t.IsClass &&
-								!t.IsAbstract &&
-								t.BaseType != null &&
-								IsSubclassOfRawGeneric(t, genericBaseType));
-
-				foreach (var impl in types)
-				{
-						var baseType = impl.BaseType!;
-						services.Add(new ServiceDescriptor(baseType, impl, lifetime));
-				}
-
-				return services;
-		}
-
-		private static bool IsSubclassOfRawGeneric(Type type, Type genericBase)
-		{
-				while (type != null && type != typeof(object))
-				{
-						var cur = type.IsGenericType ? type.GetGenericTypeDefinition() : type;
-						if (genericBase == cur)
-								return true;
-						type = type.BaseType!;
-				}
-				return false;
-		}
-
-		public static IServiceCollection AddConcreteImplementationsOfGeneric(
-				this IServiceCollection services,
-				Type genericBaseType,
-				Assembly[]? assemblies = null,
-				ServiceLifetime lifetime = ServiceLifetime.Scoped)
-		{
-				assemblies ??= new[] { Assembly.GetCallingAssembly() };
+				assemblies ??= [ Assembly.GetCallingAssembly() ];
 
 				var implementations = assemblies
 						.SelectMany(a => a.GetTypes())
 						.Where(t =>
 								t.IsClass &&
 								!t.IsAbstract &&
-								InheritsFromGeneric(t, genericBaseType));
+								InheritsFrom(t, baseType))
+						.ToList();
 
 				foreach (var impl in implementations)
 				{
@@ -86,17 +29,23 @@ public static class ServiceCollectionExtensions
 				return services;
 		}
 
-		private static bool InheritsFromGeneric(Type type, Type genericBase)
+		private static bool InheritsFrom(Type type, Type baseType)
 		{
-				while (type != null && type != typeof(object))
+				var current = type;
+				while (current != null && current != typeof(object))
 				{
-						var cur = type.IsGenericType ? type.GetGenericTypeDefinition() : type;
-						if (cur == genericBase)
+						// Check for exact match (non-generic inheritance)
+						if (current == baseType)
 								return true;
-						type = type.BaseType;
+
+						// Check for generic type inheritance
+						if (current.IsGenericType && baseType.IsGenericTypeDefinition &&
+								current.GetGenericTypeDefinition() == baseType)
+								return true;
+
+						current = current.BaseType;
 				}
 				return false;
 		}
-
 }
 

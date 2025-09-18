@@ -1,7 +1,4 @@
 
-# talk 
-# - ports the 4000-4999 is one of the safe port range for development, but try to avoid the begining of the range if possible(4000) and starting with 44 it is easier to remember because you are using the same digit.
-# - separation between main and override. Keep the parts that doesn't change in the main file and the parts that change in the override file.'
 services:
   auth-api:
     environment:
@@ -34,11 +31,10 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
-#      - ConnectionStrings__Database=Host=localhost;Port=5432;Database=ArticleHubDb;Username=postgres;Password=Password123!
       - ConnectionStrings__Database=Server=postgres;Port=5432;Database=ArticleHubDb;User Id=postgres;Password=Password123!;Include Error Detail=true
     ports:
       - "4403:8080"
-      - "4453:8081"
+      - "4443:8081"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
@@ -49,12 +45,10 @@ services:
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
       - ConnectionStrings__Database=Server=sqlserver;Database=SubmissionDb;User Id=sa;Password=Password123!;Encrypt=False;TrustServerCertificate=True
-      # - RabbitMqOptions__Host=amqp://articles-mq:5672
-      # - RabbitMqOptions__UserName=guest
-      # - RabbitMqOptions__Password=guest 
+
     ports:
       - "4404:8080"
-      - "4454:8081"
+      - "4444:8081"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro  
@@ -65,12 +59,10 @@ services:
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
       - ConnectionStrings__Database=Server=sqlserver;Database=ReviewDb;User Id=sa;Password=Password123!;Encrypt=False;TrustServerCertificate=True
-      # - RabbitMqOptions__Host=amqp://articles-mq:5672
-      # - RabbitMqOptions__UserName=guest
-      # - RabbitMqOptions__Password=guest 
+
     ports:
       - "4405:8080"
-      - "4455:8081"
+      - "4445:8081"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro  
@@ -83,7 +75,7 @@ services:
   #     - ConnectionStrings__Database=Server=sqlserver;Database=ProductionDb;User Id=sa;Password=Password123!;Encrypt=False;TrustServerCertificate=True
   #   ports:
   #     - "4406:8080"
-  #     - "4456:8081"
+  #     - "4446:8081"
   #   volumes:
   #     - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
   #     - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
@@ -103,6 +95,7 @@ services:
       - "8801:8801"
 
   articlehub-hasura:
+    restart: always
     environment:
       - HASURA_GRAPHQL_DATABASE_URL=postgres://postgres:Password123!@postgres:5432/ArticleHubDb
       - HASURA_GRAPHQL_ADMIN_SECRET=secret

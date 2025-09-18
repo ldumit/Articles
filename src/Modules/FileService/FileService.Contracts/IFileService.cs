@@ -9,6 +9,7 @@ public interface IFileService<TFileStorageOptions> : IFileService
 
 public interface IFileService
 {
+		string GenerateId();
 		Task<FileMetadata> UploadAsync(string storagePath, IFormFile file, bool overwrite = false, Dictionary<string, string>? tags = null, CancellationToken ct = default);
 		Task<FileMetadata> UploadAsync(FileUploadRequest request, Stream stream, bool overwrite = false, Dictionary<string, string>? tags = null, CancellationToken ct = default);
 

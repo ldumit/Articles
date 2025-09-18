@@ -17,6 +17,8 @@ public class FileService : IFileService
 		public FileService(BlobContainerClient containerClient, IOptions<AzureBlobFileStorageOptions> options)
 				=> (_containerClient, _options) = (containerClient, options.Value);
 
+		public string GenerateId() => Guid.NewGuid().ToString();
+
 		public async Task<FileMetadata> UploadAsync(string storagePath, IFormFile file, bool overwrite = false, Dictionary<string, string>? tags = null, CancellationToken ct = default)
 		{
 				using var stream = file.OpenReadStream();

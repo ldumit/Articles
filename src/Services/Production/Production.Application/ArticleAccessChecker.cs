@@ -3,9 +3,9 @@ using Articles.Security;
 
 namespace Production.Application;
 
-public class ArticleRoleVerifier(ProductionDbContext _dbContext) : IArticleRoleVerifier
+public class ArticleAccessChecker(ProductionDbContext _dbContext) : IArticleAccessChecker
 {
-		public async Task<bool> UserHasRoleForArticle(int? articleId, int? userId, IEnumerable<UserRoleType> roles)
+		public async Task<bool> HasAccessAsync(int? articleId, int? userId, IReadOnlySet<UserRoleType> roles, CancellationToken ct = default)
 		{
 				// the endpoint is not article specific
 				if (articleId is null)
@@ -19,6 +19,6 @@ public class ArticleRoleVerifier(ProductionDbContext _dbContext) : IArticleRoleV
 						return true;
 
 				return await _dbContext.ArticleContributors
-						.AnyAsync(e => e.ArticleId == articleId && e.Person.UserId == userId && roles.Contains(e.Role));
+						.AnyAsync(e => e.ArticleId == articleId && e.Person.UserId == userId && roles.Contains(e.Role), ct);
 		}
 }

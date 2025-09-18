@@ -32,7 +32,7 @@ public static partial class DbContextExtensions
 				return JsonConvert.DeserializeObject<TEntity[]>(File.ReadAllText(filePath), DefaultSettings) ?? [];
 		}
 
-		public static void SeedFromJson<TEntity>(this DbContext context, string folderPath = "Data/Test")
+		public static void SeedFromJsonFile<TEntity>(this DbContext context, string folderPath = "Data/Test")
 				where TEntity : class
 		{
 				if (context.Set<TEntity>().Any())

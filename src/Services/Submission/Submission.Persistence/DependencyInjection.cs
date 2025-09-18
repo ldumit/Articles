@@ -31,7 +31,7 @@ public static class DependencyInjection
 				services.AddScoped<TransactionProvider>();
 
 				services.AddScoped(typeof(Repository<>)); // only Repository<>
-				services.AddConcreteImplementationsOfGeneric(typeof(Repository<>)); // inherits from Repository<>
+				services.AddDerivedTypesOf(typeof(Repository<>)); // inherits from Repository<>
 				services.AddScoped<AssetTypeRepository>(); // cached repository
 
 

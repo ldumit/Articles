@@ -14,7 +14,7 @@
     "FirstName": "Author",
     "LastName": "1",
     "Title": "Mr",
-    "Email": "author.1@articles.org",
+    "Email": "author.1@articles.test",
     "Affiliation": "Japan Aerospace Exploration Agency (JAXA)"
   },
   {
@@ -23,7 +23,7 @@
     "FirstName": "Author",
     "LastName": "2",
     "Title": "Ms",
-    "Email": "author.2@articles.com",
+    "Email": "author.2@articles.test",
     "Affiliation": "University of Maryland, College Park"
   },
   {
@@ -32,7 +32,7 @@
     "FirstName": "Author",
     "LastName": "3",
     "Title": "Dr",
-    "Email": "author.3@articles.com",
+    "Email": "author.3@articles.test",
     "Affiliation": "Tata Institute of Fundamental Research"
   },
   {
@@ -41,7 +41,7 @@
     "FirstName": "Cor-Author",
     "LastName": "1",
     "Title": "Ms",
-    "Email": "corauthor.1@articles.com",
+    "Email": "corauthor.1@articles.test",
     "Affiliation": "Indian Institute of Science Education and Research, Bhopal"
   },
   {
@@ -50,7 +50,7 @@
     "FirstName": "Cor-Author",
     "LastName": "2",
     "Title": "Mr",
-    "Email": "corauthor.2@articles.com",
+    "Email": "corauthor.2@articles.test",
     "Affiliation": "Helmholtz Centre for Materials and Coastal Research (HZG)"
   },
   {
@@ -59,7 +59,7 @@
     "FirstName": "Typesetter",
     "LastName": "1",
     "Title": "Mr",
-    "Email": "typesetter.1@articles.com",
+    "Email": "typesetter.1@articles.test",
     "CompanyName": "Tyepesetter1",
     "isDefault": true
   },
@@ -69,7 +69,7 @@
     "FirstName": "Typesetter",
     "LastName": "2",
     "Title": "Ms",
-    "Email": "typesetter.2@articles.com",
+    "Email": "typesetter.2@articles.test",
     "CompanyName": "Tyepesetter2",
     "isDefault": false
   },
@@ -79,7 +79,7 @@
     "FirstName": "Reviewer",
     "LastName": "1",
     "Title": "Mr",
-    "Email": "reviewer.1@articles.com"
+    "Email": "reviewer.1@articles.test"
   },
   {
     "UserId": 10,
@@ -87,7 +87,7 @@
     "FirstName": "Reviewer",
     "LastName": "2",
     "Title": "Ms",
-    "Email": "reviewer.2@articles.com"
+    "Email": "reviewer.2@articles.test"
   },
   {
     "UserId": 11,
@@ -95,7 +95,7 @@
     "FirstName": "POF",
     "LastName": "1",
     "Title": "Ms",
-    "Email": "pof.1@articles.com"
+    "Email": "pof.1@articles.test"
   },
   {
     "UserId": null,
@@ -103,7 +103,7 @@
     "FirstName": "Author",
     "LastName": "4-NoUser",
     "Title": "Mr",
-    "Email": "author.4@articles.org",
+    "Email": "author.4@articles.test",
     "Affiliation": "Tokyo University of Technology"
   }
 ]

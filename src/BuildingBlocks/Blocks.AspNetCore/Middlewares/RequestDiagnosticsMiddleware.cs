@@ -21,6 +21,19 @@ public sealed class RequestDiagnosticsMiddleware(RequestDelegate _next, ILogger<
 
 				var sw = Stopwatch.StartNew();
 
+				ctx.Response.OnStarting(() =>
+				{
+						if (!ctx.Response.Headers.ContainsKey("X-Correlation-ID"))
+								ctx.Response.Headers["X-Correlation-ID"] = correlationId;
+
+						if (_env.IsDevelopment() && !ctx.Response.Headers.ContainsKey("X-Elapsed-Ms"))
+								ctx.Response.Headers.Append("X-Elapsed-Ms", sw.ElapsedMilliseconds.ToString(CultureInfo.InvariantCulture));
+
+						return Task.CompletedTask;
+				});
+
+
+
 				try 
 				{ 
 						await _next(ctx); 
@@ -30,9 +43,6 @@ public sealed class RequestDiagnosticsMiddleware(RequestDelegate _next, ILogger<
 						sw.Stop();
 
 						var elapsedMs = sw.ElapsedMilliseconds;
-
-						if(_env.IsDevelopment())
-								ctx.Response.Headers["X-Elapsed-Ms"] = elapsedMs.ToString(CultureInfo.InvariantCulture);
 
 						// is file transfer?
 						var thresholdMs = requestContext.IsFileTransfer ? 3000 : 1000;
@@ -45,9 +55,6 @@ public sealed class RequestDiagnosticsMiddleware(RequestDelegate _next, ILogger<
 						// end
 						_logger.LogDebug("[End] HTTP {Method} {Path} -> {Status} in {Elapsed}ms | CorrelationId: {CorrelationId}",
 								ctx.Request.Method, ctx.Request.Path, ctx.Response.StatusCode, elapsedMs, correlationId);
-
-						// add correlation to the Response
-						ctx.Response.Headers["X-Correlation-ID"] = correlationId;
 				}
 		}
 }

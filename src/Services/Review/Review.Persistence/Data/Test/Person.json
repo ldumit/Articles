@@ -16,7 +16,7 @@
     "FirstName": "Author",
     "LastName": "1",
     "Honorific": "Mr",
-    "Email": {"Value":"author.1@articles.org"},
+    "Email": {"Value":"author.1@articles.test"},
     "Affiliation": "JTransatlantic Aerospace Technology Hub, Montreal",
     "Degree": "PhD",
     "Discipline": "Aerospace Engineering"
@@ -28,7 +28,7 @@
     "FirstName": "Author",
     "LastName": "2",
     "Honorific": "Ms",
-    "Email": {"Value":"author.2@articles.com"},
+    "Email": {"Value":"author.2@articles.test"},
     "Affiliation": "Centre for Sustainable Urban Technologies, Manchester"
   },
   //{
@@ -38,7 +38,7 @@
   //  "FirstName": "CorAuthor",
   //  "LastName": "1",
   //  "Honorific": "Ms",
-  //  "Email": {"Value":"corauthor.1@articles.com"},
+  //  "Email": {"Value":"corauthor.1@articles.test"},
   //  "Affiliation": "Foundation for Youth Innovation and Learning, Cape Town"
   //},
   {
@@ -48,7 +48,7 @@
     "FirstName": "CorAuthor",
     "LastName": "2",
     "Honorific": "Mr",
-    "Email": {"Value":"corauthor.2@articles.com"},
+    "Email": {"Value":"corauthor.2@articles.test"},
     "Affiliation": "International Institute of Aerospace Innovation, Abu Dhabi",
     "Degree": "MsC",
     "Discipline": "Planetary Science"
@@ -59,7 +59,7 @@
   //  "FirstName": "Reviewer",
   //  "LastName": "1",
   //  "Title": "Mr",
-  //  "Email": {"Value":"reviewer.1@articles.com"}
+  //  "Email": {"Value":"reviewer.1@articles.test"}
   //},
   //{
   //  "UserId": 8,
@@ -67,7 +67,7 @@
   //  "FirstName": "Reviewer",
   //  "LastName": "2",
   //  "Title": "Ms",
-  //  "Email": {"Value":"reviewer.2@articles.com"}
+  //  "Email": {"Value":"reviewer.2@articles.test"}
   //},
   //{
   //  "UserId": null,
@@ -75,7 +75,7 @@
   //  "FirstName": "Author",
   //  "LastName": "4-NoUser",
   //  "Title": "Mr",
-  //  "Email": {"Value":"author.4@articles.org"},
+  //  "Email": {"Value":"author.4@articles.test"},
   //  "Affiliation": "Tokyo University of Technology"
   //}
 ]

@@ -118,6 +118,7 @@ namespace Auth.Persistence.Migrations
                             Id = 1,
                             Description = "Editorial Office",
                             Name = "EOF",
+                            NormalizedName = "EOF",
                             Type = "EOF"
                         },
                         new
@@ -125,6 +126,7 @@ namespace Auth.Persistence.Migrations
                             Id = 11,
                             Description = "Author",
                             Name = "AUT",
+                            NormalizedName = "AUT",
                             Type = "AUT"
                         },
                         new
@@ -132,6 +134,7 @@ namespace Auth.Persistence.Migrations
                             Id = 12,
                             Description = "Corresponding Author",
                             Name = "CORAUT",
+                            NormalizedName = "CORAUT",
                             Type = "CORAUT"
                         },
                         new
@@ -139,6 +142,7 @@ namespace Auth.Persistence.Migrations
                             Id = 21,
                             Description = "Review Editor",
                             Name = "REVED",
+                            NormalizedName = "REVED",
                             Type = "REVED"
                         },
                         new
@@ -146,6 +150,7 @@ namespace Auth.Persistence.Migrations
                             Id = 22,
                             Description = "Reviewer",
                             Name = "REV",
+                            NormalizedName = "REV",
                             Type = "REV"
                         },
                         new
@@ -153,6 +158,7 @@ namespace Auth.Persistence.Migrations
                             Id = 31,
                             Description = "Production Office Admin",
                             Name = "POF",
+                            NormalizedName = "POF",
                             Type = "POF"
                         },
                         new
@@ -160,13 +166,15 @@ namespace Auth.Persistence.Migrations
                             Id = 32,
                             Description = "Typesetter",
                             Name = "TSOF",
+                            NormalizedName = "TSOF",
                             Type = "TSOF"
                         },
                         new
                         {
                             Id = 91,
-                            Description = "user Admin",
+                            Description = "User Admin",
                             Name = "USERADMIN",
+                            NormalizedName = "USERADMIN",
                             Type = "USERADMIN"
                         });
                 });

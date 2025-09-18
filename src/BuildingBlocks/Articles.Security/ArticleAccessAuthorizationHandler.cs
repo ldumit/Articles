@@ -1,27 +1,28 @@
 ﻿using Articles.Abstractions.Enums;
 using Blocks.AspNetCore;
-using Blocks.Core;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Articles.Security;
 
-public class ArticleAccessAuthorizationHandler(HttpContextProvider _httpProvider, IArticleRoleVerifier _articleRoleChecker)
+public class ArticleAccessAuthorizationHandler(HttpContextProvider _httpProvider, IArticleAccessChecker _articleRoleChecker)
 		: AuthorizationHandler<ArticleRoleRequirement>
 {
 		protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, ArticleRoleRequirement requirement)
 		{
-				//if (requirement.AllowedRoles.Any(context.User.IsInRole) && await HasUserRoleForArticle(requirement.AllowedRoles))
-				//{
-				//		context.Succeed(requirement);
-				//}
+				var userRoles = _httpProvider.GetUserRoles<UserRoleType>()
+													.Where(requirement.AllowedRoles.Contains)
+													.ToHashSet();
 
-				if (await HasUserRoleForArticle(requirement.AllowedRoles))
+				if (userRoles.Count > 0 
+						&& await HasUserRoleForArticle(userRoles))
+				{
 						context.Succeed(requirement);
+				}
 		}
 
-		private async Task<bool> HasUserRoleForArticle(IEnumerable<string> roles)
+		private async Task<bool> HasUserRoleForArticle(IReadOnlySet<UserRoleType> userRoles)
 		{
 				return await _articleRoleChecker
-						.UserHasRoleForArticle(_httpProvider.GetArticleId(), _httpProvider.GetUserId(), roles.Select(r => r.ToEnum<UserRoleType>()));
+						.HasAccessAsync(_httpProvider.GetArticleId(), _httpProvider.GetUserId(), userRoles, _httpProvider.HttpContext.RequestAborted);
 		}
 }

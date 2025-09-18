@@ -19,7 +19,7 @@
     }
   },
   {//2
-    "email": "author.1@articles.cs",
+    "email": "author.1@articles.test",
     "firstName": "Author",
     "lastName": "1",
     "gender": "Female",
@@ -31,14 +31,14 @@
       "affiliation": "Transatlantic Aerospace Technology Hub, Montreal"
     },
     "user": {
-      "email": "author.1@articles.cs",
+      "email": "author.1@articles.test",
       "userRoles": [
         { "roleId": 11, "beginDate": "2024-08-01" }
       ]
     }
   },
   {//3
-    "email": "author.2@articles.cs",
+    "email": "author.2@articles.test",
     "firstName": "Author",
     "lastName": "2",
     "gender": "Male",
@@ -56,7 +56,7 @@
     }
   },
   {//4
-    "email": "author.3@articles.cs",
+    "email": "author.3@articles.test",
     "firstName": "Author",
     "lastName": "3",
     "gender": "Male",
@@ -74,7 +74,7 @@
     }
   },
   {//5
-    "email": "corauthor.1@articles.cs",
+    "email": "corauthor.1@articles.test",
     "firstName": "CorAuthor",
     "lastName": "1",
     "gender": "Male",
@@ -92,7 +92,7 @@
     }
   },
   {//6
-    "email": "corauthor.2@articles.cs",
+    "email": "corauthor.2@articles.test",
     "firstName": "CorAuthor",
     "lastName": "2",
     "gender": "Female",
@@ -110,7 +110,7 @@
     }
   },
   {//7
-    "email": "reved.1@articles.cs",
+    "email": "reved.1@articles.test",
     "firstName": "RevEditor",
     "lastName": "1",
     "gender": "Male",
@@ -128,7 +128,7 @@
     }
   },
   {//8
-    "email": "reved.2@articles.cs",
+    "email": "reved.2@articles.test",
     "firstName": "RevEditor",
     "lastName": "2",
     "gender": "Female",
@@ -146,7 +146,7 @@
     }
   },
   {//9
-    "email": "reved.3@articles.cs",
+    "email": "reved.3@articles.test",
     "firstName": "RevEditor",
     "lastName": "3",
     "gender": "Female",
@@ -164,7 +164,7 @@
     }
   },
   {//10
-    "email": "rev.1@articles.cs",
+    "email": "rev.1@articles.test",
     "firstName": "Reviewer",
     "lastName": "1",
     "gender": "Male",
@@ -182,7 +182,7 @@
     }
   },
   {//11
-    "email": "rev.2@articles.cs",
+    "email": "rev.2@articles.test",
     "firstName": "Reviewer",
     "lastName": "2",
     "gender": "Male",
@@ -200,7 +200,7 @@
     }
   },
   {//12
-    "email": "rev.3@articles.cs",
+    "email": "rev.3@articles.test",
     "firstName": "Reviewer",
     "lastName": "3",
     "gender": "Male",
@@ -218,7 +218,7 @@
     }
   },
   {//13
-    "email": "typesetter.1@articles.cs",
+    "email": "typesetter.1@articles.test",
     "firstName": "Typesetter",
     "lastName": "1",
     "gender": "Female",
@@ -236,7 +236,7 @@
     }
   },
   {//14
-    "email": "typesetter.2@articles.cs",
+    "email": "typesetter.2@articles.test",
     "firstName": "Typesetter",
     "lastName": "2",
     "gender": "Female",
@@ -254,7 +254,7 @@
     }
   },
   {//15
-    "email": "pof.1@articles.cs",
+    "email": "pof.1@articles.test",
     "firstName": "POF",
     "lastName": "1",
     "gender": "Female",
@@ -272,7 +272,7 @@
     }
   },
   {//16
-    "email": "eof.1@articles.cs",
+    "email": "eof.1@articles.test",
     "firstName": "EOF",
     "lastName": "1",
     "gender": "Male",

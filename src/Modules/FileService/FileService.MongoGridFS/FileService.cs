@@ -21,6 +21,8 @@ public class FileService<TFileStorageOptions> : IFileService<TFileStorageOptions
 		public FileService(GridFSBucket bucket, IOptions<TFileStorageOptions> options)
 				=> (_bucket, _options) = (bucket, options.Value);
 
+		public string GenerateId() => ObjectId.GenerateNewId().ToString();
+
 		public async Task<FileMetadata> UploadAsync(string storagePath, IFormFile file, bool overwrite = false, Dictionary<string, string>? tags = null, CancellationToken ct = default)
 		{
 				using var stream = file.OpenReadStream();

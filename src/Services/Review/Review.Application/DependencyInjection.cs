@@ -31,7 +31,7 @@ public static class DependencyInjection
 						.AddMassTransitWithRabbitMQ(configuration, Assembly.GetExecutingAssembly()); ;
 
 				services.AddScoped<IDomainEventPublisher, DomainEventPublisher>();
-				services.AddScoped<IArticleRoleVerifier, ArticleRoleVerifier>();
+				services.AddScoped<IArticleAccessChecker, ArticleAccessChecker>();
 
 				services.AddScoped<ArticleStateMachineFactory>(provider => articleStage =>
 				{

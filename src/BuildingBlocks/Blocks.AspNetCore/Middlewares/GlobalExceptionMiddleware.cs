@@ -19,6 +19,7 @@ public sealed class GlobalExceptionMiddleware(RequestDelegate _next, ILogger<Glo
 				BadRequestException => HttpStatusCode.BadRequest,
 				NotFoundException => HttpStatusCode.NotFound,
 				DomainException => HttpStatusCode.BadRequest,
+				UnauthorizedException => HttpStatusCode.Unauthorized,
 				_ => HttpStatusCode.InternalServerError
 		};
 
@@ -75,8 +76,8 @@ public sealed class GlobalExceptionMiddleware(RequestDelegate _next, ILogger<Glo
 						StatusCode = (int)HttpStatusCode.BadRequest,
 						Message = "One or more validation errors occurred.",
 						TraceId = context.TraceIdentifier,
-						Details = _env.IsDevelopment() ? exception.StackTrace : null,
-						Errors = validationErrors
+						Errors = validationErrors,
+						Details = _env.IsDevelopment() ? exception.StackTrace : null
 				};
 
 				return WriteResponseAsync(context, HttpStatusCode.BadRequest, response);

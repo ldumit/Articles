@@ -13,7 +13,7 @@ public static class DependencyInjection
 				//services.AddFeatureManagement();
 				//services.AddMessageBroker(configuration, Assembly.GetExecutingAssembly());
 
-				services.AddScoped<IArticleRoleVerifier, ArticleRoleVerifier>();
+				services.AddScoped<IArticleAccessChecker, ArticleAccessChecker>();
 
 				services.AddScoped<ArticleStateMachineFactory>(provider => articleStage =>
 				{
