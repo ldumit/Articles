@@ -11,9 +11,9 @@ public static class UploadSupplimentaryMaterialFileEndpoint
 				async ([FromRoute] int articleId, [FromForm] UploadSupplementaryFileCommand command, ISender sender) =>
 				{
 						var response = await sender.Send(command with { ArticleId = articleId });
-						return Results.Created($"/api/articles/{command.ArticleId}/assets/{response.Id}:download", response);
+						return Results.Created($"/api/articles/{articleId}/assets/{response.Id}:download", response);
 				})
-				.RequireRoleAuthorization(Role.CORAUT) //todo - is ArticleRoleAuthorizationHandler enough? test it! 
+				.RequireRoleAuthorization(Role.CORAUT)
 				.WithName("UploadSupplimentaryMaterials")
 				.WithTags("Assets")
 				.Produces<IdResponse>(StatusCodes.Status201Created)

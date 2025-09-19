@@ -11,7 +11,7 @@ public static class UploadManuscriptFileEndpoint
 						async ([FromRoute] int articleId, [FromForm] UploadManuscriptFileCommand command, ISender sender) =>
 				{
 						var response = await sender.Send(command with { ArticleId = articleId });
-						return Results.Created($"/api/articles/{command.ArticleId}/assets/{response.Id}:download", response);
+						return Results.Created($"/api/articles/{articleId}/assets/{response.Id}:download", response);
 				})
 				.RequireRoleAuthorization(Role.CORAUT)
 				.WithName("UploadManuscript")
