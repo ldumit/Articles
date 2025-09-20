@@ -9,7 +9,7 @@ using Production.Persistence;
 
 namespace Production.API.Features.Articles.AssignTypesetter;
 
-[Authorize(Roles = Role.POF)]
+[Authorize(Roles = Role.ProdAdmin)]
 [HttpPut("articles/{articleId:int}/typesetter/{typesetterId:int}")]
 [Tags("Articles")]
 public class AssignTypesetterEndpoint(ArticleRepository articleRepository, ArticleStateMachineFactory _stateMachineFactory, ProductionDbContext _dbContext) 

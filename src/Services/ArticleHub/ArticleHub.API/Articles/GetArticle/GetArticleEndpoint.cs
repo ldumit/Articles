@@ -1,8 +1,6 @@
-﻿using ArticleHub.Domain.Entities;
-using ArticleHub.Persistence.Repositories;
-using Blocks.EntityFrameworkCore;
-using Carter;
-using Microsoft.AspNetCore.Mvc;
+﻿using Carter;
+using ArticleHub.Domain.Dtos;
+using ArticleHub.Persistence;
 
 namespace ArticleHub.API.Articles.GetArticle;
 
@@ -10,16 +8,18 @@ public class GetArticleEndpoint : ICarterModule
 {
 		public void AddRoutes(IEndpointRouteBuilder app)
 		{
-				app.MapGet("/articles/{articleId:int}", async (int articleId, [FromServices] Repository<Article> repository, CancellationToken ct) =>
+				app.MapGet("/articles/{articleId:int}", async (int articleId, ArticleGraphQLReadStore graphQLReadStore, CancellationToken ct) =>
 				{
-						var article = await repository.GetByIdOrThrowAsync(articleId, ct);
-
-						return Results.Ok(article);
+						var article = await graphQLReadStore.GetArticleById(articleId, ct);
+						if(article == null)
+								return Results.NotFound();
+						else
+								return Results.Ok(article);
 				})
 				.RequireAuthorization() // allows all authenticated users
 				.WithName("GetArticle")
 				.WithTags("Articles")
-				.Produces<Article>(StatusCodes.Status200OK)
+				.Produces<ArticleDto>(StatusCodes.Status200OK)
 				.ProducesProblem(StatusCodes.Status404NotFound)
 				.ProducesProblem(StatusCodes.Status401Unauthorized);
 		}

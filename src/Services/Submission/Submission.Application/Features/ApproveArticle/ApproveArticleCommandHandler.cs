@@ -13,7 +13,7 @@ public class ApproveArticleCommandHandler
 				var article = await _articleRepository.FindByIdOrThrowAsync(command.ArticleId);
 
 				if (!await IsEditorAssignedToJournal(article.JournalId, command.CreatedById))
-						throw new BadRequestException($"Editor is not assigned to the article's Journal {article.JournalId}");
+						throw new BadRequestException($"Editor is not assigned to the article's Journal (Id: {article.JournalId})");
 
 				var editor = await GetOrCreatePersonByUserId(command.CreatedById, command, ct);
 

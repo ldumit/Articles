@@ -8,7 +8,7 @@ using Production.Domain.Assets.Enums;
 
 namespace Production.API.Features.Assets.ApproveAssets.Draft;
 
-[Authorize(Roles = $"{Role.POF},{Role.CORAUT}")]
+[Authorize(Roles = $"{Role.ProdAdmin},{Role.CorrAuthor}")]
 [HttpPut("articles/{articleId:int}/assets/draft/{assetId:int}:approve")]
 [Tags("Assets")]
 

@@ -6,7 +6,7 @@ using Production.Persistence.Repositories;
 
 namespace Production.API.Features.Assets.RequestAssets.Supplementary;
 
-[Authorize(Roles = Role.TSOF)]
+[Authorize(Roles = Role.Typesetter)]
 [HttpPut("articles/{articleId:int}/assets/supplementary:request")]
 [Tags("Assets")]
 public class RequestSupplementaryAssetsEndpoint(ArticleRepository articleRepository, AssetTypeRepository assetTypeRepository, AssetStateMachineFactory factory)

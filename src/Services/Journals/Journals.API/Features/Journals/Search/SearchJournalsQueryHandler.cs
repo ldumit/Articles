@@ -6,7 +6,7 @@ using Journals.API.Features.Shared;
 
 namespace Journals.API.Features.Journals.Search;
 
-[Authorize(Roles = Role.EOF)]
+[Authorize(Roles = Role.EditorAdmin)]
 [HttpGet("journals")]
 [Tags("Journals")]
 public class SearchJournalsQueryHandler(Repository<Journal> _repository, Repository<Editor> _editorRepository)

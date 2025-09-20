@@ -14,7 +14,7 @@ public class UploadManuscriptFileEndpoint : ICarterModule
 						var response = await sender.Send(command);
 						return Results.Created($"/api/articles/{command.ArticleId}/assets/{response.Id}:download", response);
 				})
-				.RequireRoleAuthorization(Role.CORAUT)
+				.RequireRoleAuthorization(Role.CorrAuthor)
 				.WithName("UploadManuscript")
 				.WithTags("Assets")
 				.Produces<IdResponse>(StatusCodes.Status201Created)

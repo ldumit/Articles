@@ -9,7 +9,7 @@ using Journals.Domain.Journals.Events;
 
 namespace Journals.API.Features.Journals.Update;
 
-[Authorize(Roles = Role.EOF)]
+[Authorize(Roles = Role.EditorAdmin)]
 [HttpPut("journals/{journalId:int}")]
 [Tags("Journals")]
 public class UpdateJournalEndpoint(Repository<Journal> _journalRepository)

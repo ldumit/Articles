@@ -5,7 +5,7 @@ using Production.Persistence.Repositories;
 
 namespace Production.API.Features.Assets.RequestAssets.Final;
 
-[Authorize(Roles = Role.POF)]
+[Authorize(Roles = Role.ProdAdmin)]
 //talk about custom verbs
 [HttpPut("articles/{articleId:int}/assets/final:request")]
 [Tags("Assets")]

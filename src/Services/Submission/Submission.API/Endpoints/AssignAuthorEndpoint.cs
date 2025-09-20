@@ -11,7 +11,7 @@ public static class AssignAuthorEndpoint
 						var response = await sender.Send(command with { ArticleId = articleId, AuthorId = authorId});
 						return Results.Ok(response);
 				})
-				.RequireRoleAuthorization(Role.CORAUT)
+				.RequireRoleAuthorization(Role.CorrAuthor)
 				.WithName("AssignAuthor")
 				.WithTags("Articles")
 				.Produces<IdResponse>(StatusCodes.Status200OK)

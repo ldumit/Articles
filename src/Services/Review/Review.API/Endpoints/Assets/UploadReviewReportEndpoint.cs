@@ -14,7 +14,7 @@ namespace Review.API.Endpoints.Assets
 								var response = await sender.Send(command);
 								return Results.Created($"/api/articles/{command.ArticleId}/assets/{response.Id}:download", response);
 						})
-						.RequireRoleAuthorization(Role.REV)
+						.RequireRoleAuthorization(Role.Reviewer)
 						.WithName("UploadReviewReport")
 						.WithTags("Assets")
 						.Produces<IdResponse>(StatusCodes.Status201Created)

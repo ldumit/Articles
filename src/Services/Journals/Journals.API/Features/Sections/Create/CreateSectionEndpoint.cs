@@ -6,7 +6,7 @@ using Blocks.Redis;
 
 namespace Journals.API.Features.Sections.Create;
 
-[Authorize(Roles = Role.EOF)]
+[Authorize(Roles = Role.EditorAdmin)]
 [HttpPost("journals/{journalId:int}/sections")]
 [Tags("Sections")]
 public class CreateSectionEndpoint(Repository<Journal> _repository)

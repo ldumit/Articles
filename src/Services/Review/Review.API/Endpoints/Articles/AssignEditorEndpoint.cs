@@ -11,7 +11,7 @@ public class AssignEditorEndpoint : ICarterModule
 						var response = await sender.Send(command with { ArticleId = articleId, EditorId = editorId});
 						return Results.Ok(response);
 				})
-				.RequireRoleAuthorization(Role.EOF)
+				.RequireRoleAuthorization(Role.EditorAdmin)
 				.WithName("AssignEditor")
 				.WithTags("Articles")
 				.Produces<IdResponse>(StatusCodes.Status200OK)

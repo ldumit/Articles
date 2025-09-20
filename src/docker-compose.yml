@@ -19,9 +19,12 @@ services:
   articleHub-api:
     image: ${DOCKER_REGISTRY-}articlehub-api
     depends_on:
-      - postgres
-      - articlehub-hasura
-      - rabbitmq
+        postgres:
+            condition: service_healthy
+        articlehub-hasura:
+            condition: service_started
+        rabbitmq:
+            condition: service_started
     build:
       context: .
       dockerfile: Services/ArticleHub/ArticleHub.API/Dockerfile
@@ -55,9 +58,13 @@ services:
 
   sqlserver:
     image: mcr.microsoft.com/mssql/server
+    volumes:
+      - sqlserver_data:/var/opt/mssql
 
   journals-redisdb:
     image: redis/redis-stack
+    volumes:
+      - journals_redisdb_data:/data
 
   articlehub-hasura:
     image: hasura/graphql-engine
@@ -67,21 +74,28 @@ services:
 #talk: separation beetwen main and override files
   postgres:
     image: postgres
-    # volumes:
-    #   - articlehub_data:/var/lib/postgresql/data/ 
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app -d articles"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
   
   mongo-gridfs:
     image: mongo:6.0
     container_name: mongo-gridfs
-    # volumes:
-    #   - mongo_gridfs_data:/data/db
+    volumes:
+      - mongo_gridfs_data:/data/db
 
   rabbitmq:
     image: "rabbitmq:management"
-    # volumes:
-    #   - rabbitmq_data:/var/lib/rabbitmq
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
 
 volumes:
-  articlehub_data:
-  rabbitmq_data:
+  postgres_data:
+  sqlserver_data:
   mongo_gridfs_data:
+  rabbitmq_data:
+  journals_redisdb_data:

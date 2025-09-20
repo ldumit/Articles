@@ -4,7 +4,7 @@ using Production.Persistence.Repositories;
 
 namespace Production.API.Features.Articles.GetArticle;
 
-[Authorize(Roles = $"{Role.POF},{Role.CORAUT},{Role.TSOF}")]
+[Authorize(Roles = $"{Role.ProdAdmin},{Role.CorrAuthor},{Role.Typesetter}")]
 [HttpGet("articles/{articleId:int}/assets")]
 public class GetArticleAssetsEndpointEndpoint(ArticleRepository _articleRepository) : Endpoint<GetArticleAssetsQuery>
 {

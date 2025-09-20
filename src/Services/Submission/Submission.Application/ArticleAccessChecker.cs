@@ -13,7 +13,7 @@ public class ArticleAccessChecker(SubmissionDbContext _dbContext) : IArticleAcce
 				if (userId is null || roles.IsNullOrEmpty()) 
 						return false;
 				
-				if(roles.Contains(UserRoleType.EOF)) //editorial admin users have access to all articles
+				if(roles.Overlaps([UserRoleType.EOF, UserRoleType.REVED])) //editorial admin and edito users have access to all articles
 						return true;
 
 				return await _dbContext.ArticleActors

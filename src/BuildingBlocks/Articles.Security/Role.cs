@@ -5,15 +5,15 @@ namespace Articles.Security;
 
 public static class Role
 {
-		public const string ADMIN = nameof(UserRoleType.USERADMIN);
+		public const string UserAdmin = nameof(UserRoleType.USERADMIN);
 
-		public const string EOF = nameof(UserRoleType.EOF);
-		public const string CORAUT = nameof(UserRoleType.CORAUT);
+		public const string EditorAdmin = nameof(UserRoleType.EOF);
+		public const string CorrAuthor = nameof(UserRoleType.CORAUT);
 
-		public const string REVED = nameof(UserRoleType.REVED);
-		public const string REV = nameof(UserRoleType.REV);
+		public const string Editor = nameof(UserRoleType.REVED);
+		public const string Reviewer = nameof(UserRoleType.REV);
 
-		public const string POF = nameof(UserRoleType.POF);
-		public const string TSOF = nameof(UserRoleType.TSOF);
+		public const string ProdAdmin = nameof(UserRoleType.POF);
+		public const string Typesetter = nameof(UserRoleType.TSOF);
 
 }

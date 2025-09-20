@@ -11,7 +11,7 @@ public static class RejectArticleEndpoint
 						var response = await sender.Send(command with { ArticleId = articleId });
 						return Results.Ok(response);
 				})
-				.RequireRoleAuthorization(Role.EOF)
+				.RequireRoleAuthorization(Role.Editor, Role.EditorAdmin)
 				.WithName("RejectArticle")
 				.WithTags("Articles")
 				.Produces<IdResponse>(StatusCodes.Status200OK)

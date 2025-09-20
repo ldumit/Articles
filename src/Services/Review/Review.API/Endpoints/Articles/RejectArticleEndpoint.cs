@@ -12,7 +12,7 @@ public class RejectArticleEndpoint : ICarterModule
 						var response = await sender.Send(command);
 						return Results.Ok(response);
 				})
-				.RequireRoleAuthorization(Role.EOF)
+				.RequireRoleAuthorization(Role.Editor, Role.EditorAdmin)
 				.WithName("RejectArticle")
 				.WithTags("Articles")
 				.Produces<IdResponse>(StatusCodes.Status200OK)

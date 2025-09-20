@@ -9,7 +9,7 @@ using Production.API.Features.Assets.UploadFiles._Shared;
 
 namespace Production.API.Features.Assets.UploadFiles.UploadDraftFile;
 
-[Authorize(Roles = Role.TSOF)]
+[Authorize(Roles = Role.Typesetter)]
 [HttpPost("articles/{articleId:int}/assets/draft/files:upload")]
 [AllowFileUploads]
 [Tags("Files")]

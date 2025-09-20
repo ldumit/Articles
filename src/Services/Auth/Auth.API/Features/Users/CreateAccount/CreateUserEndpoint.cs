@@ -7,7 +7,7 @@ using Auth.Persistence;
 
 namespace Auth.API.Features.Users.CreateAccount;
 
-[Authorize(Roles = Articles.Security.Role.ADMIN)]
+[Authorize(Roles = Articles.Security.Role.UserAdmin)]
 [HttpPost("users")]
 [Tags("Users")]
 public class CreateUserEndpoint(UserManager<User> _userManager, PersonRepository _personRepository, AuthDbContext _dbContext) 

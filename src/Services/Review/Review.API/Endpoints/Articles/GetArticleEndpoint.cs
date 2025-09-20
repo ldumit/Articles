@@ -11,7 +11,7 @@ public class GetArticleEndpoint : ICarterModule
 						var article = await sender.Send(query);
 						return Results.Ok(article);
 				})
-				.RequireRoleAuthorization(Role.CORAUT, Role.EOF)
+				.RequireRoleAuthorization(Role.CorrAuthor, Role.Editor, Role.Reviewer, Role.EditorAdmin)
 				.WithName("GetArticle")
 				.WithTags("Articles")
 				.Produces<GetArticleResonse>(StatusCodes.Status200OK)

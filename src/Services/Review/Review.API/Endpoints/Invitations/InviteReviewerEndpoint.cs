@@ -12,7 +12,7 @@ public class InviteReviewerEndpoint: ICarterModule
 						var response = await sender.Send(command);
 						return Results.Ok(response);
 				})
-				.RequireRoleAuthorization(Role.REVED, Role.EOF)
+				.RequireRoleAuthorization(Role.Editor, Role.EditorAdmin)
 				.WithName("Invite Reviewer")
 				.WithTags("Invitations")
 				.Produces<IdResponse>(StatusCodes.Status200OK)

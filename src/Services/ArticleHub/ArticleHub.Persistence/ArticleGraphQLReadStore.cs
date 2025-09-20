@@ -2,67 +2,68 @@
 using GraphQL.Client.Http;
 using Blocks.Core.GraphQL;
 using ArticleHub.Domain.Dtos;
+using FluentValidation;
+using FluentValidation.Results;
 
 namespace ArticleHub.Persistence;
 
 public class ArticleGraphQLReadStore(GraphQLHttpClient client)
 {
 		private readonly GraphQLHttpClient _client = client;
+
+		// Shared fragment (reuse in all Gets))
+		private const string ArticleFragment = @"
+fragment ArticleDto on Articles {
+  id
+  title
+  doi
+  stage
+  submittedOn
+  acceptedOn
+  publishedOn
+  journal { id abbreviation name }
+  submittedBy: person { id email firstName lastName userId }
+}";
+
 		public async Task<QueryResult<ArticleDto>> GetArticlesAsync(object filter, int limit = 20, int offset = 0, CancellationToken ct = default)
 		{
-				//todo - build an ednpoint that will return metadata about articles so it can be used to filter articles
-				var query = new GraphQLRequest
+				var req = new GraphQLRequest
 				{
-						Query = @"
-                query GetArticles($filter: article_bool_exp) {
-                    items:article(where: $filter)  {
-												id
-												title    
-												doi
-												stage
-												submittedon
-												publishedon
-												acceptedon
-												journal {
-													abbreviation
-													name
-												}
-												submittedby:person {
-													email
-													firstname
-													lastname
-												}
-										}
-                }",
-
+						OperationName = "GetArticles",
+						Query = ArticleFragment + @"
+query GetArticles($filter: ArticlesBoolExp, $limit: Int = 20, $offset: Int = 0) {
+  items: articles(where: $filter, limit: $limit, offset: $offset) {
+    ...ArticleDto
+  }
+}",
 						Variables = new { filter, limit, offset }
 				};
 
+				var res = await _client.SendQueryAsync<QueryResult<ArticleDto>>(req, ct);
+				if (res.Errors?.Length > 0) //todo create a custom exception for GraphQL errors
+						throw new ValidationException("GraphQL error", res.Errors.Select(e => new ValidationFailure("GraphQL", e.Message)));
 
-				var response = await _client.SendQueryAsync<QueryResult<ArticleDto>>(query, ct);
-				return response.Data;
+				return res.Data ?? new QueryResult<ArticleDto>(new());
 		}
 
-		public async Task<QueryResult<ArticleDto>> GetArticlesAsync(Dictionary<string, object?> filters)
+		public async Task<ArticleDto?> GetArticleById(int id, CancellationToken ct = default)
 		{
-				string filterQuery = BuildFilterQuery(filters);
-
-				return await GetArticlesAsync(filterQuery);
-
-		}
-
-		private string BuildFilterQuery(Dictionary<string, object?>? filters)
-		{
-				if (filters == null || filters.Count == 0)
+				var req = new GraphQLRequest
 				{
-						return "{}";
-				}
+						OperationName = "GetArticleById",
+						Query = ArticleFragment + @"
+query GetArticleById($id: Int!) {
+  item: articlesByPk(id: $id) {
+    ...ArticleDto
+  }
+}",
+						Variables = new { id }
+				};
 
-				var filterParts = filters
-						.Select(kv => $"{kv.Key}: {kv.Value}")
-						.Aggregate((current, next) => $"{current}, {next}");
+				var res = await _client.SendQueryAsync<SingleResult<ArticleDto>>(req, ct);
+				if (res.Errors?.Length > 0)
+						throw new ValidationException("GraphQL error", res.Errors.Select(e => new ValidationFailure("GraphQL", e.Message)));
 
-				return $"{{ {filterParts} }}";
+				return res.Data?.Item;
 		}
 }
-

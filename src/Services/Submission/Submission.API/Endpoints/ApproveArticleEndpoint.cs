@@ -12,7 +12,7 @@ public static class ApproveArticleEndpoint
 						var response = await sender.Send(command with { ArticleId = articleId });
 						return Results.Ok(response);
 				})
-				.RequireRoleAuthorization(Role.EOF, Role.REVED)
+				.RequireRoleAuthorization(Role.Editor, Role.EditorAdmin)
 				.WithName("ApproveArticle")
 				.WithTags("Articles")
 				.Produces<IdResponse>(StatusCodes.Status200OK)

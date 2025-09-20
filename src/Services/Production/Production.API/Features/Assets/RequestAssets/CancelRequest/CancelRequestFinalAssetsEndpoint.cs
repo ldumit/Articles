@@ -8,7 +8,7 @@ using Production.Persistence.Repositories;
 
 namespace Production.API.Features.Assets.RequestAssets.CancelRequest;
 
-[Authorize(Roles = Role.POF)]
+[Authorize(Roles = Role.ProdAdmin)]
 [HttpPut("articles/{articleId:int}/assets/final:cancel-request")]
 [Tags("Assets")]
 public class CancelRequestFinalAssetsEndpoint(ArticleRepository articleRepository, AssetRepository _assetRepository)

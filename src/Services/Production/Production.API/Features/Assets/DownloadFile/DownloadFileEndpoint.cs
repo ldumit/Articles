@@ -3,7 +3,7 @@ using Production.Persistence.Repositories;
 
 namespace Production.API.Features.Assets.DownloadFile;
 
-[Authorize(Roles = $"{Role.POF},{Role.CORAUT},{Role.TSOF}")]
+[Authorize(Roles = $"{Role.ProdAdmin},{Role.CorrAuthor},{Role.Typesetter}")]
 [HttpGet("articles/{articleId:int}/files/{fileId:int}")]
 public class DownloadFileEndpoint(FileRepository _fileRepository, IFileService _fileService) : Endpoint<DownloadFileCommand>
 {

@@ -5,7 +5,7 @@ using Production.API.Features.Assets.UploadFiles._Shared;
 
 namespace Production.API.Features.Assets.UploadFiles.UploadFinalFile;
 
-[Authorize(Roles = Role.TSOF)]
+[Authorize(Roles = Role.Typesetter)]
 [HttpPost("articles/{articleId:int}/assets/final/files:upload")]
 [AllowFileUploads]
 [Tags("Files")]

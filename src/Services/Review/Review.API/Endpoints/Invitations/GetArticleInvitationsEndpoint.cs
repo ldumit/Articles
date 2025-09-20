@@ -11,7 +11,7 @@ public class GetArticleInvitationsEndpoint : ICarterModule
 						var article = await sender.Send(query);
 						return Results.Ok(article);
 				})
-				.RequireRoleAuthorization(Role.EOF, Role.REVED)
+				.RequireRoleAuthorization(Role.Editor, Role.EditorAdmin)
 				.WithName("GetArticleInvitations")
 				.WithTags("Invitations")
 				.Produces<GetArticleInvitationsResonse>(StatusCodes.Status200OK)

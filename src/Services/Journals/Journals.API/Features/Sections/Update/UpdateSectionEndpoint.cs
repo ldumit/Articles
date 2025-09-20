@@ -10,7 +10,7 @@ using Journals.Domain.Journals.Events;
 
 namespace Journals.API.Features.Sections.Update;
 
-[Authorize(Roles = Role.EOF)]
+[Authorize(Roles = Role.EditorAdmin)]
 [HttpPut("journals/{journalId:int}/sections/{sectionId:int}")]
 [Tags("Sections")]
 public class UpdateSectionEndpoint(Repository<Journal> _repository)
