@@ -33,10 +33,9 @@ public class AcceptInvitationCommandHandler(ArticleRepository _articleRepository
 								reviewer = await CreateReviewerFromPerson(response.PersonInfo, article, command, ct);
 						}
 						command.CreatedById = reviewer.UserId!.Value;
-						//throw new NotImplementedException("The reviewer doesn't exist as a user, create an account first.");
 				}
 
-				//keeping those 2 methods separatly, allows us to assign reviewers directly without an invitation
+				//keeping those 2 methods separately, allows us to assign reviewers directly without an invitation
 				invitation.Accept();
 				article.AssignReviewer(reviewer, command);
 

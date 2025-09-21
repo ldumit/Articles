@@ -3,6 +3,7 @@ using Review.Domain.Shared.Enums;
 
 namespace Review.Application.Features.Invitations.AcceptInvitation;
 
+//todo - decline and accept invitation are not AuditedtCommands, because the endpoints are anonymous
 public record DeclineInvitationCommand(string Token)
     : ArticleCommand<DeclineInvitationResponse>
 {

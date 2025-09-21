@@ -21,8 +21,8 @@ public abstract class AggregateRoot<TPrimaryKey> : Entity<TPrimaryKey>, IAggrega
 {
 		//talk - audited properties are required only in the aggregates because when we are saving the other entities they are going to be part of an aggregate
 		// therefore they are going to inherit the same audited values
-		public TPrimaryKey CreatedById { get; set; }
-		public DateTime CreatedOn { get; set; }
+		public TPrimaryKey CreatedById { get; init; }
+		public DateTime CreatedOn { get; init; } = DateTime.UtcNow;
 		public TPrimaryKey? LastModifiedById { get; set; }
 		public DateTime? LastModifiedOn { get; set; }
 

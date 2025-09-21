@@ -20,8 +20,8 @@ public partial class User : IdentityUser<int>, IAggregateRoot
 		public virtual IReadOnlyList<RefreshToken> RefreshTokens => _refreshTokens;
 
 		//Audit
-		public int CreatedById { get; set; } = default!;
-		public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
+		public int CreatedById { get; init; } = default!;
+		public DateTime CreatedOn { get; init; } = DateTime.UtcNow;
 		public int? LastModifiedById { get; set; } = 0;
 		public DateTime? LastModifiedOn { get; set; } = DateTime.UtcNow;
 

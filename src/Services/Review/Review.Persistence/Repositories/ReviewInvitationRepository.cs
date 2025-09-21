@@ -22,7 +22,7 @@ public class ReviewInvitationRepository(ReviewDbContext dbContext)
 								x.Status == InvitationStatus.Open &&
 								(
 										(userId != null && x.UserId == userId) ||
-										(userId == null && x.Email == email!)
+										(userId == null && x.Email.Value == email!)
 								),
 								ct);
 		}
