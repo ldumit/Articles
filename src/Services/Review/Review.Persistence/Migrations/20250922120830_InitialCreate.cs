@@ -187,6 +187,8 @@ namespace Review.Persistence.Migrations
                 name: "ArticleActor",
                 columns: table => new
                 {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     ArticleId = table.Column<int>(type: "int", nullable: false),
                     PersonId = table.Column<int>(type: "int", nullable: false),
                     Role = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false, defaultValue: "AUT"),
@@ -195,7 +197,7 @@ namespace Review.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ArticleActor", x => new { x.ArticleId, x.PersonId, x.Role });
+                    table.PrimaryKey("PK_ArticleActor", x => x.Id);
                     table.ForeignKey(
                         name: "FK_ArticleActor_Article_ArticleId",
                         column: x => x.ArticleId,
@@ -369,6 +371,12 @@ namespace Review.Persistence.Migrations
                 name: "IX_ArticleAction_ArticleId",
                 table: "ArticleAction",
                 column: "ArticleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ArticleActor_ArticleId_PersonId_Role",
+                table: "ArticleActor",
+                columns: new[] { "ArticleId", "PersonId", "Role" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_ArticleActor_PersonId",

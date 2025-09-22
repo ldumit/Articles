@@ -29,8 +29,13 @@ public class InviteReviewerCommandValidator : AbstractValidator<InviteReviewerCo
 						RuleFor(x => x.LastName)
 								.NotEmpty()
 								.MaximumLength(MaxLength.C256);
-								//.NotEmptyWithMessage(nameof(InviteReviewerCommand.LastName))
-								//.MaximumLengthWithMessage(MaxLength.C256, nameof(InviteReviewerCommand.LastName));
+						//.NotEmptyWithMessage(nameof(InviteReviewerCommand.LastName))
+						//.MaximumLengthWithMessage(MaxLength.C256, nameof(InviteReviewerCommand.LastName));
+
+						//RuleFor(x => x.Affiliation)
+						//		.NotEmptyWithMessage(nameof(InviteReviewerCommand.Affiliation))
+						//		.MaximumLengthWithMessage(MaxLength.C256, nameof(InviteReviewerCommand.Affiliation));
+
 				});
     }
 }

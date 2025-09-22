@@ -1,4 +1,5 @@
 ﻿namespace Submission.Persistence.EntityConfigurations;
+
 public class ArticleEntityConfiguration : AuditedEntityConfiguration<Article>
 {
     public override void Configure(EntityTypeBuilder<Article> builder)
@@ -7,7 +8,6 @@ public class ArticleEntityConfiguration : AuditedEntityConfiguration<Article>
 
         builder.HasIndex(e => e.Title);
 
-        //talk - using constants instead of direct numbers
         builder.Property(e => e.Title).HasMaxLength(MaxLength.C256).IsRequired();
 				builder.Property(e => e.Scope).HasMaxLength(MaxLength.C2048).IsRequired();
 				builder.Property(e => e.Stage).HasEnumConversion().IsRequired();
@@ -35,7 +35,12 @@ public class ArticleEntityConfiguration : AuditedEntityConfiguration<Article>
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasMany(e => e.StageHistories).WithOne()
+				builder.HasMany(e => e.Actors).WithOne()
+						.HasForeignKey(e => e.ArticleId)
+						.IsRequired()
+						.OnDelete(DeleteBehavior.Cascade);
+
+				builder.HasMany(e => e.StageHistories).WithOne()
             .HasForeignKey(e => e.ArticleId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);

@@ -8,7 +8,7 @@ public static class Seed
 				{
 						using var transaction = context.Database.BeginTransaction();
 
-						context.SeedFromJsonFile<Author>();
+						context.SeedFromJsonFile<Person>();
 						context.SeedFromJsonFile<Journal>();
 
 						transaction.Commit();

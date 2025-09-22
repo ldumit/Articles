@@ -17,7 +17,7 @@ public partial class Reviewer
 						FirstName = personInfo.FirstName,
 						LastName = personInfo.LastName,
 						Honorific = personInfo.Honorific,
-						Affiliation = personInfo.ProfessionalProfile!.Affiliation,
+						Affiliation = personInfo.ProfessionalProfile?.Affiliation ?? string.Empty,
 						CreatedById = action.CreatedById,
 						CreatedOn = DateTime.UtcNow
 				};

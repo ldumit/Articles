@@ -48,7 +48,7 @@ public class CreateReviewerCommandHandler(ReviewDbContext _dbContext, IPersonSer
 		private async Task<PersonInfo> CreatePersonAsync(CreateReviewerCommand command, CancellationToken ct)
 		{
 				var createPersonRequest = command.Adapt<CreatePersonRequest>();
-				var response = await _personClient.CreatePersonAsync(createPersonRequest, new CallOptions(cancellationToken: ct));
+				var response = await _personClient.GetOrCreatePersonAsync(createPersonRequest, new CallOptions(cancellationToken: ct));
 				return response.PersonInfo;
 		}
 }

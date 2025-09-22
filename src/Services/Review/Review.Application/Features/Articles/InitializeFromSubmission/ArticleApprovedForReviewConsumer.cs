@@ -104,8 +104,6 @@ public class ArticleApprovedForReviewConsumer(
 
 								actors.Add(new ArticleAuthor
 								{
-										PersonId = person.Id,
-										ArticleId = articleDto.Id,
 										Person = person,
 										Role = actorDto.Role,
 										ContributionAreas = actorDto.ContributionAreas
@@ -121,8 +119,6 @@ public class ArticleApprovedForReviewConsumer(
 
 								actors.Add(new ArticleActor
 								{
-										PersonId = person.Id,
-										ArticleId = articleDto.Id,
 										Person = person,
 										Role = actorDto.Role
 								});

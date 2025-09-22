@@ -15,7 +15,7 @@
 						<PrivateAssets>all</PrivateAssets>
 						<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 				</PackageReference>
-				<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer"/>
+				<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
 				<PackageReference Include="Microsoft.EntityFrameworkCore.Tools">
 						<PrivateAssets>all</PrivateAssets>
 						<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -34,7 +34,7 @@
 				<None Update="Data\Test\Journal.json">
 						<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 				</None>
-				<None Update="Data\Test\Author.json">
+				<None Update="Data\Test\Person.json">
 						<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 				</None>
 		</ItemGroup>

@@ -10,7 +10,6 @@ public class ArticleEntityConfiguration : AuditedEntityConfiguration<Article>
 
         builder.HasIndex(e => e.Title);
 
-        //talk - using constants instead of direct numbers
         builder.Property(e => e.Title).HasMaxLength(MaxLength.C256).IsRequired();
         builder.Property(e => e.Stage).HasEnumConversion().IsRequired();
 				builder.Property(e => e.Type).HasEnumConversion().IsRequired();
@@ -38,7 +37,15 @@ public class ArticleEntityConfiguration : AuditedEntityConfiguration<Article>
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasMany(e => e.StageHistories).WithOne()
+				builder.HasMany(e => e.Actors).WithOne()
+						.HasForeignKey(e => e.ArticleId)
+						.IsRequired()
+						.OnDelete(DeleteBehavior.Cascade);
+
+    //    builder.Navigation(e => e.Actors).UsePropertyAccessMode(PropertyAccessMode.Field);
+				//builder.Metadata.FindNavigation(nameof(Article.Actors))!.SetField("_actors");
+
+				builder.HasMany(e => e.StageHistories).WithOne()
             .HasForeignKey(e => e.ArticleId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);

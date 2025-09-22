@@ -2,7 +2,6 @@
   {
     "Id": 1,
     "UserId": 1,
-    "TypeDiscriminator": "Person",
     "FirstName": "Laurentiu",
     "LastName": "Dumitrescu",
     "Honorific": "Mr",
@@ -10,9 +9,9 @@
     "Affiliation": "DotNetLabX – Real .NET solutions. From developer to architect"
   },
   {
+    "$type": "Review.Domain.Articles.Author, Review.Domain",
     "Id": 2,
     "UserId": 2,
-    "TypeDiscriminator": "Author",
     "FirstName": "Author",
     "LastName": "1",
     "Honorific": "Mr",
@@ -22,29 +21,19 @@
     "Discipline": "Aerospace Engineering"
   },
   {
+    "$type": "Review.Domain.Articles.Author, Review.Domain",
     "Id": 3,
     "UserId": 3,
-    "TypeDiscriminator": "Author",
     "FirstName": "Author",
     "LastName": "2",
     "Honorific": "Ms",
     "Email": {"Value":"author.2@articles.test"},
     "Affiliation": "Centre for Sustainable Urban Technologies, Manchester"
   },
-  //{
-  //  "Id": 5,
-  //  "UserId":5,
-  //  "TypeDiscriminator": "Author",
-  //  "FirstName": "CorAuthor",
-  //  "LastName": "1",
-  //  "Honorific": "Ms",
-  //  "Email": {"Value":"corauthor.1@articles.test"},
-  //  "Affiliation": "Foundation for Youth Innovation and Learning, Cape Town"
-  //},
   {
+    "$type": "Review.Domain.Articles.Author, Review.Domain",
     "Id": 6,
     "UserId": 6,
-    "TypeDiscriminator": "Author",
     "FirstName": "CorAuthor",
     "LastName": "2",
     "Honorific": "Mr",
@@ -53,29 +42,24 @@
     "Degree": "MsC",
     "Discipline": "Planetary Science"
   },
-  //{
-  //  "UserId": 7,
-  //  "PersonType": "Person",
-  //  "FirstName": "Reviewer",
-  //  "LastName": "1",
-  //  "Title": "Mr",
-  //  "Email": {"Value":"reviewer.1@articles.test"}
-  //},
-  //{
-  //  "UserId": 8,
-  //  "PersonType": "Person",
-  //  "FirstName": "Reviewer",
-  //  "LastName": "2",
-  //  "Title": "Ms",
-  //  "Email": {"Value":"reviewer.2@articles.test"}
-  //},
-  //{
-  //  "UserId": null,
-  //  "PersonType": "Author",
-  //  "FirstName": "Author",
-  //  "LastName": "4-NoUser",
-  //  "Title": "Mr",
-  //  "Email": {"Value":"author.4@articles.test"},
-  //  "Affiliation": "Tokyo University of Technology"
-  //}
+  {
+    "$type": "Review.Domain.Reviewers.Reviewer, Review.Domain",
+    "Id": 12,
+    "UserId": 12,
+    "FirstName": "Reviewer",
+    "LastName": "3",
+    "Honorific": "Mr",
+    "Email": {"Value":"rev.3@articles.test"},
+    "Affiliation": "Asia-Pacific Smart Infrastructure Lab, Kuala Lumpur",
+		"_specializations": [
+      {
+        "JournalId": 1,
+				"ReviewerId": 12
+      },
+      {
+        "JournalId": 3,
+				"ReviewerId": 12
+      }
+    ]
+  }  
 ]

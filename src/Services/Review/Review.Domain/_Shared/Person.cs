@@ -1,4 +1,5 @@
-﻿using Review.Domain.Shared.ValueObjects;
+﻿using Review.Domain.Articles;
+using Review.Domain.Shared.ValueObjects;
 
 namespace Review.Domain.Shared;
 
@@ -13,6 +14,7 @@ public class Person : AggregateRoot
 		public required string Affiliation { get; init; }
 
 		public int? UserId { get; init; }
+		public IReadOnlyCollection<ArticleActor> ArticleActors { get; private set; } = new HashSet<ArticleActor>();
 
-		public virtual string TypeDiscriminator { get; init; } = null!; // EF discriminator
+		public string TypeDiscriminator { get; init; } = null!; // EF discriminator
 }

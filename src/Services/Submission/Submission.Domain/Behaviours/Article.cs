@@ -33,12 +33,21 @@ public partial class Article
 				if (_actors.Exists(a => a.PersonId == author.Id && a.Role == role))
 						throw new DomainException($"Author {author.Email} is already assigned to the article");
 
-				_actors.Add(new ArticleAuthor() {
+				_actors.Add(new ArticleAuthor()
+				{
 						ContributionAreas = contributionAreas,
 						Person = author,
 						//PersonId = author.Id, 
 						Role = role
 				});
+
+				//_actors.Add(new ArticleActor()
+				//{
+				//		Person = author,
+				//		//PersonId = author.Id, 
+				//		Role = UserRoleType.REVED
+				//});
+
 				AddDomainEvent(
 						new AuthorAssigned(author, action));
 				AddAction(action);

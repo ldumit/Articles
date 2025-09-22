@@ -120,6 +120,12 @@ namespace Review.Persistence.Migrations
 
             modelBuilder.Entity("Review.Domain.Articles.ArticleActor", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
                     b.Property<int>("ArticleId")
                         .HasColumnType("int");
 
@@ -127,6 +133,7 @@ namespace Review.Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Role")
+                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)")
@@ -137,9 +144,12 @@ namespace Review.Persistence.Migrations
                         .HasMaxLength(13)
                         .HasColumnType("nvarchar(13)");
 
-                    b.HasKey("ArticleId", "PersonId", "Role");
+                    b.HasKey("Id");
 
                     b.HasIndex("PersonId");
+
+                    b.HasIndex("ArticleId", "PersonId", "Role")
+                        .IsUnique();
 
                     b.ToTable("ArticleActor", (string)null);
 
@@ -728,6 +738,15 @@ namespace Review.Persistence.Migrations
                     b.HasDiscriminator().HasValue("Author");
                 });
 
+            modelBuilder.Entity("Review.Domain.Articles.Editor", b =>
+                {
+                    b.HasBaseType("Review.Domain.Shared.Person");
+
+                    b.ToTable("Person", (string)null);
+
+                    b.HasDiscriminator().HasValue("Editor");
+                });
+
             modelBuilder.Entity("Review.Domain.Reviewers.Reviewer", b =>
                 {
                     b.HasBaseType("Review.Domain.Shared.Person");
@@ -735,15 +754,6 @@ namespace Review.Persistence.Migrations
                     b.ToTable("Person", (string)null);
 
                     b.HasDiscriminator().HasValue("Reviewer");
-                });
-
-            modelBuilder.Entity("Review.Domain.Articles.Editor", b =>
-                {
-                    b.HasBaseType("Review.Domain.Reviewers.Reviewer");
-
-                    b.ToTable("Person", (string)null);
-
-                    b.HasDiscriminator().HasValue("Editor");
                 });
 
             modelBuilder.Entity("Review.Domain.Articles.Article", b =>
@@ -782,19 +792,17 @@ namespace Review.Persistence.Migrations
 
             modelBuilder.Entity("Review.Domain.Articles.ArticleActor", b =>
                 {
-                    b.HasOne("Review.Domain.Articles.Article", "Article")
+                    b.HasOne("Review.Domain.Articles.Article", null)
                         .WithMany("Actors")
                         .HasForeignKey("ArticleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Review.Domain.Shared.Person", "Person")
-                        .WithMany()
+                        .WithMany("ArticleActors")
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("Article");
 
                     b.Navigation("Person");
                 });
@@ -888,6 +896,11 @@ namespace Review.Persistence.Migrations
                     b.Navigation("Articles");
 
                     b.Navigation("Reviewers");
+                });
+
+            modelBuilder.Entity("Review.Domain.Shared.Person", b =>
+                {
+                    b.Navigation("ArticleActors");
                 });
 
             modelBuilder.Entity("Review.Domain.Reviewers.Reviewer", b =>

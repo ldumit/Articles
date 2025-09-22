@@ -12,24 +12,10 @@ public class CreateAndAssignAuthorCommandHandler(ArticleRepository _articleRepos
 				var article = await _articleRepository.GetByIdOrThrowAsync(command.ArticleId);
 
 				Author? author;
-				if (command.PersonId == null) //new author, new person
-				{
-						author = await _dbContext.Authors.SingleOrDefaultAsync(x => x.Email.Value == command.Email, ct);
-						if (author is null)
-						{
-								var personInfo = await CreatePersonAsync(command, ct);
-								author = Author.Create(personInfo, command);
-						}
-				}
+				if (command.PersonId == null) // new author, new person
+						author = await GetOrCreateAuthorByEmailAsync(command, ct);
 				else
-				{
-						author = await _dbContext.Authors.SingleOrDefaultAsync(x => x.Id == command.PersonId, ct);
-						if (author is null)
-						{
-								var personInfo = await GetPersonAsync(command, ct);
-								author = Author.Create(personInfo, command);
-						}
-				}
+						author = await GetOrCreateAuthorByPersonIdAsync(command, ct);
 
 				article.AssignAuthor(author, command.ContributionAreas, command.IsCorrespondingAuthor, command);
 
@@ -38,19 +24,28 @@ public class CreateAndAssignAuthorCommandHandler(ArticleRepository _articleRepos
 				return new IdResponse(article.Id);
 		}
 
-		private async Task<PersonInfo> GetPersonAsync(CreateAndAssignAuthorCommand command, CancellationToken ct)
+		private async Task<Author> GetOrCreateAuthorByEmailAsync(CreateAndAssignAuthorCommand command, CancellationToken ct)
 		{
-				var response = await _personClient.GetPersonByIdAsync(new GetPersonRequest { PersonId = command.PersonId!.Value }, new CallOptions(cancellationToken: ct));
-				return response.PersonInfo;
+				var author = await _dbContext.Authors.SingleOrDefaultAsync(x => x.Email.Value == command.Email, ct);
+				if (author is null)
+				{
+						var createPersonRequest = command.Adapt<CreatePersonRequest>();
+						var response = await _personClient.GetOrCreatePersonAsync(createPersonRequest, new CallOptions(cancellationToken: ct));
+						author = Author.Create(response.PersonInfo, command);
+				}
+
+				return author;
 		}
 
-		private async Task<PersonInfo> CreatePersonAsync(CreateAndAssignAuthorCommand command, CancellationToken ct)
+		private async Task<Author> GetOrCreateAuthorByPersonIdAsync(CreateAndAssignAuthorCommand command, CancellationToken ct)
 		{
-				//var response = await _personClient.GetPersonByEmailAsync(new GetPersonByEmailRequest{ Email = command.Email!}, new CallOptions(cancellationToken: ct));
+				var author = await _dbContext.Authors.SingleOrDefaultAsync(x => x.Id == command.PersonId, ct);
+				if (author is null)
+				{
+						var response = await _personClient.GetPersonByIdAsync(new GetPersonRequest { PersonId = command.PersonId!.Value }, new CallOptions(cancellationToken: ct));
+						author = Author.Create(response.PersonInfo, command);
+				}
 
-				//return response.PersonInfo;
-				var createPersonRequest = command.Adapt<CreatePersonRequest>();
-				var response = await _personClient.GetOrCreatePersonAsync(createPersonRequest, new CallOptions(cancellationToken: ct));
-				return response.PersonInfo;
+				return author;
 		}
 }

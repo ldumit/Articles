@@ -1,11 +1,8 @@
-﻿using Review.Domain.Articles;
+﻿namespace Review.Domain.Articles;
 
-namespace Review.Domain.Articles;
-
-public class ArticleActor : IAssociationEntity
+public class ArticleActor : Entity
 {
-    public int ArticleId { get; init; }
-		public Article Article { get; init; } = null!;
+    public int ArticleId { get; init; } 
 		public int PersonId { get; init; }
 		public Person Person { get; init; } = null!;
 		public UserRoleType Role { get; init; }

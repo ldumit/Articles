@@ -1,4 +1,5 @@
 ﻿using Auth.Grpc;
+using Blocks.Mapster;
 using Review.Domain.Reviewers;
 
 namespace Review.Application.Features.Invitations.AcceptInvitation;
@@ -14,35 +15,49 @@ public class AcceptInvitationCommandHandler(ArticleRepository _articleRepository
 
 				Reviewer? reviewer = default!;
 				if (invitation.UserId != null)
-				{
-						reviewer = await _reviewerRepository.GetByUserIdAsync(invitation.UserId.Value);
-						if (reviewer is null)
-						{
-								var response = await _personClient.GetPersonByUserIdAsync(new GetPersonByUserIdRequest { UserId = invitation.UserId.Value });
-								reviewer = await CreateReviewerFromPerson(response.PersonInfo, article, command, ct);
-						}
-						command.CreatedById = invitation.UserId.Value;
-				}
+						reviewer = await GetOrCreateReviewerByUserId(command, article, invitation.UserId.Value, ct);
 				else
-				{
-						reviewer = await _reviewerRepository.GetByEmailAsync(invitation.Email, ct);
-						if (reviewer is null)
-						{
-								//todo we need to create an user not a person
-								var response = await _personClient.CreatePersonAsync(invitation.Adapt<CreatePersonRequest>());
-								reviewer = await CreateReviewerFromPerson(response.PersonInfo, article, command, ct);
-						}
-						command.CreatedById = reviewer.UserId!.Value;
-				}
+						reviewer = await GetOrCreateReviewerByEmail(command, article, invitation, ct);
 
-				//keeping those 2 methods separately, allows us to assign reviewers directly without an invitation
+				// keeping those 2 domain methods separately, allows us to assign reviewers directly without an invitation
 				invitation.Accept();
+
 				article.AssignReviewer(reviewer, command);
 
         await _articleRepository.SaveChangesAsync();
 
         return new AcceptInvitationResponse(article.Id, invitation.Id, reviewer.Id);
     }
+
+		private async Task<Reviewer> GetOrCreateReviewerByUserId(AcceptInvitationCommand command, Article article, int userId, CancellationToken ct)
+		{
+				var reviewer = await _reviewerRepository.GetByUserIdAsync(userId);
+				if (reviewer is null)
+				{
+						var response = await _personClient.GetPersonByUserIdAsync(new GetPersonByUserIdRequest { UserId = userId});
+						
+						reviewer = await CreateReviewerFromPerson(response.PersonInfo, article, command, ct);
+				}
+				command.CreatedById = userId;
+				return reviewer;
+		}
+
+		private async Task<Reviewer> GetOrCreateReviewerByEmail(AcceptInvitationCommand command, Article article, ReviewInvitation invitation, CancellationToken ct)
+		{
+				var reviewer = await _reviewerRepository.GetByEmailAsync(invitation.Email, ct);
+				if (reviewer is null)
+				{
+						//todo - here we need an user not a person. Implement a new User gRPC service. 
+						var response = await _personClient.GetOrCreatePersonAsync(
+								invitation.AdaptWith<CreatePersonRequest>(
+										request => request.Affiliation = command.Affiliation)
+								);
+
+						reviewer = await CreateReviewerFromPerson(response.PersonInfo, article, command, ct);
+				}
+				command.CreatedById = reviewer.Id; //replace it with userId after implementing grpc user creation
+				return reviewer;
+		}
 
 		private async Task<Reviewer> CreateReviewerFromPerson(PersonInfo personInfo, Article article, IArticleAction command, CancellationToken ct)
 		{

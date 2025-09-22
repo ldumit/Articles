@@ -12,11 +12,6 @@ internal class ArticleActorEntityConfiguration : IEntityTypeConfiguration<Articl
 						.HasValue<ArticleActor>(nameof(ArticleActor))
 						.HasValue<ArticleAuthor>(nameof(ArticleAuthor));
 
-				builder.HasOne(aa => aa.Article)
-						.WithMany(a => a.Actors)
-						.HasForeignKey(aa => aa.ArticleId)
-						.OnDelete(DeleteBehavior.Cascade);
-
 				builder.HasOne(aa => aa.Person)
 						.WithMany(a => a.ArticleActors)
 						.HasForeignKey(aa => aa.PersonId)

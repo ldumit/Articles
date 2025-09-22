@@ -1,10 +1,10 @@
 ﻿namespace Review.Persistence.EntityConfigurations;
 
-internal class ArticleActorEntityConfiguration : IEntityTypeConfiguration<ArticleActor>
+internal class ArticleActorEntityConfiguration : EntityConfiguration<ArticleActor>
 {
-		public void Configure(EntityTypeBuilder<ArticleActor> builder)
+		public override void Configure(EntityTypeBuilder<ArticleActor> builder)
 		{
-				builder.HasKey(e => new { e.ArticleId, e.PersonId, e.Role });
+				builder.HasIndex(e => new { e.ArticleId, e.PersonId, e.Role }).IsUnique();
 				builder.Property(e => e.Role).HasEnumConversion().HasDefaultValue(UserRoleType.AUT);
 
 				//talk about EF Core inheritance
@@ -12,13 +12,8 @@ internal class ArticleActorEntityConfiguration : IEntityTypeConfiguration<Articl
 						.HasValue<ArticleActor>(nameof(ArticleActor))
 						.HasValue<ArticleAuthor>(nameof(ArticleAuthor));
 
-				builder.HasOne(aa => aa.Article)
-						.WithMany(a => a.Actors)
-						.HasForeignKey(aa => aa.ArticleId)
-						.OnDelete(DeleteBehavior.Cascade);
-
 				builder.HasOne(aa => aa.Person)
-						.WithMany()
+						.WithMany(a => a.ArticleActors)
 						.HasForeignKey(aa => aa.PersonId)
 						.OnDelete(DeleteBehavior.Restrict);
 		}

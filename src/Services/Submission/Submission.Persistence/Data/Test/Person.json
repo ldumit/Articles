@@ -2,7 +2,6 @@
   {
     "Id": 1,
     "UserId": 1,
-    "TypeDiscriminator": "Person",
     "FirstName": "Laurentiu",
     "LastName": "Dumitrescu",
     "Honorific": "Mr",
@@ -10,9 +9,9 @@
     "Affiliation": "DotNetLabX – Real .NET solutions. From developer to architect"
   },
   {
+    "$type": "Submission.Domain.Entities.Author, Submission.Domain",
     "Id": 2,
     "UserId": 2,
-    "TypeDiscriminator": "Author",
     "FirstName": "Author",
     "LastName": "1",
     "Honorific": "Mr",
@@ -22,9 +21,9 @@
     "Discipline": "Aerospace Engineering"
   },
   {
+    "$type": "Submission.Domain.Entities.Author, Submission.Domain",
     "Id": 3,
     "UserId": 3,
-    "TypeDiscriminator": "Author",
     "FirstName": "Author",
     "LastName": "2",
     "Honorific": "Ms",
@@ -32,9 +31,9 @@
     "Affiliation": "Centre for Sustainable Urban Technologies, Manchester"
   },
   {
+    "$type": "Submission.Domain.Entities.Author, Submission.Domain",
     "Id": 5,
     "UserId":5,
-    "TypeDiscriminator": "Author",
     "FirstName": "CorAuthor",
     "LastName": "1",
     "Honorific": "Ms",
@@ -42,9 +41,9 @@
     "Affiliation": "Foundation for Youth Innovation and Learning, Cape Town"
   },
   {
+    "$type": "Submission.Domain.Entities.Author, Submission.Domain",
     "Id": 6,
     "UserId": 6,
-    "TypeDiscriminator": "Author",
     "FirstName": "CorAuthor",
     "LastName": "2",
     "Honorific": "Mr",

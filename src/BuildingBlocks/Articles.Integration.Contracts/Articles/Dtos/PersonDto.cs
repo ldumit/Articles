@@ -7,6 +7,5 @@ public record PersonDto(
 		string Email, 
 		string? Honorific,
 		string? Affiliation,
-		int? UserId,
-		string TypeDiscriminator
+		int? UserId
 		);

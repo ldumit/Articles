@@ -15,7 +15,8 @@ public static partial class DbContextExtensions
 				DefaultSettings = new JsonSerializerSettings
 				{
 						ContractResolver = new PrivateContractResolver(),
-						Converters = { new StringEnumConverter() }
+						Converters = { new StringEnumConverter() },
+						TypeNameHandling = TypeNameHandling.Auto
 				};
 		}
 

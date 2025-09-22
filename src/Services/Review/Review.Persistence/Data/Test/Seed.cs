@@ -18,8 +18,8 @@ public static class Seed
     {
         using var transaction = context.Database.BeginTransaction();
 
-        context.SeedFromJsonFile<Person>();
-        context.SeedFromJsonFile<Journal>();
+				context.SeedFromJsonFile<Journal>();
+				context.SeedFromJsonFile<Person>();
 
         transaction.Commit();
     }

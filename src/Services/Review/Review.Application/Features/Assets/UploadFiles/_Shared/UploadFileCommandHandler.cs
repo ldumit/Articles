@@ -37,8 +37,6 @@ public class UploadFileCommandHandler<TUploadCommand>
 
 		protected virtual ArticleStage NextStage => _article!.Stage;
 
-    //protected virtual ArticleStage GetNextStage(Article article, TUploadCommand command) => _article!.Stage;
-
 		protected async Task<FileMetadata> UploadFile(UploadFileCommand command, Asset asset, AssetTypeDefinition assetType, CancellationToken ct)
     {
         var filePath = asset.GenerateStorageFilePath(command.File.FileName);

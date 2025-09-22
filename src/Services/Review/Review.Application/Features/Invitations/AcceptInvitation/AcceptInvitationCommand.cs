@@ -3,7 +3,7 @@ using Review.Domain.Shared.Enums;
 
 namespace Review.Application.Features.Invitations.AcceptInvitation;
 
-public record AcceptInvitationCommand(string Token)
+public record AcceptInvitationCommand(string Token, string? Affiliation)
     : ArticleCommand<AcceptInvitationResponse>
 {
     public override ArticleActionType ActionType => ArticleActionType.AcceptInvitation;

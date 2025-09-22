@@ -5,9 +5,9 @@ public class AssignAuthorCommandHandler(ArticleRepository _articleRepository, Su
 {
 		public async Task<IdResponse> Handle(AssignAuthorCommand command, CancellationToken cancellationToken)
 		{
-				var article = await _articleRepository.GetByIdOrThrowAsync(command.ArticleId);
-
 				var author = await _dbContext.Authors.FindByIdOrThrowAsync(command.AuthorId);
+
+				var article = await _articleRepository.GetByIdOrThrowAsync(command.ArticleId);
 
 				article.AssignAuthor(author, command.ContributionAreas, command.IsCorrespondingAuthor, command);
 

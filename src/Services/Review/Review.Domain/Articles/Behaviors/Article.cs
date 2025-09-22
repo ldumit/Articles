@@ -1,7 +1,7 @@
-﻿using Articles.IntegrationEvents.Contracts.Articles.Dtos;
+﻿using Mapster;
 using Auth.Grpc;
 using Blocks.Domain;
-using Mapster;
+using Articles.IntegrationEvents.Contracts.Articles.Dtos;
 using Review.Domain.Articles.Events;
 using Review.Domain.Assets;
 using Review.Domain.Invitations;
@@ -42,7 +42,7 @@ public partial class Article
 				if (_actors.Exists(a => a.Role == UserRoleType.REVED))
 						throw new DomainException($"An Editor is already assigned to the article");
 
-				_actors.Add(new ArticleActor() { PersonId = actor.Id, Role = UserRoleType.REVED });
+				_actors.Add(new ArticleActor() { Person = actor, Role = UserRoleType.REVED });
 
 				AddDomainEvent(
 						new EditorAssigned(actor.Id, actor.UserId!.Value, action));
@@ -57,7 +57,7 @@ public partial class Article
 
 				reviewer.AddSpecialization(new ReviewerSpecialization() { JournalId = this.JournalId, ReviewerId = reviewer.Id});
 
-				_actors.Add(new ArticleActor() { PersonId = reviewer.Id, Role = UserRoleType.REV });		
+				_actors.Add(new ArticleActor() { Person = reviewer, Role = UserRoleType.REV });
 
 				AddDomainEvent(
 						new ReviewerAssigned(this, reviewer, action));
