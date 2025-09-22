@@ -1,6 +1,7 @@
 ﻿using Blocks.Core;
 using FluentValidation;
 using Newtonsoft.Json.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Blocks.FluentValidation;
 

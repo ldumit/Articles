@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Caching.Memory;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
+using System.Diagnostics;
 
 namespace Review.Persistence;
 
@@ -31,6 +33,9 @@ public partial class ReviewDbContext(DbContextOptions<ReviewDbContext> options, 
 
 		public async override Task<int> SaveChangesAsync(CancellationToken ct = default)
 		{
+				Debug.WriteLine(string.Join("\n",
+						base.ChangeTracker.Entries().Select(e => $"{e.Entity.GetType().Name} -> {e.State}")));
+
 				this.UnTrackCacheableEntities();
 
 				return await base.SaveChangesAsync(ct);

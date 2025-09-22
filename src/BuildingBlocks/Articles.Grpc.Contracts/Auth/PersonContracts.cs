@@ -16,7 +16,7 @@ public interface IPersonService
 		[OperationContract]
 		ValueTask<GetPersonResponse> GetPersonByEmailAsync(GetPersonByEmailRequest request, CallContext context = default);
 		[OperationContract]
-		ValueTask<CreatePersonResponse> CreatePersonAsync(CreatePersonRequest request, CallContext context = default);
+		ValueTask<CreatePersonResponse> GetOrCreatePersonAsync(CreatePersonRequest request, CallContext context = default);
 }
 
 [ProtoContract]

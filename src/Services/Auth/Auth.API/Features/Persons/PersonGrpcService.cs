@@ -8,13 +8,18 @@ namespace Auth.API.Features.Persons;
 
 public class PersonGrpcService(PersonRepository _personRepository, GrpcTypeAdapterConfig _typeAdapterConfig) : IPersonService
 {
-		public async ValueTask<CreatePersonResponse> CreatePersonAsync(CreatePersonRequest request, CallContext context = default)
+		public async ValueTask<CreatePersonResponse> GetOrCreatePersonAsync(CreatePersonRequest request, CallContext context = default)
 		{
-				//todo - validate CreatePersonRequest, create an HTTP endpoint and use the same handler and validator
-				var person = Person.Create(request);
+				var person = await _personRepository.GetByEmailAsync(request.Email);
+				if(person is null)
+				{
+						person = Person.Create(request);
 
-				await _personRepository.AddAsync(person, context.CancellationToken);
-				await _personRepository.SaveChangesAsync(context.CancellationToken);
+						await _personRepository.AddAsync(person, context.CancellationToken);
+						await _personRepository.SaveChangesAsync(context.CancellationToken);
+				}
+
+				//todo - validate CreatePersonRequest, create an HTTP endpoint and use the same handler and validator
 				return new CreatePersonResponse
 				{
 						PersonInfo = person.Adapt<PersonInfo>(_typeAdapterConfig)

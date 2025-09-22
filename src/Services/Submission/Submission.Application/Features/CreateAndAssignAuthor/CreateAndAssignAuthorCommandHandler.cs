@@ -14,8 +14,12 @@ public class CreateAndAssignAuthorCommandHandler(ArticleRepository _articleRepos
 				Author? author;
 				if (command.PersonId == null) //new author, new person
 				{
-						var personInfo = await CreatePersonAsync(command, ct);
-						author = Author.Create(personInfo, command);
+						author = await _dbContext.Authors.SingleOrDefaultAsync(x => x.Email.Value == command.Email, ct);
+						if (author is null)
+						{
+								var personInfo = await CreatePersonAsync(command, ct);
+								author = Author.Create(personInfo, command);
+						}
 				}
 				else
 				{
@@ -46,7 +50,7 @@ public class CreateAndAssignAuthorCommandHandler(ArticleRepository _articleRepos
 
 				//return response.PersonInfo;
 				var createPersonRequest = command.Adapt<CreatePersonRequest>();
-				var response = await _personClient.CreatePersonAsync(createPersonRequest, new CallOptions(cancellationToken: ct));
+				var response = await _personClient.GetOrCreatePersonAsync(createPersonRequest, new CallOptions(cancellationToken: ct));
 				return response.PersonInfo;
 		}
 }

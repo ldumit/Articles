@@ -9,7 +9,7 @@ service PersonService {
     rpc GetPersonById(GetPersonRequest) returns (GetPersonResponse);
     rpc GetPersonByUserId(GetPersonByUserIdRequest) returns (GetPersonResponse);
     rpc GetPersonByEmail(GetPersonByEmailRequest) returns (GetPersonResponse);
-    rpc CreatePerson(CreatePersonRequest) returns (CreatePersonResponse);
+    rpc GetOrCreatePersonAsync(CreatePersonRequest) returns (CreatePersonResponse);
 }
 
 enum Honorific
