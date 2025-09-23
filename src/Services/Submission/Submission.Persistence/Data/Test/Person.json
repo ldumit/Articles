@@ -2,16 +2,16 @@
   {
     "Id": 1,
     "UserId": 1,
-    "FirstName": "Laurentiu",
-    "LastName": "Dumitrescu",
+    "FirstName": "DotNet",
+    "LastName": "LabX",
     "Honorific": "Mr",
-    "Email": {"Value":"dumitrescu.laurentiu@gmail.com"},
+    "Email": {"Value":"dotnetlabx@articles.test"},
     "Affiliation": "DotNetLabX – Real .NET solutions. From developer to architect"
   },
   {
     "$type": "Submission.Domain.Entities.Author, Submission.Domain",
     "Id": 2,
-    "UserId": 2,
+    //"UserId": 2,
     "FirstName": "Author",
     "LastName": "1",
     "Honorific": "Mr",
@@ -23,7 +23,17 @@
   {
     "$type": "Submission.Domain.Entities.Author, Submission.Domain",
     "Id": 3,
-    "UserId": 3,
+    //"UserId": 3,
+    "FirstName": "Author",
+    "LastName": "2",
+    "Honorific": "Ms",
+    "Email": {"Value":"author.2@articles.test"},
+    "Affiliation": "Centre for Sustainable Urban Technologies, Manchester"
+  },
+  {
+    "$type": "Submission.Domain.Entities.Author, Submission.Domain",
+    "Id": 4,
+    "UserId": 4,
     "FirstName": "Author",
     "LastName": "2",
     "Honorific": "Ms",
@@ -51,14 +61,5 @@
     "Affiliation": "International Institute of Aerospace Innovation, Abu Dhabi",
     "Degree": "MsC",
     "Discipline": "Planetary Science"
-  }//,
-  //{
-  //  "UserId": null,
-  //  "TypeDiscriminator": "Author",
-  //  "FirstName": "Author",
-  //  "LastName": "4-NoUser",
-  //  "Honorific": "Mr",
-  //  "Email": {"Value":"author.4@articles.test"},
-  //  "Affiliation": "Tokyo University of Technology"
-  //}
+  }
 ]

@@ -5,7 +5,7 @@ using Production.API.Features.Assets.UploadFiles._Shared;
 
 namespace Production.API.Features.Assets.UploadFiles.UploadSupplementaryFile;
 
-[Authorize(Roles = Role.CorrAuthor)]
+[Authorize(Roles = Role.Author)]
 [HttpPost("articles/{articleId:int}/assets/supplementary/files:upload")]
 [AllowFileUploads]
 [Tags("Files")]

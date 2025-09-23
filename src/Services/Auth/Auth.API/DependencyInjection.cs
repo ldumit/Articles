@@ -7,6 +7,7 @@ using Blocks.Core.Security;
 using Blocks.Domain;
 using Blocks.FastEndpoints;
 using EmailService.Smtp;
+using EmailService.Empty;
 using FastEndpoints.Swagger;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Identity;
@@ -39,7 +40,6 @@ public static class DependenciesConfiguration
 						.AddFastEndpoints()
 						.SwaggerDocument()
 						.AddEndpointsApiExplorer()											// Minimal API docs (Swagger)
-						//.AddAutoMapper([typeof(CreateUserCommandMapping).Assembly])
 						.AddSwaggerGen()																// Swagger setup
 						.AddJwtIdentity(config)
 						.AddJwtAuthentication(config)										// JWT Authentication
@@ -60,10 +60,9 @@ public static class DependenciesConfiguration
 						options.EnableDetailedErrors = true;
 				});
 
-				services.AddSmtpEmailService(config);
-
-				//todo - do I need this registration here?
-				//services.AddScoped<IPersonService, PersonGrpcService>();
+				// replace empty email service with the real smtp one after configuring smtp settings in appsettings.json
+				services.AddEmptyEmailService(config);
+				//services.AddSmtpEmailService(config);
 
 				return services;
 		}

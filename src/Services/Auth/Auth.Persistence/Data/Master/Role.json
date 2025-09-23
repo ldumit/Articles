@@ -4,21 +4,14 @@
     "id": 1,
     "name": "EOF",
     "normalizedName": "EOF",
-    "description": "Editorial Office"
+    "description": "Editorial Office Admin"
   },
   {
     "type": "AUT",
     "id": 11,
     "name": "AUT",
     "normalizedName": "AUT",
-    "description": "Author"
-  },
-  {
-    "type": "CORAUT",
-    "id": 12,
-    "name": "CORAUT",
-    "normalizedName": "CORAUT",
-    "description": "Corresponding Author"
+    "description": "Author (all types, corresponding, co-authors etc.)"
   },
   {
     "type": "REVED",

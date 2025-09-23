@@ -23,7 +23,7 @@ var app = builder.Build();
 app.Migrate<ReviewDbContext>();
 if (app.Environment.IsDevelopment())
 {
-		app.SeedTestData();
+		app.Services.SeedTestData();
 }
 #endregion
 

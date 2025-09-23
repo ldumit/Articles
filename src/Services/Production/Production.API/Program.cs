@@ -43,7 +43,7 @@ app.Migrate<ProductionDbContext>();
 app.Migrate<ArticleTimelineDbContext>();
 if (app.Environment.IsDevelopment())
 {
-    app.SeedTestData();
+    app.Services.SeedTestData();
 }
 
 app.UseHttpsRedirection();

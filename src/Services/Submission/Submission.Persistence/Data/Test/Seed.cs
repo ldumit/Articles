@@ -6,12 +6,8 @@ public static class Seed
 		{
 				services.SeedTestData<SubmissionDbContext>(context =>
 				{
-						using var transaction = context.Database.BeginTransaction();
-
 						context.SeedFromJsonFile<Person>();
 						context.SeedFromJsonFile<Journal>();
-
-						transaction.Commit();
 				});
 		}
 }

@@ -1,20 +1,19 @@
 [
   {//1
-    "email": "dumitrescu.laurentiu@gmail.com",
-    "firstName": "Laurentiu",
-    "lastName": "Dumitrescu",
+    "email": "dotnetlabx@articles.test",
+    "firstName": "DotNet",
+    "lastName": "LabX",
     "gender": "Male",
     "honorific": null,
     "pictureUrl": null,
     "professionalProfile": {
       "position": "Admin",
       "companyName": "Articles",
-      "affiliation": "DotNetLabX Code Lab"
+      "affiliation": "DotNetLabX – Real .NET solutions. From developer to architect"
     },
     "user": {
-      "email": "dumitrescu.laurentiu@gmail.com",
       "userRoles": [
-        { "roleId": 91, "beginDate": "2024-07-01" }
+        { "roleId": 91, "beginDate": "2025-01-01" } //Admin
       ]
     }
   },
@@ -30,12 +29,11 @@
       "companyName": "Articles",
       "affiliation": "Transatlantic Aerospace Technology Hub, Montreal"
     },
-    "user": {
-      "email": "author.1@articles.test",
-      "userRoles": [
-        { "roleId": 11, "beginDate": "2024-08-01" }
-      ]
-    }
+    //"user": {
+    //  "userRoles": [
+    //    { "roleId": 11, "beginDate": "2025-01-01" } //Author
+    //  ]
+    //}
   },
   {//3
     "email": "author.2@articles.test",
@@ -49,11 +47,11 @@
       "companyName": "Articles",
       "affiliation": "Centre for Sustainable Urban Technologies, Manchester"
     },
-    "user": {
-      "userRoles": [
-        { "roleId": 11, "beginDate": "2024-08-01" }
-      ]
-    }
+    //"user": {
+    //  "userRoles": [
+    //    { "roleId": 11, "beginDate": "2025-01-01" } //Author
+    //  ]
+    //}
   },
   {//4
     "email": "author.3@articles.test",
@@ -69,7 +67,7 @@
     },
     "user": {
       "userRoles": [
-        { "roleId": 11, "beginDate": "2024-08-01" }
+        { "roleId": 11, "beginDate": "2025-01-01" } //Author
       ]
     }
   },
@@ -87,7 +85,7 @@
     },
     "user": {
       "userRoles": [
-        { "roleId": 12, "beginDate": "2024-08-01" }
+        { "roleId": 11, "beginDate": "2025-01-01" }
       ]
     }
   },
@@ -105,13 +103,13 @@
     },
     "user": {
       "userRoles": [
-        { "roleId": 12, "beginDate": "2024-08-01" }
+        { "roleId": 11, "beginDate": "2025-01-01" }
       ]
     }
   },
   {//7
-    "email": "reved.1@articles.test",
-    "firstName": "RevEditor",
+    "email": "editor.1@articles.test",
+    "firstName": "Editor",
     "lastName": "1",
     "gender": "Male",
     "honorific": null,
@@ -123,13 +121,13 @@
     },
     "user": {
       "userRoles": [
-        { "roleId": 21, "beginDate": "2024-08-01" }
+        { "roleId": 21, "beginDate": "2025-01-01" }
       ]
     }
   },
   {//8
-    "email": "reved.2@articles.test",
-    "firstName": "RevEditor",
+    "email": "editor.2@articles.test",
+    "firstName": "Editor",
     "lastName": "2",
     "gender": "Female",
     "honorific": null,
@@ -141,13 +139,13 @@
     },
     "user": {
       "userRoles": [
-        { "roleId": 21, "beginDate": "2024-08-01" }
+        { "roleId": 21, "beginDate": "2025-01-01" }
       ]
     }
   },
   {//9
-    "email": "reved.3@articles.test",
-    "firstName": "RevEditor",
+    "email": "editor.3@articles.test",
+    "firstName": "Editor",
     "lastName": "3",
     "gender": "Female",
     "honorific": null,
@@ -159,7 +157,7 @@
     },
     "user": {
       "userRoles": [
-        { "roleId": 21, "beginDate": "2024-08-01" }
+        { "roleId": 21, "beginDate": "2025-01-01" }
       ]
     }
   },
@@ -177,7 +175,7 @@
     },
     "user": {
       "userRoles": [
-        { "roleId": 22, "beginDate": "2024-08-01" }
+        { "roleId": 22, "beginDate": "2025-01-01" }
       ]
     }
   },
@@ -195,7 +193,7 @@
     },
     "user": {
       "userRoles": [
-        { "roleId": 22, "beginDate": "2024-08-01" }
+        { "roleId": 22, "beginDate": "2025-01-01" }
       ]
     }
   },
@@ -213,7 +211,7 @@
     },
     "user": {
       "userRoles": [
-        { "roleId": 22, "beginDate": "2024-08-01" }
+        { "roleId": 22, "beginDate": "2025-01-01" }
       ]
     }
   },
@@ -231,7 +229,7 @@
     },
     "user": {
       "userRoles": [
-        { "roleId": 32, "beginDate": "2024-08-01" }
+        { "roleId": 32, "beginDate": "2025-01-01" }
       ]
     }
   },
@@ -249,7 +247,7 @@
     },
     "user": {
       "userRoles": [
-        { "roleId": 32, "beginDate": "2024-08-01" }
+        { "roleId": 32, "beginDate": "2025-01-01" }
       ]
     }
   },
@@ -267,7 +265,7 @@
     },
     "user": {
       "userRoles": [
-        { "roleId": 31, "beginDate": "2024-08-01" }
+        { "roleId": 31, "beginDate": "2025-01-01" }
       ]
     }
   },
@@ -285,7 +283,7 @@
     },
     "user": {
       "userRoles": [
-        { "roleId": 1, "beginDate": "2024-08-01" }
+        { "roleId": 1, "beginDate": "2025-01-01" }
       ]
     }
   }

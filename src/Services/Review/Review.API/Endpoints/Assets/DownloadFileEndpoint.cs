@@ -11,7 +11,7 @@ public class DownloadFileEndpoint : ICarterModule
 						var result = await sender.Send(query);
 						return Results.File(result.Stream, result.ContentType, result.FileName);
 				})
-				.RequireRoleAuthorization(Role.CorrAuthor, Role.Editor, Role.Reviewer, Role.EditorAdmin)
+				.RequireRoleAuthorization(Role.Author, Role.Editor, Role.Reviewer, Role.EditorAdmin)
 				.WithName("Download")
 				.WithTags("Assets")
 				.Produces(StatusCodes.Status200OK)

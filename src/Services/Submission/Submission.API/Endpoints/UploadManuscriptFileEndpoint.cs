@@ -13,7 +13,7 @@ public static class UploadManuscriptFileEndpoint
 						var response = await sender.Send(command with { ArticleId = articleId });
 						return Results.Created($"/api/articles/{articleId}/assets/{response.Id}:download", response);
 				})
-				.RequireRoleAuthorization(Role.CorrAuthor)
+				.RequireRoleAuthorization(Role.Author)
 				.WithName("UploadManuscript")
 				.WithTags("Assets")
 				.Produces<IdResponse>(StatusCodes.Status201Created)

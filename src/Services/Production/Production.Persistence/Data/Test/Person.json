@@ -1,109 +1,57 @@
 [
-  {
+    {
+    "Id": 1,
     "UserId": 1,
-    "TypeDiscriminator": "Person",
-    "FirstName": "Laurentiu",
-    "LastName": "Dumitrescu",
-    "Title": "Mr",
-    "Email": "dumitrescu.laurentiu@gmail.com",
-    "Affiliation": "DotNetLabX Code Lab"
+    "FirstName": "DotNet",
+    "LastName": "LabX",
+    "Honorific": "Mr",
+    "Email": {"Value":"dotnetlabx@articles.test"},
+    "Affiliation": "DotNetLabX – Real .NET solutions. From developer to architect"
   },
   {
-    "UserId": 2,
-    "TypeDiscriminator": "Author",
+    "$type": "Production.Domain.Articles.Author, Review.Domain",
+    "Id": 2,
+    //"UserId": 2,
     "FirstName": "Author",
     "LastName": "1",
-    "Title": "Mr",
-    "Email": "author.1@articles.test",
-    "Affiliation": "Japan Aerospace Exploration Agency (JAXA)"
+    "Honorific": "Mr",
+    "Email": {"Value":"author.1@articles.test"},
+    "Affiliation": "JTransatlantic Aerospace Technology Hub, Montreal",
+    "Degree": "PhD",
+    "Discipline": "Aerospace Engineering"
   },
   {
-    "UserId": 3,
-    "TypeDiscriminator": "Author",
+    "$type": "Production.Domain.Articles.Author, Review.Domain",
+    "Id": 3,
+    //"UserId": 3,
     "FirstName": "Author",
     "LastName": "2",
-    "Title": "Ms",
-    "Email": "author.2@articles.test",
-    "Affiliation": "University of Maryland, College Park"
+    "Honorific": "Ms",
+    "Email": {"Value":"author.2@articles.test"},
+    "Affiliation": "Centre for Sustainable Urban Technologies, Manchester"
   },
   {
-    "UserId": 4,
-    "TypeDiscriminator": "Author",
-    "FirstName": "Author",
-    "LastName": "3",
-    "Title": "Dr",
-    "Email": "author.3@articles.test",
-    "Affiliation": "Tata Institute of Fundamental Research"
-  },
-  {
-    "UserId":5,
-    "TypeDiscriminator": "Author",
-    "FirstName": "Cor-Author",
-    "LastName": "1",
-    "Title": "Ms",
-    "Email": "corauthor.1@articles.test",
-    "Affiliation": "Indian Institute of Science Education and Research, Bhopal"
-  },
-  {
+    "$type": "Production.Domain.Articles.Author, Review.Domain",
+    "Id": 6,
     "UserId": 6,
-    "TypeDiscriminator": "Author",
-    "FirstName": "Cor-Author",
+    "FirstName": "CorAuthor",
     "LastName": "2",
-    "Title": "Mr",
-    "Email": "corauthor.2@articles.test",
-    "Affiliation": "Helmholtz Centre for Materials and Coastal Research (HZG)"
+    "Honorific": "Mr",
+    "Email": {"Value":"corauthor.2@articles.test"},
+    "Affiliation": "International Institute of Aerospace Innovation, Abu Dhabi",
+    "Degree": "MsC",
+    "Discipline": "Planetary Science"
   },
   {
-    "UserId": 7,
+    "$type": "Production.Domain.Articles.Typesetter, Review.Domain",
+    "Id": 14,
+    "UserId": 14,
     "TypeDiscriminator": "Typesetter",
     "FirstName": "Typesetter",
-    "LastName": "1",
+    "LastName": "2",
     "Title": "Mr",
-    "Email": "typesetter.1@articles.test",
+    "Email": {"Value":"typesetter.2@articles.test"},
     "CompanyName": "Tyepesetter1",
     "isDefault": true
-  },
-  {
-    "UserId": 8,
-    "TypeDiscriminator": "Typesetter",
-    "FirstName": "Typesetter",
-    "LastName": "2",
-    "Title": "Ms",
-    "Email": "typesetter.2@articles.test",
-    "CompanyName": "Tyepesetter2",
-    "isDefault": false
-  },
-  {
-    "UserId": 9,
-    "TypeDiscriminator": "Person",
-    "FirstName": "Reviewer",
-    "LastName": "1",
-    "Title": "Mr",
-    "Email": "reviewer.1@articles.test"
-  },
-  {
-    "UserId": 10,
-    "TypeDiscriminator": "Person",
-    "FirstName": "Reviewer",
-    "LastName": "2",
-    "Title": "Ms",
-    "Email": "reviewer.2@articles.test"
-  },
-  {
-    "UserId": 11,
-    "TypeDiscriminator": "Person",
-    "FirstName": "POF",
-    "LastName": "1",
-    "Title": "Ms",
-    "Email": "pof.1@articles.test"
-  },
-  {
-    "UserId": null,
-    "TypeDiscriminator": "Author",
-    "FirstName": "Author",
-    "LastName": "4-NoUser",
-    "Title": "Mr",
-    "Email": "author.4@articles.test",
-    "Affiliation": "Tokyo University of Technology"
   }
 ]

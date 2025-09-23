@@ -2,16 +2,16 @@
   {
     "Id": 1,
     "UserId": 1,
-    "FirstName": "Laurentiu",
-    "LastName": "Dumitrescu",
+    "FirstName": "DotNet",
+    "LastName": "LabX",
     "Honorific": "Mr",
-    "Email": {"Value":"dumitrescu.laurentiu@gmail.com"},
+    "Email": {"Value":"dotnetlabx@articles.test"},
     "Affiliation": "DotNetLabX – Real .NET solutions. From developer to architect"
   },
   {
     "$type": "Review.Domain.Articles.Author, Review.Domain",
     "Id": 2,
-    "UserId": 2,
+    //"UserId": 2,
     "FirstName": "Author",
     "LastName": "1",
     "Honorific": "Mr",
@@ -23,7 +23,7 @@
   {
     "$type": "Review.Domain.Articles.Author, Review.Domain",
     "Id": 3,
-    "UserId": 3,
+    //"UserId": 3,
     "FirstName": "Author",
     "LastName": "2",
     "Honorific": "Ms",

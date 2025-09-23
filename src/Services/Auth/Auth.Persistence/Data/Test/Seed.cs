@@ -1,8 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Auth.Domain.Users;
 using Microsoft.AspNetCore.Identity;
-using System.Threading.Tasks;
 
 namespace Auth.Persistence.Data.Test;
 
@@ -22,7 +20,9 @@ public static class Seed
         using var transaction = context.Database.BeginTransaction();
 
 				var persons = context.LoadFromJson<Person>();
-        foreach (var person in persons) 
+
+        context.UseManualGenerateId<User>(true);
+				foreach (var person in persons) 
         {
             var user = person.User;
             person.User = null;
@@ -33,6 +33,7 @@ public static class Seed
                 user.UserName = person.Email;
                 user.Email = person.Email;
 								user.PersonId = person.Id;
+                user.Id = person.Id;
 
 								var result = userManager.CreateAsync(user, DefaultPassword).GetAwaiter().GetResult();
 								if (!result.Succeeded)

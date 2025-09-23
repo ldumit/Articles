@@ -116,7 +116,7 @@ namespace Auth.Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "Editorial Office",
+                            Description = "Editorial Office Admin",
                             Name = "EOF",
                             NormalizedName = "EOF",
                             Type = "EOF"
@@ -124,18 +124,10 @@ namespace Auth.Persistence.Migrations
                         new
                         {
                             Id = 11,
-                            Description = "Author",
+                            Description = "Author (all types, corresponding, co-authors etc.)",
                             Name = "AUT",
                             NormalizedName = "AUT",
                             Type = "AUT"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Description = "Corresponding Author",
-                            Name = "CORAUT",
-                            NormalizedName = "CORAUT",
-                            Type = "CORAUT"
                         },
                         new
                         {

@@ -12,7 +12,7 @@ public static class SubmitArticleEndpoint
 						var response = await sender.Send(command with { ArticleId = articleId });
 						return Results.Ok(response);
 				})				
-				.RequireRoleAuthorization(Role.CorrAuthor)
+				.RequireRoleAuthorization(Role.Author)
 				.WithName("SubmitArticle")
 				.WithTags("Articles")
 				.Produces<IdResponse>(StatusCodes.Status200OK)

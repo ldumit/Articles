@@ -11,7 +11,7 @@ public static class CreateArticleEndpoint
 						var response = await sender.Send(command);
 						return Results.Created($"/api/articles/{response.Id}", response);
 				})
-				.RequireRoleAuthorization(Role.CorrAuthor)
+				.RequireRoleAuthorization(Role.Author)
 				.WithName("CreateArticle")
 				.WithTags("Articles")
 				.Produces<IdResponse>(StatusCodes.Status201Created)
