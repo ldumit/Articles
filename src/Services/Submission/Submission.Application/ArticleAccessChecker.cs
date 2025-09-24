@@ -18,6 +18,6 @@ public class ArticleAccessChecker(SubmissionDbContext _dbContext) : IArticleAcce
 
 				return await _dbContext.ArticleActors
 						.AsNoTracking()
-						.AnyAsync(e => e.ArticleId == articleId && e.Person.UserId == userId && roles.Contains(e.Role), ct);
+						.AnyAsync(e => e.ArticleId == articleId && e.Person.UserId == userId, ct);
 		}
 }

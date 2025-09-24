@@ -17,6 +17,6 @@ public class ArticleAccessChecker(ReviewDbContext _dbContext) : IArticleAccessCh
 						return true;
 
 				return await _dbContext.ArticleActors
-						.AnyAsync(e => e.ArticleId == articleId && e.Person.UserId == userId && roles.Contains(e.Role));
+						.AnyAsync(e => e.ArticleId == articleId && e.Person.UserId == userId);
 		}
 }

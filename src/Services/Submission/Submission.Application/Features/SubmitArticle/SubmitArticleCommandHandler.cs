@@ -5,7 +5,7 @@ public class SubmitArticleCommandHandler(ArticleRepository _articleRepository, A
 {
 		public async Task<IdResponse> Handle(SubmitArticleCommand command, CancellationToken cancellationToken)
 		{
-				var article = await _articleRepository.FindByIdOrThrowAsync(command.ArticleId);
+				var article = await _articleRepository.GetByIdOrThrowAsync(command.ArticleId);
 
 				article.Submit(command, _stateMachineFactory);
 

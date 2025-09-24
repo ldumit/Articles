@@ -41,13 +41,6 @@ public partial class Article
 						Role = role
 				});
 
-				//_actors.Add(new ArticleActor()
-				//{
-				//		Person = author,
-				//		//PersonId = author.Id, 
-				//		Role = UserRoleType.REVED
-				//});
-
 				AddDomainEvent(
 						new AuthorAssigned(author, action));
 				AddAction(action);
@@ -75,6 +68,18 @@ public partial class Article
 
 		public void Submit(IArticleAction<ArticleActionType> action, ArticleStateMachineFactory _stateMachineFactory)
 		{
+				// check if all mandatory contribution areas are covered
+				var contributionAreas = _actors.OfType<ArticleAuthor>()
+					.SelectMany(author => author.ContributionAreas)
+					.ToHashSet();
+
+				var missingMandatoryAreas = ContributionAreaCategories.MandatoryAreas
+					.Except(contributionAreas)
+					.ToList();
+				
+				if (missingMandatoryAreas.Count > 0)
+					throw new DomainException($"Cannot submit article: Missing mandatory contribution areas: {string.Join(", ", missingMandatoryAreas)}");
+
 				SubmittedById = action.CreatedById;
 				SubmittedOn = action.CreatedOn;
 

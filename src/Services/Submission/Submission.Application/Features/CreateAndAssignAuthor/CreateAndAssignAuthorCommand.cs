@@ -32,10 +32,6 @@ public class CreateAndAssignAuthorCommandValidator : ArticleCommandValidator<Cre
 				});
 
 				RuleFor(x => x.ContributionAreas)
-						.Must(HasMandatoryContribution)
-						.WithMessage("The author must contribute to at least one mandatory area.");
+						.NotEmptyWithMessage("The author must contribute to at least one mandatory area.");
 		}
-
-		private bool HasMandatoryContribution(HashSet<ContributionArea> contributionAreas)
-				=> contributionAreas.Overlaps(ContributionAreaCategories.MandatoryAreas);
 }
