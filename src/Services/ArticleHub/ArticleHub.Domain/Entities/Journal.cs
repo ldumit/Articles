@@ -2,9 +2,8 @@
 
 namespace ArticleHub.Domain.Entities;
 
-public class Journal : IEntity
+public class Journal : Entity
 {
-    public int Id { get; init; }
     public required string Abbreviation { get; init; }
     public required string Name { get; init; }
 

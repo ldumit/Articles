@@ -1,5 +1,4 @@
-﻿using ArticleHub.Persistence;
-using Articles.Security;
+﻿using Articles.Security;
 using Blocks.Core;
 using Blocks.Mapster;
 using Blocks.Messaging;
@@ -11,6 +10,7 @@ using Blocks.Messaging.MassTransit;
 using Blocks.Core.Security;
 using Blocks.AspNetCore;
 using Blocks.Core.Context;
+using Blocks.Hasura;
 
 namespace ArticleHub.API;
 

@@ -9,10 +9,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Json;
 using Review.API.FileStorage;
 using System.Text.Json.Serialization;
-using TransactionOptions = Blocks.EntityFrameworkCore.TransactionOptions;
 using Review.Application.Options;
 using Blocks.Core.Security;
 using Blocks.Core.Context;
+using Blocks.EntityFrameworkCore;
 
 namespace Review.API;
 
@@ -42,8 +42,6 @@ public static class DependecyInjection
 						.AddJwtAuthentication(config)    // JWT Authentication
 						.AddAuthorization();                    // Authorization configuration
 
-				// http
-				// talk - interface segragation
 				services
 						.AddScoped<IClaimsProvider, HttpContextProvider>()
 						.AddScoped<IRouteProvider, HttpContextProvider>()
@@ -60,17 +58,15 @@ public static class DependecyInjection
 				services.AddMongoFileStorageAsScoped<SubmissionFileStorageOptions>(config);
 				services.AddFileServiceFactory();
 
-				services.AddEmptyEmailService(config); //todo replace it with a real implementation
+				//todo - replace it with a real SMTP implementation after configuring your SMTP server settings
+				services.AddEmptyEmailService(config); 
 				//services.AddSmtpEmailService(config);
 
 				// grpc Services
 				var grpcOptions = config.GetSectionByTypeName<GrpcServicesOptions>();
 				services.AddCodeFirstGrpcClient<IPersonService>(grpcOptions, "Person");
-				// todo - add this service
+				// todo - add this service if needed
 				//services.AddConfiguredGrpcClient<JournalService.JournalerviceClient>(grpcOptions);
-
-				//todo do I need this IThreadSafeMemoryCache?
-				//services.AddScoped<IThreadSafeMemoryCache, MemoryCache>();
 
 				return services;
 		}

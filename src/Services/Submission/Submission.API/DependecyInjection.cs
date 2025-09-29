@@ -5,6 +5,7 @@ using Blocks.Core;
 using Blocks.AspNetCore;
 using Blocks.EntityFrameworkCore;
 using Blocks.Messaging;
+using EmailService.Empty;
 using Auth.Grpc;
 using Blocks.AspNetCore.Grpc;
 using FileStorage.MongoGridFS;
@@ -52,6 +53,10 @@ public static class DependecyInjection
 
 				// external services or modules
 				services.AddMongoFileStorageAsSingletone(config);
+
+				services.AddEmptyEmailService(config);
+				//services.AddSmtpEmailService(config);
+
 
 				//grpc Services
 				var grpcOptions = config.GetSectionByTypeName<GrpcServicesOptions>();

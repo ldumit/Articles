@@ -1,12 +1,10 @@
-﻿using Articles.Abstractions.Enums;
-
-namespace Production.Domain.Assets.Enums;
+﻿namespace Production.Domain.Assets.Enums;
 
 public static class AssetTypeCategories
 {
 		public static HashSet<AssetType> DraftAssets = new()
 		{
-				AssetType.DraftPdf
+				AssetType.TypesetDraft
 		};
 		public static HashSet<AssetType> FinalAssets = new()
 		{

@@ -58,18 +58,43 @@ services:
 
   sqlserver:
     image: mcr.microsoft.com/mssql/server
-    volumes:
-      - sqlserver_data:/var/opt/mssql
+    # volumes:
+    #   - sqlserver_data:/var/opt/mssql
 
   journals-redisdb:
     image: redis/redis-stack
-    volumes:
-      - journals_redisdb_data:/data
+    # volumes:
+    #   - journals_redisdb_data:/data
 
   articlehub-hasura:
     image: hasura/graphql-engine
     depends_on:
       - postgres
+
+  # hasura-init:
+  #   image: curlimages/curl:8.10.1
+  #   depends_on:
+  #     - articlehub-hasura
+  #   entrypoint: /bin/sh
+  #   command:
+  #     - -c
+  #     - |
+  #       until curl -sf http://articlehub-hasura:8080/healthz; do sleep 1; done
+  #       curl -s -H "x-hasura-admin-secret: secret" -H "content-type: application/json" \
+  #         -d '{"type":"pg_track_all_tables","args":{"source":"default"}}' \
+  #         http://articlehub-hasura:8080/v1/metadata
+  #       curl -s -H "x-hasura-admin-secret: secret" -H "content-type: application/json" \
+  #         -d '{"type":"pg_create_all_object_relationships","args":{"source":"default"}}' \
+  #         http://articlehub-hasura:8080/v1/metadata
+  #       curl -s -H "x-hasura-admin-secret: secret" -H "content-type: application/json" \
+  #         -d '{"type":"pg_create_all_array_relationships","args":{"source":"default"}}' \
+  #         http://articlehub-hasura:8080/v1/metadata
+  #       curl -s -H "x-hasura-admin-secret: secret" -H "content-type: application/json" \
+  #         -d '{"type":"reload_metadata","args":{}}' \
+  #         http://articlehub-hasura:8080/v1/metadata
+  #       echo "Hasura metadata auto-tracked."
+
+
 
 #talk: separation beetwen main and override files
   postgres:
@@ -79,19 +104,19 @@ services:
       interval: 5s
       timeout: 3s
       retries: 30
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+    # volumes:
+    #   - postgres_data:/var/lib/postgresql/data
   
   mongo-gridfs:
     image: mongo:6.0
     container_name: mongo-gridfs
-    volumes:
-      - mongo_gridfs_data:/data/db
+    # volumes:
+    #   - mongo_gridfs_data:/data/db
 
   rabbitmq:
     image: "rabbitmq:management"
-    volumes:
-      - rabbitmq_data:/var/lib/rabbitmq
+    # volumes:
+    #   - rabbitmq_data:/var/lib/rabbitmq
 
 volumes:
   postgres_data:

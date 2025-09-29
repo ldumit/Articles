@@ -1,11 +1,13 @@
 ﻿using Blocks.Core;
+using EFCore.NamingConventions.Internal;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Blocks.EntityFrameworkCore
 {
 		public static class ModelBuilderExtensions
 		{
-				public static void UseClrTypeNamesForTables(this ModelBuilder modelBuilder)
+				public static void UseEntityTypeNamesAsTables(this ModelBuilder modelBuilder, INameRewriter? nameRewriter = null)
 				{
 						foreach (var entity in modelBuilder.Model.GetEntityTypes())
 						{
@@ -14,14 +16,20 @@ namespace Blocks.EntityFrameworkCore
 										continue;
 
 
-								// Find the *root* base type (top of hierarchy) (for TPH strategy)
+								// Find the *root* base type (for TPH inheritance strategy)
 								var rootType = entity;
 								while (rootType.BaseType != null)
 								{
 										rootType = rootType.BaseType;
 								}
 
-								modelBuilder.Entity(entity.ClrType).ToTable(rootType.ClrType.Name);
+								var tableName = rootType.ClrType.Name;
+								if (nameRewriter != null)
+								{
+										tableName = nameRewriter.RewriteName(tableName);
+								}
+
+								modelBuilder.Entity(entity.ClrType).ToTable(tableName);
 						}
 				}
 

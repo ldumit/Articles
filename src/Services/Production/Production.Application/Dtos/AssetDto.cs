@@ -1,5 +1,4 @@
-﻿using Articles.Abstractions.Enums;
-using Production.Domain.Assets.Enums;
+﻿using Production.Domain.Assets.Enums;
 
 namespace Production.Application.Dtos;
 

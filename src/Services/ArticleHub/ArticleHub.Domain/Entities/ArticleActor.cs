@@ -1,8 +1,9 @@
 ﻿using Articles.Abstractions.Enums;
+using Blocks.Entitities;
 
 namespace ArticleHub.Domain.Entities;
 
-public class ArticleActor
+public class ArticleActor : Entity
 {
     public UserRoleType Role { get; init; }
     public int ArticleId { get; init; }

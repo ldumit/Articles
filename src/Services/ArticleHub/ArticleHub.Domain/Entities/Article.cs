@@ -3,9 +3,8 @@ using Blocks.Entitities;
 
 namespace ArticleHub.Domain.Entities;
 
-public class Article : IEntity
+public class Article : Entity
 {
-    public int Id { get; init; }
     public required string Title { get; set; }
     public string? Doi { get; set; }
     public ArticleStage Stage { get; set; }

@@ -17,9 +17,9 @@ namespace Production.Persistence.Migrations
                 name: "ArticleStageTransition",
                 columns: table => new
                 {
-                    CurrentStage = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ActionType = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    DestinationStage = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    CurrentStage = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    ActionType = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    DestinationStage = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -30,9 +30,9 @@ namespace Production.Persistence.Migrations
                 name: "AssetStateTransition",
                 columns: table => new
                 {
-                    CurrentState = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ActionType = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    DestinationState = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    CurrentState = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    ActionType = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    DestinationState = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -45,7 +45,7 @@ namespace Production.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ArticleStage = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ArticleStage = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     AssetTypes = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ActionTypes = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -83,9 +83,9 @@ namespace Production.Persistence.Migrations
                     LastName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     Title = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    Affiliation = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false, comment: "Institution or organization they are associated with when they conduct their research."),
                     UserId = table.Column<int>(type: "int", nullable: true),
                     TypeDiscriminator = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
-                    Affiliation = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true, comment: "Institution or organization they are associated with when they conduct their research."),
                     IsDefault = table.Column<bool>(type: "bit", nullable: true, defaultValue: false),
                     CompanyName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true)
                 },
@@ -141,7 +141,7 @@ namespace Production.Persistence.Migrations
                     SubmitedById = table.Column<int>(type: "int", nullable: false),
                     SubmitedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     AcceptedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Stage = table.Column<string>(type: "nvarchar(64)", nullable: false),
+                    Stage = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     JournalId = table.Column<int>(type: "int", nullable: false),
                     VolumeId = table.Column<int>(type: "int", nullable: false),
                     PublishedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -149,7 +149,7 @@ namespace Production.Persistence.Migrations
                     CreatedById = table.Column<int>(type: "int", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
                     LastModifiedById = table.Column<int>(type: "int", nullable: true),
-                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    LastModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -186,7 +186,7 @@ namespace Production.Persistence.Migrations
                 {
                     ArticleId = table.Column<int>(type: "int", nullable: false),
                     PersonId = table.Column<int>(type: "int", nullable: false),
-                    Role = table.Column<string>(type: "nvarchar(450)", nullable: false, defaultValue: "AUT")
+                    Role = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false, defaultValue: "AUT")
                 },
                 constraints: table =>
                 {
@@ -211,16 +211,16 @@ namespace Production.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    State = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    State = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
-                    Type = table.Column<string>(type: "nvarchar(64)", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     ArticleId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     Number = table.Column<byte>(type: "tinyint", nullable: false, defaultValue: (byte)0),
                     CreatedById = table.Column<int>(type: "int", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
                     LastModifiedById = table.Column<int>(type: "int", nullable: true),
-                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    LastModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -274,11 +274,11 @@ namespace Production.Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AssetId = table.Column<int>(type: "int", nullable: false),
                     Comment = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TypeId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TypeId = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     CreatedById = table.Column<int>(type: "int", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastModifiedById = table.Column<int>(type: "int", nullable: true),
-                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    LastModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -307,7 +307,7 @@ namespace Production.Persistence.Migrations
                     CreatedById = table.Column<int>(type: "int", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
                     LastModifiedById = table.Column<int>(type: "int", nullable: true),
-                    LasModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    LastModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -351,7 +351,7 @@ namespace Production.Persistence.Migrations
                 {
                     { "AssignTypesetter", "Accepted", "InProduction" },
                     { "SchedulePublication", "FinalProduction", "PublicationScheduled" },
-                    { "Publish", "PublicationScheduled", "Published" }
+                    { "PublishArticle", "PublicationScheduled", "Published" }
                 });
 
             migrationBuilder.InsertData(
@@ -385,12 +385,21 @@ namespace Production.Persistence.Migrations
                 columns: new[] { "Id", "Description", "Info", "Name" },
                 values: new object[,]
                 {
-                    { 201, "Article accepted", "Your article has been reviewed and accepted. The production of the article will start soon.", "Accepted" },
-                    { 300, "Typesetter assigned", "The typesetter is preparing your Author’s Proof. We will contact you if we need any further files or information.", "InProduction" },
-                    { 301, "Author's proof approved", "The Author's Proof is available for you to check and provide corrections. This status is also displayed if we are preparing a further Author's Proof at your request.", "DraftProduction" },
-                    { 302, "Publisher's proof uploaded", "The typesetter is preparing the final version of your article for publication. We will contact you if we need to check anything further before publication.", "FinalProduction" },
-                    { 304, "Article scheduled for publication", "Your Production Specialist has completed their quality checks. Your article is now scheduled for publication on our website and will appear online within the next few working days.", "PublicationScheduled" },
-                    { 305, "Article published", "Your article has been published and sent to all relevant repositories, and the publication process is now complete. Please note that repositories have different processing times and your article may not be available yet.", "Published" }
+                    { 101, "The Author created the Article", "The article has been created. Please upload the Manuscript and any Supplementary materials. Associate the authors with the article.", "Created" },
+                    { 102, "Author uploaded the Manuscript file", "The manuscript has been uploaded. You can now submit the article for editorial checks.", "ManuscriptUploaded" },
+                    { 103, "The Manuscript was submitted by the author for editorial checks", "Our editorial specialists are checking your article. We will contact you if we need additional files or information.", "Submitted" },
+                    { 104, "Manuscript failed the initial editorial checks", "The manuscript does not meet the required quality standards of this journal.", "InitialRejected" },
+                    { 105, "Manuscript passed the initial editorial checks", "Your manuscript has passed the initial checks. It will now move forward for review.", "InitialApproved" },
+                    { 201, "Article is under peer review", "Your article is currently being reviewed by experts in the field.", "UnderReview" },
+                    { 202, "All reviewer feedback received, pending editor's decision", "Reviewer feedback has been received. The editor will now make a decision on your article.", "ReadyForDecision" },
+                    { 203, "Editor requested a revised manuscript from the author", "The editor has requested revisions. Please upload your revised manuscript to continue the review process.", "AwaitingRevision" },
+                    { 204, "Article rejected after review", "Your article was rejected following review. Please read the feedback carefully if you plan to resubmit.", "Rejected" },
+                    { 205, "Article accepted after review", "Your article has been accepted for publication. The production process will now begin.", "Accepted" },
+                    { 300, "Typesetter assigned to the article", "A typesetter has been assigned and is preparing your Author’s Proof.", "InProduction" },
+                    { 301, "Typesetter uploaded the draft PDF for author approval", "The Author’s Proof (draft PDF) is available for you to check and provide corrections.", "DraftProduction" },
+                    { 302, "Author approved the draft PDF, finalization in progress", "The typesetter is preparing the final version of your article for publication.", "FinalProduction" },
+                    { 304, "Article scheduled for online publication", "Quality checks are complete. Your article is scheduled for publication and will appear online within the next few working days.", "PublicationScheduled" },
+                    { 305, "Article published", "Your article has been published and sent to repositories. Availability in repositories may vary depending on their processing times.", "Published" }
                 });
 
             migrationBuilder.CreateIndex(

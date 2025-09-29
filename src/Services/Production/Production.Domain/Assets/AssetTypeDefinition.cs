@@ -1,6 +1,4 @@
-﻿using Articles.Abstractions.Enums;
-using Blocks.Entitities;
-using Blocks.Core.Cache;
+﻿using Blocks.Core.Cache;
 using Production.Domain.Assets.ValueObjects;
 
 

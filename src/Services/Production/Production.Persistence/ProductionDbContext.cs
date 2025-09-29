@@ -53,7 +53,7 @@ public partial class ProductionDbContext(DbContextOptions<ProductionDbContext> o
         //modelBuilder.ApplyConfiguration(new CustomerEntityConfiguration());
 
 
-        modelBuilder.UseClrTypeNamesForTables();
+        modelBuilder.UseEntityTypeNamesAsTables();
 
 
 				base.OnModelCreating(modelBuilder);

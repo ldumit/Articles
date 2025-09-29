@@ -1,35 +1,29 @@
-﻿
-namespace Articles.Abstractions.Enums;
+﻿namespace Articles.Abstractions.Enums;
 
 public enum ContributionArea
 {
 		//mandatory
-		OriginalDraft = 1,
-		ReviewAndEditing = 2,
+		OriginalDraft = 1,  // writing the first version
+		Revision,						// improving the draft after feedback
 
 		//optional
-		Conceptualization = 3,
-		FormalAnalysis = 4,
-		Investigation = 5,
-		Methodology = 6,
-		Visualization = 7,
+		Analysis,						// methods, formal analysis
+		Investigation,			// experiments, data collection
+		Visualization				// figures, charts
 }
 
 public static class ContributionAreaCategories
 {
-		public static HashSet<ContributionArea> MandatoryAreas = new()
-		{
+		public static HashSet<ContributionArea> MandatoryAreas =
+		[
 				ContributionArea.OriginalDraft,
-				ContributionArea.ReviewAndEditing
-		};
+				ContributionArea.Revision
+		];
 
-		public static HashSet<ContributionArea> OptionalAreas = new()
-		{
-				ContributionArea.Conceptualization,
-				ContributionArea.FormalAnalysis,
+		public static HashSet<ContributionArea> OptionalAreas =
+		[
+				ContributionArea.Analysis,
 				ContributionArea.Investigation,
-				ContributionArea.Methodology,
-				ContributionArea.Conceptualization,
 				ContributionArea.Visualization
-		};
+		];
 }

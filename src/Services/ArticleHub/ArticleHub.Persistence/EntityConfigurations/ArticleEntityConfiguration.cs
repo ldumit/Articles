@@ -28,5 +28,10 @@ public class ArticleEntityConfiguration : EntityConfiguration<Article>
             .HasForeignKey(e => e.JournalId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
-    }
+
+				builder.HasMany(e => e.Actors).WithOne()
+						.HasForeignKey(aa => aa.ArticleId)
+            .IsRequired()
+						.OnDelete(DeleteBehavior.Cascade);
+		}
 }

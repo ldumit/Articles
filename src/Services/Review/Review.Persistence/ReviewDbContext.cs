@@ -26,7 +26,7 @@ public partial class ReviewDbContext(DbContextOptions<ReviewDbContext> options, 
     {
 				modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
 
-        modelBuilder.UseClrTypeNamesForTables();
+        modelBuilder.UseEntityTypeNamesAsTables();
 
 				base.OnModelCreating(modelBuilder);
     }

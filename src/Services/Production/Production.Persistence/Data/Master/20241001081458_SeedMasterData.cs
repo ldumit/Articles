@@ -16,7 +16,7 @@ namespace Production.Persistence.Migrations1
             VALUES
             (1, 'Manuscript', 'Manuscript', 1, 0, '[""pdf""]', 'pdf', 50),
             (2, 'ReviewReport', 'Reviewer Report', 3, 0, '[""pdf""]', 'pdf', 50),
-            (3, 'DraftPdf', 'Draft PDF', 3, 0, '[""pdf""]', 'pdf', 50),
+            (3, 'TypesetDraft', 'Draft PDF', 3, 0, '[""pdf""]', 'pdf', 50),
             (4, 'FinalPdf', 'Final PDF', 3, 0, '[""pdf""]', 'pdf', 50),
             (5, 'FinalHtml', 'Final HTML Zip', 3, 0, '[""zip""]', '100'),
             (6, 'FinalEpub', 'Final Epub', 3, 0, '[""epub""]', 'epub', 5),

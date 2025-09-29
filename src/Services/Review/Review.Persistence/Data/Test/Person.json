@@ -43,6 +43,16 @@
     "Discipline": "Planetary Science"
   },
   {
+    "$type": "Review.Domain.Articles.Editor, Review.Domain",
+    "Id": 9,
+    "UserId": 9,
+    "FirstName": "Editor",
+    "LastName": "3",
+    "Honorific": "Ms",
+    "Email": {"Value":"editor.3@articles.test"},
+    "Affiliation": "Academy for Creative Young Thinkers, New Delhi"
+  },
+  {
     "$type": "Review.Domain.Reviewers.Reviewer, Review.Domain",
     "Id": 12,
     "UserId": 12,

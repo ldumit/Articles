@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ArticleHub.Persistence.Migrations
 {
     [DbContext(typeof(ArticleHubDbContext))]
-    [Migration("20250909060452_InitialCreate")]
+    [Migration("20250926065911_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -29,154 +29,127 @@ namespace ArticleHub.Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .HasColumnType("integer")
-                        .HasColumnName("id")
                         .HasColumnOrder(0);
 
                     b.Property<DateTime?>("AcceptedOn")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("accepted_on");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Doi")
                         .HasMaxLength(64)
-                        .HasColumnType("character varying(64)")
-                        .HasColumnName("doi");
+                        .HasColumnType("character varying(64)");
 
                     b.Property<int>("JournalId")
-                        .HasColumnType("integer")
-                        .HasColumnName("journal_id");
+                        .HasColumnType("integer");
 
                     b.Property<DateTime?>("PublishedOn")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("published_on");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Stage")
                         .IsRequired()
                         .HasMaxLength(64)
-                        .HasColumnType("character varying(64)")
-                        .HasColumnName("stage");
+                        .HasColumnType("character varying(64)");
 
                     b.Property<int>("SubmittedById")
-                        .HasColumnType("integer")
-                        .HasColumnName("submitted_by_id");
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("SubmittedOn")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("submitted_on");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)")
-                        .HasColumnName("title");
+                        .HasColumnType("character varying(256)");
 
-                    b.HasKey("Id")
-                        .HasName("pk_articles");
+                    b.HasKey("Id");
 
-                    b.HasIndex("JournalId")
-                        .HasDatabaseName("ix_articles_journal_id");
+                    b.HasIndex("JournalId");
 
-                    b.HasIndex("SubmittedById")
-                        .HasDatabaseName("ix_articles_submitted_by_id");
+                    b.HasIndex("SubmittedById");
 
-                    b.HasIndex("Title")
-                        .HasDatabaseName("ix_articles_title");
+                    b.HasIndex("Title");
 
-                    b.ToTable("articles", (string)null);
+                    b.ToTable("article", (string)null);
                 });
 
             modelBuilder.Entity("ArticleHub.Domain.Entities.ArticleActor", b =>
                 {
                     b.Property<int>("ArticleId")
-                        .HasColumnType("integer")
-                        .HasColumnName("article_id");
+                        .HasColumnType("integer");
 
                     b.Property<int>("PersonId")
-                        .HasColumnType("integer")
-                        .HasColumnName("person_id");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Role")
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(64)
                         .HasColumnType("character varying(64)")
-                        .HasDefaultValue("AUT")
-                        .HasColumnName("role");
+                        .HasDefaultValue("AUT");
 
-                    b.HasKey("ArticleId", "PersonId", "Role")
-                        .HasName("pk_article_contributors");
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
 
-                    b.HasIndex("PersonId")
-                        .HasDatabaseName("ix_article_contributors_person_id");
+                    b.HasKey("ArticleId", "PersonId", "Role");
 
-                    b.ToTable("article_contributors", (string)null);
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("article_actor", (string)null);
                 });
 
             modelBuilder.Entity("ArticleHub.Domain.Entities.Journal", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("integer")
-                        .HasColumnName("id")
                         .HasColumnOrder(0);
 
                     b.Property<string>("Abbreviation")
                         .IsRequired()
-                        .HasMaxLength(8)
-                        .HasColumnType("character varying(8)")
-                        .HasColumnName("abbreviation");
+                        .HasMaxLength(16)
+                        .HasColumnType("character varying(16)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(64)
-                        .HasColumnType("character varying(64)")
-                        .HasColumnName("name");
+                        .HasColumnType("character varying(64)");
 
-                    b.HasKey("Id")
-                        .HasName("pk_journals");
+                    b.HasKey("Id");
 
-                    b.ToTable("journals", (string)null);
+                    b.ToTable("journal", (string)null);
                 });
 
             modelBuilder.Entity("ArticleHub.Domain.Entities.Person", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("integer")
-                        .HasColumnName("id")
                         .HasColumnOrder(0);
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)")
-                        .HasColumnName("email");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(64)
-                        .HasColumnType("character varying(64)")
-                        .HasColumnName("first_name");
+                        .HasColumnType("character varying(64)");
 
                     b.Property<string>("Honorific")
                         .HasMaxLength(64)
-                        .HasColumnType("character varying(64)")
-                        .HasColumnName("honorific");
+                        .HasColumnType("character varying(64)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(64)
-                        .HasColumnType("character varying(64)")
-                        .HasColumnName("last_name");
+                        .HasColumnType("character varying(64)");
 
                     b.Property<int?>("UserId")
-                        .HasColumnType("integer")
-                        .HasColumnName("user_id");
+                        .HasColumnType("integer");
 
-                    b.HasKey("Id")
-                        .HasName("pk_persons");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId")
-                        .IsUnique()
-                        .HasDatabaseName("ix_persons_user_id");
+                        .IsUnique();
 
-                    b.ToTable("persons", (string)null);
+                    b.ToTable("person", (string)null);
                 });
 
             modelBuilder.Entity("ArticleHub.Domain.Entities.Article", b =>
@@ -185,15 +158,13 @@ namespace ArticleHub.Persistence.Migrations
                         .WithMany("Articles")
                         .HasForeignKey("JournalId")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("fk_articles_journals_journal_id");
+                        .IsRequired();
 
                     b.HasOne("ArticleHub.Domain.Entities.Person", "SubmittedBy")
                         .WithMany()
                         .HasForeignKey("SubmittedById")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("fk_articles_persons_submitted_by_id");
+                        .IsRequired();
 
                     b.Navigation("Journal");
 
@@ -206,15 +177,13 @@ namespace ArticleHub.Persistence.Migrations
                         .WithMany("Actors")
                         .HasForeignKey("ArticleId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_article_contributors_articles_article_id");
+                        .IsRequired();
 
                     b.HasOne("ArticleHub.Domain.Entities.Person", "Person")
                         .WithMany()
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("fk_article_contributors_persons_person_id");
+                        .IsRequired();
 
                     b.Navigation("Person");
                 });

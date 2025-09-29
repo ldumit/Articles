@@ -22,7 +22,7 @@ public partial class SubmissionDbContext(DbContextOptions<SubmissionDbContext> o
     {
 				modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
 
-        modelBuilder.UseClrTypeNamesForTables();
+        modelBuilder.UseEntityTypeNamesAsTables();
 
 				base.OnModelCreating(modelBuilder);
     }

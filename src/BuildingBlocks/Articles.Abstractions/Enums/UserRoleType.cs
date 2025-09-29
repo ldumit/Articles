@@ -5,7 +5,7 @@ namespace Articles.Abstractions.Enums;
 public enum UserRoleType : int
 {
 		// Cross-domain: 1–9
-		[Description("Editorial Office")]
+		[Description("Editorial Office Admin")]
 		EOF = 1,
 
 		// Submission: 11–19
@@ -21,7 +21,7 @@ public enum UserRoleType : int
 		REV = 22,
 
 		// Production: 31–39
-		[Description("Production Office")]
+		[Description("Production Office Admin")]
 		POF = 31,
 		[Description("Typesetter")]
 		TSOF = 32,

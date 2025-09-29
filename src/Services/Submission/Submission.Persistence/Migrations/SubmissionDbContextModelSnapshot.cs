@@ -492,85 +492,106 @@ namespace Submission.Persistence.Migrations
                         new
                         {
                             Id = 101,
-                            Description = "The Author created the article",
-                            Info = "The article was created. Please upload the Manuscript and the Supplimentarry materials. Associate the authors with the article.",
+                            Description = "The Author created the Article",
+                            Info = "The article has been created. Please upload the Manuscript and any Supplementary materials. Associate the authors with the article.",
                             Name = "Created"
                         },
                         new
                         {
                             Id = 102,
-                            Description = "The Manuscript was submitted by the author",
-                            Info = "Our editorial specialist is checking your article. We will contact you if we need any further files or information.",
+                            Description = "Author uploaded the Manuscript file",
+                            Info = "The manuscript has been uploaded. You can now submit the article for editorial checks.",
                             Name = "ManuscriptUploaded"
                         },
                         new
                         {
                             Id = 103,
-                            Description = "Author uploaded the Manuscript",
-                            Info = "The manuscript was uploaded, you can now submit the article.",
+                            Description = "The Manuscript was submitted by the author for editorial checks",
+                            Info = "Our editorial specialists are checking your article. We will contact you if we need additional files or information.",
                             Name = "Submitted"
                         },
                         new
                         {
                             Id = 104,
-                            Description = "Article was rejected by the editorial specialist",
-                            Info = "The manuscript does not reach the required quality standard of this journal.",
+                            Description = "Manuscript failed the initial editorial checks",
+                            Info = "The manuscript does not meet the required quality standards of this journal.",
                             Name = "InitialRejected"
                         },
                         new
                         {
                             Id = 105,
-                            Description = "Article approved",
-                            Info = "Your article has been checked. Our editorial specialists will start soon revieing it.",
+                            Description = "Manuscript passed the initial editorial checks",
+                            Info = "Your manuscript has passed the initial checks. It will now move forward for review.",
                             Name = "InitialApproved"
                         },
                         new
                         {
                             Id = 201,
-                            Description = "Article approved",
-                            Info = "Our editorial specialist is reviewing your article.",
+                            Description = "Article is under peer review",
+                            Info = "Your article is currently being reviewed by experts in the field.",
                             Name = "UnderReview"
                         },
                         new
                         {
+                            Id = 202,
+                            Description = "All reviewer feedback received, pending editor's decision",
+                            Info = "Reviewer feedback has been received. The editor will now make a decision on your article.",
+                            Name = "ReadyForDecision"
+                        },
+                        new
+                        {
+                            Id = 203,
+                            Description = "Editor requested a revised manuscript from the author",
+                            Info = "The editor has requested revisions. Please upload your revised manuscript to continue the review process.",
+                            Name = "AwaitingRevision"
+                        },
+                        new
+                        {
                             Id = 204,
-                            Description = "Article accepted",
-                            Info = "Your article has been reviewed and accepted. The production of the article will start soon.",
+                            Description = "Article rejected after review",
+                            Info = "Your article was rejected following review. Please read the feedback carefully if you plan to resubmit.",
+                            Name = "Rejected"
+                        },
+                        new
+                        {
+                            Id = 205,
+                            Description = "Article accepted after review",
+                            Info = "Your article has been accepted for publication. The production process will now begin.",
                             Name = "Accepted"
                         },
                         new
                         {
                             Id = 300,
-                            Description = "Typesetter assigned",
-                            Info = "The typesetter is preparing your Author’s Proof. We will contact you if we need any further files or information.",
+                            Description = "Typesetter assigned to the article",
+                            Info = "A typesetter has been assigned and is preparing your Author’s Proof.",
                             Name = "InProduction"
                         },
                         new
                         {
                             Id = 301,
-                            Description = "Author's proof approved",
-                            Info = "The Author's Proof is available for you to check and provide corrections. This status is also displayed if we are preparing a further Author's Proof at your request.",
+                            Description = "Typesetter uploaded the draft PDF for author approval",
+                            Info = "The Author’s Proof (draft PDF) is available for you to check and provide corrections.",
                             Name = "DraftProduction"
                         },
                         new
                         {
                             Id = 302,
-                            Description = "Publisher's proof uploaded",
-                            Info = "The typesetter is preparing the final version of your article for publication. We will contact you if we need to check anything further before publication.",
+                            Description = "Author approved the draft PDF, finalization in progress",
+                            Info = "The typesetter is preparing the final version of your article for publication.",
                             Name = "FinalProduction"
                         },
                         new
                         {
                             Id = 304,
-                            Description = "Article scheduled for publication",
-                            Info = "Your Production Specialist has completed their quality checks. Your article is now scheduled for publication on our website and will appear online within the next few working days.",
+                            Description = "Article scheduled for online publication",
+                            Info = "Quality checks are complete. Your article is scheduled for publication and will appear online within the next few working days.",
                             Name = "PublicationScheduled"
                         },
                         new
                         {
                             Id = 305,
                             Description = "Article published",
-                            Info = "Your article has been published and sent to all relevant repositories, and the publication process is now complete. Please note that repositories have different processing times and your article may not be available yet.",
+                            Info = "Your article has been published and sent to repositories. Availability in repositories may vary depending on their processing times.",
                             Name = "Published"
                         });
                 });
@@ -670,7 +691,7 @@ namespace Submission.Persistence.Migrations
 
             modelBuilder.Entity("Submission.Domain.Entities.ArticleActor", b =>
                 {
-                    b.HasOne("Submission.Domain.Entities.Article", "Article")
+                    b.HasOne("Submission.Domain.Entities.Article", null)
                         .WithMany("Actors")
                         .HasForeignKey("ArticleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -681,8 +702,6 @@ namespace Submission.Persistence.Migrations
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("Article");
 
                     b.Navigation("Person");
                 });

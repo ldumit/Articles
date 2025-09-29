@@ -5,6 +5,7 @@ global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 // Internal libraries
 global using Blocks.Core;
 global using Blocks.EntityFrameworkCore;
+//global using Blocks.Hasura;
 global using Articles.Abstractions.Enums;
 
 // Domain
