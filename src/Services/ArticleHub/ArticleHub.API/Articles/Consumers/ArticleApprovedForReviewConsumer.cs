@@ -38,7 +38,7 @@ public class ArticleApprovedForReviewConsumer(ArticleHubDbContext _dbContext)
 		private async Task<Journal> GetOrCreateJournalAsync(ArticleDto articleDto, CancellationToken ct = default)
 		{
 				var journal = await _dbContext.Journals.SingleOrDefaultAsync(j => j.Id == articleDto.Journal.Id, ct);
-				if (journal == null)
+				if (journal is null)
 				{
 						journal = articleDto.Journal.Adapt<Journal>();
 						await _dbContext.Journals.AddAsync(journal);

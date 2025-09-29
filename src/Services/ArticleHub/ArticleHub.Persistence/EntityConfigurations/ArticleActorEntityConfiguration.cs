@@ -4,7 +4,7 @@ internal class ArticleActorEntityConfiguration : EntityConfiguration<ArticleActo
 {
 		public override void Configure(EntityTypeBuilder<ArticleActor> builder)
 		{
-				builder.HasKey(e => new { e.ArticleId, e.PersonId, e.Role });
+				builder.HasIndex(e => new { e.ArticleId, e.PersonId, e.Role }).IsUnique();
 				builder.Property(e => e.Role).HasEnumConversion().HasDefaultValue(UserRoleType.AUT);
 
 				builder.HasOne(a => a.Person)

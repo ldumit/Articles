@@ -1,6 +1,6 @@
 ﻿namespace ArticleHub.Domain.Dtos;
 
-public record ArticleDto(
+public record ArticleMinimalDto(
 		int Id,
 		string Title,
 		string Doi,
@@ -9,7 +9,5 @@ public record ArticleDto(
 		DateTime? PublishedOn,
 		DateTime? AcceptedOn,
 		JournalDto Journal,
-		PersonDto SubmittedBy,
-		IEnumerable<ActorDto> Actors
+		PersonDto SubmittedBy
 );
-

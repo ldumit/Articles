@@ -43,8 +43,11 @@ public sealed class ArticleAcceptedForProductionConsumer(ArticleHubDbContext _db
 								_dbContext.Persons.Add(person);
 						}
 
+						//article.Actors.Add(
+						//		new ArticleActor { ArticleId = article.Id, PersonId = person.Id, Role = actorDto.Role });
+
 						article.Actors.Add(
-								new ArticleActor { ArticleId = article.Id, PersonId = person.Id, Role = actorDto.Role });
+								new ArticleActor { Person = person, Role = actorDto.Role });
 				}
 		}
 }

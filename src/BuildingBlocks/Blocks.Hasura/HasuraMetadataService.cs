@@ -1,7 +1,9 @@
 ﻿using Blocks.Hasura.Metadata;
 using Blocks.Hasura.Query;
 using Microsoft.Extensions.Logging;
+using Humanizer;
 using Refit;
+
 
 namespace Blocks.Hasura;
 public sealed class HasuraMetadataService(IHasuraMetadataApi _metadataApi, IHasuraSqlApi _queryApi, ILogger<HasuraMetadataService> _logger)
@@ -111,7 +113,7 @@ public sealed class HasuraMetadataService(IHasuraMetadataApi _metadataApi, IHasu
 
 		public async Task TrackObjectRelationship(Relationship relationship, CancellationToken ct = default)
 		{
-				var relationName = relationship.To.Table.Name;
+				var relationName = ToRelationName(relationship.To.Table.Name);
 
 				var args = new PgCreateObjectRelationshipRequest
 				{
@@ -130,7 +132,7 @@ public sealed class HasuraMetadataService(IHasuraMetadataApi _metadataApi, IHasu
 
 		public async Task TrackArrayRelationship(Relationship relationship, CancellationToken ct = default)
 		{
-				var relationName = relationship.To.Table.Name;
+				var relationName = ToRelationName(relationship.To.Table.Name).Pluralize(inputIsKnownToBeSingular: false);
 
 				var args = new PgCreateArrayRelationshipRequest
 				{
@@ -149,5 +151,12 @@ public sealed class HasuraMetadataService(IHasuraMetadataApi _metadataApi, IHasu
 
 				var request = new SingleHasuraRequest(args);
 				await _metadataApi.SingleAsync(request, ct);
+		}
+
+
+		private static string ToRelationName(string tableName)
+		{
+				// snake_case -> PascalCase -> camelCase
+				return tableName.Underscore().Pascalize().Camelize();
 		}
 }

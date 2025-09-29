@@ -13,7 +13,7 @@ public class ArticleGraphQLReadStore(GraphQLHttpClient client)
 
 		// Shared fragment (reuse in all Gets))
 		private const string ArticleFragment = @"
-fragment ArticleDto on Articles {
+fragment ArticleDto on Article {
   id
   title
   doi
@@ -23,6 +23,16 @@ fragment ArticleDto on Articles {
   publishedOn
   journal { id abbreviation name }
   submittedBy: person { id email firstName lastName userId }
+  actors:articleActors {
+		role
+    person {
+		  id
+			userId
+      email
+      firstName
+      lastName
+    }
+  }
 }";
 
 		public async Task<QueryResult<ArticleDto>> GetArticlesAsync(object filter, int limit = 20, int offset = 0, CancellationToken ct = default)
@@ -31,8 +41,8 @@ fragment ArticleDto on Articles {
 				{
 						OperationName = "GetArticles",
 						Query = ArticleFragment + @"
-query GetArticles($filter: ArticlesBoolExp, $limit: Int = 20, $offset: Int = 0) {
-  items: articles(where: $filter, limit: $limit, offset: $offset) {
+query GetArticles($filter: ArticleBoolExp, $limit: Int = 20, $offset: Int = 0) {
+  items: article(where: $filter, limit: $limit, offset: $offset) {
     ...ArticleDto
   }
 }",
@@ -53,7 +63,7 @@ query GetArticles($filter: ArticlesBoolExp, $limit: Int = 20, $offset: Int = 0) 
 						OperationName = "GetArticleById",
 						Query = ArticleFragment + @"
 query GetArticleById($id: Int!) {
-  item: articlesByPk(id: $id) {
+  item: articleByPk(id: $id) {
     ...ArticleDto
   }
 }",

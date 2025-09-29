@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -75,14 +76,15 @@ namespace ArticleHub.Persistence.Migrations
                 name: "article_actor",
                 columns: table => new
                 {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Role = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false, defaultValue: "AUT"),
                     ArticleId = table.Column<int>(type: "integer", nullable: false),
-                    PersonId = table.Column<int>(type: "integer", nullable: false),
-                    Id = table.Column<int>(type: "integer", nullable: false)
+                    PersonId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_article_actor", x => new { x.ArticleId, x.PersonId, x.Role });
+                    table.PrimaryKey("PK_article_actor", x => x.Id);
                     table.ForeignKey(
                         name: "FK_article_actor_article_ArticleId",
                         column: x => x.ArticleId,
@@ -111,6 +113,12 @@ namespace ArticleHub.Persistence.Migrations
                 name: "IX_article_Title",
                 table: "article",
                 column: "Title");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_article_actor_ArticleId_PersonId_Role",
+                table: "article_actor",
+                columns: new[] { "ArticleId", "PersonId", "Role" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_article_actor_PersonId",

@@ -70,6 +70,12 @@ namespace ArticleHub.Persistence.Migrations
 
             modelBuilder.Entity("ArticleHub.Domain.Entities.ArticleActor", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
                     b.Property<int>("ArticleId")
                         .HasColumnType("integer");
 
@@ -77,17 +83,18 @@ namespace ArticleHub.Persistence.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("Role")
+                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(64)
                         .HasColumnType("character varying(64)")
                         .HasDefaultValue("AUT");
 
-                    b.Property<int>("Id")
-                        .HasColumnType("integer");
-
-                    b.HasKey("ArticleId", "PersonId", "Role");
+                    b.HasKey("Id");
 
                     b.HasIndex("PersonId");
+
+                    b.HasIndex("ArticleId", "PersonId", "Role")
+                        .IsUnique();
 
                     b.ToTable("article_actor", (string)null);
                 });
