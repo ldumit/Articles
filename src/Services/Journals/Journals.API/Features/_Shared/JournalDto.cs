@@ -7,9 +7,13 @@ public record JournalDto(
 		string NormalizedName,
 		string Description, 
 		string ISSN,
-		List<SectionDto> Sections)
+		int ArticlesCount,
+		IEnumerable<SectionDto> Sections)
 {
 		//talk about the difference between the two approaches AdaptIgnore vs MapToConstructor
 		//[AdaptIgnore] 
 		public EditorDto ChiefEditor { get; set; } = null!;
+
+		[AdaptIgnore]
+		public List<EditorDto> Editors { get; set; } = new();
 }

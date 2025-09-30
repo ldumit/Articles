@@ -24,6 +24,7 @@ public static class DependencyInjection
 						{
 								opt.SerializerOptions.PropertyNameCaseInsensitive = true;
 								opt.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
+								//opt.SerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
 						});
 
 				return services;

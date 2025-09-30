@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Journals.API.Features.Shared;
 using Blocks.Exceptions;
-using Articles.Security;
 using Blocks.Redis;
+using Articles.Security;
+using Journals.API.Features.Shared;
 
 namespace Journals.API.Features.Sections.Create;
 
@@ -19,11 +19,10 @@ public class CreateSectionEndpoint(Repository<Journal> _repository)
             throw new BadRequestException("Section with the same name already exists");
 
 				var section = command.Adapt<Section>();
-        //await _repository.SetNewId(section);
 				section.Id = await _repository.GenerateNewId<Section>();
 				journal.Sections.Add(section);
 
-				await _repository.UpdateAsync(journal);
+				await _repository.ReplaceAsync(journal);
 
 				await Send.OkAsync(new IdResponse(section.Id));
     }

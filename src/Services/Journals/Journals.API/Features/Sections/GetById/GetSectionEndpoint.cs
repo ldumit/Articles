@@ -1,12 +1,13 @@
-﻿using FastEndpoints;
-using Mapster;
-using Journals.Persistence;
-using Journals.API.Features.Shared;
+﻿using Blocks.Linq;
+using Blocks.Mapster;
 using Blocks.Redis;
-using Blocks.Linq;
+using Journals.API.Features.Shared;
+using Journals.Persistence;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Journals.API.Features.Sections.GetById;
 
+[Authorize]
 [HttpGet("journals/{journalId:int}/sections/{sectionId:int}")]
 [Tags("Sections")]
 public class GetSectionEndpoint(JournalDbContext _dbContext)
@@ -18,12 +19,14 @@ public class GetSectionEndpoint(JournalDbContext _dbContext)
 				var section = journal.Sections.SingleOrThrow(s => s.Id == query.SectionId);
 
         var sectionDto = section.Adapt<SectionDto>();
-
-        foreach (var editorRole in section.EditorRoles.Take(4))
+        
+        sectionDto.Editors = new List<EditorDto>();
+				foreach (var editorRole in section.EditorRoles)
         {
-            var editor = await _dbContext.Editors.GetByIdAsync(editorRole.EditorId);
-            sectionDto.Editors.Add(editor.Adapt<EditorDto>());
-        }
+						var editor = await _dbContext.Editors.GetByIdOrThrowAsync(editorRole.EditorId);
+						var editorDto = editor.AdaptWith<EditorDto>(editor => editor.Role = editorRole.EditorRole);
+						sectionDto.Editors.Add(editorDto);
+				}
 
         await Send.OkAsync(new GetSectionResponse(sectionDto));
     }

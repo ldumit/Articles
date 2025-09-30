@@ -5,5 +5,7 @@ namespace Journals.API.Features.Shared;
 public record EditorDto(
 		int Id,
 		string FullName, 
-		string Affiliation, 
-		EditorRole Role = EditorRole.ChiefEditor);
+		string Affiliation)
+{
+		public EditorRole Role { get; set; }
+}

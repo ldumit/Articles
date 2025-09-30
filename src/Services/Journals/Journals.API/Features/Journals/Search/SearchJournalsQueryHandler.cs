@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Redis.OM;
 using Blocks.Redis;
-using Articles.Security;
 using Journals.API.Features.Shared;
 
 namespace Journals.API.Features.Journals.Search;
 
-[Authorize(Roles = Role.EditorAdmin)]
+[Authorize]
 [HttpGet("journals")]
 [Tags("Journals")]
 public class SearchJournalsQueryHandler(Repository<Journal> _repository, Repository<Editor> _editorRepository)
@@ -18,12 +17,10 @@ public class SearchJournalsQueryHandler(Repository<Journal> _repository, Reposit
 
 				if (!string.IsNullOrWhiteSpace(query.Search))
 				{
-						var search = query.Search.Trim().ToLowerInvariant();
-						var queryString =
-								$"(@Abbreviation:{{{search}}}) | " +
-								$"(@Name:*{search}* | @Description:*{search}*)";
-
-						collection = collection.Raw(queryString);
+						var searchValue = query.Search.Trim().ToLowerInvariant();
+						// Raw search is faster and more powerful than Linq search. Try both and compare.
+						collection = RawSearch(searchValue, collection);
+						//collection = Search(searchValue, collection);
 				}
 
 				var totalCount = collection.Count();
@@ -47,5 +44,24 @@ public class SearchJournalsQueryHandler(Repository<Journal> _repository, Reposit
 				);
 
 				await Send.OkAsync(response, cancellation: ct);
+		}
+
+		private static Redis.OM.Searching.IRedisCollection<Journal> RawSearch(string searchText, Redis.OM.Searching.IRedisCollection<Journal> collection)
+		{			
+				var queryString =
+						$"(@Abbreviation:{{{searchText}}}) | " +
+						$"((@Name:*{searchText}*) | (@Description:*{searchText}*))";
+
+				collection = collection.Raw(queryString);
+				return collection;
+		}
+
+		private static Redis.OM.Searching.IRedisCollection<Journal> Search(string searchText, Redis.OM.Searching.IRedisCollection<Journal> collection)
+		{
+				collection = collection.Where(j =>
+						j.Abbreviation == searchText ||
+						j.Name.Contains(searchText) ||
+						j.Description.Contains(searchText));
+				return collection;
 		}
 }

@@ -21,5 +21,9 @@ public static class Seed
     {
 				await provider.SeedFromJson<Editor>(redisDb);
 				await provider.SeedFromJson<Journal>(redisDb);
+
+				//we need to set the sequence seed to avoid duplicate key errors because of the seeded records
+				await redisDb.SetSequenceSeed<Journal>(7);
+				await redisDb.SetSequenceSeed<Section>(14);
 		}
 }

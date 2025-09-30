@@ -1,6 +1,4 @@
-﻿using Mapster;
-
-namespace Auth.Domain.Users;
+﻿namespace Auth.Domain.Users;
 
 public partial class UserRole
 {
@@ -8,15 +6,20 @@ public partial class UserRole
 		{
 				var now = DateTime.UtcNow.Date;
 
-				if (userRoleInfo.StartDate.HasValue && userRoleInfo.StartDate.Value.Date < now)
+				var start = userRoleInfo.StartDate ?? now;
+				var end = userRoleInfo.ExpiringDate;
+
+				if (start < now)
 						throw new ArgumentException("Start date must be today or in the future.", nameof(userRoleInfo.StartDate));
 
-				if (userRoleInfo.ExpiringDate.HasValue && userRoleInfo.StartDate.HasValue &&
-						userRoleInfo.StartDate.Value.Date >= userRoleInfo.ExpiringDate.Value.Date)
-						throw new ArgumentException("Expiring date must be after the start date.", nameof(userRoleInfo.ExpiringDate));
+				if (end.HasValue && start >= end.Value)
+						throw new ArgumentException("End date must be after start date.", nameof(userRoleInfo.ExpiringDate));
 
-				var userRole = userRoleInfo.Adapt<UserRole>();
-
-				return userRole;
+				return new UserRole
+				{
+						RoleId = (int)userRoleInfo.RoleId,
+						StartDate = start,
+						ExpiringDate = end
+				};
 		}
 }

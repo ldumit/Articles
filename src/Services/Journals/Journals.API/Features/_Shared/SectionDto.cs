@@ -1,6 +1,4 @@
-﻿using Mapster;
-
-namespace Journals.API.Features.Shared;
+﻿namespace Journals.API.Features.Shared;
 
 public record SectionDto(
 		int Id, 
@@ -8,5 +6,5 @@ public record SectionDto(
 		string Description)
 {
 		[AdaptIgnore] 
-		public List<EditorDto> Editors { get; set; } = new();
+		public List<EditorDto> Editors { get; set; } = default!;
 }

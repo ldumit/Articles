@@ -10,7 +10,6 @@ public static class Extensions
 {
 		public static async Task<T?> GetByIdAsync<T>(this IRedisCollection<T> collection, int id)
 				=> await collection.FindByIdAsync(id.ToString());
-
 		public static async Task<T> GetByIdOrThrowAsync<T>(this IRedisCollection<T> collection, int id)
 		{
 				var entity = await collection.FindByIdAsync(id.ToString());
@@ -21,6 +20,9 @@ public static class Extensions
 
 		public static async Task<int> GenerateNewId<TEntity>(this IDatabase redisDb) where TEntity : Entity
 				=> (int)await redisDb.StringIncrementAsync($"{typeof(TEntity).Name}:Id:Sequence");
+
+		public static async Task<bool> SetSequenceSeed<TEntity>(this IDatabase redisDb, int startValue = 0) where TEntity : Entity
+				=> await redisDb.StringSetAsync($"{typeof(TEntity).Name}:Id:Sequence", startValue);
 
 
 		public static async Task SeedFromJson<TEntity>(this RedisConnectionProvider provider, IDatabase redisDb, string folderPath = "Data/Test")

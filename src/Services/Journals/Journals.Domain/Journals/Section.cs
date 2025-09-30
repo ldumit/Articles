@@ -4,7 +4,8 @@ using Redis.OM.Modeling;
 
 namespace Journals.Domain.Journals;
 
-[Document(StorageType = StorageType.Json)]
+[Document(StorageType = StorageType.Json, Prefixes = new[] { nameof(Section) })]
+//[Document(StorageType = StorageType.Json)]
 public class Section : Entity
 {
 		[Indexed]

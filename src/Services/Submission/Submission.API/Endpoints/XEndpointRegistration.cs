@@ -11,7 +11,7 @@ public static class EndpointRegistration
 				AssignAuthorEndpoint.Map(api);
 				CreateAndAssignAuthorEndpoint.Map(api);
 				UploadManuscriptFileEndpoint.Map(api);
-				UploadSupplimentaryMaterialFileEndpoint.Map(api);
+				UploadSupplementaryMaterialFileEndpoint.Map(api);
 				SubmitArticleEndpoint.Map(api);
 				ApproveArticleEndpoint.Map(api);
 				RejectArticleEndpoint.Map(api);

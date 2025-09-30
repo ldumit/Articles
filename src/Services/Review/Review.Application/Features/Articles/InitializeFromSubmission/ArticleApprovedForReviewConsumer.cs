@@ -5,7 +5,6 @@ using FileStorage.Contracts;
 using MassTransit;
 using Review.Application.FileStorage;
 using Review.Domain.Assets;
-using Review.Domain.Shared;
 using Review.Domain.Shared.Enums;
 
 namespace Review.Application.Features.Articles.InitializeFromSubmission;

@@ -1,7 +1,4 @@
-﻿using FastEndpoints;
-using FluentValidation;
-
-namespace Journals.API.Features.Journals.Update;
+﻿namespace Journals.API.Features.Journals.Update;
 
 public record UpdateJournalCommand(int JournalId, string Abbreviation, string ShortName, string Name, string Description, string ISSN, int ChiefEditorId);
 

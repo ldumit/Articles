@@ -9,22 +9,22 @@
 	{
 		"Id": 7,
 		"PersonId": 7,
-		"FullName": "RevEditor 1",
-		"Email": "reved.1@articles.test",
+		"FullName": "Editor 1",
+		"Email": "editor.1@articles.test",
 		"Affiliation": "European Institute for Applied Artificial Intelligence, Zurich"
 	},
 	{
 		"Id": 8,
 		"PersonId": 8,
-		"FullName": "Revditor 2",
-		"Email": "reved.2@articles.test",
+		"FullName": "Editor 2",
+		"Email": "editor.2@articles.test",
 		"Affiliation": "Institute for Behavioral Neuroscience, Sidney"
 	},
 	{
 		"Id": 9,
 		"PersonId": 9,
-		"FullName": "RevEditor 3",
-		"Email": "reved.2@articles.test",
+		"FullName": "Editor 3",
+		"Email": "editor.2@articles.test",
 		"Affiliation": "Academy for Creative Young Thinkers, New Delhi"
 	}
 ]

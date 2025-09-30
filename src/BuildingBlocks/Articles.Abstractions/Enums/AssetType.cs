@@ -19,7 +19,7 @@ public enum AssetType
 
 public static class AssetTypes
 {
-		public static HashSet<AssetType> SupplimentaryFiles =
+		public static HashSet<AssetType> SupplementaryFiles =
 		[
 				AssetType.Figure,
 				AssetType.DataSheet,
