@@ -2,4 +2,5 @@
 
 namespace Journals.Domain.Journals.Events;
 
-public record JournalCreated(Journal Journal) : IDomainEvent;
+public record SectionUpdated(Section Section) : IDomainEvent;
+

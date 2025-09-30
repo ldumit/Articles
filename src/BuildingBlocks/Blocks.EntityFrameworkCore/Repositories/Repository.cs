@@ -42,6 +42,18 @@ public abstract class RepositoryBase<TContext, TEntity, TKey>
 
 		public virtual TEntity Update(TEntity entity) => _entity.Update(entity).Entity;
 
+		public virtual async Task<TEntity> UpsertAsync(TEntity entity, CancellationToken ct = default)
+		{
+				var existingEntity = await FindByIdAsync(entity.Id);
+				if (existingEntity is null)
+				{
+						return await AddAsync(entity, ct);
+				}
+
+				_dbContext.Entry(existingEntity).CurrentValues.SetValues(entity);
+				return existingEntity;
+		}
+
 		public virtual void Remove(TEntity entity) => _entity.Remove(entity);
 
 		public virtual async Task<bool> DeleteByIdAsync(TKey id, CancellationToken ct = default)

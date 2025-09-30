@@ -5,7 +5,7 @@ using Submission.Domain.Events;
 
 namespace Submission.Application.Features.ApproveArticle;
 
-public class PublishArticleApprovedEventHandler(ArticleRepository _articleRepository, IPublishEndpoint _publishEndpoint) 
+public class PublishIntegrationEventOnArticleApprovedHandler(ArticleRepository _articleRepository, IPublishEndpoint _publishEndpoint) 
 		: INotificationHandler<ArticleApproved>
 {
 		public async Task Handle(ArticleApproved notification, CancellationToken ct)

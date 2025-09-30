@@ -7,6 +7,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Review.Application.Features.Invitations.InviteReviewer;
+using Review.Application.Mappings;
 using Review.Application.StateMachines;
 using System.Reflection;
 
@@ -15,11 +16,9 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddApplicationServices (this IServiceCollection services, IConfiguration configuration)
     {
-				//talk - fluid vs normal
 				services
-						.AddMapsterConfigsFromCurrentAssembly()																	// Scanning for mapping registration
-						//.AddMapsterConfigsFromAssemblyContaining<ApplicationMappingConfig>()    // Scanning for mapping registration
-						.AddValidatorsFromAssemblyContaining<InviteReviewerCommandValidator>()		// Register Fluent validators as transient
+						.AddMapsterConfigsFromAssemblyContaining<IntegrationEventMappings>()        // Register mapster configurations
+						.AddValidatorsFromAssemblyContaining<InviteReviewerCommandValidator>()			// Register Fluent validators as transient
 						.AddMediatR(config =>
 						{
 								config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
@@ -35,7 +34,6 @@ public static class DependencyInjection
 
 				services.AddScoped<ArticleStateMachineFactory>(provider => articleStage =>
 				{
-						//var dbConntext = provider.GetRequiredService<SubmissionDbContext>();
 						var cache = provider.GetRequiredService<IMemoryCache>();
 						return new ArticleStateMachine(articleStage, cache);
 				});

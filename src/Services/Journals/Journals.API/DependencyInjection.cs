@@ -5,9 +5,11 @@ using Blocks.Core.Security;
 using Blocks.Domain;
 using Blocks.FastEndpoints;
 using Blocks.Mapster;
+using Blocks.Messaging.MassTransit;
 using Microsoft.AspNetCore.Http.Json;
 using ProtoBuf.Grpc.Server;
 using System.IO.Compression;
+using System.Reflection;
 using System.Text.Json.Serialization;
 
 namespace Journals.API;
@@ -36,7 +38,8 @@ public static class DependencyInjection
 					.AddJwtAuthentication(config)
 					.AddMapsterConfigsFromCurrentAssembly()
 					.AddAuthorization()
-					;
+					.AddMassTransitWithRabbitMQ(config, Assembly.GetExecutingAssembly())
+				;										
 
 				services.AddScoped<IDomainEventPublisher, DomainEventPublisher>();
 

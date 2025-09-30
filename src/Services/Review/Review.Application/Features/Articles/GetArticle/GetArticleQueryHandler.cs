@@ -8,7 +8,7 @@ public class GetArticleQueryHandler(ArticleRepository _articleRepository)
     public async Task<GetArticleResonse> Handle(GetArticleQuery command, CancellationToken ct)
     {
         var article = Guard.NotFound(
-            await _articleRepository.GetFullArticleById(command.ArticleId));
+            await _articleRepository.GetFullArticleByIdAsync(command.ArticleId));
 
         return new GetArticleResonse(article.Adapt<ArticleDto>());
     }

@@ -1,10 +1,7 @@
-﻿using FastEndpoints;
-using Microsoft.AspNetCore.Authorization;
-using Mapster;
-using Journals.API.Features.Shared;
+﻿using Blocks.Redis;
 using Articles.Security;
-using Blocks.Redis;
-using Journals.Domain.Journals;
+using Microsoft.AspNetCore.Authorization;
+using Journals.API.Features.Shared;
 using Journals.Domain.Journals.Events;
 
 namespace Journals.API.Features.Journals.Update;
@@ -22,7 +19,7 @@ public class UpdateJournalEndpoint(Repository<Journal> _journalRepository)
 
         await _journalRepository.UpdateAsync(journal);
 
-				await PublishAsync(journal.Adapt<UpdateJournalEvent>());
+				await PublishAsync(new JournalUpdated(journal));
 
 				await Send.OkAsync(new IdResponse(journal.Id));
     }

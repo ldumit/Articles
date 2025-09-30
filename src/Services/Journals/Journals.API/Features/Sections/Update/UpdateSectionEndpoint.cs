@@ -24,7 +24,7 @@ public class UpdateSectionEndpoint(Repository<Journal> _repository)
 
 				await _repository.UpdateAsync(journal);
 
-				await PublishAsync(section.Adapt<UpdateSectionEvent>());
+				await PublishAsync(section.Adapt<SectionUpdated>());
 
 				await Send.OkAsync(new IdResponse(section.Id));
     }

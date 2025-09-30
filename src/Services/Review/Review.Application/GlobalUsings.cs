@@ -22,6 +22,7 @@ global using Articles.Abstractions.Enums;
 // Domain Aggregates
 global using Review.Domain.Articles;
 global using Review.Domain.Invitations;
+global using Review.Domain.Shared;
 
 //Domain
 global using Review.Domain.StateMachines;

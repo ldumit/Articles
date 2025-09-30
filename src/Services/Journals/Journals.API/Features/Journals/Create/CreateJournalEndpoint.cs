@@ -9,7 +9,6 @@ using Journals.Domain.Journals.Events;
 
 namespace Journals.API.Features.Journals.Create;
 
-//talk about authorization, everyone who is authenticated has the rights to call this endpoint?! 
 [Authorize(Roles = Role.EditorAdmin)]
 [HttpPost("journals")]
 [Tags("Journals")]

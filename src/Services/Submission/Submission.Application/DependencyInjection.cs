@@ -7,6 +7,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Submission.Application.Features.CreateArticle;
+using Submission.Application.Mappings;
 using Submission.Application.StateMachines;
 using System.Reflection;
 
@@ -15,12 +16,9 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddApplicationServices (this IServiceCollection services, IConfiguration configuration)
     {
-				//todo - remove all commented code after testing Submission
-				//talk - fluid vs normal
 				services
-						.AddMapsterConfigsFromCurrentAssembly()																	// Scanning for mapping registration
-						//.AddMapsterConfigsFromAssemblyContaining<ApplicationMappingConfig>()    // Scanning for mapping registration
-						.AddValidatorsFromAssemblyContaining<CreateArticleCommandValidator>()		// Register Fluent validators as transient
+						.AddMapsterConfigsFromAssemblyContaining<GrpcMappings>()										// Register mapster configurations
+						.AddValidatorsFromAssemblyContaining<CreateArticleCommandValidator>()				// Register Fluent validators as transient
 						.AddMediatR(config =>
 						{
 								config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());

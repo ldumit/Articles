@@ -7,9 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Flurl.Http"/>
-    <PackageReference Include="Mapster"/>
-    <PackageReference Include="Stateless"/>
+    <PackageReference Include="Flurl.Http" />
+    <PackageReference Include="Mapster" />
+    <PackageReference Include="Stateless" />
   </ItemGroup>
 
   <ItemGroup>

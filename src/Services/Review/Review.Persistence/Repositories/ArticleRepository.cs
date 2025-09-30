@@ -11,7 +11,7 @@ public class ArticleRepository(ReviewDbContext dbContext)
 						.Include(e => e.Assets);
 		}
 
-		public async Task<Article?> GetFullArticleById(int id)
+		public async Task<Article?> GetFullArticleByIdAsync(int id)
 		{
 				return await Query()
 						.Include(e => e.Journal)
