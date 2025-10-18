@@ -12,7 +12,8 @@ public partial class SetPasswordEndpoint(UserManager<User> _userManager)
 				if (user == null)
 						throw new BadRequestException($"User with email {command.Email} doesn't exist");
 				
-				var result = await _userManager.ResetPasswordAsync(user, command.TwoFactorToken, command.NewPassword);
+				var result = await _userManager.ResetPasswordAsync(
+						user, command.TwoFactorToken, command.NewPassword);
 				if (!result.Succeeded)
 						throw new BadRequestException($"Unable to change password for {command.Email}");
 

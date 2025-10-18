@@ -1,6 +1,4 @@
-﻿using Blocks.Entitities;
-
-namespace ArticleHub.Domain.Entities;
+﻿namespace ArticleHub.Domain.Entities;
 
 public class Journal : Entity
 {

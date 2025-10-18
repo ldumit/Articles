@@ -6,8 +6,10 @@ internal class UserEntityConfiguration : AuditedEntityConfiguration<User>
 		{
 				base.Configure(builder);
 
-				builder.HasMany(p => p.UserRoles).WithOne().HasForeignKey(p => p.UserId).OnDelete(DeleteBehavior.Cascade).IsRequired();
-				builder.HasMany(p => p.RefreshTokens).WithOne().HasForeignKey(p => p.UserId).OnDelete(DeleteBehavior.Cascade).IsRequired();
+				builder.HasMany(p => p.UserRoles).WithOne().HasForeignKey(p => p.UserId)
+						.IsRequired().OnDelete(DeleteBehavior.Cascade);
+				builder.HasMany(p => p.RefreshTokens).WithOne().HasForeignKey(p => p.UserId)
+						.IsRequired().OnDelete(DeleteBehavior.Cascade);
 
 				builder.HasOne(u => u.Person).WithOne(p => p.User)
 						.HasForeignKey<User>(u => u.PersonId)

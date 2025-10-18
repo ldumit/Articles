@@ -1,8 +1,9 @@
 ﻿using Articles.Abstractions.Enums;
-using Blocks.Entitities;
 
 namespace ArticleHub.Domain.Entities;
 
+// We are inheriting from Entity because EF.Core needs a simple primary key(Id),
+// otherwise we might have problems inserting the record
 public class ArticleActor : Entity
 {
     public UserRoleType Role { get; init; }

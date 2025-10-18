@@ -1,9 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using StackExchange.Redis;
-using Redis.OM;
 using Blocks.Redis;
-using Journals.Domain.Journals;
 
 namespace Journals.Persistence.Data;
 

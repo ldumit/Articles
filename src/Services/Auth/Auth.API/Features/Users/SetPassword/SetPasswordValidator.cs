@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-namespace Auth.API.Features.Users.SetPassword;
+﻿namespace Auth.API.Features.Users.SetPassword;
 
 public class SetPasswordValidator : AbstractValidator<SetPasswordCommand>
 {
@@ -10,7 +8,8 @@ public class SetPasswordValidator : AbstractValidator<SetPasswordCommand>
 				RuleFor(c => c.NewPassword).NotEmpty();
 				RuleFor(c => c.ConfirmPassword).NotEmpty();
 				RuleFor(c => c.TwoFactorToken).NotEmpty();
-				RuleFor(c => c.NewPassword).Must((command, value) => command.NewPassword == command.ConfirmPassword)
+				RuleFor(c => c.NewPassword).Must(
+						(command, value) => command.NewPassword == command.ConfirmPassword)
 						.WithMessage("Passwords doesn't match");
 		}
 }

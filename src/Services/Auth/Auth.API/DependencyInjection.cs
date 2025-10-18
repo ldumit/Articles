@@ -6,7 +6,6 @@ using Blocks.AspNetCore;
 using Blocks.Core.Security;
 using Blocks.Domain;
 using Blocks.FastEndpoints;
-using EmailService.Smtp;
 using EmailService.Empty;
 using FastEndpoints.Swagger;
 using Microsoft.AspNetCore.Http.Json;

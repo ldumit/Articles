@@ -1,9 +1,4 @@
-﻿using Journals.Domain.Journals;
-using Redis.OM;
-using Redis.OM.Searching;
-using StackExchange.Redis;
-
-namespace Journals.Persistence;
+﻿namespace Journals.Persistence;
 
 public class JournalDbContext
 {
